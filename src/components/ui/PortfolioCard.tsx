@@ -1,0 +1,68 @@
+import Image from "next/image";
+import Link from "next/link";
+import { PortfolioItem } from "@/types/wordpress";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
+
+interface PortfolioCardProps {
+    item: PortfolioItem;
+    className?: string;
+}
+
+export default function PortfolioCard({ item, className }: PortfolioCardProps) {
+    return (
+        <Link
+            href={`https://retrieve.am/practice-areas/${item.slug}/`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+                "group block rounded-2xl overflow-hidden bg-white border border-gray-100 hover:border-primary/20 hover:shadow-elevated transition-all duration-300",
+                className
+            )}
+        >
+            <div className="relative h-64 overflow-hidden">
+                <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+
+                {/* Category Badge */}
+                <div className="absolute top-4 left-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/90 text-white backdrop-blur-sm">
+                        {item.category}
+                    </span>
+                </div>
+
+                {/* Title + Learn More Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-white font-bold text-xl mb-3 group-hover:text-white transition-colors">
+                        {item.title}
+                    </h3>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-primary rounded-full px-4 py-1.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        Learn More <ArrowRight size={12} />
+                    </span>
+                </div>
+            </div>
+
+            {/* Tags Section (if available) */}
+            {item.tags && item.tags.length > 0 && (
+                <div className="p-4 border-t border-gray-100">
+                    <div className="flex flex-wrap gap-2">
+                        {item.tags.map((tag, idx) => (
+                            <span
+                                key={idx}
+                                className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </Link>
+    );
+}

@@ -1,0 +1,74 @@
+export interface WPPost {
+    id: number;
+    date: string;
+    slug: string;
+    link: string;
+    title: {
+        rendered: string;
+    };
+    excerpt: {
+        rendered: string;
+    };
+    content: {
+        rendered: string;
+    };
+    _embedded?: {
+        "wp:featuredmedia"?: WPMedia[];
+    };
+}
+
+export interface WPMedia {
+    id: number;
+    source_url: string;
+    alt_text: string;
+}
+
+export interface WPPage {
+    id: number;
+    title: {
+        rendered: string;
+    };
+    content: {
+        rendered: string;
+    };
+}
+
+export interface WPTeamMember {
+    id: string;
+    name: string;
+    position: string;
+    image: string;
+    link: string;
+}
+
+export interface PortfolioItem {
+    title: string;
+    slug: string;
+    image: string;
+    category: string;
+    tags: string[];
+}
+
+export interface EducationEntry {
+    year: string;
+    degree: string;
+    institution: string;
+}
+
+export interface PersonnelDetails {
+    name: string;
+    position: string;
+    image: string;
+    biography: string;
+    practiceAreas: string[];
+    email?: string;
+    phone?: string;
+    linkedin?: string;
+    education: EducationEntry[];
+}
+
+export interface MenuItem {
+    label: string;
+    url: string;
+    children?: MenuItem[];
+}
