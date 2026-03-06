@@ -665,3 +665,46 @@ export async function getPracticeAreaContent(slug: string): Promise<PracticeArea
     }
 }
 
+export interface LegalUpdatePDF {
+    title: string;
+    image: string;
+    pdfLink: string;
+}
+
+/**
+ * Fetch legal updates (PDFs) by scraping https://retrieve.am/legal-updates/
+ */
+export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
+    try {
+        const response = await fetch("https://retrieve.am/legal-updates/", {
+            next: { revalidate: 3600 },
+            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+        });
+
+        if (!response.ok) return [];
+
+        const html = await response.text();
+        const $ = cheerio.load(html);
+        const pdfs: LegalUpdatePDF[] = [];
+
+        $(".gdlr-core-column-service-item").each((_, el) => {
+            const title = $(el).find(".gdlr-core-column-service-title").text().trim();
+            const pdfLink = $(el).find("a[href$='.pdf']").attr("href");
+            const image = $(el).find("img").attr("src");
+
+            if (title && pdfLink) {
+                pdfs.push({
+                    title,
+                    pdfLink,
+                    image: image || "",
+                });
+            }
+        });
+
+        return pdfs;
+    } catch (error) {
+        console.error("Error scraping legal updates PDFs:", error);
+        return [];
+    }
+}
+
