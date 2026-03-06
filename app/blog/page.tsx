@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getLegalUpdates } from "@/lib/wordpress";
+import { getBlogPosts } from "@/lib/wordpress";
 import { Calendar, Clock, ArrowRight, FileText } from "lucide-react";
 
 export const metadata = {
@@ -14,8 +14,8 @@ function formatDate(iso: string) {
     });
 }
 
-export default async function LegalUpdatesPage() {
-    const { posts, total } = await getLegalUpdates(1, 12);
+export default async function BlogPage() {
+    const { posts, total } = await getBlogPosts(12, 1);
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">

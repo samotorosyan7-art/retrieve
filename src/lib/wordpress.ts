@@ -2,7 +2,7 @@ import { WPPost, WPTeamMember, PortfolioItem, MenuItem } from "@/types/wordpress
 import * as cheerio from "cheerio";
 import portfolioData from "@/data/portfolioData.json";
 
-const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://techcrunch.com/wp-json/wp/v2";
+const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://retrieve.am/wp-json/wp/v2";
 
 export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
     try {
