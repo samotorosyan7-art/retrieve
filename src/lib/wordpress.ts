@@ -80,7 +80,6 @@ export async function getTeamMembers(): Promise<WPTeamMember[]> {
     try {
         // Fallback to our-team page scraping since API is hidden
         const response = await fetch("https://retrieve.am/our-team/", {
-            next: { revalidate: 0 }, // No cache, fetch on every request to ensure sync
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
