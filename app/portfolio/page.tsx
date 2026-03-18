@@ -3,8 +3,8 @@ import PortfolioPageHero from "@/components/website/PortfolioPageHero";
 import PortfolioPageBody from "@/components/website/PortfolioPageBody";
 
 export const metadata = {
-    title: "Portfolio - Our Practice Areas | Retrieve",
-    description: "Explore our comprehensive portfolio of legal services and tax & business advisory services.",
+    title: "Portfolio",
+    description: "Explore our comprehensive portfolio of legal services and tax & business advisory services in Armenia.",
 };
 
 export default async function PortfolioPage() {

@@ -3,27 +3,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import { Calendar, Clock, ArrowRight, User, BookOpen } from "lucide-react";
+import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { LegalUpdate } from "@/lib/wordpress";
 
-function formatDate(iso: string) {
-    return new Date(iso).toLocaleDateString("en-US", {
+function formatDate(iso: string, lang: string = "en") {
+    const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";
+    return new Date(iso).toLocaleDateString(locale, {
         year: "numeric",
         month: "long",
         day: "numeric",
+        timeZone: "UTC",
     });
 }
 
 export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
 
     if (!posts || posts.length === 0) return null;
 
-    const [featured, ...rest] = posts;
+    const displayPosts = posts.slice(0, 6);
 
     return (
-        <section className="py-24 bg-white">
+        <section className="py-28 bg-[#F4F8FF]">
             <div className="container mx-auto px-4 md:px-8">
                 {/* ── Header ── */}
                 <motion.div
@@ -39,147 +42,105 @@ export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
                             {t("blog_title")}
                         </span>
                         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 tracking-tight">
-                            {t("blog_subtitle")}
+                            {t("blog_recent_articles")}
                         </h2>
+                        <p className="text-gray-500 mt-3 max-w-xl text-base leading-relaxed">
+                            {t("blog_recent_desc")}
+                        </p>
                     </div>
                     <Link
                         href="/blog"
                         className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors group shrink-0"
                     >
-                        View all articles
+                        {t("btn_view_all_articles")}
                         <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </motion.div>
 
-                {/* ── Featured post ── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.55 }}
-                    className="mb-10"
-                >
-                    <a
-                        href={featured.link || `https://retrieve.am/${featured.slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden border border-gray-100 shadow-[0_4px_24px_-6px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_-10px_rgba(0,92,185,0.18)] transition-all duration-400"
-                    >
-                        {/* Image */}
-                        <div className="relative h-64 md:h-80 bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden">
-                            {featured.image ? (
-                                <Image
-                                    src={featured.image}
-                                    alt={featured.title}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                    <BookOpen size={48} className="text-white/20" />
-                                </div>
-                            )}
-                            {/* Featured badge */}
-                            <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                                Featured
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="bg-white p-8 md:p-10 flex flex-col justify-center">
-                            <div className="flex items-center gap-4 text-xs text-gray-400 font-semibold mb-4">
-                                <span className="flex items-center gap-1.5">
-                                    <Calendar size={12} />
-                                    {formatDate(featured.date)}
-                                </span>
-                                <span className="flex items-center gap-1.5">
-                                    <Clock size={12} />
-                                    {featured.readTime} min read
-                                </span>
-                                {featured.author && (
-                                    <span className="flex items-center gap-1.5">
-                                        <User size={12} />
-                                        {featured.author}
-                                    </span>
-                                )}
-                            </div>
-                            <h3
-                                className="text-xl md:text-2xl font-extrabold text-gray-900 group-hover:text-primary transition-colors leading-snug mb-4 line-clamp-3"
-                                dangerouslySetInnerHTML={{ __html: featured.title }}
-                            />
-                            {featured.excerpt && (
-                                <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-6">
-                                    {featured.excerpt}
-                                </p>
-                            )}
-                            <span className="inline-flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
-                                {t("btn_read_article")}
-                                <ArrowRight size={14} />
-                            </span>
-                        </div>
-                    </a>
-                </motion.div>
-
-                {/* ── Secondary cards grid ── */}
-                {rest.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {rest.map((post, idx) => (
-                            <motion.a
-                                key={post.id}
-                                href={post.link || `https://retrieve.am/${post.slug}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-40px" }}
-                                transition={{ duration: 0.45, delay: idx * 0.1 }}
-                                className="group flex gap-5 p-5 rounded-2xl border border-gray-100 bg-white hover:border-primary/20 hover:shadow-[0_8px_24px_-8px_rgba(0,92,185,0.13)] transition-all duration-300"
+                {/* ── 6-post grid ── */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                    {displayPosts.map((post, idx) => (
+                        <motion.div
+                            key={post.id}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-40px" }}
+                            transition={{ duration: 0.45, delay: idx * 0.07 }}
+                        >
+                            <Link
+                                href={`/legal-updates/${post.slug}`}
+                                className="group flex flex-col h-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_12px_40px_-10px_rgba(0,92,185,0.15)] hover:border-primary/20 transition-all duration-300 overflow-hidden"
                             >
                                 {/* Thumbnail */}
-                                <div className="relative w-28 h-24 shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-[#003d7a] to-[#005CB9]">
+                                <div className="relative h-52 bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden shrink-0">
                                     {post.image ? (
                                         <Image
                                             src={post.image}
                                             alt={post.title}
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                            sizes="112px"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center">
-                                            <BookOpen size={22} className="text-white/30" />
+                                            <BookOpen size={36} className="text-white/20" />
                                         </div>
                                     )}
+                                    {/* Read time badge */}
+                                    <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                                        <Clock size={11} />
+                                        {post.readTime} {t("legal_update_read_min") || "min"}
+                                    </div>
                                 </div>
 
-                                {/* Text */}
-                                <div className="flex flex-col justify-between min-w-0">
-                                    <div>
-                                        <div className="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-2">
-                                            <span className="flex items-center gap-1">
-                                                <Calendar size={11} />
-                                                {formatDate(post.date)}
-                                            </span>
-                                            <span className="flex items-center gap-1">
-                                                <Clock size={11} />
-                                                {post.readTime}m
-                                            </span>
-                                        </div>
-                                        <h3
-                                            className="text-sm font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug line-clamp-2"
-                                            dangerouslySetInnerHTML={{ __html: post.title }}
-                                        />
+                                {/* Content */}
+                                <div className="p-6 flex flex-col flex-1">
+                                    {/* Date */}
+                                    <div className="flex items-center gap-1.5 text-xs text-gray-400 font-semibold mb-3">
+                                        <Calendar size={12} />
+                                        {formatDate(post.date, lang)}
                                     </div>
-                                    <span className="inline-flex items-center gap-1 text-primary text-xs font-bold mt-2">
-                                        Read
-                                        <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-                                    </span>
+
+                                    {/* Title */}
+                                    <h3
+                                        className="text-base font-extrabold text-gray-900 group-hover:text-primary transition-colors leading-snug mb-3 line-clamp-2"
+                                        dangerouslySetInnerHTML={{ __html: post.title }}
+                                    />
+
+                                    {/* Excerpt */}
+                                    {post.excerpt && (
+                                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-4 flex-1">
+                                            {post.excerpt}
+                                        </p>
+                                    )}
+
+                                    {/* CTA */}
+                                    <div className="flex items-center gap-1.5 text-primary text-sm font-bold mt-auto pt-3 border-t border-gray-50">
+                                        {t("btn_read_article")}
+                                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                                    </div>
                                 </div>
-                            </motion.a>
-                        ))}
-                    </div>
-                )}
+                            </Link>
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* ── View More button ── */}
+                <motion.div
+                    className="flex justify-center mt-14"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: 0.3 }}
+                >
+                    <Link
+                        href="/blog"
+                        className="inline-flex items-center gap-3 bg-gradient-to-r from-[#004791] to-[#005CB9] hover:from-[#003d7a] hover:to-[#004791] text-white font-bold text-base rounded-2xl px-9 py-4 transition-all shadow-lg shadow-blue-900/20 group"
+                    >
+                        {t("btn_view_more_articles")}
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </motion.div>
             </div>
         </section>
     );

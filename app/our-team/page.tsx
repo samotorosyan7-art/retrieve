@@ -6,6 +6,11 @@ import { Section } from "@/components/ui/Section";
 import { Linkedin } from "lucide-react";
 import TeamPageHero from "@/components/website/TeamPageHero";
 
+export const metadata = {
+    title: "Our Team",
+    description: "Meet the experienced attorneys and tax experts at Retrieve Legal & Tax, dedicated to providing top-tier legal services in Armenia.",
+};
+
 export default async function OurTeamPage() {
     const teamMembers = await getTeamMembers();
 

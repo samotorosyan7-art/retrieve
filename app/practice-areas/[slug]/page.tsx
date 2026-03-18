@@ -1,8 +1,18 @@
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPracticeAreaContent, getPortfolioItems } from "@/lib/wordpress";
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
+import enCommon from "@/locales/en/common.json";
+import ruCommon from "@/locales/ru/common.json";
+import amCommon from "@/locales/am/common.json";
+
+const dictionaries = {
+    en: enCommon,
+    ru: ruCommon,
+    am: amCommon,
+} as const;
 
 export async function generateStaticParams() {
     const items = await getPortfolioItems();
@@ -11,23 +21,34 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const content = await getPracticeAreaContent(slug);
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const content = await getPracticeAreaContent(slug, lang);
     if (!content) return {};
+    
+    const title = content.title.replace(/<[^>]+>/g, "").trim();
     return {
-        title: `${content.title} — RETRIEVE Legal & Tax`,
-        description: content.overview,
-        openGraph: content.image ? { images: [content.image] } : undefined,
+        title: title,
+        description: content.overview?.slice(0, 160),
+        openGraph: {
+            title: `${title} | Retrieve Legal & Tax`,
+            description: content.overview?.slice(0, 160),
+            images: content.image ? [content.image] : [],
+        },
     };
 }
 
 export default async function PracticeAreaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const content = await getPracticeAreaContent(slug);
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+    const content = await getPracticeAreaContent(slug, lang);
 
     if (!content) notFound();
 
     // Fetch all portfolio items to populate the sidebar links
-    const allAreas = await getPortfolioItems();
+    const allAreas = await getPortfolioItems(lang);
     // Show up to 5 other areas in sidebar
     const sidebarAreas = allAreas.filter(a => a.slug !== slug).slice(0, 5);
 
@@ -42,13 +63,13 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Link href="/practice-areas" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">
                         <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                        Back to Practice Areas
+                        {t.back_to_practice_areas}
                     </Link>
 
                     <div className="max-w-4xl">
                         <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-5">
                             <ShieldCheck size={14} />
-                            Our Expertise
+                            {t.our_expertise}
                         </div>
                         <h1
                             className="text-4xl md:text-6xl font-bold text-white leading-tight"
@@ -86,7 +107,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                                 <section>
                                     <h2 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3">
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        Overview
+                                        {t.overview}
                                     </h2>
                                     <p className="text-lg text-gray-600 leading-relaxed font-medium">
                                         {content.overview}
@@ -99,7 +120,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                                 <section>
                                     <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        How We Can Help
+                                        {t.how_we_can_help}
                                     </h2>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {content.howWeCanHelp.map((item, idx) => (
@@ -117,7 +138,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                                 <section>
                                     <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        Why Choose Us?
+                                        {t.why_choose_us_question}
                                     </h2>
                                     <div className="space-y-4">
                                         {content.whyChooseUs.map((item, idx) => (
@@ -137,7 +158,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                                 <section>
                                     <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        Frequently Asked Questions
+                                        {t.faqs}
                                     </h2>
                                     <div className="space-y-4">
                                         {content.faqs.map((faq, idx) => (
@@ -166,12 +187,14 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                         {/* CTA Card */}
                         <div className="bg-gradient-to-br from-[#003d7a] to-[#005CB9] rounded-3xl p-8 relative overflow-hidden shadow-xl shadow-blue-900/10">
                             <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none" />
-                            <h3 className="text-white text-2xl font-extrabold mb-3">Require legal assistance?</h3>
+                            <h3 className="text-white text-2xl font-extrabold mb-3">
+                                {t.require_legal_assistance}
+                            </h3>
                             <p className="text-blue-100 text-base mb-8 leading-relaxed font-medium">
-                                Our dedicated team is ready to guide you through complex legal and tax matters with precision.
+                                {t.require_legal_assistance_desc}
                             </p>
                             <Link href="/contact" className="block text-center bg-white text-[#005CB9] hover:bg-gray-50 font-bold text-base rounded-2xl px-6 py-4 transition-all shadow-md hover:shadow-lg">
-                                Schedule a Consultation
+                                {t.schedule_consultation}
                             </Link>
                         </div>
 
@@ -180,7 +203,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                             <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
                                 <h3 className="font-extrabold text-xl text-gray-900 mb-6 flex items-center gap-2">
                                     <FileText size={20} className="text-[#005CB9]" />
-                                    Other Services
+                                    {t.other_services}
                                 </h3>
                                 <div className="space-y-2">
                                     {sidebarAreas.map((area) => (
@@ -197,7 +220,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
 
                                 <div className="mt-8 pt-6 border-t border-gray-100">
                                     <Link href="/practice-areas" className="inline-flex items-center justify-center w-full gap-2 text-sm font-bold text-[#005CB9] hover:text-[#003d7a] transition-colors bg-blue-50/50 hover:bg-blue-50 py-3 rounded-xl">
-                                        View All Practice Areas
+                                        {t.view_all_practice_areas_btn}
                                     </Link>
                                 </div>
                             </div>

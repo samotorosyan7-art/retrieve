@@ -10,7 +10,6 @@ if (!img) {
     // Try other common locations for the featured image
     img = $(".gdlr-core-pbf-wrapper").eq(0).find("img").attr("src");
 }
-console.log("FEATURED IMAGE:", img);
 
 // Find content wrapper
 // Let's look for paragraphs inside gdlr-core-text-box-item-content that are not in header/footer
@@ -25,8 +24,5 @@ if (mainContent.length) {
     });
 }
 
-console.log("EXTRACTED BLOCKS:", contentBlocks.length);
 if (contentBlocks.length > 0) {
-    console.log("BLOCK 0:", contentBlocks[0].substring(0, 200).replace(/\n/g, ''));
-    console.log("BLOCK 1:", contentBlocks[1]?.substring(0, 200).replace(/\n/g, ''));
 }

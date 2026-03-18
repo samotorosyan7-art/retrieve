@@ -19,9 +19,9 @@ export default function ClientsCarousel({ logos = [] }: ClientsCarouselProps) {
         <section className="py-24 bg-[#F4F6F8] overflow-hidden border-t border-gray-100">
             <div className="container mx-auto px-4 md:px-8 mb-12">
                 <div className="text-center">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mb-4 tracking-tight">
+                    <h3 className="text-3xl md:text-3xl font-extrabold text-gray-950 mb-4 tracking-tight">
                         {t("clients_carousel_title") || "Trusted by Industry Leaders"}
-                    </h2>
+                    </h3>
                     <div className="w-16 h-1 bg-primary/20 mx-auto rounded-full">
                         <div className="w-1/2 h-full bg-primary rounded-full"></div>
                     </div>

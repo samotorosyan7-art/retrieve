@@ -9,6 +9,22 @@ interface PersonnelPageProps {
     params: { slug: string };
 }
 
+export async function generateMetadata({ params }: PersonnelPageProps) {
+    const { slug } = await params;
+    const personnel = await getPersonnelDetails(slug);
+    if (!personnel) return {};
+
+    return {
+        title: `${personnel.name} — ${personnel.position}`,
+        description: `Learn more about ${personnel.name}, ${personnel.position} at Retrieve Legal & Tax. Specializing in ${personnel.practiceAreas?.slice(0, 3).join(", ")}.`,
+        openGraph: {
+            title: `${personnel.name} | Retrieve Legal & Tax`,
+            description: personnel.position,
+            images: personnel.image ? [personnel.image] : [],
+        },
+    };
+}
+
 export async function generateStaticParams() {
     const teamMembers = await getTeamMembers();
     return teamMembers.map((member) => {

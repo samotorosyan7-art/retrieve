@@ -104,9 +104,9 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             src="/logo.png"
                             alt="RETRIEVE Legal & Tax"
                             width={180}
-                            height={60}
+                            height={100}
                             priority
-                            className="h-16 w-auto"
+                            className="h-24 w-auto"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">
@@ -141,7 +141,9 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                     onClick={() => setIsPracticeOpen(false)}
                                                     className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary transition-colors"
                                                 >
-                                                    <span>{category.label}</span>
+                                                    <span>
+                                                        {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
+                                                    </span>
                                                     {category.children && category.children.length > 0 && (
                                                         <ChevronRight size={14} className="group-hover/sub:translate-x-1 transition-transform" />
                                                     )}
@@ -158,7 +160,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                                     onClick={() => setIsPracticeOpen(false)}
                                                                     className="block px-4 py-2 hover:bg-gray-50 text-sm rounded-lg text-gray-600 hover:text-primary transition-colors"
                                                                 >
-                                                                    {subItem.label}
+                                                                    {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                                 </Link>
                                                             ))}
                                                         </div>
@@ -235,7 +237,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                         onClick={() => toggleMobileCategory(category.label)}
                                         className="flex items-center justify-between py-2 px-3 text-sm font-medium text-gray-600 hover:text-primary rounded-lg hover:bg-gray-50 text-left"
                                     >
-                                        {category.label}
+                                        {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
                                         {category.children && category.children.length > 0 && (
                                             <ChevronDown size={14} className={cn("transition-transform", expandedMobileCategories[category.label] && "rotate-180")} />
                                         )}
@@ -251,7 +253,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                     onClick={() => setIsOpen(false)}
                                                     className="py-2 px-3 text-xs text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50"
                                                 >
-                                                    {subItem.label}
+                                                    {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                 </Link>
                                             ))}
                                         </div>

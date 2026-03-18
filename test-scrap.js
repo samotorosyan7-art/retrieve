@@ -8,7 +8,6 @@ async function scrape() {
         const html = await response.text();
         const $ = cheerio.load(html);
 
-        console.log("TITLE:", $("h1").text().trim());
 
         // Find main content
         const contentBlocks = [];
@@ -16,14 +15,11 @@ async function scrape() {
             contentBlocks.push($(el).html().trim());
         });
 
-        console.log("CONTENT BLOCKS:", contentBlocks.length);
         if (contentBlocks.length > 0) {
-            console.log("FIRST BLOCK:", contentBlocks[0].substring(0, 200));
         }
 
         // See if there's an image
         const img = $(".gdlr-core-portfolio-thumbnail img").attr("src") || $(".gdlr-core-media-image img").attr("src") || $(".gdlr-core-image-item img").attr("src");
-        console.log("IMAGE:", img);
 
     } catch (e) {
         console.error(e);

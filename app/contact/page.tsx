@@ -1,39 +1,56 @@
 import { Mail, Phone, MapPin, Clock, Linkedin } from "lucide-react";
 import ContactForm from "./ContactForm";
 
-export const metadata = {
-    title: "Contact Us — RETRIEVE Legal & Tax",
-    description: "Get in touch with RETRIEVE for professional legal and tax advisory services in Armenia.",
-};
+import { cookies } from "next/headers";
+import en from "@/locales/en/common.json";
+import am from "@/locales/am/common.json";
+import ru from "@/locales/ru/common.json";
 
-const contactInfo = [
-    {
-        icon: Phone,
-        label: "Phone",
-        value: "+374 41 777 332",
-        href: "tel:+37441777332",
-    },
-    {
-        icon: Mail,
-        label: "Email",
-        value: "info@retrieve.am",
-        href: "mailto:info@retrieve.am",
-    },
-    {
-        icon: MapPin,
-        label: "Address",
-        value: "Yerevan, Armenia",
-        href: "https://maps.google.com/?q=Yerevan,Armenia",
-    },
-    {
-        icon: Clock,
-        label: "Working Hours",
-        value: "Mon – Fri: 09:00 – 18:00",
-        href: null,
-    },
-];
+const dictionaries = { en, am, ru };
 
-export default function ContactPage() {
+export async function generateMetadata() {
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+    
+    return {
+        title: `${t.nav_contact} | Retrieve Legal & Tax`,
+        description: t.contact_desc,
+    };
+}
+
+export default async function ContactPage() {
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+
+    const contactInfo = [
+        {
+            icon: Phone,
+            label: t.phone,
+            value: "+374 41 777 332",
+            href: "tel:+37441777332",
+        },
+        {
+            icon: Mail,
+            label: t.email,
+            value: "info@retrieve.am",
+            href: "mailto:info@retrieve.am",
+        },
+        {
+            icon: MapPin,
+            label: t.footer_address,
+            value: t.footer_address,
+            href: "https://maps.google.com/?q=Yerevan,Armenia",
+        },
+        {
+            icon: Clock,
+            label: t.nav_contact, // Or a more specific key if available, but nav_contact is used for "Working Hours" in some places? No, working_hours is a string.
+            label_text: t.footer_contact_info,
+            value: t.working_hours,
+            href: null,
+        },
+    ];
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
@@ -42,10 +59,10 @@ export default function ContactPage() {
                 <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
-                    <span className="inline-block text-blue-200 font-bold tracking-widest uppercase text-xs mb-4">Get In Touch</span>
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">Contact Us</h1>
+                    <span className="inline-block text-blue-200 font-bold tracking-widest uppercase text-xs mb-4">{t.contact_badge}</span>
+                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">{t.nav_contact}</h1>
                     <p className="text-blue-200 text-lg max-w-xl mx-auto">
-                        Have a legal or tax question? Let&apos;s talk. Our experts are ready to help you.
+                        {t.contact_desc}
                     </p>
                 </div>
             </div>
@@ -62,8 +79,8 @@ export default function ContactPage() {
                         {/* Contact Info Card */}
                         <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
                             <div className="bg-gradient-to-r from-[#003d7a] to-[#005CB9] px-6 py-5">
-                                <h2 className="text-white font-extrabold text-lg">Contact Information</h2>
-                                <p className="text-blue-200 text-sm mt-1">We&apos;re available Monday to Friday</p>
+                                <h2 className="text-white font-extrabold text-lg">{t.footer_contact_info}</h2>
+                                <p className="text-blue-200 text-sm mt-1">{t.working_hours}</p>
                             </div>
                             <div className="divide-y divide-gray-50">
                                 {contactInfo.map(({ icon: Icon, label, value, href }) => (
@@ -97,8 +114,8 @@ export default function ContactPage() {
                                 <Linkedin size={22} className="text-white" />
                             </div>
                             <div>
-                                <div className="text-white font-extrabold text-sm">Follow on LinkedIn</div>
-                                <div className="text-blue-200 text-xs mt-0.5">Stay updated with our latest news</div>
+                                <div className="text-white font-extrabold text-sm">LinkedIn</div>
+                                <div className="text-blue-200 text-xs mt-0.5">Retrieve Legal & Tax</div>
                             </div>
                         </a>
 
@@ -124,10 +141,10 @@ export default function ContactPage() {
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
                                         <Mail size={20} className="text-[#005CB9]" />
                                     </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">Send Us a Message</h2>
+                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.form_btn_send}</h2>
                                 </div>
                                 <p className="text-gray-500 text-sm ml-[52px]">
-                                    Fill out the form and our team will get back to you within 24 hours.
+                                    {t.contact_desc}
                                 </p>
                             </div>
                             <ContactForm />

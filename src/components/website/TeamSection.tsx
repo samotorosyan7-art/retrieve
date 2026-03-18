@@ -29,10 +29,10 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                     className="text-center mb-20 max-w-2xl mx-auto"
                 >
                     <span className="text-[#005CB9] font-bold tracking-widest uppercase text-sm mb-4 block">
-                        Meet the Experts
+                        {t("team_meet_experts")}
                     </span>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight mb-6">
-                        Our Team
+                        {t("team_our_team")}
                     </h2>
                     <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
                         <div className="w-1/2 h-full bg-[#005CB9] rounded-full" />
@@ -77,7 +77,7 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                                         {/* "View Profile" pill — slides up on hover */}
                                         <div className="absolute inset-x-0 bottom-5 flex justify-center">
                                             <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#005CB9] rounded-full px-4 py-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
-                                                View Profile <ArrowRight size={12} />
+                                                {t("btn_view_profile")} <ArrowRight size={12} />
                                             </span>
                                         </div>
                                     </div>
@@ -88,7 +88,11 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                                             <h3 className="text-lg font-extrabold text-gray-900 group-hover:text-[#005CB9] transition-colors leading-snug mb-1">
                                                 {member.name}
                                             </h3>
-                                            <p className="text-sm text-gray-500 font-medium">{member.position}</p>
+                                            <p className="text-sm text-gray-500 font-medium">
+                                                {t(`team_roles.${member.position}`) !== `team_roles.${member.position}` 
+                                                    ? t(`team_roles.${member.position}`) 
+                                                    : member.position}
+                                            </p>
                                         </div>
                                         <div className="w-9 h-9 rounded-xl bg-gray-50 group-hover:bg-[#005CB9]/10 flex items-center justify-center shrink-0 transition-colors mt-0.5">
                                             <ArrowRight size={16} className="text-gray-400 group-hover:text-[#005CB9] transition-colors" />
@@ -112,7 +116,7 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                         href="/our-team"
                         className="inline-flex items-center gap-2 font-bold text-sm rounded-full px-10 py-4 border-2 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white transition-all duration-300 shadow-sm"
                     >
-                        View All Members <ArrowRight size={16} />
+                        {t("btn_view_all_members")} <ArrowRight size={16} />
                     </Link>
                 </motion.div>
             </div>

@@ -1,21 +1,127 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { getLegalUpdates } from "@/lib/wordpress";
-import { Calendar, Clock, ArrowRight, FileText } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight } from "lucide-react";
+import en from "@/locales/en/common.json";
+import am from "@/locales/am/common.json";
+import ru from "@/locales/ru/common.json";
 
-export const metadata = {
-    title: "Blog — RETRIEVE Legal & Tax",
-    description: "Stay informed with the latest legal and regulatory updates from RETRIEVE.",
-};
+const dictionaries = { en, am, ru };
 
-function formatDate(iso: string) {
-    return new Date(iso).toLocaleDateString("en-US", {
+export async function generateMetadata() {
+    const cookieStore = await cookies();
+    const lang = ((await cookieStore.get("i18next"))?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+    
+    return {
+        title: `${t.page_blog_title} | Retrieve Legal & Tax`,
+        description: t.page_blog_description,
+    };
+}
+
+const PER_PAGE = 12;
+
+function formatDate(iso: string, lang: string = "en") {
+    const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";
+    return new Date(iso).toLocaleDateString(locale, {
         year: "numeric", month: "long", day: "numeric",
     });
 }
 
-export default async function LegalUpdatesPage() {
-    const { posts, total } = await getLegalUpdates(1, 12);
+function Pagination({ currentPage, totalPages, t }: { currentPage: number; totalPages: number; t: any }) {
+    const t_prev = t.pagination_prev;
+    const t_next = t.pagination_next;
+    
+    if (totalPages <= 1) return null;
+
+    // Build a window of page numbers around current page
+    const pages: (number | "...")[] = [];
+    for (let i = 1; i <= totalPages; i++) {
+        if (
+            i === 1 ||
+            i === totalPages ||
+            (i >= currentPage - 2 && i <= currentPage + 2)
+        ) {
+            pages.push(i);
+        } else if (pages[pages.length - 1] !== "...") {
+            pages.push("...");
+        }
+    }
+
+    return (
+        <nav
+            aria-label="Blog pagination"
+            className="flex items-center justify-center gap-2 mt-14 flex-wrap"
+        >
+            {/* Prev */}
+            <Link
+                href={currentPage > 1 ? `/blog?page=${currentPage - 1}` : "#"}
+                aria-disabled={currentPage === 1}
+                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200
+                    ${currentPage === 1
+                        ? "text-gray-300 cursor-not-allowed pointer-events-none bg-white border border-gray-100"
+                        : "text-[#005CB9] bg-white border border-gray-200 hover:border-[#005CB9] hover:bg-[#005CB9] hover:text-white shadow-sm"
+                    }`}
+            >
+                <ChevronLeft size={16} />
+                {t_prev}
+            </Link>
+
+            {/* Page numbers */}
+            {pages.map((p, idx) =>
+                p === "..." ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 text-gray-400 font-semibold select-none">
+                        …
+                    </span>
+                ) : (
+                    <Link
+                        key={p}
+                        href={`/blog?page=${p}`}
+                        aria-current={p === currentPage ? "page" : undefined}
+                        className={`w-11 h-11 flex items-center justify-center rounded-xl text-sm font-bold transition-all duration-200
+                            ${p === currentPage
+                                ? "bg-[#005CB9] text-white shadow-md shadow-blue-900/20"
+                                : "bg-white border border-gray-200 text-gray-700 hover:border-[#005CB9] hover:text-[#005CB9] shadow-sm"
+                            }`}
+                    >
+                        {p}
+                    </Link>
+                )
+            )}
+
+            {/* Next */}
+            <Link
+                href={currentPage < totalPages ? `/blog?page=${currentPage + 1}` : "#"}
+                aria-disabled={currentPage === totalPages}
+                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200
+                    ${currentPage === totalPages
+                        ? "text-gray-300 cursor-not-allowed pointer-events-none bg-white border border-gray-100"
+                        : "text-[#005CB9] bg-white border border-gray-200 hover:border-[#005CB9] hover:bg-[#005CB9] hover:text-white shadow-sm"
+                    }`}
+            >
+                {t_next}
+                <ChevronRight size={16} />
+            </Link>
+        </nav>
+    );
+}
+
+export default async function BlogPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ page?: string }>;
+}) {
+    const params = await searchParams;
+    const cookieStore = await cookies();
+    const lang = (await cookieStore.get("i18next"))?.value || "en";
+    const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
+    
+    const currentPage = Math.max(1, parseInt(params.page ?? "1", 10) || 1);
+    const { posts, total, totalPages } = await getLegalUpdates(currentPage, PER_PAGE, lang);
+
+    const start = (currentPage - 1) * PER_PAGE + 1;
+    const end = Math.min(currentPage * PER_PAGE, total);
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
@@ -27,16 +133,17 @@ export default async function LegalUpdatesPage() {
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-6">
                         <FileText size={13} />
-                        Insights & Analysis
+                        {t.blog_insights_badge}
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-5 tracking-tight">
-                        Our Blog
+                        {t.page_blog_title}
                     </h1>
                     <p className="text-blue-200 text-lg max-w-xl mx-auto">
-                        Expert legal perspectives, business insights, and regulatory updates from the RETRIEVE team.                    </p>
+                        {t.page_blog_subtitle}
+                    </p>
                     {total > 0 && (
                         <div className="mt-6 inline-block bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white text-sm font-semibold">
-                            {total} articles published
+                            {total} {t.blog_articles_published || "articles published"}
                         </div>
                     )}
                 </div>
@@ -44,11 +151,22 @@ export default async function LegalUpdatesPage() {
 
             {/* Posts Grid */}
             <div className="container mx-auto px-4 md:px-8 py-16">
+                {/* Results info */}
+                {total > 0 && (
+                    <p className="text-sm text-gray-500 font-medium mb-8">
+                        {t.blog_showing} <span className="font-bold text-gray-700">{start}–{end}</span> {t.blog_of} <span className="font-bold text-gray-700">{total}</span> {t.blog_articles} &nbsp;·&nbsp; {t.blog_page_label} <span className="font-bold text-gray-700">{currentPage}</span> {t.blog_of} <span className="font-bold text-gray-700">{totalPages}</span>
+                    </p>
+                )}
+
                 {posts.length === 0 ? (
                     <div className="text-center py-24">
                         <FileText size={48} className="text-gray-300 mx-auto mb-4" />
-                        <h2 className="text-xl font-bold text-gray-500">No updates available yet</h2>
-                        <p className="text-gray-400 mt-2">Check back soon for our latest legal insights.</p>
+                        <h2 className="text-xl font-bold text-gray-500">
+                            {t.blog_no_articles}
+                        </h2>
+                        <p className="text-gray-400 mt-2">
+                            {t.blog_check_back_soon}
+                        </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,7 +194,7 @@ export default async function LegalUpdatesPage() {
                                     {/* Read time badge */}
                                     <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
                                         <Clock size={11} />
-                                        {post.readTime} min read
+                                        {post.readTime} {t.legal_update_read_min}
                                     </div>
                                 </div>
 
@@ -85,7 +203,7 @@ export default async function LegalUpdatesPage() {
                                     {/* Date */}
                                     <div className="flex items-center gap-1.5 text-xs text-gray-400 font-semibold mb-3">
                                         <Calendar size={12} />
-                                        {formatDate(post.date)}
+                                        {formatDate(post.date, lang)}
                                     </div>
 
                                     {/* Title */}
@@ -103,7 +221,7 @@ export default async function LegalUpdatesPage() {
 
                                     {/* CTA row */}
                                     <div className="flex items-center gap-1.5 text-[#005CB9] text-sm font-bold mt-auto pt-2 border-t border-gray-50">
-                                        Read Article
+                                        {t.read_article_btn}
                                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </div>
@@ -111,6 +229,9 @@ export default async function LegalUpdatesPage() {
                         ))}
                     </div>
                 )}
+
+                {/* Pagination */}
+                <Pagination currentPage={currentPage} totalPages={totalPages} t={t} />
             </div>
         </div>
     );

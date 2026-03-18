@@ -46,7 +46,6 @@ async function run() {
         });
     }
     
-    console.log(JSON.stringify(menuItems, null, 2));
 }
 
 run();

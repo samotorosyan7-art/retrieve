@@ -1,11 +1,14 @@
 "use server";
 
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 export type ContactFormState = {
     success: boolean;
     message: string;
 } | null;
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const TO_EMAIL = process.env.CONTACT_EMAIL || "samvel.torosyan@tirsoft.co";
 
 export async function submitContactForm(
     _prev: ContactFormState,
@@ -17,29 +20,12 @@ export async function submitContactForm(
     const subject = formData.get("subject")?.toString().trim() ?? "";
     const message = formData.get("message")?.toString().trim() ?? "";
 
-    // Basic validation
     if (!name || !email || !message) {
         return { success: false, message: "Please fill in all required fields." };
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
         return { success: false, message: "Please enter a valid email address." };
     }
-
-    const smtpHost = process.env.SMTP_HOST ?? "mail.retrieve.am";
-    const smtpUser = process.env.SMTP_USER ?? "info@retrieve.am";
-    const smtpPass = process.env.SMTP_PASS ?? "";
-    const toEmail = process.env.CONTACT_TO_EMAIL ?? "info@retrieve.am";
-
-    const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: Number(process.env.SMTP_PORT ?? 587),
-        secure: false, // STARTTLS
-        auth: {
-            user: smtpUser,
-            pass: smtpPass,
-        },
-        tls: { rejectUnauthorized: false },
-    });
 
     const html = `
         <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; background: #f8faff; border-radius: 12px; overflow: hidden;">
@@ -66,9 +52,9 @@ export async function submitContactForm(
     `;
 
     try {
-        await transporter.sendMail({
-            from: `"RETRIEVE Website" <${smtpUser}>`,
-            to: toEmail,
+        await resend.emails.send({
+            from: "RETRIEVE Website <onboarding@resend.dev>",
+            to: TO_EMAIL,
             replyTo: email,
             subject: subject ? `[Contact] ${subject}` : `[Contact] New message from ${name}`,
             html,

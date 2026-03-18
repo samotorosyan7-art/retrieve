@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 interface Language {
@@ -19,6 +20,7 @@ const languages: Language[] = [
 
 export default function LanguageSelector() {
     const { i18n } = useTranslation();
+    const router = useRouter();
     const [currentLang, setCurrentLang] = useState<Language>(languages[0]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,6 +37,11 @@ export default function LanguageSelector() {
         setCurrentLang(lang);
         setIsOpen(false);
         localStorage.setItem("preferred-language", lang.code);
+        // Set cookie for server-side access
+        document.cookie = `i18next=${lang.code}; path=/; max-age=31104000`; // 1 year
+        
+        // Refresh server components
+        router.refresh();
     };
 
     return (

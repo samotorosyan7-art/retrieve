@@ -53,7 +53,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                         {t("legal_practices_subtitle") || "Specialized Expertise"}
                     </span>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-950 mb-6 tracking-tight">
-                        {t("legal_practices_title") || "Legal Practice Areas"}
+                        {t("page_practice_areas_title")}
                     </h2>
                     <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
                         <div className="w-1/2 h-full bg-primary rounded-full"></div>
@@ -84,7 +84,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                 >
                     <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white hover:border-[#005CB9] transition-colors shadow-sm">
                         <Link href="/practice-areas">
-                            {t("btn_view_all_legal_practices") || "View All Legal Services"}
+                            {t("btn_view_all_practices")}
                         </Link>
                     </Button>
                 </motion.div>

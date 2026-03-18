@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Loader2, Mail, CheckCircle2, Bell, ArrowRight } from "lucide-react";
 
 export default function Newsletter() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
@@ -36,12 +38,12 @@ export default function Newsletter() {
                     </div>
 
                     {/* Heading */}
-                    <p className="text-blue-200 font-bold tracking-widest uppercase text-xs mb-4">Stay Informed</p>
+                    <p className="text-blue-200 font-bold tracking-widest uppercase text-xs mb-4">{t("newsletter_badge")}</p>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-                        Subscribe to Our Newsletter
+                        {t("newsletter_main_title")}
                     </h2>
                     <p className="text-blue-200 text-base mb-10 max-w-lg mx-auto leading-relaxed">
-                        Legal updates, regulatory changes and tax insights — delivered straight to your inbox. No spam, ever.
+                        {t("newsletter_main_desc")}
                     </p>
 
                     {/* Form / Success */}
@@ -51,8 +53,8 @@ export default function Newsletter() {
                                 <CheckCircle2 size={26} className="text-emerald-300" />
                             </div>
                             <div className="text-left">
-                                <h4 className="text-white font-extrabold text-lg">You&apos;re subscribed!</h4>
-                                <p className="text-blue-200 text-sm">Thank you — watch your inbox for our updates.</p>
+                                <h4 className="text-white font-extrabold text-lg">{t("newsletter_success_title")}</h4>
+                                <p className="text-blue-200 text-sm">{t("newsletter_success_desc")}</p>
                             </div>
                         </div>
                     ) : (
@@ -65,7 +67,7 @@ export default function Newsletter() {
                                         required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your email address"
+                                        placeholder={t("placeholder_email")}
                                         disabled={status === "loading"}
                                         className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/10 text-white placeholder:text-blue-300 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
                                     />
@@ -77,12 +79,12 @@ export default function Newsletter() {
                                 >
                                     {status === "loading"
                                         ? <Loader2 size={17} className="animate-spin" />
-                                        : <><span>Subscribe</span><ArrowRight size={15} /></>
+                                        : <><span>{t("btn_subscribe")}</span><ArrowRight size={15} /></>
                                     }
                                 </button>
                             </div>
                             <p className="text-blue-300/70 text-xs mt-4">
-                                By subscribing you agree to our Privacy Policy. Unsubscribe anytime.
+                                {t("newsletter_privacy_note")}
                             </p>
                         </form>
                     )}

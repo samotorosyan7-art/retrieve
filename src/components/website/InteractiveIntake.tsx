@@ -1,18 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, CheckCircle2, ShieldCheck, Building2, Calculator, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { ChevronRight, CheckCircle2, ShieldCheck, Building2, Calculator, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { submitIntakeForm } from "../../../app/actions/intakeActions";
 
 type StepInfo = {
     id: "tax" | "corporate" | "ip" | null;
 };
 
 export default function InteractiveIntake() {
+    const { t } = useTranslation();
     const [step, setStep] = useState<number>(1);
     const [selection, setSelection] = useState<StepInfo>({ id: null });
     const [formData, setFormData] = useState({ name: "", email: "", details: "" });
+    const [isPending, startTransition] = useTransition();
 
     const handleSelectCategory = (id: "tax" | "corporate" | "ip") => {
         setSelection({ id });
@@ -21,7 +25,15 @@ export default function InteractiveIntake() {
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setStep(3);
+        if (!selection.id) return;
+        startTransition(async () => {
+            await submitIntakeForm({
+                category: selection.id!,
+                name: formData.name,
+                email: formData.email,
+            });
+            setStep(3);
+        });
     };
 
     const slideVariants = {
@@ -50,10 +62,10 @@ export default function InteractiveIntake() {
             <div className="flex items-center justify-between mb-6 z-10">
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold text-primary/60 tracking-wider uppercase mb-1">
-                        Instant Intake
+                        {t("intake_badge")}
                     </span>
                     <h3 className="text-xl font-bold text-gray-900">
-                        {step === 1 ? "How can we help?" : step === 2 ? "A few details" : "Request Received"}
+                        {step === 1 ? t("intake_step1_title") : step === 2 ? t("intake_step2_title") : t("intake_step3_title")}
                     </h3>
                 </div>
                 {step === 2 && (
@@ -87,8 +99,8 @@ export default function InteractiveIntake() {
                                         <Calculator size={20} />
                                     </div>
                                     <div>
-                                        <div className="font-semibold text-gray-900 leading-tight">Tax & Advisory</div>
-                                        <div className="text-sm text-gray-500">Compliance & Planning</div>
+                                        <div className="font-semibold text-gray-900 leading-tight">{t("intake_tax_title")}</div>
+                                        <div className="text-sm text-gray-500">{t("intake_tax_desc")}</div>
                                     </div>
                                 </div>
                                 <ChevronRight size={18} className="text-gray-400 group-hover:text-primary transition-colors" />
@@ -103,8 +115,8 @@ export default function InteractiveIntake() {
                                         <Building2 size={20} />
                                     </div>
                                     <div>
-                                        <div className="font-semibold text-gray-900 leading-tight">Corporate Law</div>
-                                        <div className="text-sm text-gray-500">M&A, Contracts, Formation</div>
+                                        <div className="font-semibold text-gray-900 leading-tight">{t("intake_corp_title")}</div>
+                                        <div className="text-sm text-gray-500">{t("intake_corp_desc")}</div>
                                     </div>
                                 </div>
                                 <ChevronRight size={18} className="text-gray-400 group-hover:text-primary transition-colors" />
@@ -119,8 +131,8 @@ export default function InteractiveIntake() {
                                         <ShieldCheck size={20} />
                                     </div>
                                     <div>
-                                        <div className="font-semibold text-gray-900 leading-tight">Intellectual Property</div>
-                                        <div className="text-sm text-gray-500">Trademarks & Copyrights</div>
+                                        <div className="font-semibold text-gray-900 leading-tight">{t("intake_ip_title")}</div>
+                                        <div className="text-sm text-gray-500">{t("intake_ip_desc")}</div>
                                     </div>
                                 </div>
                                 <ChevronRight size={18} className="text-gray-400 group-hover:text-primary transition-colors" />
@@ -142,29 +154,33 @@ export default function InteractiveIntake() {
                             onSubmit={handleFormSubmit}
                         >
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("full_name")}</label>
                                 <input
                                     required
                                     type="text"
                                     className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
-                                    placeholder="John Doe"
+                                    placeholder={t("form_placeholder_name")}
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("email")}</label>
                                 <input
                                     required
                                     type="email"
                                     className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
-                                    placeholder="john@company.com"
+                                    placeholder={t("form_placeholder_email")}
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
-                            <Button type="submit" className="w-full rounded-xl mt-2 h-12 shadow-soft hover:shadow-medium">
-                                Schedule Consultation
+                            <Button type="submit" disabled={isPending} className="w-full rounded-xl mt-2 h-12 shadow-soft hover:shadow-medium">
+                                {isPending ? (
+                                    <><Loader2 size={16} className="animate-spin" /> {t("form_btn_sending")}</>
+                                ) : (
+                                    t("btn_book_consultation")
+                                )}
                             </Button>
                         </motion.form>
                     )}
@@ -184,12 +200,12 @@ export default function InteractiveIntake() {
                             <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6 text-green-500">
                                 <CheckCircle2 size={32} />
                             </div>
-                            <h4 className="text-xl font-bold text-gray-900 mb-2">Request Received</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-2">{t("intake_step3_title")}</h4>
                             <p className="text-gray-500 mb-8 max-w-[250px]">
-                                One of our senior partners will contact you shortly to schedule your consultation.
+                                {t("intake_success_desc")}
                             </p>
                             <Button variant="outline" onClick={() => { setStep(1); setFormData({ name: "", email: "", details: "" }) }} className="rounded-full px-8">
-                                Back to Start
+                                {t("btn_back_to_start")}
                             </Button>
                         </motion.div>
                     )}

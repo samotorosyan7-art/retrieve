@@ -29,11 +29,11 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F4F6F8] rounded-full border border-gray-100 mb-6">
                         <span className="w-2 h-2 rounded-full bg-primary"></span>
                         <span className="text-xs font-semibold tracking-wide text-gray-600 uppercase">
-                            {t("testimonials_title") || "Client Success Stories"}
+                            {t("testimonials_badge") || "Client Success Stories"}
                         </span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight">
-                        {t("testimonials_subtitle") || "Hear directly from the businesses we've partnered with."}
+                        {t("testimonials_main_title") || "Client Testimonials"}
                     </h2>
                 </div>
 

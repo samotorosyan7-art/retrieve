@@ -16,7 +16,7 @@ import {
     Crown,
 } from "lucide-react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import { useInView } from "framer-motion";
 
 interface WhyChooseUsProps {
@@ -112,11 +112,15 @@ function StatCounter({
 export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
     const { t } = useTranslation();
 
-    const icons = useMemo(
-        () =>
-            [...ALL_ICONS].sort(() => 0.5 - Math.random()).slice(0, 4),
-        []
-    );
+    // Stable icons for SSR to avoid hydration mismatch
+    const [icons, setIcons] = useState(ALL_ICONS.slice(0, 4));
+
+    useEffect(() => {
+        // Randomize only on client after hydration
+        setIcons([...ALL_ICONS].sort(() => 0.5 - Math.random()).slice(0, 4));
+    }, []);
+
+
 
     if (!reasons || reasons.length === 0) return null;
 
@@ -166,25 +170,15 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
                 >
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-5 border border-primary/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                        {t("what we are expert at")}
+                        {t("expert_areas_subtitle") || "Specialized Expertise"}
                     </span>
 
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight mb-6 leading-tight">
-                        Why Clients Choose{" "}
-                        <span
-                            style={{
-                                background:
-                                    "linear-gradient(135deg, #005CB9 0%, #3B82F6 100%)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                            }}
-                        >
-                            Retrieve?
-                        </span>
+                        {t("why_choose_us_title") || "Why Clients Choose Us"}
                     </h2>
 
                     <p className="text-gray-500 text-lg leading-relaxed max-w-xl mx-auto">
-                        Trusted by clients across Armenia for our unwavering commitment to excellence and results-driven legal services.
+                        {t("why_choose_us_desc") || "Trusted by clients across Armenia for our unwavering commitment to excellence and results-driven legal services."}
                     </p>
                 </motion.div>
 
@@ -249,7 +243,9 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
 
                                     {/* Title */}
                                     <h3 className="text-lg font-extrabold text-gray-900 mb-3 leading-snug group-hover:text-primary transition-colors duration-300">
-                                        {reason.title}
+                                        {t(`why_choose_us_items.${reason.title}`) !== `why_choose_us_items.${reason.title}` 
+                                            ? t(`why_choose_us_items.${reason.title}`) 
+                                            : reason.title}
                                     </h3>
 
                                     {/* Divider */}

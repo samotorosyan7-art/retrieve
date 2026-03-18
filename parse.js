@@ -32,4 +32,3 @@ $(".gdlr-core-accordion-item-tab").each((i, el) => {
     if (q && a) data.faqs.push({ question: q, answer: a });
 });
 
-console.log(JSON.stringify(data, null, 2));

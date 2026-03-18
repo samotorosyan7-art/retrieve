@@ -1,18 +1,10 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { useActionState, useEffect, useRef } from "react";
 import { submitContactForm, ContactFormState } from "./actions";
 import { Loader2, Send, CheckCircle2, AlertCircle, User, Mail, Phone, MessageSquare, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const SUBJECTS = [
-    "Legal Consultation",
-    "Tax Advisory",
-    "Corporate Services",
-    "Business Registration",
-    "Immigration & Residency",
-    "Other",
-];
 
 function FieldWrapper({ label, required, children, icon: Icon }: {
     label: string;
@@ -35,6 +27,15 @@ function FieldWrapper({ label, required, children, icon: Icon }: {
 const inputClass = "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005CB9]/30 focus:border-[#005CB9] transition-all";
 
 export default function ContactForm() {
+    const { t } = useTranslation();
+    const SUBJECTS = [
+        t("subjects_legal"),
+        t("subjects_tax"),
+        t("subjects_corporate"),
+        t("subjects_business"),
+        t("subjects_immigration"),
+        t("subjects_other"),
+    ];
     const [state, action, isPending] = useActionState<ContactFormState, FormData>(
         submitContactForm,
         null
@@ -52,21 +53,21 @@ export default function ContactForm() {
         <form ref={formRef} action={action} className="space-y-5">
             {/* Name + Email row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <FieldWrapper label="Full Name" required icon={User}>
+                <FieldWrapper label={t("full_name")} required icon={User}>
                     <input
                         name="name"
                         type="text"
                         required
-                        placeholder="John Smith"
+                        placeholder={t("form_placeholder_name") || "John Smith"}
                         className={inputClass}
                     />
                 </FieldWrapper>
-                <FieldWrapper label="Email Address" required icon={Mail}>
+                <FieldWrapper label={t("email")} required icon={Mail}>
                     <input
                         name="email"
                         type="email"
                         required
-                        placeholder="john@company.com"
+                        placeholder={t("form_placeholder_email") || "john@company.com"}
                         className={inputClass}
                     />
                 </FieldWrapper>
@@ -74,17 +75,17 @@ export default function ContactForm() {
 
             {/* Phone + Subject row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <FieldWrapper label="Phone Number" icon={Phone}>
+                <FieldWrapper label={t("field_phone_number")} icon={Phone}>
                     <input
                         name="phone"
                         type="tel"
-                        placeholder="+374 XX XXX XXX"
+                        placeholder={t("form_placeholder_phone")}
                         className={inputClass}
                     />
                 </FieldWrapper>
-                <FieldWrapper label="Subject" icon={Briefcase}>
+                <FieldWrapper label={t("field_subject")} icon={Briefcase}>
                     <select name="subject" className={cn(inputClass, "cursor-pointer")}>
-                        <option value="">Select a topic…</option>
+                        <option value="">{t("form_placeholder_subject")}</option>
                         {SUBJECTS.map(s => (
                             <option key={s} value={s}>{s}</option>
                         ))}
@@ -93,12 +94,12 @@ export default function ContactForm() {
             </div>
 
             {/* Message */}
-            <FieldWrapper label="Message" required icon={MessageSquare}>
+            <FieldWrapper label={t("field_message")} required icon={MessageSquare}>
                 <textarea
                     name="message"
                     required
                     rows={6}
-                    placeholder="Tell us about your situation and how we can help…"
+                    placeholder={t("form_placeholder_message")}
                     className={cn(inputClass, "resize-none")}
                 />
             </FieldWrapper>
@@ -126,13 +127,13 @@ export default function ContactForm() {
                 className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#004791] to-[#005CB9] hover:from-[#003d7a] hover:to-[#004791] disabled:opacity-60 text-white font-bold text-sm rounded-xl px-6 py-4 transition-all duration-300 shadow-lg shadow-blue-900/20"
             >
                 {isPending
-                    ? <><Loader2 size={17} className="animate-spin" /> Sending…</>
-                    : <><Send size={17} /> Send Message</>
+                    ? <><Loader2 size={17} className="animate-spin" /> {t("form_btn_sending")}</>
+                    : <><Send size={17} /> {t("form_btn_send")}</>
                 }
             </button>
 
             <p className="text-xs text-gray-400 text-center">
-                By submitting you agree to our Privacy Policy. We&apos;ll never share your data.
+                {t("form_privacy_consent")}
             </p>
         </form>
     );

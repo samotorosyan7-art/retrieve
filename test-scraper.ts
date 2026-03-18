@@ -18,6 +18,5 @@ async function run() {
             text: $(el).text().trim() || parent.text().trim().replace(/\s+/g, ' ').substring(0, 100)
         });
     });
-    console.log(JSON.stringify(items, null, 2));
 }
 run().catch(console.error);

@@ -42,11 +42,13 @@ export interface WPTeamMember {
 }
 
 export interface PortfolioItem {
+    id?: number;
     title: string;
     slug: string;
-    image: string;
-    category: string;
-    tags: string[];
+    image: string | null;
+    category?: string;
+    categories?: number[];
+    tags?: string[];
 }
 
 export interface EducationEntry {

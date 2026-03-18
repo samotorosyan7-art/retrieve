@@ -1,14 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { getLegalUpdatesPDFs } from "@/lib/wordpress";
 import { Download, FileText } from "lucide-react";
+import enCommon from "@/locales/en/common.json";
+import ruCommon from "@/locales/ru/common.json";
+import amCommon from "@/locales/am/common.json";
 
-export const metadata = {
-    title: "Legal Updates — RETRIEVE Legal & Tax",
-    description: "Stay informed with the latest legal and regulatory updates from RETRIEVE.",
-};
+const dictionaries = {
+    en: enCommon,
+    ru: ruCommon,
+    am: amCommon,
+} as const;
+
+export async function generateMetadata() {
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+
+    return {
+        title: `${t.legal_updates_title} | Retrieve Legal & Tax`,
+        description: t.legal_updates_desc,
+    };
+}
 
 export default async function LegalUpdatesPage() {
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
     const pdfs = await getLegalUpdatesPDFs();
 
     return (
@@ -21,13 +40,13 @@ export default async function LegalUpdatesPage() {
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-6">
                         <FileText size={13} />
-                        Regulatory Bulletins
+                        {t.legal_updates_badge}
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-5 tracking-tight">
-                        Legal Updates
+                        {t.legal_updates_title}
                     </h1>
                     <p className="text-blue-200 text-lg max-w-xl mx-auto">
-                        In-depth analysis and timely updates on legal frameworks and business regulations by the RETRIEVE team.
+                        {t.legal_updates_desc}
                     </p>
                 </div>
             </div>
@@ -37,8 +56,12 @@ export default async function LegalUpdatesPage() {
                 {pdfs.length === 0 ? (
                     <div className="text-center py-24">
                         <FileText size={48} className="text-gray-300 mx-auto mb-4" />
-                        <h2 className="text-xl font-bold text-gray-500">No updates available yet</h2>
-                        <p className="text-gray-400 mt-2">Check back soon for our latest legal bulletins.</p>
+                        <h2 className="text-xl font-bold text-gray-500">
+                            {t.legal_updates_empty}
+                        </h2>
+                        <p className="text-gray-400 mt-2">
+                            {t.legal_updates_empty_desc}
+                        </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -91,7 +114,7 @@ export default async function LegalUpdatesPage() {
                                     {/* Download Footer */}
                                     <div className="mt-auto pt-6 flex flex-col">
                                         <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#005CB9]">
-                                            Download Article
+                                            {t.btn_download_article}
                                             <div className="w-6 h-6 rounded-full bg-[#005CB9]/5 flex items-center justify-center group-hover:bg-[#005CB9]/10 group-hover:translate-x-1 transition-all">
                                                 <Download size={12} />
                                             </div>

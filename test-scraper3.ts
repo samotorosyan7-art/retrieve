@@ -10,11 +10,7 @@ async function run() {
     $("a[href$='.pdf']").each((i, el) => {
         const parent = $(el).closest(".gdlr-core-item-list, .gdlr-core-blog-grid, .gdlr-core-portfolio-item, article, .gdlr-core-pbf-column").first();
         if (parent.length > 0) {
-            console.log(`\n--- ITEM ${i} ---`);
-            console.log(parent.html());
         } else {
-            console.log(`\n--- ITEM ${i} (No recognized parent) ---`);
-            console.log($(el).parent().html());
         }
     });
 }

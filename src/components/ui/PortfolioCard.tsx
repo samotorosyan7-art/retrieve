@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PortfolioItem } from "@/types/wordpress";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 import { ArrowRight } from "lucide-react";
 
 interface PortfolioCardProps {
@@ -10,11 +11,10 @@ interface PortfolioCardProps {
 }
 
 export default function PortfolioCard({ item, className }: PortfolioCardProps) {
+    const { t } = useTranslation();
     return (
         <Link
-            href={`https://retrieve.am/practice-areas/${item.slug}/`}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/practice-areas/${item.slug}`}
             className={cn(
                 "group block rounded-2xl overflow-hidden bg-white border border-gray-100 hover:border-primary/20 hover:shadow-elevated transition-all duration-300",
                 className
@@ -33,17 +33,23 @@ export default function PortfolioCard({ item, className }: PortfolioCardProps) {
                 {/* Category Badge */}
                 <div className="absolute top-4 left-4">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/90 text-white backdrop-blur-sm">
-                        {item.category}
+                        {item.category === "Legal services" 
+                            ? t("cat_legal_services") 
+                            : item.category === "Tax & Business advisory services" 
+                                ? t("cat_tax_advisory_services") 
+                                : item.category}
                     </span>
                 </div>
 
                 {/* Title + Learn More Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-white font-bold text-xl mb-3 group-hover:text-white transition-colors">
-                        {item.title}
+                        {t(`practice_titles.${item.title}`) !== `practice_titles.${item.title}` 
+                            ? t(`practice_titles.${item.title}`) 
+                            : item.title}
                     </h3>
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-primary rounded-full px-4 py-1.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                        Learn More <ArrowRight size={12} />
+                        {t("learn_more") || "Learn More"} <ArrowRight size={12} />
                     </span>
                 </div>
             </div>

@@ -27,6 +27,5 @@ async function run() {
         }
     });
 
-    console.log(JSON.stringify(items.filter(i => i.pdfLink), null, 2));
 }
 run().catch(console.error);

@@ -1,8 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getLegalUpdateBySlug, getLegalUpdates } from "@/lib/wordpress";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText } from "lucide-react";
+import enCommon from "@/locales/en/common.json";
+import ruCommon from "@/locales/ru/common.json";
+import amCommon from "@/locales/am/common.json";
+
+const dictionaries = {
+    en: enCommon,
+    ru: ruCommon,
+    am: amCommon,
+} as const;
 
 interface Props {
     params: { slug: string };
@@ -15,27 +25,40 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
-    const post = await getLegalUpdateBySlug(slug);
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const post = await getLegalUpdateBySlug(slug, lang);
     if (!post) return {};
+    
+    const title = post.title.replace(/<[^>]+>/g, "").trim();
     return {
-        title: `${post.title.replace(/<[^>]+>/g, "")} — RETRIEVE Legal & Tax`,
-        description: post.excerpt,
-        openGraph: post.image ? { images: [post.image] } : undefined,
+        title: title,
+        description: post.excerpt?.slice(0, 160),
+        openGraph: {
+            title: `${title} | Retrieve Legal & Tax`,
+            description: post.excerpt?.slice(0, 160),
+            images: post.image ? [post.image] : [],
+        },
     };
 }
 
-function formatDate(iso: string) {
-    return new Date(iso).toLocaleDateString("en-US", {
+function formatDate(iso: string, lang: string = "en") {
+    const locale = lang === "am" ? "hy-AM" : lang === "ru" ? "ru-RU" : "en-US";
+    return new Date(iso).toLocaleDateString(locale, {
         year: "numeric", month: "long", day: "numeric",
     });
 }
 
 export default async function LegalUpdateSinglePage({ params }: Props) {
     const { slug } = await params;
-    const post = await getLegalUpdateBySlug(slug);
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+    const t = dictionaries[lang] || dictionaries.en;
+
+    const post = await getLegalUpdateBySlug(slug, lang);
     if (!post) notFound();
 
-    const { posts: related } = await getLegalUpdates(1, 4);
+    const { posts: related } = await getLegalUpdates(1, 4, lang);
     const sidebar = related.filter((p) => p.slug !== slug).slice(0, 3);
 
     return (
@@ -47,16 +70,16 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Link href="/legal-updates" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">
                         <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                        Back to Legal Updates
+                        {t.back_to_legal_updates}
                     </Link>
 
                     <div className="max-w-3xl">
                         <div className="flex items-center gap-4 text-blue-200 text-sm mb-5">
                             <span className="flex items-center gap-1.5">
-                                <Calendar size={13} /> {formatDate(post.date)}
+                                <Calendar size={13} /> {formatDate(post.date, lang)}
                             </span>
                             <span className="flex items-center gap-1.5">
-                                <Clock size={13} /> {post.readTime} min read
+                                <Clock size={13} /> {post.readTime} {t.legal_update_read_min}
                             </span>
                         </div>
                         <h1
@@ -104,10 +127,10 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         {/* Footer nav */}
                         <div className="mt-8 flex items-center justify-between">
                             <Link href="/legal-updates" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#005CB9] transition-colors">
-                                <ArrowLeft size={14} /> All Legal Updates
+                                <ArrowLeft size={14} /> {t.all_legal_updates}
                             </Link>
                             <Link href="/contact" className="inline-flex items-center gap-2 bg-[#005CB9] hover:bg-[#004791] text-white text-sm font-bold rounded-full px-6 py-3 transition-colors">
-                                Speak to an Expert <ArrowRight size={14} />
+                                {t.btn_speak_to_expert} <ArrowRight size={14} />
                             </Link>
                         </div>
                     </article>
@@ -118,10 +141,14 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         {/* CTA card */}
                         <div className="bg-gradient-to-br from-[#003d7a] to-[#005CB9] rounded-2xl p-7 relative overflow-hidden">
                             <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-white/10 pointer-events-none" />
-                            <h3 className="text-white font-extrabold text-lg mb-2">Have legal questions?</h3>
-                            <p className="text-blue-200 text-sm mb-5 leading-relaxed">Our experts are ready to help you navigate complex legal and tax matters.</p>
+                            <h3 className="text-white font-extrabold text-lg mb-2">
+                                {t.have_legal_questions}
+                            </h3>
+                            <p className="text-blue-200 text-sm mb-5 leading-relaxed">
+                                {t.have_legal_questions_desc}
+                            </p>
                             <Link href="/contact" className="block text-center bg-white text-[#005CB9] hover:bg-blue-50 font-bold text-sm rounded-xl px-5 py-3 transition-colors">
-                                Schedule a Consultation
+                                {t.schedule_consultation}
                             </Link>
                         </div>
 
@@ -130,7 +157,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                                 <h3 className="font-extrabold text-gray-900 mb-5 flex items-center gap-2">
                                     <FileText size={16} className="text-[#005CB9]" />
-                                    Recent Updates
+                                    {t.blog_sidebar_recent_title}
                                 </h3>
                                 <div className="space-y-4">
                                     {sidebar.map((r) => (
@@ -142,7 +169,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                                 }
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <div className="text-xs text-gray-400 mb-1">{formatDate(r.date)}</div>
+                                                <div className="text-xs text-gray-400 mb-1">{formatDate(r.date, lang)}</div>
                                                 <div
                                                     className="text-sm font-bold text-gray-800 group-hover:text-[#005CB9] transition-colors line-clamp-2 leading-snug"
                                                     dangerouslySetInnerHTML={{ __html: r.title }}
@@ -156,10 +183,14 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
 
                         {/* Practice areas link */}
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                            <h3 className="font-extrabold text-gray-900 mb-3">Our Practice Areas</h3>
-                            <p className="text-sm text-gray-500 mb-4">Explore our full range of legal and tax services.</p>
+                            <h3 className="font-extrabold text-gray-900 mb-3">
+                                {t.our_practice_areas}
+                            </h3>
+                            <p className="text-sm text-gray-500 mb-4">
+                                {t.explore_services_desc}
+                            </p>
                             <Link href="/practice-areas" className="inline-flex items-center gap-2 text-sm font-bold text-[#005CB9] hover:underline">
-                                View All Services <ArrowRight size={13} />
+                                {t.view_all_services} <ArrowRight size={13} />
                             </Link>
                         </div>
                     </aside>
