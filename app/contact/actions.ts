@@ -27,28 +27,101 @@ export async function submitContactForm(
         return { success: false, message: "Please enter a valid email address." };
     }
 
+    const text = `
+New Inquiry Received
+Retrieve — Legal & Tax
+
+Contact Details:
+Name: ${name}
+Email: ${email}
+Phone: ${phone || "N/A"}
+Subject: ${subject || "N/A"}
+
+Message:
+${message}
+
+---
+Sent from retrieve.am contact form
+`;
+
     const html = `
-        <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; background: #f8faff; border-radius: 12px; overflow: hidden;">
-            <div style="background: linear-gradient(135deg, #003d7a, #005CB9); padding: 32px 40px;">
-                <h1 style="color: white; font-size: 24px; margin: 0; font-weight: 800;">New Contact Form Submission</h1>
-                <p style="color: rgba(255,255,255,0.7); margin: 6px 0 0; font-size: 14px;">RETRIEVE — Legal &amp; Tax</p>
-            </div>
-            <div style="padding: 32px 40px; background: white; margin: 0; border-left: 4px solid #005CB9;">
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr><td style="padding: 10px 0; color: #6b7280; font-size: 13px; width: 100px; font-weight: 600;">Name</td><td style="padding: 10px 0; color: #111827; font-weight: 700; font-size: 15px;">${name}</td></tr>
-                    <tr><td style="padding: 10px 0; color: #6b7280; font-size: 13px; font-weight: 600;">Email</td><td style="padding: 10px 0;"><a href="mailto:${email}" style="color: #005CB9;">${email}</a></td></tr>
-                    ${phone ? `<tr><td style="padding: 10px 0; color: #6b7280; font-size: 13px; font-weight: 600;">Phone</td><td style="padding: 10px 0; color: #111827;">${phone}</td></tr>` : ""}
-                    ${subject ? `<tr><td style="padding: 10px 0; color: #6b7280; font-size: 13px; font-weight: 600;">Subject</td><td style="padding: 10px 0; color: #111827;">${subject}</td></tr>` : ""}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Contact Form Submission</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f3f4f6; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color: #004791; padding: 40px 30px; text-align: center;">
+                            <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">New Inquiry Received</h1>
+                            <p style="color: #93c5fd; font-size: 14px; margin: 8px 0 0 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Retrieve &mdash; Legal &amp; Tax</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="padding-bottom: 24px;">
+                                        <h2 style="color: #111827; font-size: 18px; font-weight: 600; margin: 0 0 16px 0; border-bottom: 2px solid #f3f4f6; padding-bottom: 8px;">Contact Details</h2>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 15px;">
+                                            <tr>
+                                                <td width="30%" style="color: #6b7280; padding: 8px 0; font-weight: 500;">Name</td>
+                                                <td width="70%" style="color: #111827; padding: 8px 0; font-weight: 600;">${name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="30%" style="color: #6b7280; padding: 8px 0; font-weight: 500;">Email</td>
+                                                <td width="70%" style="padding: 8px 0;">
+                                                    <a href="mailto:${email}" style="color: #005CB9; text-decoration: none; font-weight: 600;">${email}</a>
+                                                </td>
+                                            </tr>
+                                            ${phone ? `
+                                            <tr>
+                                                <td width="30%" style="color: #6b7280; padding: 8px 0; font-weight: 500;">Phone</td>
+                                                <td width="70%" style="color: #111827; padding: 8px 0; font-weight: 600;">
+                                                    <a href="tel:${phone}" style="color: #111827; text-decoration: none;">${phone}</a>
+                                                </td>
+                                            </tr>` : ''}
+                                            ${subject ? `
+                                            <tr>
+                                                <td width="30%" style="color: #6b7280; padding: 8px 0; font-weight: 500;">Subject</td>
+                                                <td width="70%" style="color: #111827; padding: 8px 0; font-weight: 600;">${subject}</td>
+                                            </tr>` : ''}
+                                        </table>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <h2 style="color: #111827; font-size: 18px; font-weight: 600; margin: 0 0 16px 0; border-bottom: 2px solid #f3f4f6; padding-bottom: 8px;">Message</h2>
+                                        <div style="color: #374151; font-size: 15px; line-height: 1.6; background-color: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; white-space: pre-wrap;">${message}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f8fafc; padding: 24px 30px; text-align: center; border-top: 1px solid #e2e8f0;">
+                            <p style="color: #64748b; font-size: 13px; margin: 0;">This email was sent from the contact form on <a href="https://retrieve.am" style="color: #005CB9; text-decoration: none;">retrieve.am</a></p>
+                            <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0 0;">&copy; ${new Date().getFullYear()} Retrieve LLC. All rights reserved.</p>
+                        </td>
+                    </tr>
                 </table>
-            </div>
-            <div style="padding: 28px 40px; background: white; border-top: 1px solid #f0f0f0;">
-                <p style="color: #6b7280; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px;">Message</p>
-                <p style="color: #374151; font-size: 15px; line-height: 1.8; white-space: pre-wrap; margin: 0;">${message}</p>
-            </div>
-            <div style="padding: 20px 40px; background: #f8faff; border-top: 1px solid #e5e7eb;">
-                <p style="color: #9ca3af; font-size: 12px; margin: 0;">Sent from retrieve.am contact form</p>
-            </div>
-        </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
     `;
 
     try {
@@ -57,6 +130,7 @@ export async function submitContactForm(
             to: TO_EMAIL,
             replyTo: email,
             subject: subject ? `[Contact] ${subject}` : `[Contact] New message from ${name}`,
+            text,
             html,
         });
 
