@@ -79,11 +79,11 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
 
                         {/* Contact mini-list */}
                         <ul className="space-y-3 text-sm">
-                            <li className="flex items-start gap-3 group">
+                            <li className="flex items-center gap-3 group">
                                 <div className="w-7 h-7 rounded-lg bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
                                     <MapPin size={14} />
                                 </div>
-                                <span className="text-gray-400">{t("footer_address")}</span>
+                                <span className="text-gray-400">{t("11/11 Argishti St, Yerevan, Armenia")}</span>
                             </li>
                             <li className="flex items-center gap-3 group">
                                 <div className="w-7 h-7 rounded-lg bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">

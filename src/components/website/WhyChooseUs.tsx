@@ -243,8 +243,8 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
 
                                     {/* Title */}
                                     <h3 className="text-lg font-extrabold text-gray-900 mb-3 leading-snug group-hover:text-primary transition-colors duration-300">
-                                        {t(`why_choose_us_items.${reason.title}`) !== `why_choose_us_items.${reason.title}` 
-                                            ? t(`why_choose_us_items.${reason.title}`) 
+                                        {t(`why_choose_us_items.${reason.title}`) !== `why_choose_us_items.${reason.title}`
+                                            ? t(`why_choose_us_items.${reason.title}`)
                                             : reason.title}
                                     </h3>
 
@@ -272,7 +272,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
                     <StatCounter value={15} suffix="+" label={t("counters_years")} />
                     <StatCounter value={500} suffix="+" label={t("counters_cases")} />
                     <StatCounter value={120} suffix="+" label={t("counters_clients")} />
-                    <StatCounter value={25} suffix="" label={t("counters_professionals")} />
+                    <StatCounter value={15} suffix="" label={t("counters_professionals")} />
                 </motion.div>
             </div>
         </section>

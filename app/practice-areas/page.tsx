@@ -28,9 +28,28 @@ export default async function PracticeAreasPage() {
     const t = dictionaries[lang] || dictionaries.en;
     const items = await getPortfolioItems(lang);
 
+    const orderSlugs = [
+        "corporate-business-law",
+        "immigration-residence-services",
+        "employment-law",
+        "intellectual-property-law",
+        "real-estate-construction-law",
+        "investment-law",
+        "arbitration-ligitation"
+    ];
+
+    const sortedItems = [...items].sort((a, b) => {
+        const aIdx = orderSlugs.indexOf(a.slug);
+        const bIdx = orderSlugs.indexOf(b.slug);
+        if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+        if (aIdx !== -1) return -1;
+        if (bIdx !== -1) return 1;
+        return 0;
+    });
+
     return (
         <div className="pt-24 min-h-screen bg-gray-50">
-            <PracticeAreasGrid items={items} />
+            <PracticeAreasGrid items={sortedItems} />
         </div>
     );
 }
