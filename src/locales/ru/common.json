@@ -139,7 +139,8 @@
     "footer_litigation": "Судебные споры",
     "footer_privacy_policy": "Политика конфиденциальности",
     "footer_terms_of_service": "Условия использования",
-    "page_practice_areas_title": "Практики",
+    "page_legal_services_title": "Юридические услуги",
+    "page_practice_areas_title": "Налоговые и бизнес-консультационные услуги",
     "page_practice_areas_subtitle": "Мы предлагаем широкий спектр юридических услуг, адаптированных под потребности бизнеса и частных лиц в Армении и за рубежом.",
     "page_portfolio_title": "Наше портфолио",
     "page_portfolio_subtitle": "Комплексные юридические решения и налоговые консультации, разработанные с учётом ваших потребностей",
@@ -231,8 +232,8 @@
     "cat_legal_services": "Юридические услуги",
     "cat_tax_advisory_services": "Налоговое и бизнес-консультирование",
     "practice_categories": {
-      "Legal services": "Юридические услуги",
-      "Tax & Business advisory services": "Налоговое и бизнес-консультирование"
+        "Legal services": "Юридические услуги",
+        "Tax & Business advisory services": "Налоговое и бизнес-консультирование"
     },
     "learn_more": "Узнать больше",
     "legal_updates_badge": "Нормативные бюллетени",

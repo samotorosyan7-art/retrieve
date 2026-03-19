@@ -191,10 +191,37 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
                 });
 
                 if (catName) {
+                    let sortedChildren = [...children];
+                    
+                    if (catName.includes("Legal")) {
+                        const orderSlugs = [
+                            "corporate-business-law",
+                            "immigration-residence-services",
+                            "employment-law",
+                            "intellectual-property-law",
+                            "real-estate-construction-law",
+                            "investment-law",
+                            "arbitration-ligitation"
+                        ];
+
+                        sortedChildren.sort((a, b) => {
+                            const aSlug = a.url.split('/').filter(Boolean).pop() || "";
+                            const bSlug = b.url.split('/').filter(Boolean).pop() || "";
+                            
+                            const aIdx = orderSlugs.indexOf(aSlug);
+                            const bIdx = orderSlugs.indexOf(bSlug);
+                            
+                            if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+                            if (aIdx !== -1) return -1;
+                            if (bIdx !== -1) return 1;
+                            return 0;
+                        });
+                    }
+
                     menuItems.push({
                         label: catName,
                         url: "#", // Top level categories usually don't have deep links in header themselves
-                        children: children
+                        children: sortedChildren
                     });
                 }
             });

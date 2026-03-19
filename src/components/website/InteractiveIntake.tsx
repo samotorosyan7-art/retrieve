@@ -15,7 +15,7 @@ export default function InteractiveIntake() {
     const { t } = useTranslation();
     const [step, setStep] = useState<number>(1);
     const [selection, setSelection] = useState<StepInfo>({ id: null });
-    const [formData, setFormData] = useState({ name: "", email: "", details: "" });
+    const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
     const [isPending, startTransition] = useTransition();
 
     const handleSelectCategory = (id: "tax" | "corporate" | "ip") => {
@@ -31,6 +31,7 @@ export default function InteractiveIntake() {
                 category: selection.id!,
                 name: formData.name,
                 email: formData.email,
+                phone: formData.phone,
             });
             setStep(3);
         });
@@ -175,11 +176,21 @@ export default function InteractiveIntake() {
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("field_phone_number") || "Phone Number (Optional)"}</label>
+                                <input
+                                    type="tel"
+                                    className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
+                                    placeholder={t("form_placeholder_phone") || "+1 (555) 000-0000"}
+                                    value={formData.phone}
+                                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                                />
+                            </div>
                             <Button type="submit" disabled={isPending} className="w-full rounded-xl mt-2 h-12 shadow-soft hover:shadow-medium">
                                 {isPending ? (
                                     <><Loader2 size={16} className="animate-spin" /> {t("form_btn_sending")}</>
                                 ) : (
-                                    t("btn_book_consultation")
+                                    t("form_btn_send") || "Confirm Request"
                                 )}
                             </Button>
                         </motion.form>
@@ -204,7 +215,7 @@ export default function InteractiveIntake() {
                             <p className="text-gray-500 mb-8 max-w-[250px]">
                                 {t("intake_success_desc")}
                             </p>
-                            <Button variant="outline" onClick={() => { setStep(1); setFormData({ name: "", email: "", details: "" }) }} className="rounded-full px-8">
+                            <Button variant="outline" onClick={() => { setStep(1); setFormData({ name: "", email: "", phone: "" }) }} className="rounded-full px-8">
                                 {t("btn_back_to_start")}
                             </Button>
                         </motion.div>

@@ -59,7 +59,7 @@ export default function Counters() {
         { value: 15, suffix: "+", label: t("counters_years") || "Years of Experience" },
         { value: 500, suffix: "+", label: t("counters_cases") || "Successful Cases" },
         { value: 120, suffix: "+", label: t("counters_clients") || "Global Clients" },
-        { value: 25, suffix: "", label: t("counters_professionals") || "Legal Professionals" },
+        { value: 15, suffix: "", label: t("counters_professionals") || "Legal Professionals" },
     ];
 
     return (

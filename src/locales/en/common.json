@@ -139,7 +139,8 @@
     "footer_litigation": "Litigation & Dispute Resolution",
     "footer_privacy_policy": "Privacy Policy",
     "footer_terms_of_service": "Terms of Service",
-    "page_practice_areas_title": "Practice Areas",
+    "page_legal_services_title": "Legal Services",
+    "page_practice_areas_title": "Tax & business advisory Services",
     "page_practice_areas_subtitle": "We offer a comprehensive range of legal services tailored to meet the needs of businesses and individuals in Armenia and beyond.",
     "page_portfolio_title": "Our Portfolio",
     "page_portfolio_subtitle": "Comprehensive legal solutions and tax advisory services tailored to meet your needs",
@@ -231,8 +232,8 @@
     "cat_legal_services": "Legal Services",
     "cat_tax_advisory_services": "Tax & Business Advisory Services",
     "practice_categories": {
-      "Legal services": "Legal Services",
-      "Tax & Business advisory services": "Tax & Business Advisory Services"
+        "Legal services": "Legal Services",
+        "Tax & Business advisory services": "Tax & Business Advisory Services"
     },
     "learn_more": "Learn More",
     "legal_updates_badge": "Regulatory Bulletins",

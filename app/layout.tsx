@@ -36,7 +36,7 @@ export default async function RootLayout({
                     <div className="flex flex-col min-h-screen">
                         <Header practiceAreas={practiceAreas} />
                         <main className="flex-grow">{children}</main>
-                        <Footer />
+                        <Footer practiceAreas={practiceAreas} />
                         <MobileFAB />
                     </div>
                 </I18nProvider>

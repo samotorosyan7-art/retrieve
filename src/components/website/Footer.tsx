@@ -4,6 +4,7 @@ import { Facebook, Linkedin, Instagram, MapPin, Phone, Mail, ArrowRight } from "
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import { MenuItem } from "@/types/wordpress";
 
 const SOCIAL_LINKS = [
     {
@@ -23,31 +24,20 @@ const SOCIAL_LINKS = [
     },
 ];
 
-const LEGAL_PRACTICE_LINKS = [
-    { label: "footer_corporate_law", href: "/practice-areas" },
-    { label: "footer_real_estate", href: "/practice-areas" },
-    { label: "footer_ip", href: "/practice-areas" },
-    { label: "footer_litigation", href: "/practice-areas" },
-    { label: "practice_imm_title", href: "/practice-areas" },
-    { label: "practice_labor_title", href: "/practice-areas" },
-];
-
-const TAX_ADVISORY_LINKS = [
-    { label: "footer_tax_customs", href: "/practice-areas" },
-    { label: "practice_corp_title", href: "/practice-areas" },
-];
-
 const QUICK_LINKS = [
     { label: "nav_home", href: "/" },
     { label: "nav_practice_areas", href: "/practice-areas" },
-    { label: "nav_portfolio", href: "/portfolio" },
     { label: "nav_our_team", href: "/our-team" },
     { label: "nav_blog", href: "/blog" },
     { label: "nav_legal_updates", href: "/legal-updates" },
     { label: "nav_contact", href: "/contact" },
 ];
 
-export default function Footer() {
+interface FooterProps {
+    practiceAreas?: MenuItem[];
+}
+
+export default function Footer({ practiceAreas = [] }: FooterProps) {
     const { t } = useTranslation();
 
     return (
@@ -131,47 +121,30 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Legal Practice Areas */}
-                    <div className="space-y-6">
-                        <h3 className="text-base font-bold text-white flex items-center gap-3">
-                            <span className="w-1 h-6 bg-primary rounded-full block shrink-0" />
-                            {t("legal_practices_title")}
-                        </h3>
-                        <ul className="space-y-2.5">
-                            {LEGAL_PRACTICE_LINKS.map(({ label, href }) => (
-                                <li key={label}>
-                                    <Link
-                                        href={href}
-                                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors group"
-                                    >
-                                        <ArrowRight size={13} className="text-gray-600 group-hover:text-primary transition-colors shrink-0" />
-                                        {t(label)}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Column 4: Tax & Business Advisory */}
-                    <div className="space-y-6">
-                        <h3 className="text-base font-bold text-white flex items-center gap-3">
-                            <span className="w-1 h-6 bg-primary rounded-full block shrink-0" />
-                            {t("tax_advisory_title")}
-                        </h3>
-                        <ul className="space-y-2.5">
-                            {TAX_ADVISORY_LINKS.map(({ label, href }) => (
-                                <li key={label}>
-                                    <Link
-                                        href={href}
-                                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors group"
-                                    >
-                                        <ArrowRight size={13} className="text-gray-600 group-hover:text-primary transition-colors shrink-0" />
-                                        {t(label)}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    {/* Column 3 & 4: Dynamic Practice Areas */}
+                    {practiceAreas.map((category, idx) => (
+                        <div key={idx} className="space-y-6">
+                            <h3 className="text-base font-bold text-white flex items-center gap-3">
+                                <span className="w-1 h-6 bg-primary rounded-full block shrink-0" />
+                                {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
+                            </h3>
+                            {category.children && category.children.length > 0 && (
+                                <ul className="space-y-2.5">
+                                    {category.children.map((subItem, sIdx) => (
+                                        <li key={sIdx}>
+                                            <Link
+                                                href={subItem.url}
+                                                className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors group"
+                                            >
+                                                <ArrowRight size={13} className="text-gray-600 group-hover:text-primary transition-colors shrink-0" />
+                                                {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
                 </div>
 
                 {/* ── Bottom bar ── */}

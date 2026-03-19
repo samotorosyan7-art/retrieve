@@ -56,7 +56,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* ── Hero Strip ── */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-36 pb-20 mt-[-80px]">
+            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 

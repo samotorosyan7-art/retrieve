@@ -49,7 +49,7 @@ export default function TaxAdvisoryGrid({ items = [] }: TaxAdvisoryGridProps) {
                     transition={{ duration: 0.7 }}
                     className="text-center mb-16 max-w-3xl mx-auto"
                 >
-                    <span className="text-[#005CB9] font-bold tracking-widest uppercase text-sm mb-4 block">
+                    <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">
                         {t("tax_advisory_subtitle") || "Strategic Growth"}
                     </span>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-950 mb-6 tracking-tight">
@@ -83,7 +83,7 @@ export default function TaxAdvisoryGrid({ items = [] }: TaxAdvisoryGridProps) {
                     className="text-center mt-16"
                 >
                     <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white hover:border-[#005CB9] transition-colors shadow-sm">
-                        <Link href="/practice-areas">
+                        <Link href="/contact">
                             {t("btn_contact_advisory")}
                         </Link>
                     </Button>

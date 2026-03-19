@@ -72,7 +72,27 @@ export default async function HomePage() {
     const testimonials = await getTestimonials(lang);
     const clientLogos = await getClientLogos(lang);
     const whyChooseUs = await getWhyChooseUs(lang);
-    const legalItems = portfolioItems.filter(item => item.category === "Legal services");
+    const orderSlugs = [
+        "corporate-business-law",
+        "immigration-residence-services",
+        "employment-law",
+        "intellectual-property-law",
+        "real-estate-construction-law",
+        "investment-law",
+        "arbitration-ligitation"
+    ];
+
+    const legalItems = portfolioItems
+        .filter(item => item.category === "Legal services")
+        .sort((a, b) => {
+            const aIdx = orderSlugs.indexOf(a.slug);
+            const bIdx = orderSlugs.indexOf(b.slug);
+            if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+            if (aIdx !== -1) return -1;
+            if (bIdx !== -1) return 1;
+            return 0;
+        });
+        
     const taxItems = portfolioItems.filter(item => item.category === "Tax & Business advisory services");
 
     const jsonLd = {
@@ -99,8 +119,8 @@ export default async function HomePage() {
             <Hero />
             <LegalPractices items={legalItems} />
             <TaxAdvisoryGrid items={taxItems} />
-            <WhyChooseUs reasons={whyChooseUs} />
             <BlogSection posts={posts} />
+            <WhyChooseUs reasons={whyChooseUs} />
             <ClientsCarousel logos={clientLogos} />
             <TeamSection teamMembers={teamMembers} />
             <Testimonials testimonials={testimonials} />

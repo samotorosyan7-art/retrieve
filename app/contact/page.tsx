@@ -12,7 +12,7 @@ export async function generateMetadata() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
     const t = dictionaries[lang] || dictionaries.en;
-    
+
     return {
         title: `${t.nav_contact} | Retrieve Legal & Tax`,
         description: t.contact_desc,
@@ -40,8 +40,8 @@ export default async function ContactPage() {
         {
             icon: MapPin,
             label: t.footer_address,
-            value: t.footer_address,
-            href: "https://maps.google.com/?q=Yerevan,Armenia",
+            value: "Armenia, Yerevan, Argishti 11/11",
+            href: "https://maps.google.com/?q=Argishti+11/11,+Yerevan,+Armenia",
         },
         {
             icon: Clock,
@@ -105,7 +105,7 @@ export default async function ContactPage() {
 
                         {/* LinkedIn card */}
                         <a
-                            href="https://www.linkedin.com/company/retrieve-am"
+                            href="https://www.linkedin.com/company/retrievelegal/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-4 bg-[#0A66C2] hover:bg-[#004182] rounded-2xl px-6 py-5 transition-colors group"
@@ -122,7 +122,7 @@ export default async function ContactPage() {
                         {/* Map embed */}
                         <div className="rounded-3xl overflow-hidden border border-gray-100 shadow-sm h-56">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48908.63069878893!2d44.46669!3d40.18111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406abd26a3a037d7%3A0x8e4ebf92e56980f4!2sYerevan%2C%20Armenia!5e0!3m2!1sen!2s!4v1709000000000!5m2!1sen!2s"
+                                src="https://maps.google.com/maps?q=Argishti%2011%2F11%2C%20Yerevan%2C%20Armenia&t=&z=16&ie=UTF8&iwloc=&output=embed"
                                 className="w-full h-full border-0"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"

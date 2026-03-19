@@ -114,7 +114,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-600 hover:text-primary px-4 py-2 rounded-full hover:bg-primary/5 transition-all"
+                                className="text-sm font-medium text-gray-600 px-4 py-2 rounded-full hover:text-[#005CB9] transition-colors"
                             >
                                 {link.name}
                             </Link>
@@ -124,7 +124,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <div ref={practiceRef} className="relative px-4 py-2 cursor-pointer">
                             <button
                                 onClick={() => setIsPracticeOpen(v => !v)}
-                                className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-primary transition-colors focus:outline-none"
+                                className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#005CB9] transition-colors focus:outline-none"
                             >
                                 {t("nav_practice_areas")}
                                 <ChevronDown size={14} className={cn("transition-transform duration-200", isPracticeOpen && "rotate-180")} />
@@ -139,7 +139,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                 <Link
                                                     href="/practice-areas"
                                                     onClick={() => setIsPracticeOpen(false)}
-                                                    className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary transition-colors"
+                                                    className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:text-[#005CB9] transition-colors"
                                                 >
                                                     <span>
                                                         {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
@@ -158,7 +158,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                                     key={sIdx}
                                                                     href={subItem.url}
                                                                     onClick={() => setIsPracticeOpen(false)}
-                                                                    className="block px-4 py-2 hover:bg-gray-50 text-sm rounded-lg text-gray-600 hover:text-primary transition-colors"
+                                                                    className="block px-4 py-2 text-sm rounded-lg text-gray-600 hover:text-[#005CB9] transition-colors"
                                                                 >
                                                                     {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                                 </Link>
@@ -177,7 +177,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-600 hover:text-primary px-4 py-2 rounded-full hover:bg-primary/5 transition-all"
+                                className="text-sm font-medium text-gray-600 px-4 py-2 rounded-full hover:text-[#005CB9] transition-colors"
                             >
                                 {link.name}
                             </Link>

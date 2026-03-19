@@ -53,7 +53,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                         {t("legal_practices_subtitle") || "Specialized Expertise"}
                     </span>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-950 mb-6 tracking-tight">
-                        {t("page_practice_areas_title")}
+                        {t("page_legal_services_title")}
                     </h2>
                     <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
                         <div className="w-1/2 h-full bg-primary rounded-full"></div>
