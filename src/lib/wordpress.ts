@@ -10,12 +10,14 @@ function fixHttps(url: string | null | undefined): string {
     if (fixedUrl.startsWith("http://")) {
         fixedUrl = fixedUrl.replace("http://", "https://");
     }
-    // Also fix domain to avoid 403 errors from the main site
-    if (fixedUrl.includes("retrieve.am/wp-content/uploads/")) {
-        fixedUrl = fixedUrl.replace(/(www\.)?retrieve\.am/, "wp.retrieve.am");
+    // Route wp-content images through wp.retrieve.am to avoid 403 from the main site.
+    // Only replace if the host is www.retrieve.am or retrieve.am (not already wp.retrieve.am).
+    if (fixedUrl.includes("/wp-content/uploads/")) {
+        fixedUrl = fixedUrl.replace(/^(https?:\/\/)(www\.)?retrieve\.am\//, "$1wp.retrieve.am/");
     }
     return fixedUrl;
 }
+
 
 /**
  * Scrape the WordPress page <head> for Yoast SEO data and convert it to Next.js Metadata
