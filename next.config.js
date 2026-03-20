@@ -4,7 +4,15 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "**",
+                hostname: "wp.retrieve.am",
+            },
+            {
+                protocol: "https",
+                hostname: "www.retrieve.am",
+            },
+            {
+                protocol: "https",
+                hostname: "retrieve.am",
             },
         ],
     },

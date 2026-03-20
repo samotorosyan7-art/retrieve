@@ -25,6 +25,7 @@
         "react-dom": "latest",
         "react-i18next": "^16.5.4",
         "resend": "^6.9.4",
+        "sharp": "^0.34.5",
         "tailwind-merge": "^3.4.1"
     },
     "devDependencies": {

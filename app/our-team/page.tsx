@@ -25,7 +25,7 @@ export default async function OurTeamPage() {
             {/* Team Grid */}
             <Section>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {teamMembers.map((member) => {
+                    {teamMembers.map((member, index) => {
                         // Extract slug from WordPress link for local routing
                         const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || "";
                         const localLink = slug ? `/personnel/${slug}` : "#";
@@ -45,6 +45,7 @@ export default async function OurTeamPage() {
                                                 alt={member.name}
                                                 fill
                                                 className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                                                priority={index < 3}
                                             />
                                         ) : (
                                             <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
