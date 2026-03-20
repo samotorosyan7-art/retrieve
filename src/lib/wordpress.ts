@@ -1,15 +1,20 @@
 import { WPPost, WPTeamMember, PortfolioItem, MenuItem } from "@/types/wordpress";
 import * as cheerio from "cheerio";
-import portfolioData from "@/data/portfolioData.json";
 
-const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://retrieve.am/wp-json/wp/v2";
+const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
+const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
 
 function fixHttps(url: string | null | undefined): string {
     if (!url) return "";
-    if (url.startsWith("http://")) {
-        return url.replace("http://", "https://");
+    let fixedUrl = url;
+    if (fixedUrl.startsWith("http://")) {
+        fixedUrl = fixedUrl.replace("http://", "https://");
     }
-    return url;
+    // Also fix domain to avoid 403 errors from the main site
+    if (fixedUrl.includes("retrieve.am/wp-content/uploads/")) {
+        fixedUrl = fixedUrl.replace(/(www\.)?retrieve\.am/, "wp.retrieve.am");
+    }
+    return fixedUrl;
 }
 
 export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
@@ -96,7 +101,7 @@ export async function getBlogPosts(
 
 export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         // Fallback to our-team page scraping since API is hidden
         const response = await fetch(`${baseUrl}our-team/`, {
             headers: {
@@ -146,7 +151,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
  */
 export async function getPortfolioCategories(): Promise<MenuItem[]> {
     try {
-        const response = await fetch("https://retrieve.am/", {
+        const response = await fetch(`${WP_BASE_URL}/`, {
             next: { revalidate: 3600 }, // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
@@ -181,7 +186,7 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
                     const childUrl = $(childEl).children("a").attr("href");
 
                     // Convert full URLs to relative
-                    let relativeUrl = childUrl ? childUrl.replace(/^https?:\/\/(www\.)?retrieve\.am/, "") : "#";
+                    let relativeUrl = childUrl ? childUrl.replace(/^https?:\/\/(www\.|wp\.)?retrieve\.am/, "") : "#";
                     if (!relativeUrl.startsWith("/")) relativeUrl = "/" + relativeUrl;
 
                     children.push({
@@ -235,34 +240,53 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
 }
 
 /**
- * Get all portfolio items (practice areas)
+ * Get all portfolio items (practice areas) - Scraped from Live WP HTML
  */
 export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]> {
     try {
-        if (lang) {
-            const url = new URL(`${WP_API_URL}/portfolio`);
-            url.searchParams.append("per_page", "100");
-            url.searchParams.append("_embed", "1");
-            url.searchParams.append("lang", lang);
-            
-            const response = await fetch(url.toString(), { next: { revalidate: 3600 } });
-            if (response.ok) {
-                const data = await response.json();
-                return data.map((p: any) => ({
-                    id: p.id,
-                    slug: p.slug,
-                    title: p.title?.rendered ?? "",
-                    image: p._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null,
-                    category: "Legal services", // Default or extract from _embedded
-                    categories: p.portfolio_category || [],
-                    tags: [],
-                }));
-            }
-        }
-        return portfolioData as PortfolioItem[];
+        const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
+            const res = await fetch(scrapeUrl, {
+                next: { revalidate: 3600 },
+                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" }
+            });
+            if (!res.ok) return [];
+            const html = await res.text();
+            const $ = cheerio.load(html);
+            const items: PortfolioItem[] = [];
+
+            $(".gdlr-core-portfolio-item, .gdlr-core-column-service-item, .gdlr-core-item-list").each((i, el) => {
+                const title = $(el).find("h3, .gdlr-core-portfolio-title, .gdlr-core-column-service-title").text().trim();
+                const image = $(el).find("img").attr("src") || null;
+                const link = $(el).find("a").attr("href");
+                
+                if (title && link && link !== "#") {
+                    // Extract slug from link: https://wp.retrieve.am/practice-areas/corporate-business-law/ => corporate-business-law
+                    const slug = link.replace(/\/$/, "").split("/").pop() || "";
+                    if (slug && !items.find(t => t.slug === slug)) {
+                        items.push({
+                            id: i + (category === "Legal services" ? 1000 : 2000),
+                            slug: slug,
+                            title: title,
+                            image: image,
+                            category: category,
+                            categories: [],
+                            tags: []
+                        });
+                    }
+                }
+            });
+            return items;
+        };
+
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}` : WP_BASE_URL;
+
+        const legalItems = await fetchItemsFromUrl(`${baseUrl}/legal-services/`, "Legal services");
+        const taxItems = await fetchItemsFromUrl(`${baseUrl}/tax-and-business-advisory-services/`, "Tax & Business advisory services");
+
+        return [...legalItems, ...taxItems];
     } catch (error) {
-        console.error("Error loading portfolio data:", error);
-        return portfolioData as PortfolioItem[]; // Fallback
+        console.error("Error scraping portfolio data:", error);
+        return [];
     }
 }
 
@@ -286,7 +310,7 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
  */
 export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
-        const response = await fetch(`https://retrieve.am/personnel/${slug}/`, {
+        const response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
             next: { revalidate: 3600 }, // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
@@ -399,7 +423,7 @@ export async function getPersonnelDetails(slug: string): Promise<import("@/types
  */
 export async function getTestimonials(lang?: string): Promise<{ text: string; author: string; role: string; initial: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -438,7 +462,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
  */
 export async function getClientLogos(lang?: string): Promise<{ id: string; url: string; alt: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -476,7 +500,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
  */
 export async function getWhyChooseUs(lang?: string): Promise<{ title: string; description: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -519,7 +543,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
  */
 export async function getLegalPracticeAreas(lang?: string): Promise<{ label: string; url: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -552,7 +576,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
  */
 export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: string; url: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? "https://retrieve.am/ru/" : "https://retrieve.am/";
+        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -708,7 +732,7 @@ export interface PracticeAreaContent {
  */
 export async function getPracticeAreaContent(slug: string, lang?: string): Promise<PracticeAreaContent | null> {
     try {
-        const baseUrl = lang && lang !== "en" ? `https://retrieve.am/${lang}/` : "https://retrieve.am/";
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const url = `${baseUrl}practice-areas/${slug}/`;
         
         const response = await fetch(url, {
@@ -749,10 +773,14 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
             if (q && a) data.faqs.push({ question: q, answer: a });
         });
 
-        // Find matching image from portfolioData if available
-        const portfolioItem = portfolioData.find(item => item.slug === slug);
-        if (portfolioItem && portfolioItem.image) {
-            data.image = portfolioItem.image;
+        // Find header image directly from the page
+        const img = $(".gdlr-core-portfolio-thumbnail img").attr("src") 
+                 || $(".gdlr-core-media-image img").attr("src") 
+                 || $(".gdlr-core-image-item img").attr("src") 
+                 || $("meta[property=\"og:image\"]").attr("content");
+        
+        if (img) {
+            data.image = img;
         }
 
         return data;
@@ -773,7 +801,7 @@ export interface LegalUpdatePDF {
  */
 export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
     try {
-        const response = await fetch("https://retrieve.am/legal-updates/", {
+        const response = await fetch(`${WP_BASE_URL}/legal-updates/`, {
             next: { revalidate: 3600 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
