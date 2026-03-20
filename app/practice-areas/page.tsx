@@ -43,7 +43,7 @@ export default async function PracticeAreasPage() {
     });
 
     return (
-        <div className="pt-24 min-h-screen bg-gray-50">
+        <div className="pt-40 min-h-screen bg-gray-50">
             <PracticeAreasGrid items={sortedItems} />
         </div>
     );

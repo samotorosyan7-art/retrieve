@@ -51,7 +51,7 @@ export default async function ContactPage() {
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* ── Hero strip ── */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-36 pb-20">
+            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">
                 <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">

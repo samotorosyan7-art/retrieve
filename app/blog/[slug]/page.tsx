@@ -49,7 +49,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* Hero strip */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-36 pb-20">
+            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Link href="/blog" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">

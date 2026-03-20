@@ -11,7 +11,7 @@ export default function Hero() {
     const isSmallLang = i18n.language === "am" || i18n.language === "ru";
 
     return (
-        <section className="relative w-full min-h-[85vh] lg:min-h-[800px] flex items-center bg-gray-50 overflow-hidden pt-32 lg:pt-40">
+        <section className="relative w-full min-h-[85vh] lg:min-h-[800px] flex items-center bg-gray-50 overflow-hidden pt-44 lg:pt-48">
             {/* Background elements (Soft SaaS style instead of dark overlay) */}
             <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-white to-[#F4F6F8] z-0"></div>
             <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>

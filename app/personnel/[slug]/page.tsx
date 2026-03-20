@@ -40,7 +40,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* ── Thin top bar with back link ── */}
-            <div className="bg-white border-b border-gray-100 pt-28 pb-0">
+            <div className="bg-white border-b border-gray-100 pt-40 pb-0">
                 <div className="container mx-auto px-4 md:px-8 py-4">
                     <Link
                         href="/our-team"
