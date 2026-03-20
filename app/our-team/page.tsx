@@ -1,4 +1,5 @@
-import { getTeamMembers } from "@/lib/wordpress";
+import { getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
@@ -6,10 +7,12 @@ import { Section } from "@/components/ui/Section";
 import { Linkedin } from "lucide-react";
 import TeamPageHero from "@/components/website/TeamPageHero";
 
-export const metadata = {
-    title: "Our Team",
-    description: "Meet the experienced attorneys and tax experts at Retrieve Legal & Tax, dedicated to providing top-tier legal services in Armenia.",
-};
+export async function generateMetadata() {
+    const cookieStore = await cookies();
+    const lang = cookieStore.get("i18next")?.value || "en";
+    return getYoastMetadata("/our-team", lang);
+}
+
 
 export default async function OurTeamPage() {
     const teamMembers = await getTeamMembers();

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import PracticeAreasGrid from "@/components/website/PracticeAreasGrid";
-import { getPortfolioItems } from "@/lib/wordpress";
+import { getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
 import amCommon from "@/locales/am/common.json";
@@ -14,12 +14,7 @@ const dictionaries = {
 export async function generateMetadata() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const t = dictionaries[lang] || dictionaries.en;
-
-    return {
-        title: `${t.page_practice_areas_title} | Retrieve Legal & Tax`,
-        description: t.page_practice_areas_subtitle,
-    };
+    return getYoastMetadata("/legal-services", lang);
 }
 
 export default async function PracticeAreasPage() {

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPracticeAreaContent, getPortfolioItems } from "@/lib/wordpress";
+import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
@@ -23,19 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const content = await getPracticeAreaContent(slug, lang);
-    if (!content) return {};
-    
-    const title = content.title.replace(/<[^>]+>/g, "").trim();
-    return {
-        title: title,
-        description: content.overview?.slice(0, 160),
-        openGraph: {
-            title: `${title} | Retrieve Legal & Tax`,
-            description: content.overview?.slice(0, 160),
-            images: content.image ? [content.image] : [],
-        },
-    };
+    return getYoastMetadata(`/practice-areas/${slug}`, lang);
 }
 
 export default async function PracticeAreaDetailPage({ params }: { params: Promise<{ slug: string }> }) {

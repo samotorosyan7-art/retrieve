@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+
 import { cookies } from "next/headers";
 import Hero from "@/components/website/Hero";
 import WhyChooseUs from "@/components/website/WhyChooseUs";
@@ -11,56 +11,15 @@ import Newsletter from "@/components/website/Newsletter";
 import LegalPractices from "@/components/website/LegalPractices";
 import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
-import { getPortfolioItems, getTeamMembers, getLegalUpdates, getTestimonials, getClientLogos, getWhyChooseUs } from "@/lib/wordpress";
+import { getPortfolioItems, getTeamMembers, getLegalUpdates, getTestimonials, getClientLogos, getWhyChooseUs, getYoastMetadata } from "@/lib/wordpress";
 
 export async function generateMetadata() {
     const cookieStore = await cookies();
     const lang = cookieStore.get("i18next")?.value || "en";
-
-    const titles = {
-        en: "Retrieve Legal & Tax | Law Firm in Armenia",
-        am: "Retrieve Legal & Tax | Իրավաբանական ընկերություն Հայաստանում",
-        ru: "Retrieve Legal & Tax | Юридическая фирма в Армении"
-    };
-
-    const descriptions = {
-        en: "Retrieve Legal & Tax is a law firm in Armenia providing corporate, tax, immigration, intellectual property, real estate, and dispute resolution services.",
-        am: "Retrieve Legal & Tax-ը իրավաբանական ընկերություն է Հայաստանում, որը տրամադրում է կորպորատիվ, հարկային, միգրացիոն, մտավոր սեփականության, անշարժ գույքի և վեճերի լուծման ծառայություններ:",
-        ru: "Retrieve Legal & Tax — юридическая фирма в Армении, предоставляющая корпоративные, налоговые, иммиграционные услуги, услуги в области интеллектуальной собственности, недвижимости и разрешения споров."
-    };
-
-    const title = titles[lang as keyof typeof titles] || titles.en;
-    const description = descriptions[lang as keyof typeof descriptions] || descriptions.en;
-
-    return {
-        title: {
-            absolute: title
-        },
-        description: description,
-        openGraph: {
-            title: title,
-            description: description,
-            url: "https://www.retrieve.am/",
-            siteName: "Retrieve Legal & Tax",
-            images: [
-                {
-                    url: "https://www.retrieve.am/path-to-default-share-image.jpg",
-                    width: 1200,
-                    height: 630,
-                    alt: "Retrieve Legal & Tax",
-                },
-            ],
-            locale: lang === "am" ? "hy_AM" : lang === "ru" ? "ru_RU" : "en_US",
-            type: "website",
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: title,
-            description: description,
-            images: ["https://www.retrieve.am/path-to-default-share-image.jpg"],
-        },
-    };
+    return getYoastMetadata("/", lang);
 }
+
+
 
 export default async function HomePage() {
     const cookieStore = await cookies();

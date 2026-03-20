@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone, Linkedin, ArrowLeft, User, GraduationCap, Scale, MapPin } from "lucide-react";
-import { getPersonnelDetails, getTeamMembers } from "@/lib/wordpress";
+import { getPersonnelDetails, getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
 
 interface PersonnelPageProps {
@@ -11,18 +13,9 @@ interface PersonnelPageProps {
 
 export async function generateMetadata({ params }: PersonnelPageProps) {
     const { slug } = await params;
-    const personnel = await getPersonnelDetails(slug);
-    if (!personnel) return {};
-
-    return {
-        title: `${personnel.name} — ${personnel.position}`,
-        description: `Learn more about ${personnel.name}, ${personnel.position} at Retrieve Legal & Tax. Specializing in ${personnel.practiceAreas?.slice(0, 3).join(", ")}.`,
-        openGraph: {
-            title: `${personnel.name} | Retrieve Legal & Tax`,
-            description: personnel.position,
-            images: personnel.image ? [personnel.image] : [],
-        },
-    };
+    const cookieStore = await cookies();
+    const lang = cookieStore.get("i18next")?.value || "en";
+    return getYoastMetadata(`/personnel/${slug}`, lang);
 }
 
 export async function generateStaticParams() {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { getLegalUpdatesPDFs } from "@/lib/wordpress";
+import { getLegalUpdatesPDFs, getYoastMetadata } from "@/lib/wordpress";
 import { Download, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
@@ -16,12 +16,7 @@ const dictionaries = {
 export async function generateMetadata() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const t = dictionaries[lang] || dictionaries.en;
-
-    return {
-        title: `${t.legal_updates_title} | Retrieve Legal & Tax`,
-        description: t.legal_updates_desc,
-    };
+    return getYoastMetadata("/legal-updates", lang);
 }
 
 export default async function LegalUpdatesPage() {

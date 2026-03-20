@@ -17,6 +17,59 @@ function fixHttps(url: string | null | undefined): string {
     return fixedUrl;
 }
 
+/**
+ * Scrape the WordPress page <head> for Yoast SEO data and convert it to Next.js Metadata
+ */
+export async function getYoastMetadata(path: string, lang: string = "en"): Promise<import("next").Metadata> {
+    try {
+        const baseUrl = lang === "en" ? WP_BASE_URL : `${WP_BASE_URL}/${lang}`;
+        const cleanPath = path.startsWith("/") ? path : `/${path}`;
+        const url = `${baseUrl}${cleanPath === "/" ? "" : cleanPath}/`;
+        
+        const response = await fetch(url, {
+            next: { revalidate: 3600 },
+            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+        });
+
+        if (!response.ok) return {};
+
+        const html = await response.text();
+        const $ = cheerio.load(html);
+
+        const title = $("title").text() || $("meta[property='og:title']").attr("content");
+        const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
+        const ogImage = $("meta[property='og:image']").attr("content");
+        const canonical = $("link[rel='canonical']").attr("href");
+
+        const fixedCanonical = canonical 
+            ? canonical.replace(/(www\.)?wp\.retrieve\.am/, "retrieve.am") 
+            : `https://www.retrieve.am${cleanPath}`;
+
+        return {
+            title: title ? { absolute: title } : undefined,
+            description,
+            alternates: {
+                canonical: fixedCanonical
+            },
+            openGraph: {
+                title,
+                description,
+                images: ogImage ? [fixHttps(ogImage)] : undefined,
+                url: fixedCanonical
+            },
+            twitter: {
+                card: "summary_large_image",
+                title,
+                description,
+                images: ogImage ? [fixHttps(ogImage)] : undefined,
+            }
+        };
+    } catch (e) {
+        console.error(`Error scraping Yoast metadata for ${path}:`, e);
+        return {};
+    }
+}
+
 export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
     try {
         const response = await fetch(`${WP_API_URL}/posts?per_page=${limit}&_embed`, {

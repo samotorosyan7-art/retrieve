@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { getLegalUpdateBySlug, getLegalUpdates } from "@/lib/wordpress";
+import { getLegalUpdateBySlug, getLegalUpdates, getYoastMetadata } from "@/lib/wordpress";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -23,19 +23,7 @@ export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
     const cookieStore = await cookies();
     const lang = (await cookieStore.get("i18next"))?.value || "en";
-    const post = await getLegalUpdateBySlug(slug, lang);
-    if (!post) return {};
-    
-    const title = post.title.replace(/<[^>]+>/g, "").trim();
-    return {
-        title: title,
-        description: post.excerpt?.slice(0, 160),
-        openGraph: {
-            title: `${title} | Retrieve Legal & Tax`,
-            description: post.excerpt?.slice(0, 160),
-            images: post.image ? [post.image] : [],
-        },
-    };
+    return getYoastMetadata(`/${slug}`, lang);
 }
 
 function formatDate(iso: string, lang: string = "en") {
