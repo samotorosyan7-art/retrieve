@@ -126,7 +126,7 @@ Sent from retrieve.am contact form
 
     try {
         await resend.emails.send({
-            from: "Retrieve.am",
+            from: "Retrieve Legal & Tax <onboarding@resend.dev>",
             to: TO_EMAIL,
             replyTo: email,
             subject: subject ? `[Contact] ${subject}` : `[Contact] New message from ${name}`,
