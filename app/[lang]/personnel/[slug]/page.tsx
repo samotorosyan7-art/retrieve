@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { Mail, Phone, Linkedin, ArrowLeft, User, GraduationCap, Scale, MapPin } from "lucide-react";
 import { getPersonnelDetails, getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";

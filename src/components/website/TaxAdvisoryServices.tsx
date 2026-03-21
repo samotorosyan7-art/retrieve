@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Calculator, Landmark, TrendingUp, Handshake, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";

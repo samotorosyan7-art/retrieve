@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import ContactForm from "../../../app/contact/ContactForm";
+import ContactForm from "../../../app/[lang]/contact/ContactForm";
 import { useTranslation } from "react-i18next";
 
 export default function ContactSection() {

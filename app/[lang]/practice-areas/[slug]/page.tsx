@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { notFound } from "next/navigation";
 import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";

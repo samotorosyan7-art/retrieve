@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getLegalUpdateBySlug, getLegalUpdates } from "@/lib/wordpress";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
 import { getLegalUpdatesPDFs, getYoastMetadata } from "@/lib/wordpress";
 import { Download, FileText } from "lucide-react";

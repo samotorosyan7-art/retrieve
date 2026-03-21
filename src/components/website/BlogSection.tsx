@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";

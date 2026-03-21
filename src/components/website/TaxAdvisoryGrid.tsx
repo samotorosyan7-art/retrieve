@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
 import PortfolioCard from "@/components/ui/PortfolioCard";

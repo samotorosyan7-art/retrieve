@@ -1,7 +1,7 @@
 import { getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
 import { cookies } from "next/headers";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { Linkedin } from "lucide-react";

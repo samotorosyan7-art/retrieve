@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 interface Language {
@@ -24,6 +24,8 @@ export default function LanguageSelector() {
     const [currentLang, setCurrentLang] = useState<Language>(languages[0]);
     const [isOpen, setIsOpen] = useState(false);
 
+    const pathname = usePathname();
+
     useEffect(() => {
         const langCode = i18n.resolvedLanguage || i18n.language || "en";
         const found = languages.find(l => l.code === langCode);
@@ -40,8 +42,18 @@ export default function LanguageSelector() {
         // Set cookie for server-side access
         document.cookie = `i18next=${lang.code}; path=/; max-age=31104000`; // 1 year
         
-        // Refresh server components
-        router.refresh();
+        // Push router to new lang path
+        let newPathname = pathname || "/";
+        const parts = newPathname.split("/");
+        if (parts.length > 1 && ["en", "ru", "am"].includes(parts[1])) {
+            parts[1] = lang.code;
+            newPathname = parts.join("/") || "/";
+        } else {
+            // Unlikely to hit this if middleware is strictly rewriting, but fallback
+            newPathname = `/${lang.code}${newPathname}`;
+        }
+        
+        router.push(newPathname);
     };
 
     return (

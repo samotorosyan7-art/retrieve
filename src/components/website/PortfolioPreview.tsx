@@ -2,7 +2,7 @@
 
 import { Section } from "@/components/ui/Section";
 import PortfolioGrid from "@/components/website/PortfolioGrid";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { PortfolioItem } from "@/types/wordpress";

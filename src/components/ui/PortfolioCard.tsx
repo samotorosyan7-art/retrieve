@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { PortfolioItem } from "@/types/wordpress";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";

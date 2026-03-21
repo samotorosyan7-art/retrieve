@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { motion } from "framer-motion";
 import { ArrowRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Facebook, Linkedin, Instagram, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "@/types/wordpress";

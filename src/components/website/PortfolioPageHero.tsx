@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/ui/LocalizedLink";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Section } from "@/components/ui/Section";
