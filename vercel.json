@@ -5,17 +5,17 @@
     "devCommand": "next dev",
     "redirects": [
         {
-            "source": "/legal-services",
+            "source": "/en/legal-services",
             "destination": "/practice-areas",
             "permanent": true
         },
         {
-            "source": "/about-us",
+            "source": "/en/about-us",
             "destination": "/",
             "permanent": true
         },
         {
-            "source": "/իրավաբանական-անձանց-տվյալների-փոփոխ",
+            "source": "/en/իրավաբանական-անձանց-տվյալների-փոփոխ",
             "destination": "/blog",
             "permanent": true
         }
