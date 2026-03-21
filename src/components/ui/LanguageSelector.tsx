@@ -19,7 +19,7 @@ const languages: Language[] = [
 ];
 
 export default function LanguageSelector() {
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
     const router = useRouter();
     const [currentLang, setCurrentLang] = useState<Language>(languages[0]);
     const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +60,8 @@ export default function LanguageSelector() {
         <div className="relative">
             <button
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label={t("select_language", { defaultValue: "Select language" })}
+                aria-expanded={isOpen}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700"
             >
                 <span className="text-xl">{currentLang.flag}</span>

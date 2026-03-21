@@ -14,12 +14,14 @@ function FieldWrapper({ label, required, children, icon: Icon }: {
 }) {
     return (
         <div className="space-y-1.5">
-            <label className="flex items-center gap-1.5 text-sm font-semibold text-gray-700">
-                <Icon size={14} className="text-[#005CB9]" />
-                {label}
-                {required && <span className="text-red-500 ml-0.5">*</span>}
+            <label className="flex flex-col gap-1.5">
+                <span className="flex items-center gap-1.5 text-sm font-semibold text-gray-700">
+                    <Icon size={14} className="text-[#005CB9]" />
+                    {label}
+                    {required && <span className="text-red-500 ml-0.5">*</span>}
+                </span>
+                {children}
             </label>
-            {children}
         </div>
     );
 }

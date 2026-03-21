@@ -56,16 +56,68 @@ export default async function HomePage() {
 
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "LegalService",
+        "@type": ["LegalService", "ProfessionalService", "Attorney"],
+        "@id": "https://www.retrieve.am/#organization",
         "name": "Retrieve Legal & Tax",
         "url": "https://www.retrieve.am",
-        "description": "Retrieve Legal & Tax is a law firm and advisory service in Armenia providing legal, tax, accounting, immigration, intellectual property, and business advisory support.",
+        "logo": "https://www.retrieve.am/logo.png",
+        "image": "https://www.retrieve.am/logo.png",
+        "description": "Expert Legal and Tax Services, Lawyer Consultation, and Legal Setup in Armenia. We provide corporate law, tax advisory, and business setup support.",
         "telephone": "+374 41 777 332",
-        "areaServed": "Armenia",
+        "email": "info@retrieve.am",
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Argishti 11/11",
             "addressLocality": "Yerevan",
+            "postalCode": "0015",
             "addressCountry": "AM"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 40.1741,
+            "longitude": 44.5038
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+        },
+        "timeZone": "Asia/Yerevan", 
+        "priceRange": "$$",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Armenia"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/company/retrievelegal/"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Legal and Tax Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Legal Setup in Armenia"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Lawyer Consultation"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Tax Advisory Services"
+                    }
+                }
+            ]
         }
     };
 

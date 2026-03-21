@@ -1,11 +1,21 @@
 import { MetadataRoute } from 'next'
-import { getPortfolioItems, getTeamMembers, getBlogPosts } from '@/lib/wordpress'
+import { getPortfolioItems, getTeamMembers, getBlogPosts, getLegalUpdates } from '@/lib/wordpress'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.retrieve.am'
+  const locales = ["en", "ru", "am"]
+  let allPages: MetadataRoute.Sitemap = []
 
-  // Static pages
-  const staticPages = [
+  // Global root (redirects or canonical base)
+  allPages.push({
+    url: `${baseUrl}/`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 1,
+  })
+
+  // Static core routes
+  const staticRoutes = [
     '',
     '/practice-areas',
     '/our-team',
@@ -13,49 +23,67 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/contact',
     '/portfolio',
     '/legal-updates',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }))
-
-  // Dynamic Practice Areas
-  const portfolioItems = await getPortfolioItems()
-  const practiceAreaPages = portfolioItems.map((item) => ({
-    url: `${baseUrl}/practice-areas/${item.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  // Dynamic Personnel
-  const teamMembers = await getTeamMembers()
-  const personnelPages = teamMembers
-    .map((member) => {
-      const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || ""
-      return slug ? {
-        url: `${baseUrl}/personnel/${slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      } : null
-    })
-    .filter((p): p is NonNullable<typeof p> => p !== null)
-
-  // Dynamic Blog Posts
-  const { posts } = await getBlogPosts(100) // Get recent 100 posts
-  const blogPages = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }))
-
-  return [
-    ...staticPages,
-    ...practiceAreaPages,
-    ...personnelPages,
-    ...blogPages,
   ]
+
+  for (const lang of locales) {
+    // 1. Static Pages
+    const staticPages = staticRoutes.map((route) => ({
+      url: `${baseUrl}/${lang}${route}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: route === '' ? 1 : 0.8,
+    }))
+
+    // 2. Dynamic Practice Areas
+    const portfolioItems = await getPortfolioItems(lang)
+    const practiceAreaPages = portfolioItems.map((item) => ({
+      url: `${baseUrl}/${lang}/practice-areas/${item.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+
+    // 3. Dynamic Personnel
+    const teamMembers = await getTeamMembers(lang)
+    const personnelPages = teamMembers
+      .map((member) => {
+        const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || ""
+        return slug ? {
+          url: `${baseUrl}/${lang}/personnel/${slug}`,
+          lastModified: new Date(),
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        } : null
+      })
+      .filter((p): p is NonNullable<typeof p> => p !== null)
+
+    // 4. Dynamic Blog Posts
+    const { posts } = await getBlogPosts(100, 1, lang)
+    const blogPages = posts.map((post) => ({
+      url: `${baseUrl}/${lang}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }))
+
+    // 5. Dynamic Legal Updates
+    const { posts: legalUpdates } = await getLegalUpdates(1, 100, lang)
+    const legalUpdatePages = legalUpdates.map((post) => ({
+      url: `${baseUrl}/${lang}/legal-updates/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }))
+
+    allPages = [
+      ...allPages,
+      ...staticPages,
+      ...practiceAreaPages,
+      ...personnelPages,
+      ...blogPages,
+      ...legalUpdatePages,
+    ]
+  }
+
+  return allPages
 }

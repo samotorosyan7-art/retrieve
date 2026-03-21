@@ -198,6 +198,8 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                     <button
                         className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
                         onClick={() => setIsOpen(!isOpen)}
+                        aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
+                        aria-expanded={isOpen}
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>

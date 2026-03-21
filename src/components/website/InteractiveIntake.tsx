@@ -70,7 +70,7 @@ export default function InteractiveIntake() {
                     </h3>
                 </div>
                 {step === 2 && (
-                    <button onClick={() => setStep(1)} className="text-gray-400 hover:text-gray-600 transition-colors p-1">
+                    <button onClick={() => setStep(1)} aria-label="Go back" className="text-gray-400 hover:text-gray-600 transition-colors p-1">
                         <ArrowLeft size={18} />
                     </button>
                 )}
@@ -154,37 +154,39 @@ export default function InteractiveIntake() {
                             className="flex flex-col gap-4 w-full"
                             onSubmit={handleFormSubmit}
                         >
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("full_name")}</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
-                                    placeholder={t("form_placeholder_name")}
-                                    value={formData.name}
-                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("email")}</label>
-                                <input
-                                    required
-                                    type="email"
-                                    className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
-                                    placeholder={t("form_placeholder_email")}
-                                    value={formData.email}
-                                    onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t("field_phone_number") || "Phone Number (Optional)"}</label>
-                                <input
-                                    type="tel"
-                                    className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
-                                    placeholder={t("form_placeholder_phone") || "+1 (555) 000-0000"}
-                                    value={formData.phone}
-                                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                                />
+                            <div className="flex flex-col gap-4">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-gray-700 mb-1">{t("full_name")}</span>
+                                    <input
+                                        required
+                                        type="text"
+                                        className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
+                                        placeholder={t("form_placeholder_name")}
+                                        value={formData.name}
+                                        onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                    />
+                                </label>
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-gray-700 mb-1">{t("email")}</span>
+                                    <input
+                                        required
+                                        type="email"
+                                        className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
+                                        placeholder={t("form_placeholder_email")}
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                    />
+                                </label>
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-gray-700 mb-1">{t("field_phone_number") || "Phone Number (Optional)"}</span>
+                                    <input
+                                        type="tel"
+                                        className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-gray-50 pb-0.5"
+                                        placeholder={t("form_placeholder_phone") || "+1 (555) 000-0000"}
+                                        value={formData.phone}
+                                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                                    />
+                                </label>
                             </div>
                             <Button type="submit" disabled={isPending} className="w-full rounded-xl mt-2 h-12 shadow-soft hover:shadow-medium">
                                 {isPending ? (

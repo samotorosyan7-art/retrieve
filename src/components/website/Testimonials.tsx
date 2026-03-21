@@ -41,12 +41,14 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
                 <div className="hidden md:flex gap-3">
                     <button
                         onClick={() => scroll("left")}
+                        aria-label={t("prev_testimonial", { defaultValue: "Previous testimonial" })}
                         className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary hover:shadow-soft transition-all"
                     >
                         <ArrowLeft size={20} />
                     </button>
                     <button
                         onClick={() => scroll("right")}
+                        aria-label={t("next_testimonial", { defaultValue: "Next testimonial" })}
                         className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary hover:shadow-soft transition-all"
                     >
                         <ArrowRight size={20} />
