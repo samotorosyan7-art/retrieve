@@ -2,5 +2,42 @@
     "framework": "nextjs",
     "buildCommand": "next build",
     "installCommand": "pnpm install",
-    "devCommand": "next dev"
+    "devCommand": "next dev",
+    {
+    "redirects": [
+    {
+      "source": "/legal-services",
+      "destination": "/practice-areas",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/իրավաբանական-անձանց-տվյալների-փոփոխ",
+      "destination": "/blog",
+      "permanent": true
+    }
+  ]
+}{
+  "redirects": [
+    {
+      "source": "/legal-services",
+      "destination": "/practice-areas",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/իրավաբանական-անձանց-տվյալների-փոփոխ",
+      "destination": "/blog",
+      "permanent": true
+    }
+  ]
+}
 }
