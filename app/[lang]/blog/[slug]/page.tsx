@@ -14,10 +14,7 @@ interface Props {
     params: { slug: string };
 }
 
-export async function generateStaticParams() {
-    const { posts } = await getLegalUpdates(1, 50);
-    return posts.map((p) => ({ slug: p.slug }));
-}
+
 
 export async function generateMetadata({ params }: Props) {
     const { slug } = await params;

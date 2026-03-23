@@ -16,6 +16,14 @@ const nextConfig = {
             },
         ],
     },
+    async rewrites() {
+        return [
+            {
+                source: "/api/pdf/:path*",
+                destination: "https://wp.retrieve.am/wp-content/uploads/:path*",
+            },
+        ];
+    },
 };
 
 module.exports = nextConfig;

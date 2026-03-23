@@ -18,13 +18,7 @@ export async function generateMetadata({ params }: PersonnelPageProps) {
     return getYoastMetadata(`/personnel/${slug}`, lang);
 }
 
-export async function generateStaticParams() {
-    const teamMembers = await getTeamMembers();
-    return teamMembers.map((member) => {
-        const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || "";
-        return { slug };
-    }).filter(p => p.slug);
-}
+
 
 export default async function PersonnelPage({ params }: PersonnelPageProps) {
     const { slug } = await params;

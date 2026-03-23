@@ -886,9 +886,17 @@ export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
             const image = $(el).find("img").attr("src");
 
             if (title && pdfLink) {
+                // Replace wordpress URL with proxy URL to avoid 403 forbidden hotlinking
+                let proxyLink = pdfLink;
+                if (pdfLink.includes("wp.retrieve.am/wp-content/uploads/")) {
+                    proxyLink = pdfLink.replace("https://wp.retrieve.am/wp-content/uploads/", "/api/pdf/");
+                } else if (pdfLink.includes("retrieve.am/wp-content/uploads/")) {
+                    proxyLink = pdfLink.replace("https://retrieve.am/wp-content/uploads/", "/api/pdf/");
+                }
+
                 pdfs.push({
                     title,
-                    pdfLink,
+                    pdfLink: proxyLink,
                     image: image || "",
                 });
             }

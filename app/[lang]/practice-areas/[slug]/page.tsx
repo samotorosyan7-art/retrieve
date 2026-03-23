@@ -14,10 +14,7 @@ const dictionaries = {
     am: amCommon,
 } as const;
 
-export async function generateStaticParams() {
-    const items = await getPortfolioItems();
-    return items.map((p) => ({ slug: p.slug }));
-}
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
