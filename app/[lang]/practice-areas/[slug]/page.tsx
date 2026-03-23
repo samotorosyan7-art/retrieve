@@ -94,9 +94,18 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
                                         {t.overview}
                                     </h2>
-                                    <p className="text-lg text-gray-600 leading-relaxed font-medium">
-                                        {content.overview}
-                                    </p>
+                                    <div 
+                                        className="overflow-x-auto prose prose-lg max-w-none text-gray-700
+                                            prose-headings:font-extrabold prose-headings:text-gray-900
+                                            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+                                            prose-a:text-[#005CB9] prose-a:no-underline hover:prose-a:underline
+                                            prose-strong:text-gray-900
+                                            prose-ul:list-disc prose-ul:pl-5
+                                            prose-ol:list-decimal prose-ol:pl-5
+                                            prose-li:mb-1
+                                            [&_p]:mb-5 [&_p]:leading-relaxed [&_p]:text-gray-600 [&_p]:font-medium"
+                                        dangerouslySetInnerHTML={{ __html: content.overview }}
+                                    />
                                 </section>
                             )}
 

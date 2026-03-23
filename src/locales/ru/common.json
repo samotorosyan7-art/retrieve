@@ -211,6 +211,9 @@
     "blog_sidebar_recent_title": "Последние обновления",
     "blog_sidebar_practice_areas_title": "Наши услуги",
     "blog_sidebar_practice_areas_desc": "Ознакомьтесь с полным спектром наших юридических и налоговых услуг.",
+    "blog_sidebar_tags_title": "Категории блога",
+    "blog_articles_found": "статей найдено",
+    "category": "Категория",
     "btn_speak_to_expert": "Поговорить с экспертом",
     "form_placeholder_name": "Иван Иванов",
     "form_placeholder_email": "info@example.ru",
@@ -309,5 +312,6 @@
         "Reliable Results": "Надежные результаты",
         "Client-Focused": "Ориентированность на клиента",
         "Strategic Solutions": "Стратегические решения"
-    }
+    },
+    "tags": "Теги"
 }

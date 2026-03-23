@@ -19,6 +19,8 @@ export async function generateMetadata() {
     return getYoastMetadata("/legal-updates", lang);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function LegalUpdatesPage() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
@@ -29,7 +31,7 @@ export default async function LegalUpdatesPage() {
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-24">
+            <div className="relative bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden pt-44 pb-12">
                 <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-1/4 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">

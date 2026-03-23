@@ -211,6 +211,9 @@
     "blog_sidebar_recent_title": "Recent Updates",
     "blog_sidebar_practice_areas_title": "Our Practice Areas",
     "blog_sidebar_practice_areas_desc": "Explore our full range of legal and tax services.",
+    "blog_sidebar_tags_title": "Blog Categories",
+    "blog_articles_found": "articles found",
+    "category": "Category",
     "btn_speak_to_expert": "Speak to an Expert",
     "form_placeholder_name": "John Smith",
     "form_placeholder_email": "john@company.com",
@@ -309,5 +312,6 @@
         "Reliable Results": "Reliable Results",
         "Client-Focused": "Client-Focused",
         "Strategic Solutions": "Strategic Solutions"
-    }
+    },
+    "tags": "Tags"
 }

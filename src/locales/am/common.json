@@ -211,6 +211,9 @@
     "blog_sidebar_recent_title": "Վերջին թարմացումները",
     "blog_sidebar_practice_areas_title": "Մեր ծառայությունները",
     "blog_sidebar_practice_areas_desc": "Բացահայտեք մեր իրավաբանական և հարկային ծառայությունների ամբողջական տեսականին:",
+    "blog_sidebar_tags_title": "Բլոգի բաժիններ",
+    "blog_articles_found": "հոդված գտնվել է",
+    "category": "Կատեգորիա",
     "btn_speak_to_expert": "Խոսեք փորձագետի հետ",
     "form_placeholder_name": "Հովհաննես Հովհաննիսյան",
     "form_placeholder_email": "info@example.am",
@@ -309,5 +312,6 @@
         "Reliable Results": "Հուսալի արդյունքներ",
         "Client-Focused": "Հաճախորդակենտրոն",
         "Strategic Solutions": "Ռազմավարական լուծումներ"
-    }
+    },
+    "tags": "Թեգեր"
 }

@@ -12,9 +12,17 @@ export interface WPPost {
     content: {
         rendered: string;
     };
+    tags?: number[];
     _embedded?: {
         "wp:featuredmedia"?: WPMedia[];
+        "wp:term"?: any[][];
     };
+}
+
+export interface WPTag {
+    id: number;
+    name: string;
+    slug: string;
 }
 
 export interface WPMedia {

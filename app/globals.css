@@ -27,3 +27,46 @@ body {
 .animate-bounce-once {
   animation: bounce-once 0.6s ease-in-out;
 }
+
+/* Prose Table Styles */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+  line-height: 1.52;
+}
+
+.prose thead {
+  border-bottom: 2px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.prose th {
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: #1a202c;
+  border: 1px solid #e2e8f0;
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+  color: #4a5568;
+}
+
+.prose tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+.prose figure.wp-block-table {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.prose figure.wp-block-table table {
+  margin: 0;
+}

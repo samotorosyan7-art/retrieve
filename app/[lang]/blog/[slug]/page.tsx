@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { getLegalUpdateBySlug, getLegalUpdates, getYoastMetadata } from "@/lib/wordpress";
-import { Calendar, Clock, ArrowLeft, ArrowRight, FileText } from "lucide-react";
+import { getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
+import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
 import ru from "@/locales/ru/common.json";
@@ -23,6 +23,8 @@ export async function generateMetadata({ params }: Props) {
     return getYoastMetadata(`/${slug}`, lang);
 }
 
+export const dynamic = "force-dynamic";
+
 function formatDate(iso: string, lang: string = "en") {
     const locale = lang === "am" ? "hy-AM" : lang === "ru" ? "ru-RU" : "en-US";
     return new Date(iso).toLocaleDateString(locale, {
@@ -41,12 +43,13 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
 
     const { posts: related } = await getLegalUpdates(1, 4, lang);
     const sidebar = related.filter((p) => p.slug !== slug).slice(0, 3);
+    const allTags = await getTags(lang);
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* Hero strip */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">
+            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-12">
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Link href="/blog" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">
@@ -86,7 +89,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         )}
 
                         {/* Content */}
-                        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12">
+                        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 overflow-x-auto">
                             <div
                                 className="
                                     prose prose-lg max-w-none text-gray-700
@@ -103,6 +106,22 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                 "
                                 dangerouslySetInnerHTML={{ __html: post.content }}
                             />
+
+                            {/* Tags */}
+                            {post.tags && post.tags.length > 0 && (
+                                <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-2 items-center">
+                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-wider mr-2">{t.tags}:</span>
+                                    {post.tags.map((tag) => (
+                                        <Link
+                                            key={tag.id}
+                                            href={`/tag/${tag.slug}`}
+                                            className="bg-gray-100 hover:bg-blue-50 text-gray-600 hover:text-[#005CB9] text-xs font-bold rounded-lg px-3 py-1.5 transition-colors"
+                                        >
+                                            #{tag.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Footer nav */}
@@ -156,6 +175,27 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                                     dangerouslySetInnerHTML={{ __html: r.title }}
                                                 />
                                             </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Tag Cloud */}
+                        {allTags.length > 0 && (
+                            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-6">
+                                <h3 className="font-extrabold text-gray-900 mb-5 flex items-center gap-2">
+                                    <Layout size={16} className="text-[#005CB9]" />
+                                    {t.blog_sidebar_tags_title}
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {allTags.map((tag) => (
+                                        <Link
+                                            key={tag.id}
+                                            href={`/tag/${tag.slug}`}
+                                            className="bg-[#005CB9] hover:bg-[#004791] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-2 transition-colors inline-block"
+                                        >
+                                            {tag.name}
                                         </Link>
                                     ))}
                                 </div>

@@ -1,4 +1,4 @@
-import { WPPost, WPTeamMember, PortfolioItem, MenuItem } from "@/types/wordpress";
+import { WPPost, WPTeamMember, PortfolioItem, MenuItem, WPTag } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
@@ -37,7 +37,7 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
         try {
             const response = await fetch(url, {
                 signal: controller.signal,
-                next: { revalidate: 0 },
+                cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
             clearTimeout(timeout);
@@ -88,7 +88,7 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
 export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
     try {
         const response = await fetch(`${WP_API_URL}/posts?per_page=${limit}&_embed`, {
-            next: { revalidate: 0 },
+            cache: "no-store",
         });
 
         if (!response.ok) {
@@ -123,7 +123,7 @@ export async function getBlogPosts(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 0 } });
+        const response = await fetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -146,6 +146,13 @@ export async function getBlogPosts(
                     .replace(/\[&hellip;\]/, "…")
                     .trim() ?? "";
 
+            // Extract tags
+            const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
+                id: tag.id,
+                name: tag.name.replace(/&amp;/g, "&"),
+                slug: tag.slug,
+            })) || [];
+
             return {
                 id: p.id,
                 slug: p.slug,
@@ -157,6 +164,7 @@ export async function getBlogPosts(
                 author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
                 readTime: Math.max(1, Math.ceil(wordCount / 200)),
                 link: p.link ?? "",
+                tags,
             };
         });
 
@@ -172,7 +180,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         // Fallback to our-team page scraping since API is hidden
         const response = await fetch(`${baseUrl}our-team/`, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -221,7 +229,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
 export async function getPortfolioCategories(): Promise<MenuItem[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/`, {
-            next: { revalidate: 0 }, // Cache for 1 hour
+            cache: "no-store", // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -315,7 +323,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
     try {
         const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
             const res = await fetch(scrapeUrl, {
-                next: { revalidate: 0 },
+                cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" }
             });
             if (!res.ok) return [];
@@ -380,7 +388,7 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
 export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
         const response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
-            next: { revalidate: 0 }, // Cache for 1 hour
+            cache: "no-store", // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -494,7 +502,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -533,7 +541,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -571,7 +579,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -614,7 +622,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -647,7 +655,7 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -683,6 +691,7 @@ export interface LegalUpdate {
     author: string;
     readTime: number;
     link?: string;
+    tags?: WPTag[];
 }
 
 /**
@@ -705,7 +714,7 @@ export async function getLegalUpdates(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 0 } });
+        const response = await fetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -723,6 +732,13 @@ export async function getLegalUpdates(
             // Strip HTML from excerpt
             const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
 
+            // Extract tags
+            const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
+                id: tag.id,
+                name: tag.name.replace(/&amp;/g, "&"),
+                slug: tag.slug,
+            })) || [];
+
             return {
                 id: p.id,
                 slug: p.slug,
@@ -733,6 +749,7 @@ export async function getLegalUpdates(
                 image,
                 author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
                 readTime: Math.max(1, Math.ceil(wordCount / 200)),
+                tags,
             };
         });
 
@@ -755,7 +772,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 0 } });
+        const response = await fetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return null;
 
@@ -770,6 +787,13 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             null;
         const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
 
+        // Extract tags
+        const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
+            id: tag.id,
+            name: tag.name.replace(/&amp;/g, "&"),
+            slug: tag.slug,
+        })) || [];
+
         return {
             id: p.id,
             slug: p.slug,
@@ -780,10 +804,104 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             image,
             author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
             readTime: Math.max(1, Math.ceil(wordCount / 200)),
+            tags,
         };
     } catch (error) {
         console.error("Error fetching legal update by slug:", error);
         return null;
+    }
+}
+
+/**
+ * Fetch a tag by its slug
+ */
+export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag | null> {
+    try {
+        const url = new URL(`${WP_API_URL}/tags`);
+        url.searchParams.append("slug", slug);
+        if (lang) {
+            url.searchParams.append("lang", lang);
+        }
+
+        const response = await fetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return null;
+
+        const data = await response.json();
+        if (!data.length) return null;
+
+        return {
+            id: data[0].id,
+            name: data[0].name.replace(/&amp;/g, "&"),
+            slug: data[0].slug,
+        };
+    } catch (error) {
+        console.error(`Error fetching tag by slug ${slug}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Fetch posts filtered by tag
+ */
+export async function getPostsByTag(
+    tagId: number,
+    page = 1,
+    perPage = 9,
+    lang?: string
+): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
+    try {
+        const url = new URL(`${WP_API_URL}/posts`);
+        url.searchParams.append("tags", tagId.toString());
+        url.searchParams.append("per_page", perPage.toString());
+        url.searchParams.append("page", page.toString());
+        url.searchParams.append("_embed", "1");
+        url.searchParams.append("orderby", "date");
+        url.searchParams.append("order", "desc");
+        if (lang) {
+            url.searchParams.append("lang", lang);
+        }
+
+        const response = await fetch(url.toString(), { cache: "no-store" });
+
+        if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
+
+        const total = parseInt(response.headers.get("X-WP-Total") || "0");
+        const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "0");
+        const data = await response.json();
+
+        const posts: LegalUpdate[] = data.map((p: any) => {
+            const wordCount = p.content?.rendered?.replace(/<[^>]+>/g, "").split(/\s+/).length ?? 0;
+            const image =
+                p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large?.source_url ||
+                p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                null;
+
+            const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
+
+            const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
+                id: tag.id,
+                name: tag.name.replace(/&amp;/g, "&"),
+                slug: tag.slug,
+            })) || [];
+
+            return {
+                id: p.id,
+                slug: p.slug,
+                title: p.title?.rendered ?? "",
+                excerpt: rawExcerpt,
+                content: p.content?.rendered ?? "",
+                date: p.date,
+                image,
+                author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
+                readTime: Math.max(1, Math.ceil(wordCount / 200)),
+                tags,
+            };
+        });
+
+        return { posts, total, totalPages };
+    } catch (error) {
+        console.error("Error fetching posts by tag:", error);
+        return { posts: [], total: 0, totalPages: 0 };
     }
 }
 
@@ -805,7 +923,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const url = `${baseUrl}practice-areas/${slug}/`;
         
         const response = await fetch(url, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -816,7 +934,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
 
         const data: PracticeAreaContent = {
             title: $("h1.attorna-page-title").text().trim(),
-            overview: $(".gdlr-core-title-item-caption").first().text().trim(),
+            overview: $(".gdlr-core-title-item-caption").first().html()?.trim() || "",
             howWeCanHelp: [],
             whyChooseUs: [],
             faqs: []
@@ -871,7 +989,7 @@ export interface LegalUpdatePDF {
 export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/legal-updates/`, {
-            next: { revalidate: 0 },
+            cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -909,3 +1027,27 @@ export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
     }
 }
 
+
+export async function getTags(lang?: string): Promise<WPTag[]> {
+    try {
+        const url = new URL(`${WP_API_URL}/tags`);
+        url.searchParams.append("per_page", "100");
+        url.searchParams.append("hide_empty", "true");
+        if (lang) {
+            url.searchParams.append("lang", lang);
+        }
+
+        const response = await fetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return [];
+
+        const data = await response.json();
+        return data.map((t: any) => ({
+            id: t.id,
+            name: t.name.replace(/&amp;/g, "&"),
+            slug: t.slug,
+        }));
+    } catch (error) {
+        console.error("Error fetching tags:", error);
+        return [];
+    }
+}
