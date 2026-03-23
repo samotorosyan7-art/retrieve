@@ -136,21 +136,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                     </article>
 
                     {/* ── Sidebar ── */}
-                    <aside className="w-full lg:w-80 xl:w-96 shrink-0 space-y-6 lg:sticky lg:top-28">
-
-                        {/* CTA card */}
-                        <div className="bg-gradient-to-br from-[#003d7a] to-[#005CB9] rounded-2xl p-7 relative overflow-hidden">
-                            <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-white/10 pointer-events-none" />
-                            <h3 className="text-white font-extrabold text-lg mb-2">
-                                {t.have_legal_questions}
-                            </h3>
-                            <p className="text-blue-200 text-sm mb-5 leading-relaxed">
-                                {t.have_legal_questions_desc}
-                            </p>
-                            <Link href="/contact" className="block text-center bg-white text-[#005CB9] hover:bg-blue-50 font-bold text-sm rounded-xl px-5 py-3 transition-colors">
-                                {t.schedule_consultation}
-                            </Link>
-                        </div>
+                    <aside className="w-full lg:w-80 xl:w-96 shrink-0 space-y-8">
 
                         {/* Recent articles */}
                         {sidebar.length > 0 && (
@@ -183,7 +169,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
 
                         {/* Tag Cloud */}
                         {allTags.length > 0 && (
-                            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-6">
+                            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                                 <h3 className="font-extrabold text-gray-900 mb-5 flex items-center gap-2">
                                     <Layout size={16} className="text-[#005CB9]" />
                                     {t.blog_sidebar_tags_title}
@@ -201,6 +187,20 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                 </div>
                             </div>
                         )}
+
+                        {/* CTA card */}
+                        <div className="bg-gradient-to-br from-[#003d7a] to-[#005CB9] rounded-2xl p-7 relative overflow-hidden">
+                            <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-white/10 pointer-events-none" />
+                            <h3 className="text-white font-extrabold text-lg mb-2">
+                                {t.have_legal_questions}
+                            </h3>
+                            <p className="text-blue-200 text-sm mb-5 leading-relaxed">
+                                {t.have_legal_questions_desc}
+                            </p>
+                            <Link href="/contact" className="block text-center bg-white text-[#005CB9] hover:bg-blue-50 font-bold text-sm rounded-xl px-5 py-3 transition-colors">
+                                {t.schedule_consultation}
+                            </Link>
+                        </div>
 
                         {/* Practice areas link */}
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
