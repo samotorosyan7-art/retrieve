@@ -886,17 +886,16 @@ export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
             const image = $(el).find("img").attr("src");
 
             if (title && pdfLink) {
-                // Replace wordpress URL with proxy URL to avoid 403 forbidden hotlinking
-                let proxyLink = pdfLink;
+                // To fix the 403 Forbidden / 404 error, we will ensure that the PDF link
+                // ALWAYS points directly to the headless CMS (wp.retrieve.am) instead of the Next.js app (www.retrieve.am).
+                let correctLink = pdfLink;
                 if (pdfLink.includes("/wp-content/uploads/")) {
-                    // Replace any variant of retrieve.am/.../wp-content/uploads/ (with or without www, wp, etc.)
-                    // to facilitate proxying via Next.js api/pdf to avoid 403 hotlinking issues.
-                    proxyLink = pdfLink.replace(/^https?:\/\/(?:[a-z0-9-]+\.)?retrieve\.am\/wp-content\/uploads\//i, "/api/pdf/");
+                    correctLink = pdfLink.replace(/^https?:\/\/(?:[a-z0-9-]+\.)?retrieve\.am\/wp-content\/uploads\//i, "https://wp.retrieve.am/wp-content/uploads/");
                 }
 
                 pdfs.push({
                     title,
-                    pdfLink: proxyLink,
+                    pdfLink: correctLink,
                     image: image || "",
                 });
             }
