@@ -888,10 +888,10 @@ export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
             if (title && pdfLink) {
                 // Replace wordpress URL with proxy URL to avoid 403 forbidden hotlinking
                 let proxyLink = pdfLink;
-                if (pdfLink.includes("wp.retrieve.am/wp-content/uploads/")) {
-                    proxyLink = pdfLink.replace("https://wp.retrieve.am/wp-content/uploads/", "/api/pdf/");
-                } else if (pdfLink.includes("retrieve.am/wp-content/uploads/")) {
-                    proxyLink = pdfLink.replace("https://retrieve.am/wp-content/uploads/", "/api/pdf/");
+                if (pdfLink.includes("/wp-content/uploads/")) {
+                    // Replace any variant of retrieve.am/.../wp-content/uploads/ (with or without www, wp, etc.)
+                    // to facilitate proxying via Next.js api/pdf to avoid 403 hotlinking issues.
+                    proxyLink = pdfLink.replace(/^https?:\/\/(?:[a-z0-9-]+\.)?retrieve\.am\/wp-content\/uploads\//i, "/api/pdf/");
                 }
 
                 pdfs.push({
