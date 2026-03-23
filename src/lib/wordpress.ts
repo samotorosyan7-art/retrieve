@@ -37,7 +37,7 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
         try {
             const response = await fetch(url, {
                 signal: controller.signal,
-                next: { revalidate: 3600 },
+                next: { revalidate: 60 },
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
             clearTimeout(timeout);
@@ -88,7 +88,7 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
 export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
     try {
         const response = await fetch(`${WP_API_URL}/posts?per_page=${limit}&_embed`, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
         });
 
         if (!response.ok) {
@@ -123,7 +123,7 @@ export async function getBlogPosts(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 1800 } });
+        const response = await fetch(url.toString(), { next: { revalidate: 60 } });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -220,7 +220,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
 export async function getPortfolioCategories(): Promise<MenuItem[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/`, {
-            next: { revalidate: 3600 }, // Cache for 1 hour
+            next: { revalidate: 60 }, // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -314,7 +314,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
     try {
         const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
             const res = await fetch(scrapeUrl, {
-                next: { revalidate: 3600 },
+                next: { revalidate: 60 },
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" }
             });
             if (!res.ok) return [];
@@ -379,7 +379,7 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
 export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
         const response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
-            next: { revalidate: 3600 }, // Cache for 1 hour
+            next: { revalidate: 60 }, // Cache for 1 hour
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -493,7 +493,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -532,7 +532,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -570,7 +570,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -613,7 +613,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -646,7 +646,7 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
     try {
         const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -704,7 +704,7 @@ export async function getLegalUpdates(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 1800 } });
+        const response = await fetch(url.toString(), { next: { revalidate: 60 } });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -754,7 +754,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { next: { revalidate: 1800 } });
+        const response = await fetch(url.toString(), { next: { revalidate: 60 } });
 
         if (!response.ok) return null;
 
@@ -804,7 +804,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const url = `${baseUrl}practice-areas/${slug}/`;
         
         const response = await fetch(url, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
@@ -870,7 +870,7 @@ export interface LegalUpdatePDF {
 export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/legal-updates/`, {
-            next: { revalidate: 3600 },
+            next: { revalidate: 60 },
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
