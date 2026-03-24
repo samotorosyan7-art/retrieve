@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import { getPortfolioItems, getTeamMembers, getBlogPosts, getLegalUpdates } from '@/lib/wordpress'
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.retrieve.am'
   const locales = ["en", "ru", "am"]

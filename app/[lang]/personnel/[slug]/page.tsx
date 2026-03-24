@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: PersonnelPageProps) {
 }
 
 
+export const dynamic = "force-dynamic";
 
 export default async function PersonnelPage({ params }: PersonnelPageProps) {
     const { slug } = await params;

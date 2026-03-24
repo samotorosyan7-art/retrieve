@@ -15,6 +15,8 @@ export async function generateMetadata() {
     return getYoastMetadata("/contact", lang);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ContactPage() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;

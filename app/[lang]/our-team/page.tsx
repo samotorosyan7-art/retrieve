@@ -13,6 +13,7 @@ export async function generateMetadata() {
     return getYoastMetadata("/our-team", lang);
 }
 
+export const dynamic = "force-dynamic";
 
 export default async function OurTeamPage() {
     const teamMembers = await getTeamMembers();

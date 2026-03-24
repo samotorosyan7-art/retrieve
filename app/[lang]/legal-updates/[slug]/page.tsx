@@ -46,6 +46,8 @@ function formatDate(iso: string, lang: string = "en") {
     });
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function LegalUpdateSinglePage({ params }: Props) {
     const { slug } = await params;
     const cookieStore = await cookies();

@@ -23,6 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return getYoastMetadata(`/practice-areas/${slug}`, lang);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function PracticeAreaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const cookieStore = await cookies();

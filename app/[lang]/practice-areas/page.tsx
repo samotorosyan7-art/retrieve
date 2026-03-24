@@ -17,6 +17,8 @@ export async function generateMetadata() {
     return getYoastMetadata("/legal-services", lang);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function PracticeAreasPage() {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;

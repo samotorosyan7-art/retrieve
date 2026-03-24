@@ -229,7 +229,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
 export async function getPortfolioCategories(): Promise<MenuItem[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/`, {
-            cache: "no-store", // Cache for 1 hour
+            cache: "no-store",
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
@@ -388,7 +388,7 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
 export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
         const response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
-            cache: "no-store", // Cache for 1 hour
+            cache: "no-store",
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
