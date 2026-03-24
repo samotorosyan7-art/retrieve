@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
-import { getLegalUpdates, getYoastMetadata } from "@/lib/wordpress";
+import { getBlogPosts, getYoastMetadata } from "@/lib/wordpress";
 import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -115,7 +115,7 @@ export default async function BlogPage({
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     
     const currentPage = Math.max(1, parseInt(params.page ?? "1", 10) || 1);
-    const { posts, total, totalPages } = await getLegalUpdates(currentPage, PER_PAGE, lang);
+    const { posts, total, totalPages } = await getBlogPosts(PER_PAGE, currentPage, lang);
 
     const start = (currentPage - 1) * PER_PAGE + 1;
     const end = Math.min(currentPage * PER_PAGE, total);

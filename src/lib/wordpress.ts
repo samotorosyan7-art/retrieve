@@ -113,7 +113,7 @@ export async function getBlogPosts(
 ): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
     try {
         const url = new URL(`${WP_API_URL}/posts`);
-        url.searchParams.append("categories_exclude", "2");
+        // url.searchParams.append("categories_exclude", "2"); // Removed to include all posts in blog
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
@@ -695,7 +695,7 @@ export interface LegalUpdate {
 }
 
 /**
- * Fetch legal updates (blog posts) from the WordPress REST API
+ * Fetch legal updates (Category 2 posts) from the WordPress REST API
  */
 export async function getLegalUpdates(
     page = 1,
@@ -1049,5 +1049,30 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
     } catch (error) {
         console.error("Error fetching tags:", error);
         return [];
+    }
+}
+/**
+ * Resolves a slug to its content type (post or portfolio)
+ */
+export async function getContentTypeBySlug(slug: string): Promise<"post" | "portfolio" | null> {
+    try {
+        // 1. Try fetching as a post
+        const postRes = await fetch(`${WP_API_URL}/posts?slug=${slug}`, { cache: "no-store" });
+        if (postRes.ok) {
+            const posts = await postRes.json();
+            if (posts.length > 0) return "post";
+        }
+
+        // 2. Try fetching as a portfolio item (practice area)
+        const portfolioRes = await fetch(`${WP_API_URL}/portfolio?slug=${slug}`, { cache: "no-store" });
+        if (portfolioRes.ok) {
+            const items = await portfolioRes.json();
+            if (items.length > 0) return "portfolio";
+        }
+
+        return null;
+    } catch (error) {
+        console.error("Error resolving content type:", error);
+        return null;
     }
 }
