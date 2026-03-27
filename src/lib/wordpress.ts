@@ -4,6 +4,12 @@ import * as cheerio from "cheerio";
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
 const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
 
+const LANGUAGE_AUTHOR_MAP: Record<string, number> = {
+    en: 2, // Samvel Torosyan
+    am: 1, // arman.torosyan
+    ru: 3, // Lilya Zalinyan
+};
+
 function fixHttps(url: string | null | undefined): string {
     if (!url) return "";
     let fixedUrl = url;
@@ -85,9 +91,17 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
 }
 
 
-export async function getLatestPosts(limit = 3): Promise<WPPost[]> {
+export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]> {
     try {
-        const response = await fetch(`${WP_API_URL}/posts?per_page=${limit}&_embed`, {
+        const url = new URL(`${WP_API_URL}/posts`);
+        url.searchParams.append("per_page", limit.toString());
+        url.searchParams.append("_embed", "1");
+
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        }
+
+        const response = await fetch(url.toString(), {
             cache: "no-store",
         });
 
@@ -119,7 +133,9 @@ export async function getBlogPosts(
         url.searchParams.append("_embed", "1");
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
-        if (lang) {
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        } else if (lang) {
             url.searchParams.append("lang", lang);
         }
 
@@ -710,7 +726,9 @@ export async function getLegalUpdates(
         url.searchParams.append("_embed", "1");
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
-        if (lang) {
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        } else if (lang) {
             url.searchParams.append("lang", lang);
         }
 
@@ -768,7 +786,9 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         const url = new URL(`${WP_API_URL}/posts`);
         url.searchParams.append("slug", slug);
         url.searchParams.append("_embed", "1");
-        if (lang) {
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        } else if (lang) {
             url.searchParams.append("lang", lang);
         }
 
@@ -857,7 +877,9 @@ export async function getPostsByTag(
         url.searchParams.append("_embed", "1");
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
-        if (lang) {
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        } else if (lang) {
             url.searchParams.append("lang", lang);
         }
 
