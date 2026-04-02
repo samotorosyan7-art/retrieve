@@ -65,10 +65,21 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
             ? canonical.replace(/(www\.)?wp\.retrieve\.am/, "retrieve.am")
             : `https://www.retrieve.am${cleanPath}`;
 
+        const BASE_URL = "https://www.retrieve.am";
+        const pathSuffix = cleanPath === "/" ? "/" : cleanPath;
+
         return {
             title: title ? { absolute: title } : undefined,
             description: description || undefined,
-            alternates: { canonical: fixedCanonical },
+            alternates: {
+                canonical: fixedCanonical,
+                languages: {
+                    "en": `${BASE_URL}/en${pathSuffix}`,
+                    "am": `${BASE_URL}/am${pathSuffix}`,
+                    "ru": `${BASE_URL}/ru${pathSuffix}`,
+                    "x-default": `${BASE_URL}/en${pathSuffix}`,
+                },
+            },
             openGraph: {
                 siteName: "Retrieve Legal & Tax",
                 type: "website",

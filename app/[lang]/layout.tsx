@@ -18,6 +18,15 @@ export const metadata: Metadata = {
         icon: "/logo.png",
         apple: "/logo.png",
     },
+    alternates: {
+        canonical: "https://www.retrieve.am/en/",
+        languages: {
+            "en": "https://www.retrieve.am/en/",
+            "am": "https://www.retrieve.am/am/",
+            "ru": "https://www.retrieve.am/ru/",
+            "x-default": "https://www.retrieve.am/en/",
+        },
+    },
 };
 
 export const dynamic = "force-dynamic";
