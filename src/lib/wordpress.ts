@@ -204,7 +204,7 @@ export async function getBlogPosts(
 
 export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         // Fallback to our-team page scraping since API is hidden
         const response = await fetch(`${baseUrl}our-team/`, {
             cache: "no-store",
@@ -414,7 +414,9 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
  */
 export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
-        const response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
+        const baseUrl = WP_BASE_URL; // Personnel might not have translated parent pages, but let's be careful.
+        // If we want to support translated personnel pages, we'd need to know if the slug itself changes.
+        const response = await fetch(`${baseUrl}/personnel/${slug}/`, {
             cache: "no-store",
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
@@ -527,7 +529,7 @@ export async function getPersonnelDetails(slug: string): Promise<import("@/types
  */
 export async function getTestimonials(lang?: string): Promise<{ text: string; author: string; role: string; initial: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -566,7 +568,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
  */
 export async function getClientLogos(lang?: string): Promise<{ id: string; url: string; alt: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -604,7 +606,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
  */
 export async function getWhyChooseUs(lang?: string): Promise<{ title: string; description: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -647,7 +649,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
  */
 export async function getLegalPracticeAreas(lang?: string): Promise<{ label: string; url: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -680,7 +682,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
  */
 export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: string; url: string }[]> {
     try {
-        const baseUrl = lang === "ru" ? `${WP_BASE_URL}/ru/` : `${WP_BASE_URL}/`;
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
