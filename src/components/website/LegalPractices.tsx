@@ -83,7 +83,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                     className="text-center mt-16"
                 >
                     <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white hover:border-[#005CB9] transition-colors shadow-sm">
-                        <Link href="/practice-areas">
+                        <Link href="/legal-services">
                             {t("btn_view_all_practices")}
                         </Link>
                     </Button>

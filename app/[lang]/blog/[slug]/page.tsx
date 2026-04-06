@@ -210,7 +210,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             <p className="text-sm text-gray-500 mb-4">
                                 {t.blog_sidebar_practice_areas_desc}
                             </p>
-                            <Link href="/practice-areas" className="inline-flex items-center gap-2 text-sm font-bold text-[#005CB9] hover:underline">
+                            <Link href="/legal-services" className="inline-flex items-center gap-2 text-sm font-bold text-[#005CB9] hover:underline">
                                 {t.view_all_services} <ArrowRight size={13} />
                             </Link>
                         </div>

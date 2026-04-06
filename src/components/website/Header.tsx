@@ -134,10 +134,14 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             {isPracticeOpen && (
                                 <div className="absolute top-full left-0 pt-2 w-72 z-50">
                                     <div className="bg-white rounded-xl shadow-medium border border-gray-100 p-2">
-                                        {practiceAreas.map((category, idx) => (
+                                        {practiceAreas.map((category, idx) => {
+                                            const categoryRoute = category.label.toLowerCase().includes("tax")
+                                                ? "/tax-and-business-advisory-services"
+                                                : "/legal-services";
+                                            return (
                                             <div key={idx} className="relative group/sub">
                                                 <Link
-                                                    href="/practice-areas"
+                                                    href={categoryRoute}
                                                     onClick={() => setIsPracticeOpen(false)}
                                                     className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:text-[#005CB9] transition-colors"
                                                 >
@@ -153,21 +157,26 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                 {category.children && category.children.length > 0 && (
                                                     <div className="absolute top-0 left-full pl-2 w-72 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 transform -translate-x-2 group-hover/sub:translate-x-0 z-50">
                                                         <div className="bg-white rounded-xl shadow-medium border border-gray-100 p-1.5 max-h-[400px] overflow-y-auto custom-scrollbar">
-                                                            {category.children.map((subItem, sIdx) => (
+                                                            {category.children.map((subItem, sIdx) => {
+                                                                const slug = subItem.url.replace(/\/$/, "").split("/").pop() || "";
+                                                                const subItemHref = `${categoryRoute}/${slug}`;
+                                                                return (
                                                                 <Link
                                                                     key={sIdx}
-                                                                    href={subItem.url}
+                                                                    href={subItemHref}
                                                                     onClick={() => setIsPracticeOpen(false)}
                                                                     className="block px-4 py-2 text-sm rounded-lg text-gray-600 hover:text-[#005CB9] transition-colors"
                                                                 >
                                                                     {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                                 </Link>
-                                                            ))}
+                                                                );
+                                                            })}
                                                         </div>
                                                     </div>
                                                 )}
                                             </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             )}
@@ -223,7 +232,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                     {/* Mobile Practice Areas */}
                     <div className="flex flex-col">
                         <Link
-                            href="/practice-areas"
+                            href="/legal-services"
                             className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-primary bg-primary/5 transition-colors"
                             onClick={() => setIsOpen(false)}
                         >
@@ -233,7 +242,11 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <div className="pl-6 flex flex-col mt-1 space-y-1 border-l-2 border-gray-100 ml-5 py-2">
                             {/* Removed 'All Practice Areas' and 'Our Portfolio' per request */}
 
-                            {practiceAreas.map((category, idx) => (
+                            {practiceAreas.map((category, idx) => {
+                                const categoryRoute = category.label.toLowerCase().includes("tax")
+                                    ? "/tax-and-business-advisory-services"
+                                    : "/legal-services";
+                                return (
                                 <div key={idx} className="flex flex-col">
                                     <button
                                         onClick={() => toggleMobileCategory(category.label)}
@@ -248,20 +261,24 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                     {/* Mobile Level 3 */}
                                     {expandedMobileCategories[category.label] && category.children && (
                                         <div className="pl-4 flex flex-col mt-1 space-y-0.5 border-l border-gray-100 ml-2 py-1">
-                                            {category.children.map((subItem, sIdx) => (
+                                            {category.children.map((subItem, sIdx) => {
+                                                const slug = subItem.url.replace(/\/$/, "").split("/").pop() || "";
+                                                return (
                                                 <Link
                                                     key={sIdx}
-                                                    href={subItem.url}
+                                                    href={`${categoryRoute}/${slug}`}
                                                     onClick={() => setIsOpen(false)}
                                                     className="py-2 px-3 text-xs text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50"
                                                 >
                                                     {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                 </Link>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     )}
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 

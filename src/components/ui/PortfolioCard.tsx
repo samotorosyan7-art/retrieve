@@ -12,9 +12,12 @@ interface PortfolioCardProps {
 
 export default function PortfolioCard({ item, className }: PortfolioCardProps) {
     const { t } = useTranslation();
+    const basePath = item.category?.toLowerCase().includes("tax")
+        ? "/tax-and-business-advisory-services"
+        : "/legal-services";
     return (
         <Link
-            href={`/practice-areas/${item.slug}`}
+            href={`${basePath}/${item.slug}`}
             className={cn(
                 "group block rounded-2xl overflow-hidden bg-white border border-gray-100 hover:border-primary/20 hover:shadow-elevated transition-all duration-300",
                 className

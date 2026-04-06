@@ -52,7 +52,7 @@ export default async function NotFound() {
                         </Link>
                         
                         <Link 
-                            href="/practice-areas" 
+                            href="/legal-services" 
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-[#005CB9] border border-gray-200 px-8 py-4 rounded-full font-bold transition-all active:scale-95"
                         >
                             <FileText size={18} />

@@ -31,7 +31,8 @@ export default async function sitemap({
   // Static core routes
   const staticRoutes = [
     '',
-    '/practice-areas',
+    '/legal-services',
+    '/tax-and-business-advisory-services',
     '/our-team',
     '/blog',
     '/contact',
@@ -49,12 +50,17 @@ export default async function sitemap({
 
   // 2. Dynamic Practice Areas
   const portfolioItems = await getPortfolioItems(lang)
-  const practiceAreaPages = portfolioItems.map((item) => ({
-    url: `${baseUrl}/${lang}/practice-areas/${item.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
+  const practiceAreaPages = portfolioItems.map((item) => {
+    const basePath = item.category?.toLowerCase().includes("tax")
+      ? "tax-and-business-advisory-services"
+      : "legal-services";
+    return {
+      url: `${baseUrl}/${lang}/${basePath}/${item.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    };
+  })
 
   // 3. Dynamic Personnel
   const teamMembers = await getTeamMembers(lang)

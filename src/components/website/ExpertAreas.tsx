@@ -109,7 +109,7 @@ export default function ExpertAreas() {
                     className="text-center mt-20"
                 >
                     <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-gray-200 text-gray-700 hover:bg-white hover:text-primary transition-colors shadow-sm">
-                        <Link href="/practice-areas">
+                        <Link href="/legal-services">
                             {t("btn_view_all_practices") || "View All Solutions"}
                         </Link>
                     </Button>

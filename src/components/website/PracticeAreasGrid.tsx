@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PortfolioItem } from "@/types/wordpress";
 import PortfolioCard from "@/components/ui/PortfolioCard";
 import { useTranslation } from "react-i18next";
@@ -9,25 +10,22 @@ import { cn } from "@/lib/utils";
 
 interface PracticeAreasGridProps {
     items: PortfolioItem[];
+    activeCategory: "Legal services" | "Tax & Business advisory services";
 }
 
 const ITEMS_PER_PAGE = 6;
 
-export default function PracticeAreasGrid({ items }: PracticeAreasGridProps) {
+export default function PracticeAreasGrid({ items, activeCategory }: PracticeAreasGridProps) {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<string>("All");
+    const router = useRouter();
     const [visibleCount, setVisibleCount] = useState<number>(ITEMS_PER_PAGE);
 
     const tabs = [
-        { id: "All", label: t("nav_all_practice_areas") || "All" },
-        { id: "Legal services", label: t("portfolio_legal_services") || "Legal Services" },
-        { id: "Tax & Business advisory services", label: t("portfolio_tax_services") || "Tax & Business Advisory Services" }
+        { id: "Legal services", label: t("portfolio_legal_services") || "Legal Services", href: "/legal-services" },
+        { id: "Tax & Business advisory services", label: t("portfolio_tax_services") || "Tax & Business Advisory Services", href: "/tax-and-business-advisory-services" }
     ];
 
-    const filteredItems = items.filter(item => {
-        if (activeTab === "All") return true;
-        return item.category === activeTab;
-    });
+    const filteredItems = items.filter(item => item.category === activeCategory);
 
     const displayItems = filteredItems.slice(0, visibleCount);
     const hasMore = visibleCount < filteredItems.length;
@@ -36,9 +34,8 @@ export default function PracticeAreasGrid({ items }: PracticeAreasGridProps) {
         setVisibleCount(prev => prev + ITEMS_PER_PAGE);
     };
 
-    const handleTabChange = (tabId: string) => {
-        setActiveTab(tabId);
-        setVisibleCount(ITEMS_PER_PAGE); // Reset visible count on tab change
+    const handleTabChange = (tab: typeof tabs[number]) => {
+        router.push(tab.href);
     };
 
     return (
@@ -50,10 +47,10 @@ export default function PracticeAreasGrid({ items }: PracticeAreasGridProps) {
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
-                            onClick={() => handleTabChange(tab.id)}
+                            onClick={() => handleTabChange(tab)}
                             className={cn(
                                 "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border",
-                                activeTab === tab.id
+                                activeCategory === tab.id
                                     ? "bg-[#005CB9] text-white border-[#005CB9] shadow-md"
                                     : "bg-white text-gray-600 border-gray-200 hover:border-[#005CB9]/50 hover:text-[#005CB9]"
                             )}

@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
 
 const QUICK_LINKS = [
     { label: "nav_home", href: "/" },
-    { label: "nav_practice_areas", href: "/practice-areas" },
+    { label: "nav_practice_areas", href: "/legal-services" },
     { label: "nav_our_team", href: "/our-team" },
     { label: "nav_blog", href: "/blog" },
     { label: "nav_legal_updates", href: "/legal-updates" },
@@ -122,7 +122,11 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                     </div>
 
                     {/* Column 3 & 4: Dynamic Practice Areas */}
-                    {practiceAreas.map((category, idx) => (
+                    {practiceAreas.map((category, idx) => {
+                        const categoryRoute = category.label.toLowerCase().includes("tax")
+                            ? "/tax-and-business-advisory-services"
+                            : "/legal-services";
+                        return (
                         <div key={idx} className="space-y-6">
                             <h3 className="text-base font-bold text-white flex items-center gap-3">
                                 <span className="w-1 h-6 bg-primary rounded-full block shrink-0" />
@@ -130,21 +134,25 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                             </h3>
                             {category.children && category.children.length > 0 && (
                                 <ul className="space-y-2.5">
-                                    {category.children.map((subItem, sIdx) => (
+                                    {category.children.map((subItem, sIdx) => {
+                                        const slug = subItem.url.replace(/\/$/, "").split("/").pop() || "";
+                                        return (
                                         <li key={sIdx}>
                                             <Link
-                                                href={subItem.url}
+                                                href={`${categoryRoute}/${slug}`}
                                                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors group"
                                             >
                                                 <ArrowRight size={13} className="text-gray-600 group-hover:text-primary transition-colors shrink-0" />
                                                 {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                             </Link>
                                         </li>
-                                    ))}
+                                        );
+                                    })}
                                 </ul>
                             )}
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* ── Bottom bar ── */}

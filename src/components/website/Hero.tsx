@@ -49,7 +49,7 @@ export default function Hero() {
                                 </Link>
                             </Button>
                             <Button size="lg" variant="outline" className="rounded-full px-8 h-14 w-full sm:w-auto text-base border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-all" asChild>
-                                <Link href="/practice-areas">
+                                <Link href="/legal-services">
                                     {t("btn_learn_more")}
                                 </Link>
                             </Button>

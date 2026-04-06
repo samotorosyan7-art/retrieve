@@ -5,8 +5,13 @@
     "devCommand": "next dev",
     "redirects": [
         {
-            "source": "/en/legal-services",
-            "destination": "/practice-areas",
+            "source": "/en/practice-areas",
+            "destination": "/legal-services",
+            "permanent": true
+        },
+        {
+            "source": "/practice-areas",
+            "destination": "/legal-services",
             "permanent": true
         },
         {
