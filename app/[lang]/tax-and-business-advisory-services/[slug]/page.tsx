@@ -22,9 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang);
     
     // Check if we need to translate the title manually
-    const translatedTitle = (t.practice_titles as any)?.[slug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')] || 
-                          (t.practice_titles as any)?.[slug] || 
-                          metadata.title;
+    const slugKey = slug.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+    const translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slugKey) || ""] || metadata.title;
 
     if (translatedTitle && typeof translatedTitle === 'string') {
         metadata.title = { absolute: `${translatedTitle} - Retrieve` };
