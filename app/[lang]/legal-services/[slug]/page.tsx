@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang);
     
     // Check if we need to translate the title manually
-    const slugKey = slug.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
-    const translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slugKey) || ""] || metadata.title;
+    const slugKey = slug.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '');
+    const translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slugKey) || ""] || metadata.title;
 
     if (translatedTitle && typeof translatedTitle === 'string') {
         metadata.title = { absolute: `${translatedTitle} - Retrieve` };
@@ -73,8 +73,8 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                         <h1
                             className="text-4xl md:text-6xl font-bold text-white leading-tight"
                             dangerouslySetInnerHTML={{ 
-                                __html: content.isFallback && (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slug) || ""] 
-                                    ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slug) || ""]
+                                __html: content.isFallback && (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slug.toLowerCase().replace(/-law$/, '')) || ""] 
+                                    ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slug.toLowerCase().replace(/-law$/, '')) || ""]
                                     : content.title 
                             }}
                         />
