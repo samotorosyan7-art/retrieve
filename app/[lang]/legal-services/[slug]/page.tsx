@@ -18,7 +18,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    return getYoastMetadata(`/practice-areas/${slug}`, lang);
+    const t = dictionaries[lang] || dictionaries.en;
+    const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang);
+    
+    // Check if we need to translate the title manually
+    const translatedTitle = (t.practice_titles as any)?.[slug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')] || 
+                          (t.practice_titles as any)?.[slug] || 
+                          metadata.title;
+
+    if (translatedTitle && typeof translatedTitle === 'string') {
+        metadata.title = { absolute: `${translatedTitle} - Retrieve` };
+    }
+    
+    return metadata;
 }
 
 export const dynamic = "force-dynamic";
@@ -61,7 +73,11 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                         </div>
                         <h1
                             className="text-4xl md:text-6xl font-bold text-white leading-tight"
-                            dangerouslySetInnerHTML={{ __html: content.title }}
+                            dangerouslySetInnerHTML={{ 
+                                __html: content.isFallback && (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slug) || ""] 
+                                    ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-') === slug) || ""]
+                                    : content.title 
+                            }}
                         />
                     </div>
                 </div>
@@ -196,16 +212,21 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                     {t.other_services}
                                 </h3>
                                 <div className="space-y-2">
-                                    {sidebarAreas.map((area) => (
-                                        <Link
-                                            key={area.slug}
-                                            href={`${getCategoryRoute(area.category)}/${area.slug}`}
-                                            className="group flex items-center justify-between p-3 -mx-3 rounded-xl hover:bg-gray-50 transition-colors"
-                                        >
-                                            <span className="text-gray-700 font-semibold group-hover:text-[#005CB9] transition-colors">{area.title}</span>
-                                            <ArrowRight size={16} className="text-gray-300 group-hover:text-[#005CB9] group-hover:translate-x-1 transition-all" />
-                                        </Link>
-                                    ))}
+                                    {sidebarAreas.map((area) => {
+                                        const translatedAreaTitle = lang !== 'en' && (t.practice_titles as any)?.[area.title] 
+                                            ? (t.practice_titles as any)[area.title] 
+                                            : area.title;
+                                        return (
+                                            <Link
+                                                key={area.slug}
+                                                href={`${getCategoryRoute(area.category)}/${area.slug}`}
+                                                className="group flex items-center justify-between p-3 -mx-3 rounded-xl hover:bg-gray-50 transition-colors"
+                                            >
+                                                <span className="text-gray-700 font-semibold group-hover:text-[#005CB9] transition-colors">{translatedAreaTitle}</span>
+                                                <ArrowRight size={16} className="text-gray-300 group-hover:text-[#005CB9] group-hover:translate-x-1 transition-all" />
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
 
                                 <div className="mt-8 pt-6 border-t border-gray-100">

@@ -1,4 +1,4 @@
-import { WPPost, WPTeamMember, PortfolioItem, MenuItem, WPTag } from "@/types/wordpress";
+import { WPPost, WPTeamMember, MenuItem, WPTag } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
@@ -717,6 +717,17 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
     }
 }
 
+export interface PortfolioItem {
+    id?: number;
+    title: string;
+    slug: string;
+    image: string | null;
+    category?: string;
+    categories?: number[];
+    tags?: string[];
+    translatedTitle?: string;
+}
+
 export interface LegalUpdate {
     id: number;
     slug: string;
@@ -955,6 +966,7 @@ export interface PracticeAreaContent {
     whyChooseUs: string[];
     faqs: { question: string; answer: string }[];
     image?: string;
+    isFallback?: boolean;
 }
 
 /**
@@ -965,12 +977,17 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const url = `${baseUrl}practice-areas/${slug}/`;
         
-        let response = await fetch(url, {
+        // Add ?lang=hy for TranslatePress if needed, though they usually use subdirectories
+        const fetchUrl = lang === "am" ? `${WP_BASE_URL}/practice-areas/${slug}/?lang=hy` : url;
+
+        let response = await fetch(fetchUrl, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
 
+        let isFallback = false;
         if (!response.ok && lang && lang !== "en") {
+            isFallback = true;
             response = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
                 cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
@@ -987,8 +1004,13 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
             overview: $(".gdlr-core-title-item-caption").first().html()?.trim() || "",
             howWeCanHelp: [],
             whyChooseUs: [],
-            faqs: []
+            faqs: [],
+            isFallback: isFallback
         };
+
+        // If it's a fallback page (English content on AM route) and it's Armenian, 
+        // we check if we can partially translate it via the local amCommon dictionary.
+        // This is handled in the Page component now, but we prepare the data.
 
         // Lists for How we can help / Why choose us
         const lists = $(".gdlr-core-icon-list-item ul");
