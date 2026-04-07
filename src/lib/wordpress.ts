@@ -41,11 +41,19 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
 
         let html: string;
         try {
-            const response = await fetch(url, {
+            let response = await fetch(url, {
                 signal: controller.signal,
                 cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
+            if (!response.ok && lang !== "en") {
+                const fallbackUrl = `${WP_BASE_URL}${cleanPath === "/" ? "" : cleanPath}/`;
+                response = await fetch(fallbackUrl, {
+                    signal: controller.signal,
+                    cache: "no-store",
+                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                });
+            }
             clearTimeout(timeout);
             if (!response.ok) return {};
             html = await response.text();
@@ -957,10 +965,17 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const url = `${baseUrl}practice-areas/${slug}/`;
         
-        const response = await fetch(url, {
+        let response = await fetch(url, {
             cache: "no-store",
             headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
         });
+
+        if (!response.ok && lang && lang !== "en") {
+            response = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
+                cache: "no-store",
+                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            });
+        }
 
         if (!response.ok) return null;
 
