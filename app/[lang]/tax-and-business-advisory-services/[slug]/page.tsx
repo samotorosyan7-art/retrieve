@@ -51,6 +51,14 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
     const allAreas = await getPortfolioItems(lang);
     const sidebarAreas = allAreas.filter(a => a.slug !== slug).slice(0, 5);
 
+    // Override content if local Armenian translations exist
+    if (lang === 'am' && (t as any).practice_content?.[slug]) {
+        const local = (t as any).practice_content[slug];
+        content.overview = local.overview || content.overview;
+        content.howWeCanHelp = local.how_we_can_help || content.howWeCanHelp;
+        content.whyChooseUs = local.why_choose_us || content.whyChooseUs;
+    }
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
