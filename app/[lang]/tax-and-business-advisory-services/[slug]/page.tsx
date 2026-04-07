@@ -57,6 +57,9 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
         content.overview = local.overview || content.overview;
         content.howWeCanHelp = local.how_we_can_help || content.howWeCanHelp;
         content.whyChooseUs = local.why_choose_us || content.whyChooseUs;
+        if (local.faqs) {
+            content.faqs = local.faqs;
+        }
     }
 
     return (
