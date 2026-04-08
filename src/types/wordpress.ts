@@ -46,6 +46,7 @@ export interface WPTeamMember {
     name: string;
     position: string;
     image: string;
+    imageAlt?: string;
     link: string;
 }
 
@@ -54,6 +55,7 @@ export interface PortfolioItem {
     title: string;
     slug: string;
     image: string | null;
+    imageAlt?: string;
     category?: string;
     categories?: number[];
     tags?: string[];
@@ -69,6 +71,7 @@ export interface PersonnelDetails {
     name: string;
     position: string;
     image: string;
+    imageAlt?: string;
     biography: string;
     practiceAreas: string[];
     email?: string;

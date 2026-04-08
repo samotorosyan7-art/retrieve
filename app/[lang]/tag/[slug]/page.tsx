@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getTagBySlug, getPostsByTag, getLegalUpdates, getYoastMetadata } from "@/lib/wordpress";
@@ -91,6 +92,11 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
             <div className="relative bg-gradient-to-br from-[#003d7a] to-[#005CB9] pt-44 pb-12 overflow-hidden">
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
+                    <Breadcrumbs items={[
+                        { label: t.page_blog_title || "Insights & News", href: "/blog" },
+                        { label: tag.name }
+                    ]} />
+
                     <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-6">
                         <Tag size={13} />
                         {t.category}
@@ -123,7 +129,7 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
                                         <Link key={post.id} href={`/blog/${post.slug}`} className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all flex flex-col">
                                             <div className="relative h-52 bg-gray-100 overflow-hidden">
                                                 {post.image ? (
-                                                    <Image src={post.image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
+                                                    <Image src={post.image} alt={post.imageAlt || post.title.replace(/<[^>]+>/g, "")} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-[#005CB9]/20 bg-blue-50">
                                                         <FileText size={40} />
@@ -163,7 +169,7 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
                                     <Link key={r.id} href={`/blog/${r.slug}`} className="flex gap-4 group">
                                         <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 shrink-0 border border-gray-100 shadow-sm">
                                             {r.image ? (
-                                                <Image src={r.image} alt={r.title} fill className="object-cover group-hover:scale-110 transition-transform duration-300" sizes="64px" />
+                                                <Image src={r.image} alt={r.imageAlt || r.title.replace(/<[^>]+>/g, "")} fill className="object-cover group-hover:scale-110 transition-transform duration-300" sizes="64px" />
                                             ) : (
                                                 <FileText size={20} className="absolute inset-0 m-auto text-gray-200" />
                                             )}

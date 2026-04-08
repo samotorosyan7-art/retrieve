@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { notFound } from "next/navigation";
 import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
@@ -22,8 +23,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang);
     
     // Check if we need to translate the title manually
-    const slugKey = slug.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '');
-    const translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slugKey) || ""] || metadata.title;
+    let translatedTitle = (t as any).practice_content?.[slug]?.title;
+    
+    if (!translatedTitle) {
+        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '');
+        const slugKey = normalize(slug);
+        translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => normalize(k) === slugKey) || ""];
+    }
+
+    if (!translatedTitle) {
+        translatedTitle = metadata.title;
+    }
 
     if (translatedTitle && typeof translatedTitle === 'string') {
         metadata.title = { absolute: `${translatedTitle} - Retrieve` };
@@ -62,6 +72,12 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
         }
     }
 
+    const displayTitle = (t as any).practice_content?.[slug]?.title 
+        ? (t as any).practice_content[slug].title
+        : (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""] 
+            ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""]
+            : content.title;
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
@@ -71,10 +87,10 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <Link href="/tax-and-business-advisory-services" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">
-                        <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                        {t.back_to_practice_areas}
-                    </Link>
+                    <Breadcrumbs items={[
+                        { label: t.cat_tax_advisory_services || "Tax & Business Advisory Services", href: "/tax-and-business-advisory-services" },
+                        { label: displayTitle }
+                    ]} />
 
                     <div className="max-w-4xl">
                         <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-5">
@@ -83,11 +99,7 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                         </div>
                         <h1
                             className="text-4xl md:text-6xl font-bold text-white leading-tight"
-                            dangerouslySetInnerHTML={{ 
-                                __html: content.isFallback && (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slug.toLowerCase().replace(/-law$/, '')) || ""] 
-                                    ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/-law$/, '') === slug.toLowerCase().replace(/-law$/, '')) || ""]
-                                    : content.title 
-                            }}
+                            dangerouslySetInnerHTML={{ __html: displayTitle }}
                         />
                     </div>
                 </div>
@@ -103,7 +115,7 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                             <div className="relative w-full h-80 md:h-[400px] rounded-3xl overflow-hidden mb-12 shadow-xl border border-white">
                                 <Image
                                     src={content.image}
-                                    alt={content.title}
+                                    alt={content.imageAlt || content.title}
                                     fill
                                     className="object-cover"
                                     priority
@@ -223,9 +235,9 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                                 </h3>
                                 <div className="space-y-2">
                                     {sidebarAreas.map((area) => {
-                                        const translatedAreaTitle = lang !== 'en' && (t.practice_titles as any)?.[area.title] 
-                                            ? (t.practice_titles as any)[area.title] 
-                                            : area.title;
+                                        const translatedAreaTitle = (t as any).practice_content?.[area.slug]?.title 
+                                            || (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === area.slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""]
+                                            || area.title;
                                         return (
                                             <Link
                                                 key={area.slug}

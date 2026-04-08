@@ -188,6 +188,8 @@ export async function getBlogPosts(
                 slug: tag.slug,
             })) || [];
 
+            const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
+
             return {
                 id: p.id,
                 slug: p.slug,
@@ -196,6 +198,7 @@ export async function getBlogPosts(
                 content: p.content?.rendered ?? "",
                 date: p.date,
                 image,
+                imageAlt,
                 author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
                 readTime: Math.max(1, Math.ceil(wordCount / 200)),
                 link: p.link ?? "",
@@ -235,7 +238,9 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
         $(".gdlr-core-personnel-list-column").each((i, el) => {
             const name = $(el).find(".gdlr-core-personnel-list-title a").text().trim();
             const position = $(el).find(".gdlr-core-personnel-list-position").text().trim();
-            const rawImage = $(el).find(".gdlr-core-personnel-list-image img").attr("src");
+            const $img = $(el).find(".gdlr-core-personnel-list-image img");
+            const rawImage = $img.attr("src");
+            const imageAlt = $img.attr("alt") || "";
             const image = rawImage ? fixHttps(rawImage) : "";
             const link = $(el).find(".gdlr-core-personnel-list-title a").attr("href") || "";
             const httpsLink = fixHttps(link);
@@ -246,6 +251,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
                     name,
                     position,
                     image,
+                    imageAlt,
                     link: httpsLink,
                 });
             }
@@ -368,7 +374,9 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
 
             $(".gdlr-core-portfolio-item, .gdlr-core-column-service-item, .gdlr-core-item-list").each((i, el) => {
                 const title = $(el).find("h3, .gdlr-core-portfolio-title, .gdlr-core-column-service-title").text().trim();
-                const image = $(el).find("img").attr("src") || null;
+                const $img = $(el).find("img");
+                const image = $img.attr("src") || null;
+                const image_alt = $img.attr("alt") || "";
                 const link = $(el).find("a").attr("href");
                 
                 if (title && link && link !== "#") {
@@ -380,6 +388,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
                             slug: slug,
                             title: title,
                             image: image,
+                            imageAlt: image_alt,
                             category: category,
                             categories: [],
                             tags: []
@@ -445,8 +454,12 @@ export async function getPersonnelDetails(slug: string): Promise<import("@/types
         const position = $(".gdlr-core-title-item-caption").first().text().trim();
 
         // Extract image from the left column (gdlr-core-column-20)
-        let image = $(".gdlr-core-column-20 img").first().attr("src") ||
-            $("img[src*='wp-content/uploads']").first().attr("src") || "";
+        const $img = $(".gdlr-core-column-20 img").first().length 
+            ? $(".gdlr-core-column-20 img").first()
+            : $("img[src*='wp-content/uploads']").first();
+            
+        let image = $img.attr("src") || "";
+        const image_alt = $img.attr("alt") || "";
         
         if (image.startsWith("http://")) {
             image = image.replace("http://", "https://");
@@ -519,6 +532,7 @@ export async function getPersonnelDetails(slug: string): Promise<import("@/types
             name,
             position,
             image,
+            imageAlt: image_alt,
             biography,
             practiceAreas,
             email,
@@ -722,6 +736,7 @@ export interface PortfolioItem {
     title: string;
     slug: string;
     image: string | null;
+    imageAlt?: string;
     category?: string;
     categories?: number[];
     tags?: string[];
@@ -736,6 +751,7 @@ export interface LegalUpdate {
     content: string;
     date: string;
     image: string | null;
+    imageAlt?: string;
     author: string;
     readTime: number;
     link?: string;
@@ -789,6 +805,8 @@ export async function getLegalUpdates(
                 slug: tag.slug,
             })) || [];
 
+            const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
+
             return {
                 id: p.id,
                 slug: p.slug,
@@ -797,6 +815,7 @@ export async function getLegalUpdates(
                 content: p.content?.rendered ?? "",
                 date: p.date,
                 image,
+                imageAlt,
                 author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
                 readTime: Math.max(1, Math.ceil(wordCount / 200)),
                 tags,
@@ -846,6 +865,8 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             slug: tag.slug,
         })) || [];
 
+        const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
+
         return {
             id: p.id,
             slug: p.slug,
@@ -854,6 +875,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             content: p.content?.rendered ?? "",
             date: p.date,
             image,
+            imageAlt,
             author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
             readTime: Math.max(1, Math.ceil(wordCount / 200)),
             tags,
@@ -938,6 +960,8 @@ export async function getPostsByTag(
                 slug: tag.slug,
             })) || [];
 
+            const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
+
             return {
                 id: p.id,
                 slug: p.slug,
@@ -946,6 +970,7 @@ export async function getPostsByTag(
                 content: p.content?.rendered ?? "",
                 date: p.date,
                 image,
+                imageAlt,
                 author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
                 readTime: Math.max(1, Math.ceil(wordCount / 200)),
                 tags,
@@ -966,6 +991,7 @@ export interface PracticeAreaContent {
     whyChooseUs: string[];
     faqs: { question: string; answer: string }[];
     image?: string;
+    imageAlt?: string;
     isFallback?: boolean;
 }
 
@@ -1033,13 +1059,17 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         });
 
         // Find header image directly from the page
-        const img = $(".gdlr-core-portfolio-thumbnail img").attr("src") 
-                 || $(".gdlr-core-media-image img").attr("src") 
-                 || $(".gdlr-core-image-item img").attr("src") 
-                 || $("meta[property=\"og:image\"]").attr("content");
+        const $img = $(".gdlr-core-portfolio-thumbnail img").length
+            ? $(".gdlr-core-portfolio-thumbnail img").first()
+            : $(".gdlr-core-media-image img").length
+            ? $(".gdlr-core-media-image img").first()
+            : $(".gdlr-core-image-item img").first();
+            
+        const img = $img.attr("src") || $("meta[property=\"og:image\"]").attr("content");
         
         if (img) {
             data.image = img;
+            data.imageAlt = $img.attr("alt") || "";
         }
 
         return data;

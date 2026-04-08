@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { Mail, Phone, Linkedin, ArrowLeft, User, GraduationCap, Scale, MapPin } from "lucide-react";
 import { getPersonnelDetails, getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
@@ -37,13 +38,14 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
             {/* ── Thin top bar with back link ── */}
             <div className="bg-white border-b border-gray-100 pt-40 pb-0">
                 <div className="container mx-auto px-4 md:px-8 py-4">
-                    <Link
-                        href="/our-team"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#005CB9] transition-colors group"
-                    >
-                        <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                        Back to Our Team
-                    </Link>
+                    <Breadcrumbs 
+                        theme="light" 
+                        className="!mb-0" 
+                        items={[
+                            { label: "Our Team", href: "/our-team" },
+                            { label: personnel.name }
+                        ]} 
+                    />
                 </div>
             </div>
 
@@ -62,7 +64,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                 {personnel.image ? (
                                     <Image
                                         src={personnel.image}
-                                        alt={personnel.name}
+                                        alt={personnel.imageAlt || personnel.name}
                                         fill
                                         className="object-cover object-top"
                                         priority

@@ -26,7 +26,7 @@ export default function PortfolioCard({ item, className }: PortfolioCardProps) {
             <div className="relative h-64 overflow-hidden">
                 <Image
                     src={item.image}
-                    alt={item.title}
+                    alt={item.imageAlt || item.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -47,9 +47,16 @@ export default function PortfolioCard({ item, className }: PortfolioCardProps) {
                 {/* Title + Learn More Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-white font-bold text-xl mb-3 group-hover:text-white transition-colors">
-                        {t(`practice_titles.${item.title}`) !== `practice_titles.${item.title}` 
-                            ? t(`practice_titles.${item.title}`) 
-                            : item.title}
+                        {(() => {
+                            const content = t("practice_content", { returnObjects: true }) as Record<string, any>;
+                            if (content?.[item.slug]?.title) return content[item.slug].title;
+                            
+                            const titles = t("practice_titles", { returnObjects: true }) as Record<string, string>;
+                            const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '');
+                            const slugKey = normalize(item.slug);
+                            const match = Object.keys(titles || {}).find(k => normalize(k) === slugKey);
+                            return match ? titles[match] : item.title;
+                        })()}
                     </h3>
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-primary rounded-full px-4 py-1.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                         {t("learn_more") || "Learn More"} <ArrowRight size={12} />

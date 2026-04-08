@@ -236,7 +236,8 @@
     "cat_tax_advisory_services": "Tax & Business Advisory Services",
     "practice_categories": {
         "Legal services": "Legal Services",
-        "Tax & Business advisory services": "Tax & Business Advisory Services"
+        "Tax & Business advisory services": "Tax & Business Advisory Services",
+        "Tax Advisory": "Tax Advisory"
     },
     "learn_more": "Learn More",
     "legal_updates_badge": "Regulatory Bulletins",

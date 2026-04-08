@@ -60,7 +60,7 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                                         {member.image ? (
                                             <Image
                                                 src={member.image}
-                                                alt={member.name}
+                                                alt={member.imageAlt || member.name}
                                                 fill
                                                 className="object-cover object-top transition-transform duration-600 group-hover:scale-105"
                                                 sizes="(max-width: 768px) 100vw, 33vw"

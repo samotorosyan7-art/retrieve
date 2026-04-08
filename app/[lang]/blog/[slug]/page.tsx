@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
@@ -52,10 +53,10 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
             <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-12">
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <Link href="/blog" className="inline-flex items-center gap-2 text-blue-200 hover:text-white text-sm font-medium mb-8 group transition-colors">
-                        <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                        {t.blog_back_to_blog}
-                    </Link>
+                    <Breadcrumbs items={[
+                        { label: t.page_blog_title || "Insights & News", href: "/blog" },
+                        { label: post.title }
+                    ]} />
 
                     <div className="max-w-3xl">
                         <div className="flex items-center gap-4 text-blue-200 text-sm mb-5">
@@ -84,7 +85,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         {/* Featured image */}
                         {post.image && (
                             <div className="relative w-full h-72 md:h-96 rounded-3xl overflow-hidden mb-10 shadow-lg">
-                                <Image src={post.image} alt={post.title.replace(/<[^>]+>/g, "")} fill className="object-cover" priority />
+                                <Image src={post.image} alt={post.imageAlt || post.title.replace(/<[^>]+>/g, "")} fill className="object-cover" priority />
                             </div>
                         )}
 
@@ -150,7 +151,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                         <Link key={r.id} href={`/blog/${r.slug}`} className="flex gap-3 group">
                                             <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[#005CB9]/10 shrink-0">
                                                 {r.image
-                                                    ? <Image src={r.image} alt={r.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="56px" />
+                                                    ? <Image src={r.image} alt={r.imageAlt || r.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="56px" />
                                                     : <FileText size={20} className="absolute inset-0 m-auto text-[#005CB9]/30" />
                                                 }
                                             </div>

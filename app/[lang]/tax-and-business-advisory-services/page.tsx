@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import PracticeAreasGrid from "@/components/website/PracticeAreasGrid";
 import { getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
 import amCommon from "@/locales/am/common.json";
@@ -28,6 +29,12 @@ export default async function TaxAdvisoryServicesPage() {
 
     return (
         <div className="pt-40 min-h-screen bg-gray-50">
+            <div className="container mx-auto px-4 md:px-8 mb-8">
+                <Breadcrumbs 
+                    items={[{ label: (dictionaries[lang] as any).cat_tax_advisory_services || "Tax & Business Advisory Services" }]} 
+                    theme="light"
+                />
+            </div>
             <PracticeAreasGrid items={sortedItems} activeCategory="Tax & Business advisory services" />
         </div>
     );
