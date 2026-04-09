@@ -73,7 +73,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
         const normalizedPath = nextPath.startsWith("/") ? nextPath : `/${nextPath}`;
         // Ensure path ends without slash for consistent concatenation, then add it where needed
         const pathSuffix = normalizedPath.replace(/\/$/, "");
-        const finalCanonical = `${BASE_URL}/${lang}${pathSuffix}/`.replace(/\/+$/, "/");
+        const finalCanonical = `${BASE_URL}/${lang}${pathSuffix}`.replace(/\/+$/, "");
 
         return {
             title: title ? { absolute: title } : undefined,
@@ -81,10 +81,10 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             alternates: {
                 canonical: finalCanonical,
                 languages: {
-                    "en": `${BASE_URL}/en${pathSuffix}/`.replace(/\/+$/, "/"),
-                    "am": `${BASE_URL}/am${pathSuffix}/`.replace(/\/+$/, "/"),
-                    "ru": `${BASE_URL}/ru${pathSuffix}/`.replace(/\/+$/, "/"),
-                    "x-default": `${BASE_URL}/en${pathSuffix}/`.replace(/\/+$/, "/"),
+                    "en": `${BASE_URL}/en${pathSuffix}`.replace(/\/+$/, ""),
+                    "am": `${BASE_URL}/am${pathSuffix}`.replace(/\/+$/, ""),
+                    "ru": `${BASE_URL}/ru${pathSuffix}`.replace(/\/+$/, ""),
+                    "x-default": `${BASE_URL}/en${pathSuffix}`.replace(/\/+$/, ""),
                 },
             },
             openGraph: {

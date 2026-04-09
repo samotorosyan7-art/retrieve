@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     alternates: {
         canonical: "/",
         languages: {
-            "en": "/en/",
-            "am": "/am/",
-            "ru": "/ru/",
-            "x-default": "/en/",
+            "en": "/en",
+            "am": "/am",
+            "ru": "/ru",
+            "x-default": "/en",
         },
     },
 };
