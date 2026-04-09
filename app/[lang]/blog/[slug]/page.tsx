@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
     const cookieStore = await cookies();
     const lang = (await cookieStore.get("i18next"))?.value || "en";
-    return getYoastMetadata(`/${slug}`, lang);
+    return getYoastMetadata(`/${slug}`, lang, `/blog/${slug}`);
 }
 
 export const dynamic = "force-dynamic";

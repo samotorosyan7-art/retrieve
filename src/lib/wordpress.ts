@@ -29,7 +29,7 @@ function fixHttps(url: string | null | undefined): string {
  * Scrape the WordPress page <head> for Yoast SEO data and convert it to Next.js Metadata.
  * Falls back to {} gracefully if WP is slow or unavailable.
  */
-export async function getYoastMetadata(path: string, lang: string = "en"): Promise<import("next").Metadata> {
+export async function getYoastMetadata(path: string, lang: string = "en", overridePath?: string): Promise<import("next").Metadata> {
     try {
         const baseUrl = lang === "en" ? WP_BASE_URL : `${WP_BASE_URL}/${lang}`;
         const cleanPath = path.startsWith("/") ? path : `/${path}`;
@@ -67,25 +67,24 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
         const title = $("title").text() || $("meta[property='og:title']").attr("content");
         const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
         const ogImage = $("meta[property='og:image']").attr("content");
-        const canonical = $("link[rel='canonical']").attr("href");
-
-        const fixedCanonical = canonical
-            ? canonical.replace(/(www\.)?wp\.retrieve\.am/, "retrieve.am")
-            : `https://www.retrieve.am${cleanPath}`;
-
+        
         const BASE_URL = "https://www.retrieve.am";
-        const pathSuffix = cleanPath === "/" ? "/" : cleanPath;
+        const nextPath = overridePath || path;
+        const normalizedPath = nextPath.startsWith("/") ? nextPath : `/${nextPath}`;
+        // Ensure path ends without slash for consistent concatenation, then add it where needed
+        const pathSuffix = normalizedPath.replace(/\/$/, "");
+        const finalCanonical = `${BASE_URL}/${lang}${pathSuffix}/`.replace(/\/+$/, "/");
 
         return {
             title: title ? { absolute: title } : undefined,
             description: description || undefined,
             alternates: {
-                canonical: fixedCanonical,
+                canonical: finalCanonical,
                 languages: {
-                    "en": `${BASE_URL}/en${pathSuffix}`,
-                    "am": `${BASE_URL}/am${pathSuffix}`,
-                    "ru": `${BASE_URL}/ru${pathSuffix}`,
-                    "x-default": `${BASE_URL}/en${pathSuffix}`,
+                    "en": `${BASE_URL}/en${pathSuffix}/`.replace(/\/+$/, "/"),
+                    "am": `${BASE_URL}/am${pathSuffix}/`.replace(/\/+$/, "/"),
+                    "ru": `${BASE_URL}/ru${pathSuffix}/`.replace(/\/+$/, "/"),
+                    "x-default": `${BASE_URL}/en${pathSuffix}/`.replace(/\/+$/, "/"),
                 },
             },
             openGraph: {
@@ -94,7 +93,7 @@ export async function getYoastMetadata(path: string, lang: string = "en"): Promi
                 title: title || undefined,
                 description: description || undefined,
                 images: ogImage ? [fixHttps(ogImage)] : undefined,
-                url: fixedCanonical,
+                url: finalCanonical,
             },
             twitter: {
                 card: "summary_large_image",

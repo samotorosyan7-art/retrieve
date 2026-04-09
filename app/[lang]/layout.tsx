@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.retrieve.am"),
     title: {
         default: "Retrieve Legal & Tax | Law Firm in Armenia",
         template: "%s | Retrieve Legal & Tax"
@@ -19,12 +20,12 @@ export const metadata: Metadata = {
         apple: "/logo.png",
     },
     alternates: {
-        canonical: "https://www.retrieve.am/en/",
+        canonical: "/",
         languages: {
-            "en": "https://www.retrieve.am/en/",
-            "am": "https://www.retrieve.am/am/",
-            "ru": "https://www.retrieve.am/ru/",
-            "x-default": "https://www.retrieve.am/en/",
+            "en": "/en/",
+            "am": "/am/",
+            "ru": "/ru/",
+            "x-default": "/en/",
         },
     },
 };

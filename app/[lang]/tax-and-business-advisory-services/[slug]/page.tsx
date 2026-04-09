@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
     const t = dictionaries[lang] || dictionaries.en;
-    const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang);
+    const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang, `/tax-and-business-advisory-services/${slug}`);
     
     // Check if we need to translate the title manually
     let translatedTitle = (t as any).practice_content?.[slug]?.title;
