@@ -7,21 +7,23 @@ export async function generateSitemaps() {
   return [{ id: 'en' }, { id: 'ru' }, { id: 'am' }];
 }
 
-export default async function sitemap({
-  id,
-}: {
-  id: string
-}): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap(
+  props: any
+): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.retrieve.am'
-  // Use id directly as lang, fallback to en if undefined
-  const lang = id || "en"
+  
+  // In Next.js 15, sitemap props or its properties can be promises
+  const resolvedProps = await props;
+  const idValue = resolvedProps?.id || resolvedProps;
+  const id = await idValue;
+  const lang = typeof id === 'string' ? id : "en";
 
   let allPages: MetadataRoute.Sitemap = []
 
   // Global root (redirects or canonical base). Only add on 'en' to avoid duplication in each sitemap.
   if (lang === "en") {
     allPages.push({
-      url: `${baseUrl}/`,
+      url: `${baseUrl}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 1,
