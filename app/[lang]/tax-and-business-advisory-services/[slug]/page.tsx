@@ -20,19 +20,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const cookieStore = await cookies();
     const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
     const t = dictionaries[lang] || dictionaries.en;
+    
+    // 1. Fetch metadata from WordPress
     const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang, `/tax-and-business-advisory-services/${slug}`);
     
-    // Check if we need to translate the title manually
+    // 2. If WordPress successfully provided a title, use the metadata as is
+    if (metadata.title) {
+        return metadata;
+    }
+
+    // 3. Fallback: If WordPress didn't provide a title, use local translations
     let translatedTitle = (t as any).practice_content?.[slug]?.title;
     
     if (!translatedTitle) {
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '');
         const slugKey = normalize(slug);
         translatedTitle = (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => normalize(k) === slugKey) || ""];
-    }
-
-    if (!translatedTitle) {
-        translatedTitle = metadata.title;
     }
 
     if (translatedTitle && typeof translatedTitle === 'string') {
@@ -137,7 +140,6 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                                         className="overflow-x-auto prose prose-lg max-w-none text-gray-700
                                             prose-headings:font-extrabold prose-headings:text-gray-900
                                             prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-                                            prose-a:text-[#005CB9] prose-a:no-underline hover:prose-a:underline
                                             prose-strong:text-gray-900
                                             prose-ul:list-disc prose-ul:pl-5
                                             prose-ol:list-decimal prose-ol:pl-5

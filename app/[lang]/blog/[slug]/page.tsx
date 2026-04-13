@@ -97,7 +97,6 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                     prose-headings:font-extrabold prose-headings:text-gray-900
                                     prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
                                     prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                                    prose-a:text-[#005CB9] prose-a:no-underline hover:prose-a:underline
                                     prose-strong:text-gray-900
                                     prose-ul:list-disc prose-ul:pl-5
                                     prose-ol:list-decimal prose-ol:pl-5

@@ -46,25 +46,61 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
-            if (!response.ok && lang !== "en") {
-                const fallbackUrl = `${WP_BASE_URL}${cleanPath === "/" ? "" : cleanPath}/`;
-                response = await fetch(fallbackUrl, {
+
+            // Fallback 1: If 404 and path has a subdirectory (like /practice-areas/slug), try the root slug (/slug)
+            if (!response.ok && cleanPath.split("/").filter(Boolean).length > 1) {
+                const slug = cleanPath.split("/").filter(Boolean).pop();
+                const fallbackRootUrl = `${baseUrl}/${slug}/`;
+                const fallbackResponse = await fetch(fallbackRootUrl, {
                     signal: controller.signal,
                     cache: "no-store",
                     headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
                 });
+                if (fallbackResponse.ok) {
+                    response = fallbackResponse;
+                }
             }
+
+            // Fallback 2: If still not OK and lang !== "en", try the English version
+            if (!response.ok && lang !== "en") {
+                const englishBaseUrl = WP_BASE_URL;
+                const fallbackUrl = `${englishBaseUrl}${cleanPath === "/" ? "" : cleanPath}/`;
+                const fallbackResponse = await fetch(fallbackUrl, {
+                    signal: controller.signal,
+                    cache: "no-store",
+                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                });
+                
+                if (fallbackResponse.ok) {
+                    response = fallbackResponse;
+                } else if (cleanPath.split("/").filter(Boolean).length > 1) {
+                    // Also try the root slug in English
+                    const slug = cleanPath.split("/").filter(Boolean).pop();
+                    const engRootUrl = `${englishBaseUrl}/${slug}/`;
+                    const engRootResponse = await fetch(engRootUrl, {
+                        signal: controller.signal,
+                        cache: "no-store",
+                        headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                    });
+                    if (engRootResponse.ok) response = engRootResponse;
+                }
+            }
+
             clearTimeout(timeout);
             if (!response.ok) return {};
             html = await response.text();
-        } catch {
+        } catch (err) {
             clearTimeout(timeout);
+            console.error(`Fetch error in getYoastMetadata for ${url}:`, err);
             return {};
         }
 
         const $ = cheerio.load(html);
 
-        const title = $("title").text() || $("meta[property='og:title']").attr("content");
+        const title = $("title").text() || 
+                      $("meta[property='og:title']").attr("content") || 
+                      $("meta[name='twitter:title']").attr("content") ||
+                      $("h1").first().text();
         const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
         const ogImage = $("meta[property='og:image']").attr("content");
         
@@ -1011,12 +1047,38 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         });
 
         let isFallback = false;
-        if (!response.ok && lang && lang !== "en") {
-            isFallback = true;
-            response = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
+
+        // Try root slug if practice-areas path fails
+        if (!response.ok) {
+            const rootUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/${slug}/` : `${WP_BASE_URL}/${slug}/`;
+            const rootResponse = await fetch(rootUrl, {
                 cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
+            if (rootResponse.ok) {
+                response = rootResponse;
+            }
+        }
+
+        if (!response.ok && lang && lang !== "en") {
+            isFallback = true;
+            // Try English version
+            let engResponse = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
+                cache: "no-store",
+                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            });
+            
+            if (!engResponse.ok) {
+                // Try English root
+                engResponse = await fetch(`${WP_BASE_URL}/${slug}/`, {
+                    cache: "no-store",
+                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                });
+            }
+            
+            if (engResponse.ok) {
+                response = engResponse;
+            }
         }
 
         if (!response.ok) return null;
