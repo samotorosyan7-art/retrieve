@@ -70,7 +70,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                     cache: "no-store",
                     headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
                 });
-                
+
                 if (fallbackResponse.ok) {
                     response = fallbackResponse;
                 } else if (cleanPath.split("/").filter(Boolean).length > 1) {
@@ -97,13 +97,13 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
 
         const $ = cheerio.load(html);
 
-        const title = $("title").text() || 
-                      $("meta[property='og:title']").attr("content") || 
-                      $("meta[name='twitter:title']").attr("content") ||
-                      $("h1").first().text();
+        const title = $("title").text() ||
+            $("meta[property='og:title']").attr("content") ||
+            $("meta[name='twitter:title']").attr("content") ||
+            $("h1").first().text();
         const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
         const ogImage = $("meta[property='og:image']").attr("content");
-        
+
         const BASE_URL = "https://www.retrieve.am";
         const nextPath = overridePath || path;
         const normalizedPath = nextPath.startsWith("/") ? nextPath : `/${nextPath}`;
@@ -322,7 +322,7 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
 
         // Find the Practice Areas menu item
         let practiceAreasLi: any = null;
-        
+
         $(".sf-menu > li").each((_, el) => {
             if ($(el).children("a").text().trim().includes("Practice Areas")) {
                 practiceAreasLi = el;
@@ -350,7 +350,7 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
 
                 if (catName) {
                     let sortedChildren = [...children];
-                    
+
                     if (catName.includes("Legal")) {
                         const orderSlugs = [
                             "corporate-business-law",
@@ -365,10 +365,10 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
                         sortedChildren.sort((a, b) => {
                             const aSlug = a.url.split('/').filter(Boolean).pop() || "";
                             const bSlug = b.url.split('/').filter(Boolean).pop() || "";
-                            
+
                             const aIdx = orderSlugs.indexOf(aSlug);
                             const bIdx = orderSlugs.indexOf(bSlug);
-                            
+
                             if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
                             if (aIdx !== -1) return -1;
                             if (bIdx !== -1) return 1;
@@ -413,7 +413,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
                 const image = $img.attr("src") || null;
                 const image_alt = $img.attr("alt") || "";
                 const link = $(el).find("a").attr("href");
-                
+
                 if (title && link && link !== "#") {
                     // Extract slug from link: https://wp.retrieve.am/practice-areas/corporate-business-law/ => corporate-business-law
                     const slug = link.replace(/\/$/, "").split("/").pop() || "";
@@ -489,13 +489,13 @@ export async function getPersonnelDetails(slug: string): Promise<import("@/types
         const position = $(".gdlr-core-title-item-caption").first().text().trim();
 
         // Extract image from the left column (gdlr-core-column-20)
-        const $img = $(".gdlr-core-column-20 img").first().length 
+        const $img = $(".gdlr-core-column-20 img").first().length
             ? $(".gdlr-core-column-20 img").first()
             : $("img[src*='wp-content/uploads']").first();
-            
+
         let image = $img.attr("src") || "";
         const image_alt = $img.attr("alt") || "";
-        
+
         if (image.startsWith("http://")) {
             image = image.replace("http://", "https://");
         }
@@ -807,6 +807,7 @@ export async function getLegalUpdates(
         url.searchParams.append("per_page", perPage.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
@@ -872,12 +873,14 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         const url = new URL(`${WP_API_URL}/posts`);
         url.searchParams.append("slug", slug);
         url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         } else if (lang) {
             url.searchParams.append("lang", lang);
         }
 
+        console.log("url", url);
         const response = await fetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return null;
@@ -964,6 +967,7 @@ export async function getPostsByTag(
         url.searchParams.append("per_page", perPage.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
@@ -1037,7 +1041,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const url = `${baseUrl}practice-areas/${slug}/`;
-        
+
         // Add ?lang=hy for TranslatePress if needed, though they usually use subdirectories
         const fetchUrl = lang === "am" ? `${WP_BASE_URL}/practice-areas/${slug}/?lang=hy` : url;
 
@@ -1067,7 +1071,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
                 cache: "no-store",
                 headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
             });
-            
+
             if (!engResponse.ok) {
                 // Try English root
                 engResponse = await fetch(`${WP_BASE_URL}/${slug}/`, {
@@ -1075,7 +1079,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
                     headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
                 });
             }
-            
+
             if (engResponse.ok) {
                 response = engResponse;
             }
@@ -1123,11 +1127,11 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const $img = $(".gdlr-core-portfolio-thumbnail img").length
             ? $(".gdlr-core-portfolio-thumbnail img").first()
             : $(".gdlr-core-media-image img").length
-            ? $(".gdlr-core-media-image img").first()
-            : $(".gdlr-core-image-item img").first();
-            
+                ? $(".gdlr-core-media-image img").first()
+                : $(".gdlr-core-image-item img").first();
+
         const img = $img.attr("src") || $("meta[property=\"og:image\"]").attr("content");
-        
+
         if (img) {
             data.image = img;
             data.imageAlt = $img.attr("alt") || "";
