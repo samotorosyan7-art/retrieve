@@ -162,10 +162,17 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
                                         <User size={20} className="text-[#005CB9]" />
                                     </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">Biography</h2>
+                                    <h2 className="text-xl font-extrabold text-gray-900">Biography</h2>
                                 </div>
                                 <div
-                                    className="prose prose-lg max-w-none text-gray-600 leading-relaxed [&_p]:mb-4 [&_strong]:text-gray-900 [&_ul]:list-disc [&_ul]:pl-5"
+                                    className="prose prose-lg max-w-none text-gray-600 leading-relaxed
+                                        prose-headings:font-extrabold prose-headings:text-gray-900
+                                        prose-h2:text-xl prose-h3:text-base
+                                        prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
+                                        prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
+                                        prose-li:mb-2 prose-li:pl-2
+                                        prose-li:marker:text-[#005CB9]
+                                        [&_p]:mb-4 [&_strong]:text-gray-900"
                                     dangerouslySetInnerHTML={{ __html: personnel.biography }}
                                 />
                             </div>

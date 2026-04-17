@@ -150,6 +150,7 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
         const url = new URL(`${WP_API_URL}/posts`);
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
 
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
@@ -185,6 +186,7 @@ export async function getBlogPosts(
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
