@@ -132,15 +132,14 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
 
                             {content.overview && (
                                 <section>
-                                    <h2 className="text-xl font-extrabold text-gray-900 mb-6 flex items-center gap-3">
+                                    <h2 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3">
                                         <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
                                         {t.overview}
                                     </h2>
                                     <div 
                                         className="overflow-x-auto prose prose-lg max-w-none text-gray-700
                                             prose-headings:font-extrabold prose-headings:text-gray-900
-                                            prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
-                                            prose-h3:text-base prose-h3:mt-8 prose-h3:mb-3
+                                            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
                                             prose-strong:text-gray-900
                                             prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
                                             prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6

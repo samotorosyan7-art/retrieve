@@ -71,6 +71,62 @@ body {
   margin: 0;
 }
 
+/* Blog single page heading sizes */
+.blog-content h2 {
+  font-size: 20px !important;
+  line-height: 1.4;
+}
+
+.blog-content h3 {
+  font-size: 16px !important;
+  line-height: 1.5;
+}
+
+/* Prose List Styles — override Tailwind Preflight reset (list-style: none) */
+.prose ul {
+  list-style-type: disc !important;
+  padding-left: 1.625em !important;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  padding-left: 1.625em !important;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 0.375em;
+}
+
+.prose li::marker {
+  color: #005CB9;
+}
+
+/* Nested lists */
+.prose ul ul,
+.prose ol ul {
+  list-style-type: circle !important;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose ul ul ul,
+.prose ol ul ul {
+  list-style-type: square !important;
+}
+
+.prose ul ol,
+.prose ol ol {
+  list-style-type: lower-alpha !important;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
 /* Ensure links in WordPress content are always blue and visually distinct */
 .prose a {
   color: #005CB9 !important;

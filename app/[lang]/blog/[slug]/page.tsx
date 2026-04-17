@@ -93,7 +93,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 overflow-x-auto">
                             <div
                                 className="
-                                    prose prose-lg max-w-none text-gray-700
+                                    blog-content prose prose-lg max-w-none text-gray-700
                                     prose-headings:font-extrabold prose-headings:text-gray-900
                                     prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
                                     prose-h3:text-base prose-h3:mt-8 prose-h3:mb-3
