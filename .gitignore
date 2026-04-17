@@ -4,3 +4,4 @@ node_modules/
 .turbo/
 package-lock.json
 .vercel
+.claude/
