@@ -211,9 +211,10 @@ export default async function BlogPage({
 
                                     {/* Excerpt */}
                                     {post.excerpt && (
-                                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4 flex-1">
-                                            {post.excerpt}
-                                        </p>
+                                        <p 
+                                            className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4 flex-1"
+                                            dangerouslySetInnerHTML={{ __html: post.excerpt.replace(/&nbsp;/g, " ") }}
+                                        />
                                     )}
 
                                     {/* CTA row */}

@@ -56,7 +56,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         { label: post.title }
                     ]} />
 
-                    <div className="max-w-3xl">
+                    <div className="max-w-5xl">
                         <div className="flex items-center gap-4 text-blue-200 text-sm mb-5">
                             <span className="flex items-center gap-1.5">
                                 <Calendar size={13} /> {formatDate(post.date, lang)}
@@ -66,7 +66,8 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             </span>
                         </div>
                         <h1
-                            className="text-3xl md:text-5xl font-extrabold text-white leading-tight break-words"
+                            className="text-2xl md:text-4xl font-extrabold text-white leading-tight break-words"
+                            title={post.title.replace(/<[^>]+>/g, "")}
                             dangerouslySetInnerHTML={{ __html: post.title }}
                         />
                     </div>
@@ -157,7 +158,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-xs text-gray-400 mb-1">{formatDate(r.date, lang)}</div>
                                                 <div
-                                                    className="text-sm font-bold text-gray-800 group-hover:text-[#005CB9] transition-colors line-clamp-2 leading-snug"
+                                                    className="text-sm font-bold text-gray-800 group-hover:text-[#005CB9] transition-colors leading-snug"
                                                     dangerouslySetInnerHTML={{ __html: r.title }}
                                                 />
                                             </div>

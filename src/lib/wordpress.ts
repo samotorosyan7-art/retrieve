@@ -230,8 +230,8 @@ export async function getBlogPosts(
             return {
                 id: p.id,
                 slug: p.slug,
-                title: p.title?.rendered ?? "",
-                excerpt: rawExcerpt,
+                title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;/g, "'").replace(/&#8211;/g, "–") ?? "",
+                excerpt: rawExcerpt.replace(/&nbsp;/g, " "),
                 content: p.content?.rendered ?? "",
                 date: p.date,
                 image,
@@ -910,8 +910,8 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         return {
             id: p.id,
             slug: p.slug,
-            title: p.title?.rendered ?? "",
-            excerpt: rawExcerpt,
+            title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;/g, "'").replace(/&#8211;/g, "–") ?? "",
+            excerpt: rawExcerpt.replace(/&nbsp;/g, " "),
             content: p.content?.rendered ?? "",
             date: p.date,
             image,

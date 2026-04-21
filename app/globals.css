@@ -148,3 +148,20 @@ body {
   color: #004791 !important;
   text-decoration: none !important;
 }
+
+/* Modern Text Wrapping & Hyphenation — Disabled due to issues with AM/RU */
+/* h1, h2, h3, h4, h5, h6 { text-wrap: balance; } */
+/* .prose p, .prose li { text-wrap: pretty; } */
+
+.break-words {
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+}
+
+/* Ensure long words in headings don't break layout but wrap naturally */
+h1.break-words, h2.break-words {
+  hyphens: none;
+}
