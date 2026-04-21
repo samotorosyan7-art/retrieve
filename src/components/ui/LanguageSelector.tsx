@@ -45,9 +45,26 @@ export default function LanguageSelector() {
         // Push router to new lang path
         let newPathname = pathname || "/";
         const parts = newPathname.split("/");
+        
         if (parts.length > 1 && ["en", "ru", "am"].includes(parts[1])) {
             parts[1] = lang.code;
-            newPathname = parts.join("/") || "/";
+            
+            // Special handling for detail pages to avoid 404s when slugs are not shared across languages
+            if (parts.length > 3) {
+                if (parts[2] === "blog") {
+                    newPathname = `/${lang.code}/blog`;
+                } else if (parts[2] === "personnel") {
+                    newPathname = `/${lang.code}/our-team`;
+                } else if (parts[2] === "legal-services") {
+                    newPathname = `/${lang.code}/legal-services`;
+                } else if (parts[2] === "tax-and-business-advisory-services") {
+                    newPathname = `/${lang.code}/tax-and-business-advisory-services`;
+                } else {
+                    newPathname = parts.join("/");
+                }
+            } else {
+                newPathname = parts.join("/") || "/";
+            }
         } else {
             // Unlikely to hit this if middleware is strictly rewriting, but fallback
             newPathname = `/${lang.code}${newPathname}`;

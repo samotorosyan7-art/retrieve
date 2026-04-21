@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 import Image from "next/image";
@@ -9,13 +9,11 @@ import { getPersonnelDetails, getTeamMembers, getYoastMetadata } from "@/lib/wor
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
 
 interface PersonnelPageProps {
-    params: { slug: string };
+    params: Promise<{ slug: string; lang: string }>;
 }
 
 export async function generateMetadata({ params }: PersonnelPageProps) {
-    const { slug } = await params;
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
+    const { slug, lang } = await params;
     return getYoastMetadata(`/personnel/${slug}`, lang);
 }
 
@@ -23,10 +21,12 @@ export async function generateMetadata({ params }: PersonnelPageProps) {
 export const dynamic = "force-dynamic";
 
 export default async function PersonnelPage({ params }: PersonnelPageProps) {
-    const { slug } = await params;
+    const { slug, lang } = await params;
     const personnel = await getPersonnelDetails(slug);
 
-    if (!personnel) notFound();
+    if (!personnel) {
+        redirect(`/${lang}/our-team`);
+    }
 
     const linkedinUrl = personnel.linkedin
         ? personnel.linkedin.startsWith("http") ? personnel.linkedin : `https://${personnel.linkedin}`
@@ -79,7 +79,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
 
                                 {/* Name + position on photo */}
                                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                                    <h1 className="text-2xl font-extrabold text-white leading-tight mb-1">
+                                    <h1 className="text-2xl font-extrabold text-white leading-tight mb-1 break-words">
                                         {personnel.name}
                                     </h1>
                                     {personnel.position && (
@@ -165,7 +165,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <h2 className="text-2xl font-extrabold text-gray-900">Biography</h2>
                                 </div>
                                 <div
-                                    className="prose prose-lg max-w-none text-gray-600 leading-relaxed
+                                    className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words
                                         prose-headings:font-extrabold prose-headings:text-gray-900
 
                                         prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6

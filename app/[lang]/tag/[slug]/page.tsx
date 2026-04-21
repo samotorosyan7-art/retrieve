@@ -83,6 +83,8 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
     const tag = await getTagBySlug(slug, lang);
     if (!tag) notFound();
 
+    const translatedTagName = (t as any).tag_names?.[tag.slug] || tag.name;
+
     const { posts, total, totalPages } = await getPostsByTag(tag.id, currentPage, PER_PAGE, lang);
     const { posts: recent } = await getLegalUpdates(1, 5, lang);
 
@@ -94,7 +96,7 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Breadcrumbs items={[
                         { label: t.page_blog_title || "Insights & News", href: "/blog" },
-                        { label: tag.name }
+                        { label: translatedTagName }
                     ]} />
 
                     <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-6">
@@ -102,7 +104,7 @@ export default async function TagArchivePage({ params, searchParams }: Props) {
                         {t.category}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-                        {tag.name}
+                        {translatedTagName}
                     </h1>
                     {total > 0 && (
                         <p className="text-blue-100/80 text-lg font-medium">

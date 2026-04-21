@@ -74,11 +74,19 @@ body {
 /* Blog single page heading sizes */
 .blog-content h2 {
   font-size: 20px !important;
+  font-weight: 800 !important;
   line-height: 1.4;
 }
 
 .blog-content h3 {
   font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.5;
+}
+
+.blog-content h4 {
+  font-size: 14px !important;
+  font-weight: 800 !important;
   line-height: 1.5;
 }
 

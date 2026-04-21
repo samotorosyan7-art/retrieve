@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide-react";
 import en from "@/locales/en/common.json";
@@ -12,15 +12,13 @@ import ru from "@/locales/ru/common.json";
 const dictionaries = { en, am, ru };
 
 interface Props {
-    params: { slug: string };
+    params: Promise<{ slug: string; lang: string }>;
 }
 
 
 
 export async function generateMetadata({ params }: Props) {
-    const { slug } = await params;
-    const cookieStore = await cookies();
-    const lang = (await cookieStore.get("i18next"))?.value || "en";
+    const { slug, lang } = await params;
     return getYoastMetadata(`/${slug}`, lang, `/blog/${slug}`);
 }
 
@@ -34,13 +32,13 @@ function formatDate(iso: string, lang: string = "en") {
 }
 
 export default async function LegalUpdateSinglePage({ params }: Props) {
-    const { slug } = await params;
-    const cookieStore = await cookies();
-    const lang = (await cookieStore.get("i18next"))?.value || "en";
+    const { slug, lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
 
     const post = await getLegalUpdateBySlug(slug, lang);
-    if (!post) notFound();
+    if (!post) {
+        redirect(`/${lang}/blog`);
+    }
 
     const { posts: related } = await getLegalUpdates(1, 4, lang);
     const sidebar = related.filter((p) => p.slug !== slug).slice(0, 3);
@@ -68,7 +66,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             </span>
                         </div>
                         <h1
-                            className="text-3xl md:text-5xl font-extrabold text-white leading-tight"
+                            className="text-3xl md:text-5xl font-extrabold text-white leading-tight break-words"
                             dangerouslySetInnerHTML={{ __html: post.title }}
                         />
                     </div>
@@ -90,13 +88,14 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                         )}
 
                         {/* Content */}
-                        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 overflow-x-auto">
+                        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 overflow-x-hidden">
                             <div
                                 className="
-                                    blog-content prose prose-lg max-w-none text-gray-700
+                                    blog-content prose prose-lg max-w-none text-gray-700 break-words
                                     prose-headings:font-extrabold prose-headings:text-gray-900
                                     prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
-                                    prose-h3:text-base prose-h3:mt-8 prose-h3:mb-3
+                                    prose-h3:text-base prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-3
+                                    prose-h4:text-sm prose-h4:font-bold prose-h4:mt-6 prose-h4:mb-2
                                     prose-strong:text-gray-900
                                     prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
                                     prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
@@ -118,7 +117,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                             href={`/tag/${tag.slug}`}
                                             className="bg-gray-100 hover:bg-blue-50 text-gray-600 hover:text-[#005CB9] text-xs font-bold rounded-lg px-3 py-1.5 transition-colors"
                                         >
-                                            #{tag.name}
+                                            #{(t as any).tag_names?.[tag.slug] || tag.name}
                                         </Link>
                                     ))}
                                 </div>
@@ -182,7 +181,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                             href={`/tag/${tag.slug}`}
                                             className="bg-[#005CB9] hover:bg-[#004791] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-2 transition-colors inline-block"
                                         >
-                                            {tag.name}
+                                            {(t as any).tag_names?.[tag.slug] || tag.name}
                                         </Link>
                                     ))}
                                 </div>

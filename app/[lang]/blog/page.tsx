@@ -9,9 +9,8 @@ import ru from "@/locales/ru/common.json";
 
 const dictionaries = { en, am, ru };
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = ((await cookieStore.get("i18next"))?.value || "en") as keyof typeof dictionaries;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params;
     return getYoastMetadata("/blog", lang);
 }
 
@@ -105,16 +104,17 @@ function Pagination({ currentPage, totalPages, t }: { currentPage: number; total
 }
 
 export default async function BlogPage({
+    params,
     searchParams,
 }: {
+    params: Promise<{ lang: string }>;
     searchParams: Promise<{ page?: string }>;
 }) {
-    const params = await searchParams;
-    const cookieStore = await cookies();
-    const lang = (await cookieStore.get("i18next"))?.value || "en";
+    const { lang } = await params;
+    const sParams = await searchParams;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     
-    const currentPage = Math.max(1, parseInt(params.page ?? "1", 10) || 1);
+    const currentPage = Math.max(1, parseInt(sParams.page ?? "1", 10) || 1);
     const { posts, total, totalPages } = await getBlogPosts(PER_PAGE, currentPage, lang);
 
     const start = (currentPage - 1) * PER_PAGE + 1;

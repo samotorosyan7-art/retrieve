@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
@@ -15,11 +15,9 @@ const dictionaries = {
     am: amCommon,
 } as const;
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const t = dictionaries[lang] || dictionaries.en;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; lang: string }> }) {
+    const { slug, lang } = await params;
+    const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     
     // 1. Fetch metadata from WordPress
     const metadata = await getYoastMetadata(`/practice-areas/${slug}`, lang, `/legal-services/${slug}`);
@@ -52,14 +50,14 @@ function getCategoryRoute(category?: string): string {
     return "/legal-services";
 }
 
-export default async function LegalServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const t = dictionaries[lang] || dictionaries.en;
+export default async function LegalServiceDetailPage({ params }: { params: Promise<{ slug: string; lang: string }> }) {
+    const { slug, lang } = await params;
+    const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     const content = await getPracticeAreaContent(slug, lang);
 
-    if (!content) notFound();
+    if (!content) {
+        redirect(`/${lang}/legal-services`);
+    }
 
     const allAreas = await getPortfolioItems(lang);
     const sidebarAreas = allAreas.filter(a => a.slug !== slug).slice(0, 5);
@@ -101,7 +99,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                             {t.our_expertise}
                         </div>
                         <h1
-                            className="text-4xl md:text-6xl font-bold text-white leading-tight"
+                            className="text-4xl md:text-6xl font-bold text-white leading-tight break-words"
                             dangerouslySetInnerHTML={{ __html: displayTitle }}
                         />
                     </div>
@@ -137,7 +135,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                         {t.overview}
                                     </h2>
                                     <div 
-                                        className="overflow-x-auto prose prose-lg max-w-none text-gray-700
+                                        className="overflow-x-auto prose prose-lg max-w-none text-gray-700 break-words
                                             prose-headings:font-extrabold prose-headings:text-gray-900
                                             prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
                                             prose-strong:text-gray-900

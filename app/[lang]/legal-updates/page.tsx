@@ -13,18 +13,16 @@ const dictionaries = {
     am: amCommon,
 } as const;
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params;
     return getYoastMetadata("/legal-updates", lang);
 }
 
 export const dynamic = "force-dynamic";
 
-export default async function LegalUpdatesPage() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
-    const t = dictionaries[lang] || dictionaries.en;
+export default async function LegalUpdatesPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params;
+    const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     const pdfs = await getLegalUpdatesPDFs();
 
     return (
