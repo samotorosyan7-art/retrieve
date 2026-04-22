@@ -43,7 +43,7 @@ export default function PracticeAreasGrid({ items, activeCategory }: PracticeAre
             <div className="container mx-auto px-4 md:px-8">
 
                 {/* Filtration Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
+                <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
@@ -58,6 +58,15 @@ export default function PracticeAreasGrid({ items, activeCategory }: PracticeAre
                             {tab.label}
                         </button>
                     ))}
+                </div>
+
+                <div className="max-w-4xl mx-auto text-center mb-16">
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                        {activeCategory === "Legal services" 
+                            ? t("legal_services_description") 
+                            : t("tax_business_advisory_description")
+                        }
+                    </p>
                 </div>
 
                 {/* Grid */}
