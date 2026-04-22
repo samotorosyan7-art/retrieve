@@ -18,8 +18,8 @@ export default function Hero() {
             <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[80px] pointer-events-none"></div>
             
-            {/* Subtle Bottom-left Logo Watermark */}
-            <div className="absolute bottom-0 left-0 -translate-x-1/4 translate-y-1/4 opacity-[0.05] pointer-events-none z-0 select-none hidden lg:block">
+            {/* Subtle Bottom-right Logo Watermark */}
+            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 opacity-[0.1] pointer-events-none z-0 select-none hidden lg:block">
                 <Image 
                     src="/logo.png" 
                     alt="Retrieve Logo" 
