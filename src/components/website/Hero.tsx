@@ -17,14 +17,14 @@ export default function Hero() {
             <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-white to-[#F4F6F8] z-0"></div>
             <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[80px] pointer-events-none"></div>
-            
+
             {/* Subtle Bottom-right Logo Watermark */}
-            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 opacity-[0.1] pointer-events-none z-0 select-none hidden lg:block">
-                <Image 
-                    src="/logo.png" 
-                    alt="Retrieve Logo" 
-                    width={800} 
-                    height={800} 
+            <div className="absolute bottom-0 left-0 translate-x-1/4 translate-y-1/4 opacity-[0.1] pointer-events-none z-0 select-none hidden lg:block">
+                <Image
+                    src="/logo.png"
+                    alt="Retrieve Logo"
+                    width={800}
+                    height={800}
                     className="grayscale object-contain"
                     priority
                 />
@@ -44,8 +44,8 @@ export default function Hero() {
 
                         <h1 className={cn(
                             "font-extrabold leading-[1.1] mb-6 text-gray-950 tracking-tight",
-                            isSmallLang 
-                                ? "text-3xl md:text-4xl lg:text-5xl" 
+                            isSmallLang
+                                ? "text-3xl md:text-4xl lg:text-5xl"
                                 : "text-4xl md:text-5xl lg:text-5xl"
                         )}>
                             {t("hero_title_full")}
