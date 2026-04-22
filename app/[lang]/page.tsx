@@ -8,10 +8,11 @@ import Testimonials from "@/components/website/Testimonials";
 import TeamSection from "@/components/website/TeamSection";
 import BlogSection from "@/components/website/BlogSection";
 import Newsletter from "@/components/website/Newsletter";
+import MasonrySlider from "@/components/website/MasonrySlider";
 import LegalPractices from "@/components/website/LegalPractices";
 import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
-import { getPortfolioItems, getTeamMembers, getLegalUpdates, getClientLogos, getYoastMetadata } from "@/lib/wordpress";
+import { getPortfolioItems, getTeamMembers, getLegalUpdates, getClientLogos, getYoastMetadata, getMasonryPosts } from "@/lib/wordpress";
 
 export async function generateMetadata() {
     const cookieStore = await cookies();
@@ -30,6 +31,7 @@ export default async function HomePage() {
     const teamMembers = await getTeamMembers(lang);
     const { posts } = await getLegalUpdates(1, 6, lang);
     const clientLogos = await getClientLogos(lang);
+    const { posts: masonryPosts } = await getMasonryPosts(6, lang);
     const orderSlugs = [
         "corporate-business-law",
         "immigration-residence-services",
@@ -127,6 +129,7 @@ export default async function HomePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero />
+            <MasonrySlider posts={masonryPosts} />
             <LegalPractices items={legalItems} />
             <TaxAdvisoryGrid items={taxItems} />
             <BlogSection posts={posts} />

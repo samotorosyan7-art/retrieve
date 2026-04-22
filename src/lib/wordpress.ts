@@ -1,4 +1,4 @@
-import { WPPost, WPTeamMember, MenuItem, WPTag } from "@/types/wordpress";
+import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
@@ -247,6 +247,68 @@ export async function getBlogPosts(
     } catch (error) {
         console.error("Error fetching blog posts:", error);
         return { posts: [], total: 0, totalPages: 0 };
+    }
+}
+
+/**
+ * Fetch masonry posts from retrieve.am
+ */
+export async function getMasonryPosts(
+    limit = 6,
+    lang?: string
+): Promise<{ posts: LegalUpdate[] }> {
+    try {
+        const url = new URL(`${WP_API_URL}/posts`);
+        url.searchParams.append("categories", "3"); // Masonry category ID
+        url.searchParams.append("per_page", limit.toString());
+        url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("orderby", "date");
+        url.searchParams.append("order", "desc");
+        
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        }
+
+        const response = await fetch(url.toString(), { cache: "no-store" });
+
+        if (!response.ok) return { posts: [] };
+
+        const data = await response.json();
+
+        const posts: LegalUpdate[] = data.map((p: any) => {
+            const rawImage =
+                p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large
+                    ?.source_url ||
+                p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                null;
+            const image = rawImage ? fixHttps(rawImage) : null;
+            const rawExcerpt =
+                p.excerpt?.rendered
+                    ?.replace(/<[^>]+>/g, "")
+                    .replace(/\[&hellip;\]/, "…")
+                    .trim() ?? "";
+
+            return {
+                id: p.id,
+                slug: p.slug,
+                title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;/g, "'").replace(/&#8211;/g, "–") ?? "",
+                excerpt: rawExcerpt.replace(/&nbsp;/g, " "),
+                content: p.content?.rendered ?? "",
+                date: p.date,
+                image,
+                imageAlt: p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "",
+                author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
+                readTime: 1, // Optional for masonry
+                link: p.link ?? "",
+                tags: []
+            };
+        });
+
+        return { posts };
+    } catch (error) {
+        console.error("Error fetching masonry posts:", error);
+        return { posts: [] };
     }
 }
 
@@ -780,20 +842,7 @@ export interface PortfolioItem {
     translatedTitle?: string;
 }
 
-export interface LegalUpdate {
-    id: number;
-    slug: string;
-    title: string;
-    excerpt: string;
-    content: string;
-    date: string;
-    image: string | null;
-    imageAlt?: string;
-    author: string;
-    readTime: number;
-    link?: string;
-    tags?: WPTag[];
-}
+
 
 /**
  * Fetch legal updates (Category 2 posts) from the WordPress REST API

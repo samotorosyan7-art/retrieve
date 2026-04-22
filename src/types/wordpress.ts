@@ -85,3 +85,18 @@ export interface MenuItem {
     url: string;
     children?: MenuItem[];
 }
+
+export interface LegalUpdate {
+    id: number;
+    slug: string;
+    title: string;
+    excerpt: string;
+    content: string;
+    date: string;
+    image: string | null;
+    imageAlt?: string;
+    author: string;
+    readTime: number;
+    link?: string;
+    tags?: WPTag[];
+}

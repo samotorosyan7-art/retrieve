@@ -19,6 +19,7 @@ export async function submitContactForm(
     const phone = formData.get("phone")?.toString().trim() ?? "";
     const subject = formData.get("subject")?.toString().trim() ?? "";
     const message = formData.get("message")?.toString().trim() ?? "";
+    const citizenship = formData.get("citizenship")?.toString().trim() ?? "";
 
     if (!name || !email || !message) {
         return { success: false, message: "Please fill in all required fields." };
@@ -35,6 +36,7 @@ Contact Details:
 Name: ${name}
 Email: ${email}
 Phone: ${phone || "N/A"}
+Citizenship: ${citizenship || "N/A"}
 Subject: ${subject || "N/A"}
 
 Message:
@@ -89,6 +91,11 @@ Sent from retrieve.am contact form
                                                 <td width="70%" style="color: #111827; padding: 8px 0; font-weight: 600;">
                                                     <a href="tel:${phone}" style="color: #111827; text-decoration: none;">${phone}</a>
                                                 </td>
+                                            </tr>` : ''}
+                                            ${citizenship ? `
+                                            <tr>
+                                                <td width="30%" style="color: #6b7280; padding: 8px 0; font-weight: 500;">Citizenship</td>
+                                                <td width="70%" style="color: #111827; padding: 8px 0; font-weight: 600;">${citizenship}</td>
                                             </tr>` : ''}
                                             ${subject ? `
                                             <tr>

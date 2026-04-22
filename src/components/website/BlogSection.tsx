@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import { LegalUpdate } from "@/lib/wordpress";
+import { LegalUpdate } from "@/types/wordpress";
 
 function formatDate(iso: string, lang: string = "en") {
     const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";

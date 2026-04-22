@@ -37,7 +37,7 @@ export default function ContactSection() {
                             <div className="space-y-6">
                                 <div className="flex items-start gap-5 group">
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300 shrink-0">
-                                        <Phone size={20} className="text-primary group-hover:text-white transition-colors duration-300" />
+                                        <Phone size={20} className="text-primary group-hover:!text-white transition-colors duration-300" />
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-gray-900 text-lg mb-1">{t("contact_call_us") || "Call Us"}</h3>
@@ -47,7 +47,7 @@ export default function ContactSection() {
 
                                 <div className="flex items-start gap-5 group">
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300 shrink-0">
-                                        <Mail size={20} className="text-primary group-hover:text-white transition-colors duration-300" />
+                                        <Mail size={20} className="text-primary group-hover:!text-white transition-colors duration-300" />
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-gray-900 text-lg mb-1">{t("contact_email_us") || "Email Us"}</h3>
@@ -57,7 +57,7 @@ export default function ContactSection() {
 
                                 <div className="flex items-start gap-5 group">
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300 shrink-0">
-                                        <MapPin size={20} className="text-primary group-hover:text-white transition-colors duration-300" />
+                                        <MapPin size={20} className="text-primary group-hover:!text-white transition-colors duration-300" />
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-gray-900 text-lg mb-1">{t("contact_visit_us") || "Visit Us"}</h3>

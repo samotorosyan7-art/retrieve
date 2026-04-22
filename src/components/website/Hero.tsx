@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,7 @@ export default function Hero() {
             <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-white to-[#F4F6F8] z-0"></div>
             <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[80px] pointer-events-none"></div>
+            
 
             <div className="container mx-auto px-4 md:px-8 relative z-10 w-full">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -30,10 +32,10 @@ export default function Hero() {
                         </div>
 
                         <h1 className={cn(
-                            "font-extrabold leading-[1.05] mb-6 text-gray-950 tracking-tight",
+                            "font-extrabold leading-[1.1] mb-6 text-gray-950 tracking-tight",
                             isSmallLang 
-                                ? "text-4xl md:text-5xl lg:text-6xl" 
-                                : "text-5xl md:text-6xl lg:text-7xl"
+                                ? "text-3xl md:text-4xl lg:text-5xl" 
+                                : "text-4xl md:text-5xl lg:text-5xl"
                         )}>
                             {t("hero_title_full")}
                         </h1>
