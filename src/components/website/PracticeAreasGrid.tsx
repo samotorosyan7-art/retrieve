@@ -63,8 +63,8 @@ export default function PracticeAreasGrid({ items, activeCategory }: PracticeAre
                 <div className="max-w-4xl mx-auto text-center mb-16">
                     <p className="text-gray-600 text-lg leading-relaxed">
                         {activeCategory === "Legal services" 
-                            ? t("legal_services_description") 
-                            : t("tax_business_advisory_description")
+                            ? t("page_legal_services_description") 
+                            : t("page_tax_business_advisory_description")
                         }
                     </p>
                 </div>

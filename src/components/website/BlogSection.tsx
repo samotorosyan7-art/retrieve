@@ -104,6 +104,7 @@ export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
                                     {/* Title */}
                                     <h3
                                         className="text-base font-extrabold text-gray-900 group-hover:text-primary transition-colors leading-snug mb-3 line-clamp-2"
+                                        title={post.title.replace(/<[^>]+>/g, "")}
                                         dangerouslySetInnerHTML={{ __html: post.title }}
                                     />
 

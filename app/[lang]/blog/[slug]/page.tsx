@@ -66,8 +66,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             </span>
                         </div>
                         <h1
-                            className="text-2xl md:text-4xl font-extrabold text-white leading-tight break-words"
-                            title={post.title.replace(/<[^>]+>/g, "")}
+                            className="text-3xl md:text-5xl font-extrabold text-white leading-tight break-words"
                             dangerouslySetInnerHTML={{ __html: post.title }}
                         />
                     </div>
@@ -158,7 +157,8 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-xs text-gray-400 mb-1">{formatDate(r.date, lang)}</div>
                                                 <div
-                                                    className="text-sm font-bold text-gray-800 group-hover:text-[#005CB9] transition-colors leading-snug"
+                                                    className="text-sm font-bold text-gray-800 group-hover:text-[#005CB9] transition-all leading-snug line-clamp-2 group-hover:line-clamp-none break-words cursor-help"
+                                                    title={r.title.replace(/<[^>]+>/g, "")}
                                                     dangerouslySetInnerHTML={{ __html: r.title }}
                                                 />
                                             </div>

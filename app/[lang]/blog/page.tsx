@@ -206,6 +206,7 @@ export default async function BlogPage({
                                     {/* Title */}
                                     <h2
                                         className="text-base font-extrabold text-gray-900 group-hover:text-[#005CB9] transition-colors leading-snug mb-3 line-clamp-2"
+                                        title={post.title.replace(/<[^>]+>/g, "")}
                                         dangerouslySetInnerHTML={{ __html: post.title }}
                                     />
 
