@@ -18,6 +18,17 @@ export default function Hero() {
             <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[80px] pointer-events-none"></div>
             
+            {/* Subtle Left-aligned Logo Watermark */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 opacity-[0.02] pointer-events-none z-0 select-none hidden lg:block">
+                <Image 
+                    src="/logo.png" 
+                    alt="Retrieve Logo" 
+                    width={1000} 
+                    height={1000} 
+                    className="grayscale object-contain"
+                    priority
+                />
+            </div>
 
             <div className="container mx-auto px-4 md:px-8 relative z-10 w-full">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
