@@ -171,9 +171,21 @@
     "tax_advisory_title": "Tax & Business Advisory Services",
     "tax_advisory_desc": "Navigate complex financial landscapes with our expert tax consultants and business advisors. We provide actionable strategies to optimize your operational structures.",
     "btn_contact_advisory": "Schedule a Consultation",
-    "why_choose_us_title": "Why Clients Choose Us",
-    "why_choose_us_desc": "Trusted by clients across Armenia for our unwavering commitment to excellence and results-driven legal services.",
+    "why_choose_us_badge": "Why Choose Us",
+    "why_choose_us_title": "Why Choose Retrieve as Your Law Firm in Armenia",
+    "why_choose_us_desc": "Navigating legal, tax, and regulatory requirements in Armenia requires more than general knowledge — it requires a law firm that understands the local system from the inside and has a proven track record of delivering results for foreign founders, investors, and businesses.\n\nAt Retrieve Legal & Tax, we combine deep expertise in Armenian law with a client-first approach that makes complex processes straightforward, transparent, and efficient.",
+    "why_choose_us_items": {
+        "Proven Expertise": "Proven Expertise",
+        "Proven Expertise_desc": "A team of experienced attorneys and advisors with a track record of success in corporate law, tax planning, immigration, and more — delivering legal solutions that are practical, compliant, and results-driven.",
+        "Personalized Service": "Personalized Service",
+        "Personalized Service_desc": "Legal services designed to meet the unique needs of each client, ensuring practical and effective outcomes regardless of the complexity of the matter.",
+        "Local Knowledge & Global Reach": "Local Knowledge & Global Reach",
+        "Local Knowledge & Global Reach_desc": "As a law firm in Armenia with international expertise, we combine deep understanding of Armenian law with cross-border experience — giving clients the best of both local and global legal practice.",
+        "Reliable Results": "Reliable Results",
+        "Reliable Results_desc": "Trusted by global brands like Shell, WWF, QLESS, and REMAX, as well as local startups and organizations — a track record that speaks to the quality and consistency of our legal services across corporate, tax, and immigration matters."
+    },
     "team_our_team": "Our Team",
+    "team_subtitle": "Behind every client matter at Retrieve Legal & Tax is a dedicated team of lawyers who bring hands-on experience across the full range of Armenian legal and regulatory practice. We believe that legal expertise is most valuable when it is accessible, clear, and genuinely client-focused — and that is the standard every member of our team is held to.",
     "hero_title_full": "Retrieve Legal & Tax: Legal and Tax Services in Armenia",
     "btn_book_consultation": "Book Consultation",
     "intake_badge": "Instant Intake",
@@ -189,13 +201,34 @@
     "intake_success_desc": "One of our senior partners will contact you shortly to schedule your consultation.",
     "btn_back_to_start": "Back to Start",
     "blog_recent_articles": "Recent Articles",
-    "blog_recent_desc": "Expert legal perspectives, business insights, and regulatory updates from the Retrieve team.",
+    "blog_recent_desc": "Stay informed with the latest insights from Retrieve Legal & Tax — our legal team regularly publishes practical guides covering Armenian corporate law, taxation, immigration, and intellectual property to help founders, investors, and businesses navigate the Armenian legal landscape with confidence.",
     "btn_view_all_articles": "View all articles",
     "btn_view_more_articles": "View More Articles",
     "team_meet_experts": "Meet the Experts",
     "btn_view_all_members": "View All Members",
     "testimonials_badge": "Client Success Stories",
     "testimonials_main_title": "Client Testimonials",
+    "testimonials_subtitle": "Explore what our clients say about our legal services.",
+    "testimonials_list": [
+        {
+            "text": "The legal support we received for our market entry in Armenia was exceptional. Their team's deep understanding of local regulations made the process seamless.",
+            "author": "Mark J.",
+            "role": "Corporate Counsel",
+            "initial": "M"
+        },
+        {
+            "text": "As a tech startup, we needed agile and forward-thinking legal advice. Retrieve Legal & Tax provided exactly that, helping us with IP protection and employment law.",
+            "author": "Sarah L.",
+            "role": "Founder & CEO",
+            "initial": "S"
+        },
+        {
+            "text": "Their expertise in Armenian real estate law is unmatched. They guided us through every step of our large-scale investment project with professional precision.",
+            "author": "David K.",
+            "role": "Investment Director",
+            "initial": "D"
+        }
+    ],
     "contact_badge": "Get in Touch",
     "contact_main_title": "Contact Retrieve",
     "contact_desc": "Have questions about our services or need legal assistance? Our team is ready to provide the guidance you need. Reach out to us today.",
@@ -312,12 +345,7 @@
         "Partner": "Partner",
         "Principal": "Principal"
     },
-    "why_choose_us_items": {
-        "Proven Expertise": "Proven Expertise",
-        "Reliable Results": "Reliable Results",
-        "Client-Focused": "Client-Focused",
-        "Strategic Solutions": "Strategic Solutions"
-    },
+
     "tags": "Tags",
     "404_title": "Page Not Found",
     "404_subtitle": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",

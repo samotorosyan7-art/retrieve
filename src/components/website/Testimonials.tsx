@@ -10,6 +10,9 @@ interface TestimonialsProps {
 
 export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
     const { t } = useTranslation();
+    const hardcodedTestimonials = t("testimonials_list", { returnObjects: true }) as any[];
+    const displayTestimonials = Array.isArray(hardcodedTestimonials) ? hardcodedTestimonials : testimonials;
+
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const scroll = (direction: "left" | "right") => {
@@ -32,9 +35,12 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
                             {t("testimonials_badge") || "Client Success Stories"}
                         </span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight mb-4">
                         {t("testimonials_main_title") || "Client Testimonials"}
                     </h2>
+                    <p className="text-gray-500 text-lg leading-relaxed">
+                        {t("testimonials_subtitle")}
+                    </p>
                 </div>
 
                 {/* Desktop Navigation Controls */}
@@ -67,7 +73,7 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
                     className="flex overflow-x-auto gap-6 sm:gap-8 pb-12 pt-4 snap-x snap-mandatory hide-scrollbar relative z-0"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {testimonials.map((testy, idx) => (
+                    {displayTestimonials.map((testy, idx) => (
                         <div
                             key={idx}
                             className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center bg-white border border-gray-100 rounded-3xl p-8 sm:p-10 shadow-soft hover:shadow-elevated hover:-translate-y-2 transition-all duration-500 relative group flex flex-col"

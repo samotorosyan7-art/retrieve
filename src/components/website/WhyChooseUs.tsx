@@ -122,9 +122,15 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
 
 
 
-    if (!reasons || reasons.length === 0) return null;
+    const defaultReasons = [
+        { title: "Proven Expertise", description: "" },
+        { title: "Personalized Service", description: "" },
+        { title: "Local Knowledge & Global Reach", description: "" },
+        { title: "Reliable Results", description: "" }
+    ];
 
-    const cards = reasons.slice(0, 4);
+    const displayReasons = (reasons && reasons.length > 0) ? reasons : defaultReasons;
+    const cards = displayReasons.slice(0, 4);
 
     return (
         <section className="relative py-28 overflow-hidden bg-[#F4F8FF]">
@@ -170,7 +176,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
                 >
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-5 border border-primary/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                        {t("expert_areas_subtitle") || "Specialized Expertise"}
+                        {t("why_choose_us_badge") || "Why Choose Us"}
                     </span>
 
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight mb-6 leading-tight">
@@ -253,7 +259,9 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
 
                                     {/* Description */}
                                     <p className="text-gray-500 leading-relaxed text-sm flex-grow">
-                                        {reason.description}
+                                        {t(`why_choose_us_items.${reason.title}_desc`) !== `why_choose_us_items.${reason.title}_desc`
+                                            ? t(`why_choose_us_items.${reason.title}_desc`)
+                                            : reason.description}
                                     </p>
                                 </div>
                             </motion.div>

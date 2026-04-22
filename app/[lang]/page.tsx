@@ -11,7 +11,7 @@ import Newsletter from "@/components/website/Newsletter";
 import LegalPractices from "@/components/website/LegalPractices";
 import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
-import { getPortfolioItems, getTeamMembers, getLegalUpdates, getTestimonials, getClientLogos, getWhyChooseUs, getYoastMetadata } from "@/lib/wordpress";
+import { getPortfolioItems, getTeamMembers, getLegalUpdates, getClientLogos, getYoastMetadata } from "@/lib/wordpress";
 
 export async function generateMetadata() {
     const cookieStore = await cookies();
@@ -29,9 +29,7 @@ export default async function HomePage() {
     const portfolioItems = await getPortfolioItems(lang);
     const teamMembers = await getTeamMembers(lang);
     const { posts } = await getLegalUpdates(1, 6, lang);
-    const testimonials = await getTestimonials(lang);
     const clientLogos = await getClientLogos(lang);
-    const whyChooseUs = await getWhyChooseUs(lang);
     const orderSlugs = [
         "corporate-business-law",
         "immigration-residence-services",
@@ -132,10 +130,10 @@ export default async function HomePage() {
             <LegalPractices items={legalItems} />
             <TaxAdvisoryGrid items={taxItems} />
             <BlogSection posts={posts} />
-            <WhyChooseUs reasons={whyChooseUs} />
+            <WhyChooseUs />
             <ClientsCarousel logos={clientLogos} />
             <TeamSection teamMembers={teamMembers} />
-            <Testimonials testimonials={testimonials} />
+            <Testimonials />
             <ContactSection />
             <Newsletter />
         </>
