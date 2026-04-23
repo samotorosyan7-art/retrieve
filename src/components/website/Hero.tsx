@@ -25,7 +25,7 @@ export default function Hero() {
                     alt="Retrieve Logo"
                     width={800}
                     height={800}
-                    className="grayscale object-contain"
+                    className="grayscale object-contain mix-blend-multiply"
                     priority
                 />
             </div>

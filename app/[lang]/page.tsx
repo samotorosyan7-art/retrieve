@@ -132,10 +132,10 @@ export default async function HomePage() {
             <MasonrySlider posts={masonryPosts} />
             <LegalPractices items={legalItems} />
             <TaxAdvisoryGrid items={taxItems} />
-            <BlogSection posts={posts} />
             <WhyChooseUs />
             <ClientsCarousel logos={clientLogos} />
             <TeamSection teamMembers={teamMembers} />
+            <BlogSection posts={posts} />
             <Testimonials />
             <ContactSection />
             <Newsletter />

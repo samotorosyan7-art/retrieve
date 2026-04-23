@@ -148,6 +148,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
 export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]> {
     try {
         const url = new URL(`${WP_API_URL}/posts`);
+        url.searchParams.append("categories_exclude", "3");
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("_embed", "1");
         url.searchParams.append("v", Date.now().toString());
@@ -182,7 +183,7 @@ export async function getBlogPosts(
 ): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
     try {
         const url = new URL(`${WP_API_URL}/posts`);
-        // url.searchParams.append("categories_exclude", "2"); // Removed to include all posts in blog
+        url.searchParams.append("categories_exclude", "3"); 
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
@@ -855,6 +856,7 @@ export async function getLegalUpdates(
     try {
         const url = new URL(`${WP_API_URL}/posts`);
         url.searchParams.append("categories", "2");
+        url.searchParams.append("categories_exclude", "3");
         url.searchParams.append("per_page", perPage.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");

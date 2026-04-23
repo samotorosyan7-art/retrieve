@@ -103,10 +103,10 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <Image
                             src="/logo.png"
                             alt="RETRIEVE Legal & Tax"
-                            width={180}
-                            height={100}
+                            width={200}
+                            height={120}
                             priority
-                            className="h-24 w-auto"
+                            className="h-28 w-auto scale-110 transition-transform mix-blend-multiply"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">
