@@ -43,7 +43,8 @@ export default function QuoteForm({ postTitle }: { postTitle: string }) {
     }, [state]);
 
     return (
-        <div className="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-soft sticky top-32">
+        <div id="quote-form" className="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-soft sticky top-32 scroll-mt-32">
+
             <h3 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight">
                 {t("get_a_quote") || "Get a Quote"}
             </h3>

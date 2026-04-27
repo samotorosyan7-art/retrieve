@@ -66,7 +66,7 @@ export default async function OfferSinglePage({ params }: Props) {
 
             {/* Body */}
             <div className="container mx-auto px-4 md:px-8 py-14">
-                <div className="flex flex-col lg:flex-row gap-12 items-start">
+                <div className="flex flex-col-reverse lg:flex-row gap-12">
 
                     {/* ── Main article ── */}
                     <article className="flex-1 min-w-0">
@@ -99,15 +99,23 @@ export default async function OfferSinglePage({ params }: Props) {
                         </div>
 
                         {/* Footer nav */}
-                        <div className="mt-8 flex items-center justify-between">
+                        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#005CB9] transition-colors">
                                 <ArrowLeft size={14} /> {t.btn_back_home || "Back to Home"}
                             </Link>
+
+                            <a 
+                                href="#quote-form" 
+                                className="inline-flex items-center gap-2 bg-[#005CB9] hover:bg-[#004791] text-white text-sm font-bold rounded-full px-8 py-3.5 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            >
+                                {t.get_a_quote || "Get a Quote"}
+                            </a>
                         </div>
+
                     </article>
 
                     {/* ── Sidebar with Form ── */}
-                    <aside className="w-full lg:w-[400px] shrink-0">
+                    <aside className="w-full lg:w-[400px] shrink-0 lg:sticky lg:top-32">
                         <QuoteForm postTitle={post.title.replace(/<[^>]+>/g, "")} />
                     </aside>
                 </div>
