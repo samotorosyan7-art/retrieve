@@ -50,7 +50,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
     }, []);
 
     const navLinks = [
-        { name: t("nav_home"), href: "/" },
+        { name: t("nav_about_us"), href: "/about-us" },
         { name: t("nav_our_team"), href: "/our-team" },
         { name: t("nav_blog"), href: "/blog" },
         { name: t("nav_legal_updates"), href: "/legal-updates" },
@@ -64,7 +64,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+        <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-gray-200">
             {/* Top Bar - Contact Info Only */}
             <div className="bg-gray-50 border-b border-gray-200">
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center py-2 text-xs text-gray-600">
@@ -99,14 +99,14 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
             >
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center">
+                    <Link href="/" className="flex items-center py-1">
                         <Image
                             src="/logo.png"
                             alt="RETRIEVE Legal & Tax"
-                            width={200}
-                            height={120}
+                            width={160}
+                            height={80}
                             priority
-                            className="h-28 w-auto scale-110 transition-transform mix-blend-multiply"
+                            className="h-16 md:h-20 w-auto object-contain transition-transform mix-blend-multiply"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">
@@ -222,11 +222,11 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
             )}>
                 <div className="container mx-auto px-4 flex flex-col gap-1">
                     <Link
-                        href="/"
+                        href="/about-us"
                         className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
                         onClick={() => setIsOpen(false)}
                     >
-                        {t("nav_home")}
+                        {t("nav_about_us")}
                     </Link>
 
                     {/* Mobile Practice Areas */}

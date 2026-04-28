@@ -8,7 +8,8 @@ import Testimonials from "@/components/website/Testimonials";
 import TeamSection from "@/components/website/TeamSection";
 import BlogSection from "@/components/website/BlogSection";
 import Newsletter from "@/components/website/Newsletter";
-import MasonrySlider from "@/components/website/MasonrySlider";
+import PopularGuides from "@/components/website/PopularGuides";
+import AboutPreviewNew from "@/components/website/AboutPreview";
 import LegalPractices from "@/components/website/LegalPractices";
 import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
@@ -57,69 +58,82 @@ export default async function HomePage() {
 
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": ["LegalService", "ProfessionalService", "Attorney"],
-        "@id": "https://www.retrieve.am/#organization",
-        "name": "Retrieve Legal & Tax",
-        "url": "https://www.retrieve.am",
-        "logo": "https://www.retrieve.am/logo.png",
-        "image": "https://www.retrieve.am/logo.png",
-        "description": "Expert Legal and Tax Services, Lawyer Consultation, and Legal Setup in Armenia. We provide corporate law, tax advisory, and business setup support.",
-        "telephone": "+374 41 777 332",
-        "email": "info@retrieve.am",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Argishti 11/11",
-            "addressLocality": "Yerevan",
-            "postalCode": "0015",
-            "addressCountry": "AM"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 40.1741,
-            "longitude": 44.5038
-        },
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-        },
-        "timeZone": "Asia/Yerevan", 
-        "priceRange": "$$",
-        "areaServed": {
-            "@type": "Country",
-            "name": "Armenia"
-        },
-        "sameAs": [
-            "https://www.linkedin.com/company/retrievelegal/"
-        ],
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Legal and Tax Services",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Legal Setup in Armenia"
-                    }
+        "@graph": [
+            {
+                "@type": ["Organization", "LegalService"],
+                "@id": `https://www.retrieve.am/${lang}/#organization`,
+                "name": "Retrieve Legal & Tax",
+                "url": `https://www.retrieve.am/${lang}`,
+                "logo": "https://www.retrieve.am/logo.png",
+                "image": "https://www.retrieve.am/logo.png",
+                "description": "Retrieve Legal & Tax is a trusted law firm in Armenia, providing legal and tax advisory services to businesses and individuals.",
+                "telephone": "+37441777332",
+                "email": "info@retrieve.am",
+                "priceRange": "$$",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "customer support",
+                    "telephone": "+37441777332",
+                    "email": "info@retrieve.am",
+                    "availableLanguage": ["English", "Armenian", "Russian"]
                 },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Lawyer Consultation"
-                    }
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Argishti 11/11",
+                    "addressLocality": "Yerevan",
+                    "postalCode": "0015",
+                    "addressCountry": "AM"
                 },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Tax Advisory Services"
-                    }
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 40.1741,
+                    "longitude": 44.5038
+                },
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "18:00"
+                },
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Armenia"
+                },
+                "sameAs": [
+                    "https://www.linkedin.com/company/retrievelegal/"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": `https://www.retrieve.am/${lang}/#website`,
+                "url": `https://www.retrieve.am/${lang}`,
+                "name": "Retrieve Legal & Tax",
+                "publisher": {
+                    "@id": `https://www.retrieve.am/${lang}/#organization`
                 }
-            ]
-        }
+            },
+            {
+                "@type": "WebPage",
+                "@id": `https://www.retrieve.am/${lang}/#webpage`,
+                "url": `https://www.retrieve.am/${lang}`,
+                "name": "Retrieve Legal & Tax",
+                "isPartOf": {
+                    "@id": `https://www.retrieve.am/${lang}/#website`
+                },
+                "about": {
+                    "@id": `https://www.retrieve.am/${lang}/#organization`
+                },
+                "mainEntity": {
+                    "@id": `https://www.retrieve.am/${lang}/#organization`
+                }
+            }
+        ]
     };
 
     return (
@@ -129,7 +143,8 @@ export default async function HomePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero />
-            <MasonrySlider posts={masonryPosts} />
+            <PopularGuides posts={masonryPosts} />
+            <AboutPreviewNew />
             <LegalPractices items={legalItems} />
             <TaxAdvisoryGrid items={taxItems} />
             <WhyChooseUs />
