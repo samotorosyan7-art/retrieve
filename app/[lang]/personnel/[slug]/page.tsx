@@ -1,12 +1,16 @@
-import { notFound, redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
-import { Mail, Phone, Linkedin, ArrowLeft, User, GraduationCap, Scale, MapPin } from "lucide-react";
-import { getPersonnelDetails, getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
+import { Mail, Phone, Linkedin, User, GraduationCap, Scale, MapPin } from "lucide-react";
+import { getPersonnelDetails, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
+import en from "@/locales/en/common.json";
+import am from "@/locales/am/common.json";
+import ru from "@/locales/ru/common.json";
+
+const dictionaries = { en, am, ru };
 
 interface PersonnelPageProps {
     params: Promise<{ slug: string; lang: string }>;
@@ -22,11 +26,12 @@ export const dynamic = "force-dynamic";
 
 export default async function PersonnelPage({ params }: PersonnelPageProps) {
     const { slug, lang } = await params;
-    const personnel = await getPersonnelDetails(slug);
+    const personnel = await getPersonnelDetails(slug, lang);
 
     if (!personnel) {
-        redirect(`/${lang}/our-team`);
+        redirect(`/${lang}/about-us`);
     }
+    const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
 
     const linkedinUrl = personnel.linkedin
         ? personnel.linkedin.startsWith("http") ? personnel.linkedin : `https://${personnel.linkedin}`
@@ -42,7 +47,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                         theme="light" 
                         className="!mb-0" 
                         items={[
-                            { label: "Our Team", href: "/our-team" },
+                            { label: t.nav_about_us, href: "/about-us" },
                             { label: personnel.name }
                         ]} 
                     />
@@ -83,7 +88,9 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                         {personnel.name}
                                     </h1>
                                     {personnel.position && (
-                                        <p className="text-blue-200 text-sm font-medium">{personnel.position}</p>
+                                        <p className="text-blue-200 text-sm font-medium">
+                                            {(t.team_member_positions as any)?.[personnel.position] || personnel.position}
+                                        </p>
                                     )}
                                 </div>
                             </div>
@@ -91,7 +98,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
 
                         {/* Contact info card */}
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">Contact</h3>
+                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">{t.personnel_contact}</h3>
 
                             {personnel.email && (
                                 <a href={`mailto:${personnel.email}`} className="flex items-start gap-3 group">
@@ -135,8 +142,8 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <MapPin size={15} className="text-gray-400" />
                                 </div>
                                 <div>
-                                    <div className="text-[11px] text-gray-400 font-medium mb-0.5">Location</div>
-                                    <div className="text-sm font-semibold text-gray-800">Yerevan, Armenia</div>
+                                    <div className="text-[11px] text-gray-400 font-medium mb-0.5">{t.personnel_location}</div>
+                                    <div className="text-sm font-semibold text-gray-800">{t.footer_address || "Yerevan, Armenia"}</div>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +153,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                             href="/contact"
                             className="block w-full text-center bg-gradient-to-r from-[#004791] to-[#005CB9] hover:from-[#003d7a] hover:to-[#004791] text-white font-bold text-sm rounded-2xl px-6 py-4 transition-all shadow-lg shadow-blue-900/20"
                         >
-                            Schedule a Consultation
+                            {t.personnel_schedule_consultation}
                         </Link>
                     </aside>
 
@@ -162,19 +169,24 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
                                         <User size={20} className="text-[#005CB9]" />
                                     </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">Biography</h2>
+                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_biography}</h2>
                                 </div>
-                                <div
-                                    className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words
-                                        prose-headings:font-extrabold prose-headings:text-gray-900
-
-                                        prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
-                                        prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
-                                        prose-li:mb-2 prose-li:pl-2
-                                        prose-li:marker:text-[#005CB9]
-                                        [&_p]:mb-4 [&_strong]:text-gray-900"
-                                    dangerouslySetInnerHTML={{ __html: personnel.biography }}
-                                />
+                                {(t.personnel_bios as Record<string, string>)?.[slug] ? (
+                                    <p className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words">
+                                        {(t.personnel_bios as Record<string, string>)[slug]}
+                                    </p>
+                                ) : (
+                                    <div
+                                        className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words
+                                            prose-headings:font-extrabold prose-headings:text-gray-900
+                                            prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
+                                            prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
+                                            prose-li:mb-2 prose-li:pl-2
+                                            prose-li:marker:text-[#005CB9]
+                                            [&_p]:mb-4 [&_strong]:text-gray-900"
+                                        dangerouslySetInnerHTML={{ __html: personnel.biography }}
+                                    />
+                                )}
                             </div>
                         )}
 
@@ -185,7 +197,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
                                         <Scale size={20} className="text-[#005CB9]" />
                                     </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">Practice Areas</h2>
+                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_practice_areas}</h2>
                                 </div>
                                 <PracticeAreasAccordion areas={personnel.practiceAreas} />
                             </div>
@@ -198,7 +210,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
                                         <GraduationCap size={20} className="text-[#005CB9]" />
                                     </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">Education & Bar Admission</h2>
+                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_education}</h2>
                                 </div>
                                 <div className="relative pl-6 border-l-2 border-[#005CB9]/20 space-y-8">
                                     {personnel.education.map((edu, index) => (

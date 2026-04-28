@@ -35,7 +35,6 @@ export default async function sitemap(
     '',
     '/legal-services',
     '/tax-and-business-advisory-services',
-    '/our-team',
     '/blog',
     '/contact',
     '/portfolio',

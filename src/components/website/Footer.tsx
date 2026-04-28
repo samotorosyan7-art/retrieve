@@ -26,8 +26,8 @@ const SOCIAL_LINKS = [
 
 const QUICK_LINKS = [
     { label: "nav_home", href: "/" },
+    { label: "nav_about_us", href: "/about-us" },
     { label: "nav_practice_areas", href: "/legal-services" },
-    { label: "nav_our_team", href: "/our-team" },
     { label: "nav_blog", href: "/blog" },
     { label: "nav_legal_updates", href: "/legal-updates" },
     { label: "nav_contact", href: "/contact" },
@@ -83,7 +83,7 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                                 <div className="w-7 h-7 rounded-lg bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
                                     <MapPin size={14} />
                                 </div>
-                                <span className="text-gray-400">{t("11/11 Argishti St, Yerevan, Armenia")}</span>
+                                <span className="text-gray-400">{t("footer_address")}</span>
                             </li>
                             <li className="flex items-center gap-3 group">
                                 <div className="w-7 h-7 rounded-lg bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">

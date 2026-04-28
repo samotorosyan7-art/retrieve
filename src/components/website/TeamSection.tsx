@@ -7,8 +7,19 @@ import { ArrowRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { WPTeamMember } from "@/types/wordpress";
 
-export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember[] }) {
+export default function TeamSection({ 
+    teamMembers, 
+    showAll = false, 
+    showCta = true 
+}: { 
+    teamMembers: WPTeamMember[]; 
+    showAll?: boolean;
+    showCta?: boolean;
+}) {
     const { t } = useTranslation();
+
+    // Show all members fetched from WP. If translation is available, use it.
+    const displayMembers = showAll ? teamMembers : teamMembers.slice(0, 3);
 
     if (teamMembers.length === 0) return null;
 
@@ -44,7 +55,7 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
 
                 {/* Cards grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {teamMembers.slice(0, 3).map((member, idx) => {
+                    {displayMembers.map((member, idx) => {
                         const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || "";
                         const localLink = slug ? `/personnel/${slug}` : "#";
 
@@ -77,28 +88,20 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                                         {/* Dark gradient overlay always visible at bottom */}
                                         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
 
-                                        {/* "View Profile" pill — slides up on hover */}
-                                        <div className="absolute inset-x-0 bottom-5 flex justify-center">
-                                            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#005CB9] rounded-full px-4 py-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
-                                                {t("btn_view_profile")} <ArrowRight size={12} />
-                                            </span>
-                                        </div>
-                                    </div>
+                                        <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                                            {/* "View Profile" pill — slides up on hover */}
+                                            <div className="mb-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white bg-[#005CB9] rounded-full px-3 py-1.5 shadow-lg">
+                                                    {t("btn_view_profile")} <ArrowRight size={10} />
+                                                </span>
+                                            </div>
 
-                                    {/* Info */}
-                                    <div className="px-7 py-6 flex items-start justify-between gap-3">
-                                        <div>
-                                            <h3 className="text-lg font-extrabold text-gray-900 group-hover:text-[#005CB9] transition-colors leading-snug mb-1">
+                                            <h3 className="text-xl font-extrabold text-white leading-tight mb-1 group-hover:text-blue-200 transition-colors">
                                                 {member.name}
                                             </h3>
-                                            <p className="text-sm text-gray-500 font-medium">
-                                                {t(`team_roles.${member.position}`) !== `team_roles.${member.position}` 
-                                                    ? t(`team_roles.${member.position}`) 
-                                                    : member.position}
+                                            <p className="text-blue-200 text-xs font-medium uppercase tracking-wider">
+                                                {t(`team_member_positions.${member.position}`, { defaultValue: member.position })}
                                             </p>
-                                        </div>
-                                        <div className="w-9 h-9 rounded-xl bg-gray-50 group-hover:bg-[#005CB9]/10 flex items-center justify-center shrink-0 transition-colors mt-0.5">
-                                            <ArrowRight size={16} className="text-gray-400 group-hover:text-[#005CB9] transition-colors" />
                                         </div>
                                     </div>
                                 </Link>
@@ -108,20 +111,22 @@ export default function TeamSection({ teamMembers }: { teamMembers: WPTeamMember
                 </div>
 
                 {/* CTA */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    className="text-center mt-16"
-                >
-                    <Link
-                        href="/our-team"
-                        className="inline-flex items-center gap-2 font-bold text-sm rounded-full px-10 py-4 border-2 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white transition-all duration-300 shadow-sm"
+                {showCta && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.5, duration: 0.6 }}
+                        className="text-center mt-16"
                     >
-                        {t("btn_view_all_members")} <ArrowRight size={16} />
-                    </Link>
-                </motion.div>
+                        <Link
+                            href="/about-us"
+                            className="inline-flex items-center gap-2 font-bold text-sm rounded-full px-10 py-4 border-2 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white transition-all duration-300 shadow-sm"
+                        >
+                            {t("btn_view_all_members")} <ArrowRight size={16} />
+                        </Link>
+                    </motion.div>
+                )}
             </div>
         </section>
     );

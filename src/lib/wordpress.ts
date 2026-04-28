@@ -332,20 +332,21 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
         const html = await response.text();
         const $ = cheerio.load(html);
         const teamMembers: WPTeamMember[] = [];
+        const seenLinks = new Set<string>();
 
-        // Select team member elements - based on typical Goodlayers/Attorna theme structure
-        // Looking for .gdlr-core-personnel-item or similar
-        $(".gdlr-core-personnel-list-column").each((i, el) => {
-            const name = $(el).find(".gdlr-core-personnel-list-title a").text().trim();
-            const position = $(el).find(".gdlr-core-personnel-list-position").text().trim();
-            const $img = $(el).find(".gdlr-core-personnel-list-image img");
+        // Select team member elements - broader selector to catch all published personnel
+        $(".gdlr-core-personnel-list-column, .gdlr-core-personnel-grid-column, .gdlr-core-personnel-item").each((i, el) => {
+            const name = $(el).find("[class*='-title'] a, [class*='-title']").first().text().trim();
+            const position = $(el).find("[class*='-position']").first().text().trim();
+            const $img = $(el).find("img");
             const rawImage = $img.attr("src");
             const imageAlt = $img.attr("alt") || "";
             const image = rawImage ? fixHttps(rawImage) : "";
-            const link = $(el).find(".gdlr-core-personnel-list-title a").attr("href") || "";
+            const link = $(el).find("a").attr("href") || "";
             const httpsLink = fixHttps(link);
 
-            if (name) {
+            if (name && httpsLink && !seenLinks.has(httpsLink)) {
+                seenLinks.add(httpsLink);
                 teamMembers.push({
                     id: `team-${i}`,
                     name,
@@ -529,16 +530,34 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
  * Get detailed information for a single personnel member
  * @param slug - Personnel slug (e.g., "feliks-hovakimyan")
  */
-export async function getPersonnelDetails(slug: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
+export async function getPersonnelDetails(slug: string, lang?: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
     try {
-        const baseUrl = WP_BASE_URL; // Personnel might not have translated parent pages, but let's be careful.
-        // If we want to support translated personnel pages, we'd need to know if the slug itself changes.
-        const response = await fetch(`${baseUrl}/personnel/${slug}/`, {
+        // am uses TranslatePress ?lang=hy, ru uses subdirectory, en uses base
+        let fetchUrl: string;
+        if (lang === "am") {
+            fetchUrl = `${WP_BASE_URL}/personnel/${slug}/?lang=hy`;
+        } else if (lang && lang !== "en") {
+            fetchUrl = `${WP_BASE_URL}/${lang}/personnel/${slug}/`;
+        } else {
+            fetchUrl = `${WP_BASE_URL}/personnel/${slug}/`;
+        }
+
+        let response = await fetch(fetchUrl, {
             cache: "no-store",
             headers: {
                 "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
             },
         });
+
+        // Fallback to English if the translated path doesn't exist
+        if (!response.ok && lang && lang !== "en") {
+            response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
+                cache: "no-store",
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
+                },
+            });
+        }
 
         if (!response.ok) {
             console.error(`Failed to fetch personnel page for ${slug}`);

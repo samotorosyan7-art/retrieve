@@ -53,8 +53,6 @@ export default function LanguageSelector() {
             if (parts.length > 3) {
                 if (parts[2] === "blog") {
                     newPathname = `/${lang.code}/blog`;
-                } else if (parts[2] === "personnel") {
-                    newPathname = `/${lang.code}/our-team`;
                 } else if (parts[2] === "legal-services") {
                     newPathname = `/${lang.code}/legal-services`;
                 } else if (parts[2] === "tax-and-business-advisory-services") {
@@ -81,7 +79,7 @@ export default function LanguageSelector() {
                 aria-expanded={isOpen}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700"
             >
-                <span className="text-xl">{currentLang.flag}</span>
+                <span className="text-xl leading-none shrink-0 block">{currentLang.flag}</span>
                 <span className="hidden sm:inline">{currentLang.code.toUpperCase()}</span>
             </button>
 

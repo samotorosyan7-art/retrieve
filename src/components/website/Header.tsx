@@ -51,7 +51,6 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
 
     const navLinks = [
         { name: t("nav_about_us"), href: "/about-us" },
-        { name: t("nav_our_team"), href: "/our-team" },
         { name: t("nav_blog"), href: "/blog" },
         { name: t("nav_legal_updates"), href: "/legal-updates" },
     ];
@@ -194,24 +193,27 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                     </nav>
 
                     {/* Right Actions */}
-                    <div className="hidden lg:flex items-center gap-2">
+                    <div className="flex items-center gap-2 md:gap-4">
                         <LanguageSelector />
-                        <Button asChild className="rounded-full px-6 shadow-soft hover:shadow-medium transition-all">
-                            <Link href="/contact" className="flex items-center gap-2">
-                                {t("btn_contact_us")} <ArrowRight size={16} />
-                            </Link>
-                        </Button>
-                    </div>
+                        
+                        <div className="hidden lg:flex items-center gap-4">
+                            <Button asChild className="rounded-full px-8 shadow-soft hover:shadow-medium transition-all bg-[#005CB9] text-white hover:bg-[#004a96]">
+                                <Link href="/contact" className="flex items-center gap-2">
+                                    {t("btn_contact_us")} <ArrowRight size={18} />
+                                </Link>
+                            </Button>
+                        </div>
 
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
-                        aria-expanded={isOpen}
-                    >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                        {/* Mobile Menu Button */}
+                        <button
+                            className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+                            onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
+                            aria-expanded={isOpen}
+                        >
+                            {isOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -221,6 +223,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                 isOpen ? "max-h-[80vh] py-4 border-t" : "max-h-0 py-0"
             )}>
                 <div className="container mx-auto px-4 flex flex-col gap-1">
+
                     <Link
                         href="/about-us"
                         className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
@@ -282,13 +285,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         </div>
                     </div>
 
-                    <Link
-                        href="/our-team"
-                        className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {t("nav_our_team")}
-                    </Link>
+
                     <Link
                         href="/blog"
                         className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
@@ -315,7 +312,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <div className="flex justify-center">
                             <LanguageSelector />
                         </div>
-                        <Button className="w-full justify-center rounded-xl py-6" asChild>
+                        <Button className="w-full justify-center rounded-xl py-6 bg-[#005CB9] text-white" asChild>
                             <Link href="/contact" onClick={() => setIsOpen(false)}>{t("btn_contact_us")}</Link>
                         </Button>
                     </div>
