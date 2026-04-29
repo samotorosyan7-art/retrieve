@@ -1,21 +1,19 @@
-import { cookies } from "next/headers";
 import { getTeamMembers, getYoastMetadata } from "@/lib/wordpress";
 import AboutUsClient from "./AboutUsClient";
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
+interface Props {
+    params: Promise<{ lang: string }>;
+}
+
+export async function generateMetadata({ params }: Props) {
+    const { lang } = await params;
     return getYoastMetadata("/about-us", lang);
 }
 
 export const dynamic = "force-dynamic";
 
-export default async function AboutUsPage() {
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
-    
-    // Fetch team members for the consolidated About Us page
+export default async function AboutUsPage({ params }: Props) {
+    const { lang } = await params;
     const teamMembers = await getTeamMembers(lang);
-
     return <AboutUsClient teamMembers={teamMembers} />;
 }
