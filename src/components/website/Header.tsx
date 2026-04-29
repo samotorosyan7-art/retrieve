@@ -50,6 +50,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
     }, []);
 
     const navLinks = [
+        { name: t("nav_home"), href: "/" },
         { name: t("nav_about_us"), href: "/about-us" },
         { name: t("nav_blog"), href: "/blog" },
         { name: t("nav_legal_updates"), href: "/legal-updates" },
@@ -100,12 +101,12 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                     {/* Logo */}
                     <Link href="/" className="flex items-center py-1">
                         <Image
-                            src="/logo.png"
+                            src="/logo.jpg"
                             alt="RETRIEVE Legal & Tax"
-                            width={160}
+                            width={200}
                             height={80}
                             priority
-                            className="h-16 md:h-20 w-auto object-contain transition-transform mix-blend-multiply"
+                            className="h-16 md:h-20 w-auto object-contain transition-transform"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">

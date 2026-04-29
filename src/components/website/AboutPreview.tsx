@@ -24,7 +24,7 @@ export default function AboutPreviewNew() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8 }}
                                 viewport={{ once: true }}
-                                className="absolute left-0 top-0 w-[85%] h-[80%] rounded-[2rem] overflow-hidden bg-gray-50 shadow-2xl z-10 border-8 border-white"
+                                className="absolute left-0 top-0 w-[85%] h-[80%] rounded-[2rem] overflow-hidden z-10"
                             >
                                 <Image
                                     src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-in-Yerevan.jpg"
@@ -41,7 +41,7 @@ export default function AboutPreviewNew() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 viewport={{ once: true }}
-                                className="absolute right-0 bottom-0 w-[55%] h-[65%] rounded-[2rem] overflow-hidden bg-gray-50 shadow-2xl z-20 border-8 border-white"
+                                className="absolute right-0 bottom-0 w-[55%] h-[65%] rounded-[2rem] overflow-hidden z-20"
                             >
                                 <Image
                                     src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
@@ -80,7 +80,7 @@ export default function AboutPreviewNew() {
 
                             <div className="mt-10 h-1.5 w-24 bg-primary rounded-full mb-10"></div>
 
-                            <Button asChild className="rounded-full px-10 h-14 text-base font-bold bg-[#005CB9] text-white hover:bg-[#004a96] shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white transition-colors shadow-sm">
                                 <Link href="/about-us" className="flex items-center gap-2">
                                     {t("btn_about_us")} <ArrowRight size={18} />
                                 </Link>

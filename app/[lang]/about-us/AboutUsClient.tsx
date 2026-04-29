@@ -135,7 +135,28 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
 
                     {/* RIGHT — Main Content */}
                     <main className="flex-1 min-w-0 space-y-10">
-                        
+
+                        {/* Who We Are */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
+                        >
+                            <span className="text-[#005CB9] font-bold tracking-widest uppercase text-xs mb-3 block">
+                                {t("who_we_are")}
+                            </span>
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
+                                {t("about_preview_title")}
+                            </h2>
+                            <div className="h-1 w-12 bg-[#005CB9] rounded-full mb-6" />
+                            <div className="space-y-4 text-base text-gray-600 leading-relaxed">
+                                <p>{t("about_preview_text_1")}</p>
+                                <p>{t("about_preview_text_2")}</p>
+                            </div>
+                        </motion.div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <motion.div 
                                 initial={{ opacity: 0, x: -20 }}
@@ -200,51 +221,48 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 items-stretch">
-                            {/* Left — tall featured image */}
-                            <motion.div
-                                whileHover={{ scale: 1.015 }}
-                                className="md:col-span-3 relative rounded-3xl overflow-hidden shadow-xl min-h-[340px]"
-                            >
-                                <Image
-                                    src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
-                                    alt="Retrieve Team"
-                                    fill
-                                    className="object-cover object-top"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#003d7a]/80 via-transparent to-transparent" />
-                                <div className="absolute bottom-6 left-6 text-white">
-                                    <p className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-1">{t("team_title")}</p>
-                                    <p className="text-lg font-extrabold leading-tight">Retrieve Legal & Tax</p>
+                        {/* How We Work */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden"
+                        >
+                            <div className="flex flex-col md:flex-row gap-0 items-stretch">
+                                <div className="flex-1 min-w-0 p-8 md:p-10">
+                                    <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
+                                        {t("how_we_work")}
+                                    </h2>
+                                    <div className="space-y-4 text-base text-gray-600 leading-relaxed mb-8">
+                                        <p>{t("about_us_story_text")}</p>
+                                        <p>{t("about_us_cta_text")}</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {[
+                                            t("about_us_feature_1"),
+                                            t("about_us_feature_2"),
+                                            t("about_us_feature_3"),
+                                            t("about_us_feature_4"),
+                                        ].map((item, idx) => (
+                                            <div key={idx} className="flex items-center gap-3 text-sm font-semibold text-gray-700">
+                                                <CheckCircle2 size={18} className="text-[#005CB9] shrink-0" />
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </motion.div>
-
-                            {/* Right — office image + stats badge */}
-                            <div className="md:col-span-2 flex flex-col gap-5">
-                                <motion.div
-                                    whileHover={{ scale: 1.015 }}
-                                    className="relative rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-md flex-1 min-h-[200px]"
-                                >
+                                <div className="w-full md:w-1/2 shrink-0 relative min-h-[350px]">
                                     <Image
-                                        src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-in-Yerevan.jpg"
-                                        alt="Office"
+                                        src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
+                                        alt="How We Work"
                                         fill
-                                        className="object-contain p-3"
+                                        className="object-cover object-top"
+                                        sizes="(max-width: 768px) 100vw, 288px"
                                     />
-                                </motion.div>
-                                <div className="rounded-3xl bg-gradient-to-br from-[#005CB9] to-[#003d7a] p-6 text-white flex flex-col justify-center gap-3">
-                                    <div className="flex items-center gap-4">
-                                        <div className="text-3xl font-black">10+</div>
-                                        <div className="text-sm text-blue-100 leading-tight">{t("about_us_feature_1")}</div>
-                                    </div>
-                                    <div className="w-full h-px bg-white/20" />
-                                    <div className="flex items-center gap-4">
-                                        <div className="text-3xl font-black">200+</div>
-                                        <div className="text-sm text-blue-100 leading-tight">{t("about_us_feature_2")}</div>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Team Section Integration */}
                         <div className="pt-10">

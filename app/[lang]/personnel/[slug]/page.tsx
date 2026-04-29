@@ -151,7 +151,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                         {/* CTA */}
                         <Link
                             href="/contact"
-                            className="block w-full text-center bg-gradient-to-r from-[#004791] to-[#005CB9] hover:from-[#003d7a] hover:to-[#004791] text-white font-bold text-sm rounded-2xl px-6 py-4 transition-all shadow-lg shadow-blue-900/20"
+                            className="inline-flex w-full items-center justify-center rounded-full px-8 h-14 text-sm font-bold text-white bg-[#005CB9] hover:bg-[#004791] shadow-lg hover:shadow-primary/20 transition-all duration-300 active:scale-95"
                         >
                             {t.personnel_schedule_consultation}
                         </Link>

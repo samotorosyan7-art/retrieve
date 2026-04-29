@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import InteractiveIntake from "@/components/website/InteractiveIntake";
 
 export default function Hero() {

@@ -85,7 +85,7 @@ export default function TaxAdvisoryGrid({ items = [] }: TaxAdvisoryGridProps) {
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="text-center mt-16"
                 >
-                    <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white hover:border-[#005CB9] transition-colors shadow-sm">
+                    <Button size="lg" asChild className="rounded-full px-10 bg-[#005CB9] text-white hover:bg-[#005CB9] focus-visible:ring-0 shadow-sm">
                         <Link href="/contact">
                             {t("btn_contact_advisory")}
                         </Link>

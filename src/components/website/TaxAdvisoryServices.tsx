@@ -54,7 +54,7 @@ export default function TaxAdvisoryServices({ services = [] }: TaxAdvisoryServic
                             <p className="text-gray-600 leading-relaxed text-lg mb-8">
                                 {t("tax_advisory_desc") || "Navigate complex financial landscapes with our expert tax consultants and business advisors. We provide actionable strategies to optimize your operational structures."}
                             </p>
-                            <Button className="rounded-full px-8 shadow-soft" asChild>
+                            <Button className="rounded-full px-8 md:px-10 h-14 md:h-16 text-sm md:text-base font-bold bg-[#005CB9] text-white hover:bg-[#005CB9] focus:bg-[#005CB9] focus-visible:ring-0 shadow-sm pointer-events-auto w-full sm:w-auto" asChild>
                                 <Link href="https://retrieve.am/legal-services/">
                                     {t("btn_contact_advisory") || "Schedule a Consultation"}
                                 </Link>

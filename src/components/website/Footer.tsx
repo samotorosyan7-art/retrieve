@@ -51,11 +51,11 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                         <Link href="/" className="inline-block">
                             <div className="bg-white rounded-xl px-3 py-2 inline-block">
                                 <Image
-                                    src="/logo.png"
+                                    src="/logo.jpg"
                                     alt="Retrieve"
-                                    width={130}
-                                    height={36}
-                                    className="h-8 w-auto object-contain"
+                                    width={200}
+                                    height={56}
+                                    className="h-14 w-auto object-contain"
                                 />
                             </div>
                         </Link>
