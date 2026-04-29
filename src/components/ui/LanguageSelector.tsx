@@ -13,9 +13,9 @@ interface Language {
 }
 
 const languages: Language[] = [
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "ru", name: "Русский", flag: "🇷🇺" },
-    { code: "am", name: "Հայերեն", flag: "🇦🇲" },
+    { code: "en", name: "English", flag: "us" },
+    { code: "ru", name: "Русский", flag: "ru" },
+    { code: "am", name: "Հայերեն", flag: "am" },
 ];
 
 export default function LanguageSelector() {
@@ -79,8 +79,12 @@ export default function LanguageSelector() {
                 aria-expanded={isOpen}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700"
             >
-                <span className="text-xl leading-none shrink-0 block">{currentLang.flag}</span>
-                <span className="hidden sm:inline">{currentLang.code.toUpperCase()}</span>
+                <img
+                    src={`https://flagcdn.com/w40/${currentLang.flag}.png`}
+                    alt={currentLang.name}
+                    className="rounded-sm object-cover shrink-0 w-5 h-5"
+                />
+                <span className="hidden sm:inline text-sm font-semibold">{currentLang.code.toUpperCase()}</span>
             </button>
 
             {isOpen && (
@@ -99,7 +103,11 @@ export default function LanguageSelector() {
                                     currentLang.code === lang.code && "bg-primary/5 text-primary"
                                 )}
                             >
-                                <span className="text-xl">{lang.flag}</span>
+                                <img
+                                    src={`https://flagcdn.com/w40/${lang.flag}.png`}
+                                    alt={lang.name}
+                                    className="rounded-sm object-cover shrink-0 w-5 h-5"
+                                />
                                 <span className="text-sm font-medium">{lang.name}</span>
                             </button>
                         ))}
