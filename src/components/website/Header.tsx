@@ -106,7 +106,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             width={200}
                             height={80}
                             priority
-                            className="h-16 md:h-20 w-auto object-contain transition-transform"
+                            className="h-16 md:h-20 w-50 object-none transition-transform"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">
