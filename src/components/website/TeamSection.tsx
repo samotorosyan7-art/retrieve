@@ -46,7 +46,7 @@ export default function TeamSection({
                         {t("team_our_team")}
                     </h2>
                     <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                        {t("team_subtitle")}
+                        {t("about_us_cta_text")}
                     </p>
                     <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
                         <div className="w-1/2 h-full bg-[#005CB9] rounded-full" />

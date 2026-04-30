@@ -147,14 +147,24 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             <span className="text-[#005CB9] font-bold tracking-widest uppercase text-xs mb-3 block">
                                 {t("who_we_are")}
                             </span>
-                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
-                                {t("about_preview_title")}
-                            </h2>
                             <div className="h-1 w-12 bg-[#005CB9] rounded-full mb-6" />
                             <div className="space-y-4 text-base text-gray-600 leading-relaxed">
                                 <p>{t("about_preview_text_1")}</p>
                                 <p>{t("about_preview_text_2")}</p>
                             </div>
+                        </motion.div>
+
+                        {/* What We Stand For Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center mb-8"
+                        >
+                            <h2 className="text-[#005CB9] font-bold tracking-widest uppercase text-xs mb-3 block">
+                                {t("what_we_stand_for")}
+                            </h2>
                         </motion.div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -185,42 +195,6 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             </motion.div>
                         </div>
 
-                        {/* Story Section with Background Image */}
-                        <div className="relative bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden min-h-[400px] flex items-center">
-                            {/* Background Image for section */}
-                            <div className="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-20 md:opacity-100 z-0">
-                                <Image 
-                                    src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Armenia.jpg"
-                                    alt="Reliable Results"
-                                    fill
-                                    className="object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent hidden md:block" />
-                            </div>
-
-                            <div className="relative z-10 w-full md:w-2/3 p-8 md:p-12 space-y-6">
-                                <h2 className="text-3xl font-extrabold text-gray-900 leading-tight">
-                                    {t("about_us_story_title_1", { defaultValue: "Committed to Providing" })} <span className="text-[#005CB9]">{t("about_us_story_title_2", { defaultValue: "Reliable Results" })}</span>
-                                </h2>
-                                <p className="text-gray-600 leading-relaxed max-w-xl">
-                                    {t("about_us_story_text")}
-                                </p>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                                    {[
-                                        t("about_us_feature_1"),
-                                        t("about_us_feature_2"),
-                                        t("about_us_feature_3"),
-                                        t("about_us_feature_4"),
-                                    ].map((item, idx) => (
-                                        <div key={idx} className="flex items-center gap-2 text-sm font-bold text-gray-700">
-                                            <CheckCircle2 size={18} className="text-[#005CB9]" />
-                                            {item}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
                         {/* How We Work */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -236,7 +210,6 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                                     </h2>
                                     <div className="space-y-4 text-base text-gray-600 leading-relaxed mb-8">
                                         <p>{t("about_us_story_text")}</p>
-                                        <p>{t("about_us_cta_text")}</p>
                                     </div>
                                     <div className="space-y-3">
                                         {[
