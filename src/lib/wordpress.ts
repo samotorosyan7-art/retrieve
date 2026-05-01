@@ -166,6 +166,14 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
             return [];
         }
 
+        // Check if response is JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.error(`WordPress API returned non-JSON response: ${contentType}. Body: ${text.substring(0, 500)}`);
+            return [];
+        }
+
         return await response.json();
     } catch (error) {
         console.error("Error fetching posts:", error);
@@ -955,7 +963,18 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         console.log("url", url);
         const response = await fetch(url.toString(), { cache: "no-store" });
 
-        if (!response.ok) return null;
+        if (!response.ok) {
+            console.error(`WordPress API error: ${response.status} ${response.statusText}`);
+            return null;
+        }
+
+        // Check if response is JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.error(`WordPress API returned non-JSON response: ${contentType}. Body: ${text.substring(0, 500)}`);
+            return null;
+        }
 
         const data = await response.json();
         if (!data.length) return null;
@@ -1009,6 +1028,14 @@ export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag |
 
         const response = await fetch(url.toString(), { cache: "no-store" });
         if (!response.ok) return null;
+
+        // Check if response is JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.error(`WordPress API returned non-JSON response for tag: ${contentType}. Body: ${text.substring(0, 500)}`);
+            return null;
+        }
 
         const data = await response.json();
         if (!data.length) return null;

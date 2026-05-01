@@ -144,10 +144,9 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             transition={{ duration: 0.6 }}
                             className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
                         >
-                            <span className="text-[#005CB9] font-bold tracking-widest uppercase text-xs mb-3 block">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
                                 {t("who_we_are")}
-                            </span>
-                            <div className="h-1 w-12 bg-[#005CB9] rounded-full mb-6" />
+                            </h2>
                             <div className="space-y-4 text-base text-gray-600 leading-relaxed">
                                 <p>{t("about_preview_text_1")}</p>
                                 <p>{t("about_preview_text_2")}</p>
@@ -160,40 +159,28 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
-                            className="text-center mb-8"
+                            className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
                         >
-                            <h2 className="text-[#005CB9] font-bold tracking-widest uppercase text-xs mb-3 block">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
                                 {t("what_we_stand_for")}
                             </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-[#005CB9]/10 flex items-center justify-center">
+                                        <Target className="text-[#005CB9]" size={24} />
+                                    </div>
+                                    <h3 className="text-2xl font-extrabold text-gray-900">{t("about_us_mission_title")}</h3>
+                                    <p className="text-gray-600 leading-relaxed">{t("about_us_mission_text")}</p>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-[#005CB9]/10 flex items-center justify-center">
+                                        <Users className="text-[#005CB9]" size={24} />
+                                    </div>
+                                    <h3 className="text-2xl font-extrabold text-gray-900">{t("about_us_vision_title")}</h3>
+                                    <p className="text-gray-600 leading-relaxed">{t("about_us_vision_text")}</p>
+                                </div>
+                            </div>
                         </motion.div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <motion.div 
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
-                            >
-                                <div className="w-12 h-12 rounded-2xl bg-[#005CB9]/10 flex items-center justify-center mb-6">
-                                    <Target className="text-[#005CB9]" size={24} />
-                                </div>
-                                <h2 className="text-2xl font-extrabold text-gray-900 mb-4">{t("about_us_mission_title")}</h2>
-                                <p className="text-gray-600 leading-relaxed">{t("about_us_mission_text")}</p>
-                            </motion.div>
-
-                            <motion.div 
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
-                            >
-                                <div className="w-12 h-12 rounded-2xl bg-[#005CB9]/10 flex items-center justify-center mb-6">
-                                    <Users className="text-[#005CB9]" size={24} />
-                                </div>
-                                <h2 className="text-2xl font-extrabold text-gray-900 mb-4">{t("about_us_vision_title")}</h2>
-                                <p className="text-gray-600 leading-relaxed">{t("about_us_vision_text")}</p>
-                            </motion.div>
-                        </div>
 
                         {/* How We Work */}
                         <motion.div
