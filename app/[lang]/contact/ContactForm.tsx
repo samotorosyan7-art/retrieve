@@ -1,7 +1,8 @@
 "use client";
 
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useActionState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import { submitContactForm, ContactFormState } from "./actions";
 import { Loader2, Send, CheckCircle2, AlertCircle, User, Mail, Phone, MessageSquare, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -38,11 +39,23 @@ export default function ContactForm() {
         t("subjects_immigration"),
         t("subjects_other"),
     ];
-    const [state, action, isPending] = useActionState<ContactFormState, FormData>(
-        submitContactForm,
-        null
-    );
+    const [state, setState] = useState<ContactFormState | null>(null);
+    const [isPending, startTransition] = useTransition();
     const formRef = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = async (formData: FormData) => {
+        startTransition(async () => {
+            try {
+                const result = await submitContactForm(null, formData);
+                setState(result);
+            } catch (error) {
+                setState({
+                    success: false,
+                    message: "An unexpected error occurred. Please try again."
+                });
+            }
+        });
+    };
 
     // Reset form on success
     useEffect(() => {
@@ -52,7 +65,7 @@ export default function ContactForm() {
     }, [state]);
 
     return (
-        <form ref={formRef} action={action} className="space-y-5">
+        <form ref={formRef} onSubmit={(e) => { e.preventDefault(); handleSubmit(new FormData(e.currentTarget)); }} className="space-y-5">
             {/* Name + Email row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <FieldWrapper label={t("full_name")} required icon={User}>

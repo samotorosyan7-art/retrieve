@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react"; // Explicit React import for context compatibility
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { PortfolioItem } from "@/types/wordpress";

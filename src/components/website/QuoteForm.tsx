@@ -1,7 +1,8 @@
 "use client";
 
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useActionState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import { submitContactForm, ContactFormState } from "../../../app/[lang]/contact/actions";
 import { Loader2, Send, CheckCircle2, AlertCircle, User, Mail, Phone, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,11 +31,23 @@ const inputClass = "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 
 
 export default function QuoteForm({ postTitle }: { postTitle: string }) {
     const { t } = useTranslation();
-    const [state, action, isPending] = useActionState<ContactFormState, FormData>(
-        submitContactForm,
-        null
-    );
+    const [state, setState] = useState<ContactFormState | null>(null);
+    const [isPending, startTransition] = useTransition();
     const formRef = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = async (formData: FormData) => {
+        startTransition(async () => {
+            try {
+                const result = await submitContactForm(null, formData);
+                setState(result);
+            } catch (error) {
+                setState({
+                    success: false,
+                    message: "An unexpected error occurred. Please try again."
+                });
+            }
+        });
+    };
 
     useEffect(() => {
         if (state?.success) {
@@ -49,7 +62,7 @@ export default function QuoteForm({ postTitle }: { postTitle: string }) {
                 {t("get_a_quote") || "Get a Quote"}
             </h3>
             
-            <form ref={formRef} action={action} className="space-y-5">
+            <form ref={formRef} onSubmit={(e) => { e.preventDefault(); handleSubmit(new FormData(e.currentTarget)); }} className="space-y-5">
                 <input type="hidden" name="subject" value={`Quote Request: ${postTitle}`} />
                 
                 <FieldWrapper label={t("full_name")} required icon={User}>

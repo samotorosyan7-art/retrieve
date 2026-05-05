@@ -33,6 +33,7 @@ export default async function sitemap(
   // Static core routes
   const staticRoutes = [
     '',
+    '/about-us',
     '/legal-services',
     '/tax-and-business-advisory-services',
     '/blog',
