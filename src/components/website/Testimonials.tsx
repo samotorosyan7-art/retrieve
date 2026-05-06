@@ -11,12 +11,13 @@ interface TestimonialsProps {
 export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
     const { t } = useTranslation();
     const hardcodedTestimonials = t("testimonials_list", { returnObjects: true }) as any[];
-    const displayTestimonials = Array.isArray(hardcodedTestimonials) ? hardcodedTestimonials : testimonials;
+    const displayTestimonials = Array.isArray(hardcodedTestimonials) && hardcodedTestimonials.length > 0 ? hardcodedTestimonials : 
+                              Array.isArray(testimonials) && testimonials.length > 0 ? testimonials : [];
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const scroll = (direction: "left" | "right") => {
-        if (scrollRef.current) {
+        if (scrollRef?.current && typeof scrollRef.current.scrollBy === 'function') {
             const scrollAmount = 400; // approximate card width + gap
             scrollRef.current.scrollBy({
                 left: direction === "left" ? -scrollAmount : scrollAmount,
@@ -73,7 +74,7 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
                     className="flex overflow-x-auto gap-6 sm:gap-8 pb-12 pt-4 snap-x snap-mandatory hide-scrollbar relative z-0"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {displayTestimonials.map((testy, idx) => (
+                    {displayTestimonials?.map((testy, idx) => (
                         <div
                             key={idx}
                             className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center bg-white border border-gray-100 rounded-3xl p-8 sm:p-10 shadow-soft hover:shadow-elevated hover:-translate-y-2 transition-all duration-500 relative group flex flex-col"

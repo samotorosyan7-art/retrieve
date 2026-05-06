@@ -44,11 +44,14 @@ export default function ContactForm() {
     const formRef = useRef<HTMLFormElement>(null);
 
     const handleSubmit = async (formData: FormData) => {
+        if (!formData || typeof formData.get !== 'function') return;
+        
         startTransition(async () => {
             try {
                 const result = await submitContactForm(null, formData);
                 setState(result);
             } catch (error) {
+                console.error("Form submission error:", error);
                 setState({
                     success: false,
                     message: "An unexpected error occurred. Please try again."
@@ -65,7 +68,15 @@ export default function ContactForm() {
     }, [state]);
 
     return (
-        <form ref={formRef} onSubmit={(e) => { e.preventDefault(); handleSubmit(new FormData(e.currentTarget)); }} className="space-y-5">
+        <form ref={formRef} onSubmit={(e) => { 
+                e.preventDefault(); 
+                try {
+                    const formData = new FormData(e.currentTarget);
+                    handleSubmit(formData);
+                } catch (err) {
+                    console.error("Form data extraction error:", err);
+                }
+            }} className="space-y-5">
             {/* Name + Email row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <FieldWrapper label={t("full_name")} required icon={User}>

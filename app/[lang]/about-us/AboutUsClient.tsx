@@ -35,9 +35,9 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
     ];
 
     const stats = [
-        { label: t("about_us_stat_experience", { defaultValue: "Years of Experience" }), value: "10+", icon: Briefcase },
+        { label: t("about_us_stat_experience", { defaultValue: "Years of Experience" }), value: "15+", icon: Briefcase },
         { label: t("about_us_stat_cases", { defaultValue: "Successful Cases" }), value: "500+", icon: Scale },
-        { label: t("about_us_stat_partners", { defaultValue: "Global Partners" }), value: "20+", icon: Globe },
+        { label: t("about_us_stat_partners", { defaultValue: "Global Partners" }), value: "120+", icon: Globe },
     ];
 
     return (
@@ -215,7 +215,7 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                                 <div className="w-full md:w-1/2 shrink-0 relative min-h-[350px]">
                                     <Image
                                         src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
-                                        alt="How We Work"
+                                        alt="About Retrieve Law Firm"
                                         fill
                                         className="object-cover object-top"
                                         sizes="(max-width: 768px) 100vw, 288px"

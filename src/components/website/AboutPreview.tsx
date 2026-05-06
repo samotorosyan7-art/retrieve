@@ -24,11 +24,11 @@ export default function AboutPreviewNew() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8 }}
                                 viewport={{ once: true }}
-                                className="absolute left-0 top-0 w-[85%] h-[80%] rounded-[2rem] overflow-hidden z-10"
+                                className="absolute left-0 top-0 w-[85%] h-[80%] overflow-hidden z-10"
                             >
                                 <Image
                                     src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-in-Yerevan.jpg"
-                                    alt="Law-Firm-in-Yerevan"
+                                    alt="Law Firm in Yerevan"
                                     fill
                                     className="object-contain p-6 transition-transform duration-700"
                                     sizes="(max-width: 768px) 70vw, 35vw"
@@ -41,11 +41,11 @@ export default function AboutPreviewNew() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 viewport={{ once: true }}
-                                className="absolute right-0 bottom-0 w-[55%] h-[65%] rounded-[2rem] overflow-hidden z-20"
+                                className="absolute right-0 bottom-0 w-[55%] h-[65%] overflow-hidden z-20"
                             >
                                 <Image
                                     src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
-                                    alt="Law-Firm-Retrieve-Team"
+                                    alt="Law Firm Retrieve Team"
                                     fill
                                     className="object-cover transition-transform duration-700"
                                     sizes="(max-width: 768px) 50vw, 25vw"

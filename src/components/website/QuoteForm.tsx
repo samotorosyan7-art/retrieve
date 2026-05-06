@@ -36,11 +36,14 @@ export default function QuoteForm({ postTitle }: { postTitle: string }) {
     const formRef = useRef<HTMLFormElement>(null);
 
     const handleSubmit = async (formData: FormData) => {
+        if (!formData || typeof formData.get !== 'function') return;
+        
         startTransition(async () => {
             try {
                 const result = await submitContactForm(null, formData);
                 setState(result);
             } catch (error) {
+                console.error("Quote form submission error:", error);
                 setState({
                     success: false,
                     message: "An unexpected error occurred. Please try again."
@@ -62,7 +65,15 @@ export default function QuoteForm({ postTitle }: { postTitle: string }) {
                 {t("get_a_quote") || "Get a Quote"}
             </h3>
             
-            <form ref={formRef} onSubmit={(e) => { e.preventDefault(); handleSubmit(new FormData(e.currentTarget)); }} className="space-y-5">
+            <form ref={formRef} onSubmit={(e) => { 
+                e.preventDefault();
+                try {
+                    const formData = new FormData(e.currentTarget);
+                    handleSubmit(formData);
+                } catch (err) {
+                    console.error("Quote form data extraction error:", err);
+                }
+            }} className="space-y-5">
                 <input type="hidden" name="subject" value={`Quote Request: ${postTitle}`} />
                 
                 <FieldWrapper label={t("full_name")} required icon={User}>
