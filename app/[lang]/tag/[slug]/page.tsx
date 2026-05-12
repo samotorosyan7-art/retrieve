@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getTagBySlug, getPostsByTag, getLegalUpdates, getYoastMetadata } from "@/lib/wordpress";
+import { formatDate } from "@/lib/dateUtils";
 import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -24,13 +25,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export const dynamic = "force-dynamic";
 
 const PER_PAGE = 9;
-
-function formatDate(iso: string, lang: string = "en") {
-    const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";
-    return new Date(iso).toLocaleDateString(locale, {
-        year: "numeric", month: "long", day: "numeric",
-    });
-}
 
 function Pagination({ currentPage, totalPages, t, slug }: { currentPage: number; totalPages: number; t: any; slug: string }) {
     if (totalPages <= 1) return null;

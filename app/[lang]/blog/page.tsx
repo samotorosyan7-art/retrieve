@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
 import { getBlogPosts, getYoastMetadata } from "@/lib/wordpress";
+import { formatDate } from "@/lib/dateUtils";
 import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -17,13 +18,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export const dynamic = "force-dynamic";
 
 const PER_PAGE = 12;
-
-function formatDate(iso: string, lang: string = "en") {
-    const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";
-    return new Date(iso).toLocaleDateString(locale, {
-        year: "numeric", month: "long", day: "numeric",
-    });
-}
 
 function Pagination({ currentPage, totalPages, t }: { currentPage: number; totalPages: number; t: any }) {
     const t_prev = t.pagination_prev;

@@ -6,16 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { LegalUpdate } from "@/types/wordpress";
-
-function formatDate(iso: string, lang: string = "en") {
-    const locale = lang.startsWith("am") ? "hy-AM" : lang.startsWith("ru") ? "ru-RU" : "en-US";
-    return new Date(iso).toLocaleDateString(locale, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "UTC",
-    });
-}
+import { formatDate } from "@/lib/dateUtils";
 
 export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
     const { t, i18n } = useTranslation();

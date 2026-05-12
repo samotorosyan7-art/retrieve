@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
+import { formatDate } from "@/lib/dateUtils";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -23,13 +24,6 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export const dynamic = "force-dynamic";
-
-function formatDate(iso: string, lang: string = "en") {
-    const locale = lang === "am" ? "hy-AM" : lang === "ru" ? "ru-RU" : "en-US";
-    return new Date(iso).toLocaleDateString(locale, {
-        year: "numeric", month: "long", day: "numeric",
-    });
-}
 
 export default async function LegalUpdateSinglePage({ params }: Props) {
     const { slug, lang } = await params;
