@@ -1,6 +1,34 @@
 import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
+// Armenian meta titles from Excel
+const ARMENIAN_META_TITLES: Record<string, string> = {
+    "/": "Իրավաբանական Ընկերություն Հայաստանում | Retrieve Legal & Tax",
+    "/legal-services": "Իրավաբանական Ծառայություններ և Խորհրդատվություն | Retrieve Legal & Tax",
+    "/legal-services/corporate-business-law": "Կորպորատիվ Ծառայություններ | Կորպորատիվ Իրավաբան | Ընկերության Գրանցում",
+    "/legal-services/immigration-residence-services": "Ներգաղթի և Կացության Ծառայություններ | Քաղաքացիության Ստացման Աջակցություն",
+    "/legal-services/employment-law": "Աշխատանքային Իրավունք | Պայմանագրերի Մշակում, Աշխատանքային Վեճերի Լուծում",
+    "/legal-services/intellectual-property-law": "Մտավոր Սեփականություն | Հեղինակային Իրավունք, Ապրանքային Նշան, Արտոնագրեր",
+    "/legal-services/real-estate-construction-law": "Անշարժ Գույքի Իրավաբան | Շինարարական Թույլտվության Ստացում",
+    "/legal-services/investment-law": "Ներդրումային Աջակցություն | Ներդրողների Իրավունքների Պաշտպանություն",
+    "/legal-services/arbitration-ligitation": "Արբիտրաժ և Դատական Վեճեր | Ներկայացուցչություն ՀՀ Դատարաններում",
+    "/legal-services/tax-law-compliance": "Հարկային Իրավաբան | Խորհրդատվություն, Հարկային Աուդիտ, Վեճերի Լուծում",
+    "/legal-services/banking-finance-law": "Բանկային եւ Ֆինանսական Ոլորտում Իրավաբանական Ծառայություններ",
+    "/legal-services/competition-law": "Մրցակցային Իրավունք | Հակամենաշնորհ և Մրցակցություն",
+    "/legal-services/energy-law": "Էներգետիկայի Ոլորտում Իրավաբանական Ծառայություններ | Վեճերի Լուծում",
+    "/legal-services/it-data-privacy-protection": "ՏՏ և Տվյալների Պաշտպանություն Ոլորտում Իրավաբանական Ծառայություններ",
+    "/legal-services/health-pharmaceuticals": "Առողջապահություն և Դեղագործություն | Իրավաբանական Աջակցություն ",
+    "/legal-services/cryptocurrency-blockchain": "Կրիպտոարժույթ և Բլոկչեյն | Իրավաբանական Աջակցություն | Սմարթ-Պայմանագրեր",
+    "/tax-and-business-advisory-services": "Հարկային և Բիզնես Խորհրդատվական Ծառայություններ | Հաշվապահություն, M&A",
+    "/tax-and-business-advisory-services/accounting-bookkeeping": "Հաշվապահական Ծառայություններ | Ֆինանսական Հաշվետվությունների Պատրաստում ",
+    "/tax-and-business-advisory-services/tax-advisory": "Հարկային Խորհրդատվական Ծառայություններ | Հարկային Պլանավորում",
+    "/tax-and-business-advisory-services/corporate-finance-advisory": "Կորպորատիվ Ֆինանսների Խորհրդատվություն | Ռիսկերի Կառավարում",
+    "/tax-and-business-advisory-services/ma-advising": "M&A Խորհրդատվություն | Միաձուլումներ և Ձեռքբերումներ",
+    "/about-us": "Մեր Մասին | Գործարար և Կորպորատիվ Իրավունքի Մասնագիտացած Իրավաբաններ",
+    "/blog": "Իրավաբանական Բլոգ | Գործարար Իրավունքի Վերաբերյալ Տեղեկատվություն",
+    "/legal-updates": "Իրավական Նորություններ | Գործարար Կարգավորման Մասին Վերլուծություններ"
+};
+
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
 const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
 
@@ -97,10 +125,22 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
 
         const $ = cheerio.load(html);
 
-        const title = $("title").text() ||
-            $("meta[property='og:title']").attr("content") ||
-            $("meta[name='twitter:title']").attr("content") ||
-            $("h1").first().text();
+        // Use Armenian meta titles for Armenian language
+        let title = "";
+        if (lang === "am") {
+            title = ARMENIAN_META_TITLES[path] || 
+                     ARMENIAN_META_TITLES[path.replace(/\/$/, "")] ||
+                     ARMENIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
+                     "";
+        }
+        
+        // Fallback to scraped titles if Armenian title not found
+        if (!title) {
+            title = $("title").text() ||
+                    $("meta[property='og:title']").attr("content") ||
+                    $("meta[name='twitter:title']").attr("content") ||
+                    $("h1").first().text();
+        }
         const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
         const ogImage = $("meta[property='og:image']").attr("content");
 
