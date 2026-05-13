@@ -29,6 +29,34 @@ const ARMENIAN_META_TITLES: Record<string, string> = {
     "/legal-updates": "Իրավական Նորություններ | Գործարար Կարգավորման Մասին Վերլուծություններ"
 };
 
+// Russian meta titles from Excel
+const RUSSIAN_META_TITLES: Record<string, string> = {
+    "/": "Юридическая Фирма в Армении | Опытные Юристы | Retrieve Legal & Tax",
+    "/legal-services": "Юридические Услуги в Армении | Юридические Решения | Retrieve",
+    "/practice-areas/corporate-business-law": "Корпоративный Юрист в Армении | Бизнес Юристы | Создание Бизнеса и M&A",
+    "/practice-areas/immigration-residence-services": "Миграционный Юрист Армения | Визы, Разрешения на Работу, ВНЖ в Армении",
+    "/practice-areas/employment-law": "Трудовой Юрист в Армении | Адвокат по Трудовым Спорам",
+    "/practice-areas/intellectual-property-law": "Юрист по Интеллектуальной Собственности | Регистрация Товарного Знака",
+    "/practice-areas/real-estate-construction-law": "Адвокат по Недвижимости | Юридические Услуги в Сфере Строительсва",
+    "/practice-areas/investment-law": "Юрист по Инвестициям в Армении | Иностранные Инвестиции",
+    "/practice-areas/arbitration-ligitation": "Арбитражные Юристы в Армении | Арбитраж и Судебные Разбирательства",
+    "/practice-areas/tax-law-compliance": "Налоговые Юристы в Армении | Налоговая Консультация, Разрешение Споров",
+    "/practice-areas/banking-finance-law": "Юристы по Банковским и Финансовым Вопросам в Армении",
+    "/practice-areas/competition-law": "Антимонопольный Юрист в Армении | Конкурентное Право",
+    "/practice-areas/energy-law": "Юрист в Сфере Энергетики в Армении | Возобновляемая Энергетика и PPA",
+    "/practice-areas/it-data-privacy-protection": "IT Юрист в Армении | Защита Данных и Кибербезопасность",
+    "/practice-areas/health-pharmaceuticals": "Медицинский Юрист в Армении | Фармацевтическое и Медицинское Право",
+    "/practice-areas/cryptocurrency-blockchain": "Юрист по Криптовалюте и Блокчейну в Армении | Смарт-Контракты и ICO",
+    "/tax-and-business-advisory-services": "Бизнес Консалтинг и Налоговая Консультация в Армении | Бухгалтерия и M&A",
+    "/practice-areas/accounting-bookkeeping": "Бухгалтерские Услуги в Армении | Финансовая Отчетность, Бухгалтерский Учет",
+    "/practice-areas/tax-advisory": "Налоговая Консультация в Армении | НДС, Налоговое Планирование и Споры",
+    "/practice-areas/corporate-finance-advisory": "Финансовый Консалтинг в Армении | Корпоративные Финансы и M&A",
+    "/practice-areas/ma-advising": "Слияния и Поглощения в Армении | Сделки M&A | Консалтинг",
+    "/about-us": "О нас | Юристы по Бзнесу и Корпоративному Праву в Армении",
+    "/blog": "Юридический Блог | Бизнес-право и Изменения Законодательства в Армении",
+    "/legal-updates": "Юридические Новости в Армении | Анализ Законов и Регулирования Бизнеса"
+};
+
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
 const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
 
@@ -125,16 +153,21 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
 
         const $ = cheerio.load(html);
 
-        // Use Armenian meta titles for Armenian language
+        // Use Armenian and Russian meta titles for respective languages
         let title = "";
         if (lang === "am") {
             title = ARMENIAN_META_TITLES[path] || 
                      ARMENIAN_META_TITLES[path.replace(/\/$/, "")] ||
                      ARMENIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
                      "";
+        } else if (lang === "ru") {
+            title = RUSSIAN_META_TITLES[path] || 
+                     RUSSIAN_META_TITLES[path.replace(/\/$/, "")] ||
+                     RUSSIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
+                     "";
         }
         
-        // Fallback to scraped titles if Armenian title not found
+        // Fallback to scraped titles if localized title not found
         if (!title) {
             title = $("title").text() ||
                     $("meta[property='og:title']").attr("content") ||
