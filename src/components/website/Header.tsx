@@ -102,7 +102,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                     <Link href="/" className="flex items-center py-1">
                         <Image
                             src="/logo.jpg"
-                            alt="RETRIEVE Legal & Tax"
+                            alt="Retrieve Legal & Tax law firm"
                             width={200}
                             height={80}
                             priority

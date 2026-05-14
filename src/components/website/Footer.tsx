@@ -52,7 +52,7 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                             <div className="bg-white rounded-xl px-3 py-2 inline-block">
                                 <Image
                                     src="/logo.jpg"
-                                    alt="Retrieve"
+                                    alt="Retrieve Legal & Tax law firm"
                                     width={200}
                                     height={56}
                                     className="h-14 w-auto object-contain"
