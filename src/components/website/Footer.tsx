@@ -159,8 +159,8 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                 <div className="pt-8 border-t border-gray-800 text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p>&copy; {new Date().getFullYear()} Retrieve Law Firm. {t("footer_rights")}</p>
                     <div className="flex gap-6">
-                        <Link href="#" className="hover:text-white transition-colors">{t("footer_privacy_policy")}</Link>
-                        <Link href="#" className="hover:text-white transition-colors">{t("footer_terms_of_service")}</Link>
+                        <Link href="/privacy-policy" className="hover:text-white transition-colors">{t("footer_privacy_policy")}</Link>
+                        <Link href="/terms-of-service" className="hover:text-white transition-colors">{t("footer_terms_of_service")}</Link>
                     </div>
                 </div>
             </div>

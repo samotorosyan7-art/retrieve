@@ -1,4 +1,4 @@
-import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate } from "@/types/wordpress";
+import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate, WPPage } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
 // Armenian meta titles from Excel
@@ -156,23 +156,23 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
         // Use Armenian and Russian meta titles for respective languages
         let title = "";
         if (lang === "am") {
-            title = ARMENIAN_META_TITLES[path] || 
-                     ARMENIAN_META_TITLES[path.replace(/\/$/, "")] ||
-                     ARMENIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
-                     "";
+            title = ARMENIAN_META_TITLES[path] ||
+                ARMENIAN_META_TITLES[path.replace(/\/$/, "")] ||
+                ARMENIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
+                "";
         } else if (lang === "ru") {
-            title = RUSSIAN_META_TITLES[path] || 
-                     RUSSIAN_META_TITLES[path.replace(/\/$/, "")] ||
-                     RUSSIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
-                     "";
+            title = RUSSIAN_META_TITLES[path] ||
+                RUSSIAN_META_TITLES[path.replace(/\/$/, "")] ||
+                RUSSIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
+                "";
         }
-        
+
         // Fallback to scraped titles if localized title not found
         if (!title) {
             title = $("title").text() ||
-                    $("meta[property='og:title']").attr("content") ||
-                    $("meta[name='twitter:title']").attr("content") ||
-                    $("h1").first().text();
+                $("meta[property='og:title']").attr("content") ||
+                $("meta[name='twitter:title']").attr("content") ||
+                $("h1").first().text();
         }
         const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
         const ogImage = $("meta[property='og:image']").attr("content");
@@ -264,7 +264,7 @@ export async function getBlogPosts(
 ): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
     try {
         const url = new URL(`${WP_API_URL}/posts`);
-        url.searchParams.append("categories_exclude", "3"); 
+        url.searchParams.append("categories_exclude", "3");
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
@@ -347,16 +347,32 @@ export async function getMasonryPosts(
         url.searchParams.append("v", Date.now().toString());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
-        
+
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         }
 
+        let data = [];
         const response = await fetch(url.toString(), { cache: "no-store" });
 
-        if (!response.ok) return { posts: [] };
-
-        const data = await response.json();
+        if (response.ok) {
+            data = await response.json();
+            
+            // Fallback: If no posts found with author filter, try without it
+            if (data.length === 0 && lang && LANGUAGE_AUTHOR_MAP[lang]) {
+                const fallbackUrl = new URL(`${WP_API_URL}/posts`);
+                fallbackUrl.searchParams.append("categories", "3");
+                fallbackUrl.searchParams.append("per_page", limit.toString());
+                fallbackUrl.searchParams.append("_embed", "1");
+                fallbackUrl.searchParams.append("v", Date.now().toString());
+                const fallbackRes = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+                if (fallbackRes.ok) {
+                    data = await fallbackRes.json();
+                }
+            }
+        } else {
+            return { posts: [] };
+        }
 
         const posts: LegalUpdate[] = data.map((p: any) => {
             const rawImage =
@@ -1412,6 +1428,45 @@ export async function getContentTypeBySlug(slug: string): Promise<"post" | "port
         return null;
     } catch (error) {
         console.error("Error resolving content type:", error);
+        return null;
+    }
+}
+
+/**
+ * Fetch a generic WordPress page by its slug
+ */
+export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPage | null> {
+    try {
+        const url = new URL(`${WP_API_URL}/pages`);
+        url.searchParams.append("slug", slug);
+        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+        }
+
+        const response = await fetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return null;
+
+        let data = await response.json();
+
+        // Fallback 1: Try without author filter
+        if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            const fallbackUrl = new URL(`${WP_API_URL}/pages`);
+            fallbackUrl.searchParams.append("slug", slug);
+            const fallbackRes = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+            if (fallbackRes.ok) data = await fallbackRes.json();
+        }
+
+        if (!data.length) return null;
+
+        const p = data[0];
+        return {
+            id: p.id,
+            slug: p.slug,
+            title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&") ?? "",
+            content: p.content?.rendered ?? "",
+        };
+    } catch (error) {
+        console.error(`Error fetching page by slug ${slug}:`, error);
         return null;
     }
 }

@@ -33,12 +33,9 @@ export interface WPMedia {
 
 export interface WPPage {
     id: number;
-    title: {
-        rendered: string;
-    };
-    content: {
-        rendered: string;
-    };
+    slug: string;
+    title: string;
+    content: string;
 }
 
 export interface WPTeamMember {
