@@ -9,18 +9,90 @@ import ru from "@/locales/ru/common.json";
 
 const dictionaries = { en, am, ru };
 
+const staticTitles: Record<string, string> = {
+    en: "Terms of Service",
+    ru: "Условия предоставления услуг",
+    am: "Օգտագործման պայմաններ",
+};
+
+const lastUpdatedText: Record<string, string> = {
+    en: "Last updated: 19.05.2026",
+    ru: "Последнее обновление: 19.05.2026",
+    am: "Վերջին թարմացումը՝ 19.05.2026",
+};
+
+const armenianCorrections: Record<string, string> = {
+    "մատուցվողծառայությունների": "մատուցվող ծառայությունների",
+    "դուքհամաձայնում": "դուք համաձայնում",
+    "խնդրումենքչօգտագործել": "խնդրում ենք չօգտագործել",
+    "ենքչօգտագործել": "ենք չօգտագործել",
+    "գործողհաճախորդների": "գործող հաճախորդների",
+    "մատուցումըկարգավորվում": "մատուցումը կարգավորվում",
+    "կորպորատիվկառուցվածքի": "կորպորատիվ կառուցվածքի",
+    "գործարքներիխորհրդատվական": "գործարքների խորհրդատվական",
+    "այլիրավասությունների": "այլ իրավասությունների",
+    "համապատասխանիրավասություն": "համապատասխան իրավասություն",
+    "ներդրումայինխորհրդատվություն": "ներդրումային խորհրդատվություն",
+    "մշտապեսփոփոխվում": "մշտապես փոփոխվում",
+    "առանցմասնագիտական": "առանց մասնագիտական",
+    "մերծառայությունների": "մեր ծառայությունների",
+    "ընկերություններիիրական": "ընկերությունների իրական",
+    "չկատարմանդեպքում": "չկատարման դեպքում",
+    "ժամանակինտեղեկատվություն": "ժամանակին տեղեկատվություն",
+    "դրանցհամակցություն": "դրանց համակցություն",
+    "ներառումկիրառելի": "ներառում կիրառելի",
+    "սահմանվածժամկետներում": "սահմանված ժամկետներում",
+    "առևտրայինտոկոսադրույքի": "առևտրային տոկոսադրույքի",
+    "գումարըհաշվանցվում": "գումարը հաշվանցվում",
+    "Չօգտագործվածմնացորդը": "Չօգտագործված մնացորդը",
+    "օրենքովնախատեսված": "օրենքով նախատեսված",
+    "գործընկերխորհրդատուներ": "գործընկեր խորհրդատուներ",
+    "ինտելեկտուալսեփականության": "ինտելեկտուալ սեփականության",
+    "թույլտվությանկրկնօրինակել": "թույլտվության կրկնօրինակել",
+    "նյութերըպաշտպանված": "նյութերը պաշտպանված",
+    "նպատակայինշրջանակում": "նպատակային շրջանակում",
+    "սխալտեղեկատվության": "սխալ տեղեկատվության",
+    "առանցթույլտվության": "առանց թույլտվության",
+    "մատուցվածծառայությունների": "մատուցված ծառայությունների",
+    "Մենքվերադարձնում": "Մենք վերադարձնում",
+    "պահպանմանիրավունքով": "պահպանման իրավունքով",
+    "Հանրապետությանօրենսդրությամբ": "Հանրապետության օրենսդրությամբ",
+    "շարունակականօգտագործումը": "շարունակական օգտագործումը",
+    "ամբողջականհամաձայնագիր": "ամբողջական համաձայնագիր",
+    "համաձայն(«Retrieve»": "համաձայն («Retrieve»",
+    "ընկերությունէ,որը": "ընկերություն է, որը"
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
-    return getYoastMetadata("/terms-of-service", lang);
+    // Russian is mapped to "team-frame-style", Armenian to "team-plain-style", English/others to "terms-of-service"
+    const slug = lang === "ru" ? "team-frame-style" : lang === "am" ? "team-plain-style" : "terms-of-service";
+    return getYoastMetadata(`/${slug}`, lang);
 }
 
 export default async function TermsOfServicePage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
-    const page = await getWPPageBySlug("terms-of-service", lang);
+    
+    // Fetch dynamically from WP: ru -> team-frame-style, am -> team-plain-style, others -> terms-of-service
+    const slug = lang === "ru" ? "team-frame-style" : lang === "am" ? "team-plain-style" : "terms-of-service";
+    const page = await getWPPageBySlug(slug, lang);
 
     if (!page) {
         notFound();
+    }
+
+    const title = staticTitles[lang] || staticTitles.en;
+
+    // Clean all non-breaking spaces (&nbsp; and unicode \u00a0) to allow proper word-wrap in the browser
+    let cleanContent = page.content
+        .replace(/&nbsp;/g, " ")
+        .replace(/\u00a0/g, " ");
+
+    if (lang === "am") {
+        Object.entries(armenianCorrections).forEach(([connected, corrected]) => {
+            cleanContent = cleanContent.split(connected).join(corrected);
+        });
     }
 
     return (
@@ -35,8 +107,8 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight">
-                            {page.title}
+                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight break-words">
+                            {title}
                         </h1>
                     </div>
                 </div>
@@ -48,15 +120,15 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                     <div className="bg-white rounded-[2.5rem] shadow-xl shadow-blue-900/5 border border-gray-100 overflow-hidden">
                         <div className="p-8 md:p-16">
                             <article 
-                                className="blog-content prose prose-lg max-w-none text-gray-700
+                                className="blog-content prose prose-lg max-w-none text-gray-700 break-words w-full overflow-hidden
                                     prose-headings:font-extrabold prose-headings:text-gray-900
-                                    prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-gray-100
+                                    prose-h2:text-2xl prose-h2:attorna-page-title prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-gray-100
                                     prose-h3:text-xl prose-h3:font-bold prose-h3:mt-10 prose-h3:mb-4
                                     prose-strong:text-gray-900
                                     prose-p:mb-6 prose-p:leading-relaxed
                                     prose-li:marker:text-[#005CB9]
                                     prose-blockquote:border-l-4 prose-blockquote:border-[#005CB9] prose-blockquote:bg-blue-50/50 prose-blockquote:px-8 prose-blockquote:py-4 prose-blockquote:rounded-r-2xl prose-blockquote:not-italic"
-                                dangerouslySetInnerHTML={{ __html: page.content }}
+                                dangerouslySetInnerHTML={{ __html: cleanContent }}
                             />
                         </div>
                         
@@ -66,7 +138,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                                 <ArrowLeft size={16} /> {t.btn_back_home || "Back to Home"}
                             </Link>
                             <p className="text-xs text-gray-400 font-medium italic">
-                                Last updated: {new Date().toLocaleDateString(lang === 'en' ? 'en-US' : lang === 'ru' ? 'ru-RU' : 'hy-AM')}
+                                {lastUpdatedText[lang] || lastUpdatedText.en}
                             </p>
                         </div>
                     </div>
