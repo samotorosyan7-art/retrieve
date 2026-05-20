@@ -38,8 +38,47 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
     const sidebar = related.filter((p) => p.slug !== slug).slice(0, 3);
     const allTags = await getTags(lang);
 
+    const canonicalUrl = `https://www.retrieve.am/${lang}/blog/${post.slug}`;
+    const publishDate = post.date ? post.date.split("T")[0] : new Date().toISOString().split("T")[0];
+    const modifiedDate = post.modified ? post.modified.split("T")[0] : publishDate;
+
+    const schemaMarkup = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": `${canonicalUrl}#article`,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": canonicalUrl
+        },
+        "headline": post.title,
+        "description": post.excerpt || "",
+        "image": [
+            post.image || "https://www.retrieve.am/logo.png"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "Retrieve Legal & Tax"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Retrieve Legal & Tax",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.retrieve.am/logo.png"
+            }
+        },
+        "datePublished": publishDate,
+        "dateModified": modifiedDate,
+        "inLanguage": lang
+    };
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
+            {/* JSON-LD Schema Markup */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+            />
 
             {/* Hero strip */}
             <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-12">

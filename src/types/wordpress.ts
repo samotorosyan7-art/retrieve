@@ -90,6 +90,7 @@ export interface LegalUpdate {
     excerpt: string;
     content: string;
     date: string;
+    modified?: string;
     image: string | null;
     imageAlt?: string;
     author: string;

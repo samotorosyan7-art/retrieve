@@ -31,12 +31,12 @@ export default function Hero() {
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
                     {/* Content Column */}
-                    <div className="flex-1 w-full max-w-2xl text-left relative z-30">
+                    <div className="flex-1 w-full max-w-3xl text-left relative z-30">
                         <h1 className={cn(
-                            "font-extrabold leading-[1.15] md:leading-[1.1] mb-6 text-white tracking-tight",
+                            "font-extrabold leading-[1.15] md:leading-[1.2] mb-6 text-white tracking-tight",
                             isSmallLang
-                                ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
-                                : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                                ? "text-2xl sm:text-3xl md:text-4xl lg:text-[42px]"
+                                : "text-3xl sm:text-4xl md:text-5xl lg:text-[54px]"
                         )}>
                             {t("hero_title_full")}
                         </h1>
