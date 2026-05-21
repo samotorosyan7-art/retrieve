@@ -6,6 +6,7 @@ import I18nProvider from "@/components/providers/I18nProvider";
 import MobileFAB from "@/components/website/MobileFAB";
 import { getPortfolioCategories } from "@/lib/wordpress";
 import { cookies } from "next/headers";
+import Script from "next/script";
 
 
 export const metadata: Metadata = {
@@ -50,6 +51,19 @@ export default async function RootLayout({
 
     return (
         <html lang={lang} className="font-sans">
+            <Script
+                src="https://www.googletagmanager.com/gtag/js?id=AW-18179368906"
+                strategy="afterInteractive"
+            />
+            <Script id="google-ads" strategy="afterInteractive">
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'AW-18179368906');
+                `}
+            </Script>
             <body className="antialiased text-text bg-background tracking-tight">
                 <I18nProvider lang={lang}>
                     <div className="flex flex-col min-h-screen">
