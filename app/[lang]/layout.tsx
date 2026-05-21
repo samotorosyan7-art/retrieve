@@ -28,6 +28,13 @@ export const metadata: Metadata = {
             "x-default": "/en",
         },
     },
+    openGraph: {
+        images: ["https://www.retrieve.am/logo.png"],
+    },
+    twitter: {
+        card: "summary_large_image",
+        images: ["https://www.retrieve.am/logo.png"],
+    },
 };
 
 export const dynamic = "force-dynamic";

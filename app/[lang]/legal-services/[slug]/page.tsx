@@ -79,8 +79,28 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
             ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""]
             : content.title;
 
+    const faqSchemaMarkup = content.faqs && content.faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": content.faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
+            {/* JSON-LD FAQ Schema Markup */}
+            {faqSchemaMarkup && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaMarkup) }}
+                />
+            )}
 
             {/* ── Hero Strip ── */}
             <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">

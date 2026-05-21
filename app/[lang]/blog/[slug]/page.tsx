@@ -52,23 +52,26 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
         },
         "headline": post.title,
         "description": post.excerpt || "",
-        "image": [
-            post.image || "https://www.retrieve.am/logo.png"
-        ],
+        "image": {
+            "@type": "ImageObject",
+            "url": post.image || "https://www.retrieve.am/logo.png"
+        },
         "author": {
             "@type": "Organization",
-            "name": "Retrieve Legal & Tax"
+            "name": post.author || "Retrieve Legal & Tax",
+            "url": "https://www.retrieve.am/"
         },
         "publisher": {
             "@type": "Organization",
             "name": "Retrieve Legal & Tax",
+            "url": "https://www.retrieve.am/",
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://www.retrieve.am/logo.png"
             }
         },
-        "datePublished": publishDate,
-        "dateModified": modifiedDate,
+        "datePublished": `${publishDate}T00:00:00+04:00`,
+        "dateModified": `${modifiedDate}T00:00:00+04:00`,
         "inLanguage": lang
     };
 

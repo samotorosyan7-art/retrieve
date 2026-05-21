@@ -201,14 +201,14 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 type: "website",
                 title: title || undefined,
                 description: description || undefined,
-                images: ogImage ? [fixHttps(ogImage)] : undefined,
+                images: ["https://www.retrieve.am/logo.png"],
                 url: finalCanonical,
             },
             twitter: {
                 card: "summary_large_image",
                 title: title || undefined,
                 description: description || undefined,
-                images: ogImage ? [fixHttps(ogImage)] : undefined,
+                images: ["https://www.retrieve.am/logo.png"],
             },
         };
     } catch (e) {
