@@ -1,61 +1,30 @@
 import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate, WPPage } from "@/types/wordpress";
 import * as cheerio from "cheerio";
 
-// Armenian meta titles from Excel
-const ARMENIAN_META_TITLES: Record<string, string> = {
-    "/": "Իրավաբանական Ընկերություն Հայաստանում | Retrieve Legal & Tax",
-    "/legal-services": "Իրավաբանական Ծառայություններ և Խորհրդատվություն | Retrieve Legal & Tax",
-    "/practice-areas/corporate-business-law": "Կորպորատիվ Ծառայություններ | Կորպորատիվ Իրավաբան | Ընկերության Գրանցում",
-    "/practice-areas/immigration-residence-services": "Ներգաղթի և Կացության Ծառայություններ | Քաղաքացիության Ստացման Աջակցություն",
-    "/practice-areas/employment-law": "Աշխատանքային Իրավունք | Պայմանագրերի Մշակում, Աշխատանքային Վեճերի Լուծում",
-    "/practice-areas/intellectual-property-law": "Մտավոր Սեփականություն | Հեղինակային Իրավունք, Ապրանքային Նշան, Արտոնագրեր",
-    "/practice-areas/real-estate-construction-law": "Անշարժ Գույքի Իրավաբան | Շինարարական Թույլտվության Ստացում",
-    "/practice-areas/investment-law": "Ներդրումային Աջակցություն | Ներդրողների Իրավունքների Պաշտպանություն",
-    "/practice-areas/arbitration-ligitation": "Արբիտրաժ և Դատական Վեճեր | Ներկայացուցչություն ՀՀ Դատարաններում",
-    "/practice-areas/tax-law-compliance": "Հարկային Իրավաբան | Խորհրդատվություն, Հարկային Աուդիտ, Վեճերի Լուծում",
-    "/practice-areas/banking-finance-law": "Բանկային եւ Ֆինանսական Ոլորտում Իրավաբանական Ծառայություններ",
-    "/practice-areas/competition-law": "Մրցակցային Իրավունք | Հակամենաշնորհ և Մրցակցություն",
-    "/practice-areas/energy-law": "Էներգետիկայի Ոլորտում Իրավաբանական Ծառայություններ | Վեճերի Լուծում",
-    "/practice-areas/it-data-privacy-protection": "ՏՏ և Տվյալների Պաշտպանություն Ոլորտում Իրավաբանական Ծառայություններ",
-    "/practice-areas/health-pharmaceuticals": "Առողջապահություն և Դեղագործություն | Իրավաբանական Աջակցություն ",
-    "/practice-areas/cryptocurrency-blockchain": "Կրիպտոարժույթ և Բլոկչեյն | Իրավաբանական Աջակցություն | Սմարթ-Պայմանագրեր",
-    "/tax-and-business-advisory-services": "Հարկային և Բիզնես Խորհրդատվական Ծառայություններ | Հաշվապահություն, M&A",
-    "/practice-areas/accounting-bookkeeping": "Հաշվապահական Ծառայություններ | Ֆինանսական Հաշվետվությունների Պատրաստում ",
-    "/practice-areas/tax-advisory": "Հարկային Խորհրդատվական Ծառայություններ | Հարկային Պլանավորում",
-    "/practice-areas/corporate-finance-advisory": "Կորպորատիվ Ֆինանսների Խորհրդատվություն | Ռիսկերի Կառավարում",
-    "/practice-areas/ma-advising": "M&A Խորհրդատվություն | Միաձուլումներ և Ձեռքբերումներ",
-    "/about-us": "Մեր Մասին | Գործարար և Կորպորատիվ Իրավունքի Մասնագիտացած Իրավաբաններ",
-    "/blog": "Իրավաբանական Բլոգ | Գործարար Իրավունքի Վերաբերյալ Տեղեկատվություն",
-    "/legal-updates": "Իրավական Նորություններ | Գործարար Կարգավորման Մասին Վերլուծություններ"
+import enCommon from '../locales/en/common.json';
+import ruCommon from '../locales/ru/common.json';
+import amCommon from '../locales/am/common.json';
+
+const dictionaries: Record<string, any> = {
+    en: enCommon,
+    ru: ruCommon,
+    am: amCommon,
 };
 
-// Russian meta titles from Excel
-const RUSSIAN_META_TITLES: Record<string, string> = {
-    "/": "Юридическая Фирма в Армении | Опытные Юристы | Retrieve Legal & Tax",
-    "/legal-services": "Юридические Услуги в Армении | Юридические Решения | Retrieve",
-    "/practice-areas/corporate-business-law": "Корпоративный Юрист в Армении | Бизнес Юристы | Создание Бизнеса и M&A",
-    "/practice-areas/immigration-residence-services": "Миграционный Юрист Армения | Визы, Разрешения на Работу, ВНЖ в Армении",
-    "/practice-areas/employment-law": "Трудовой Юрист в Армении | Адвокат по Трудовым Спорам",
-    "/practice-areas/intellectual-property-law": "Юрист по Интеллектуальной Собственности | Регистрация Товарного Знака",
-    "/practice-areas/real-estate-construction-law": "Адвокат по Недвижимости | Юридические Услуги в Сфере Строительсва",
-    "/practice-areas/investment-law": "Юрист по Инвестициям в Армении | Иностранные Инвестиции",
-    "/practice-areas/arbitration-ligitation": "Арбитражные Юристы в Армении | Арбитраж и Судебные Разбирательства",
-    "/practice-areas/tax-law-compliance": "Налоговые Юристы в Армении | Налоговая Консультация, Разрешение Споров",
-    "/practice-areas/banking-finance-law": "Юристы по Банковским и Финансовым Вопросам в Армении",
-    "/practice-areas/competition-law": "Антимонопольный Юрист в Армении | Конкурентное Право",
-    "/practice-areas/energy-law": "Юрист в Сфере Энергетики в Армении | Возобновляемая Энергетика и PPA",
-    "/practice-areas/it-data-privacy-protection": "IT Юрист в Армении | Защита Данных и Кибербезопасность",
-    "/practice-areas/health-pharmaceuticals": "Медицинский Юрист в Армении | Фармацевтическое и Медицинское Право",
-    "/practice-areas/cryptocurrency-blockchain": "Юрист по Криптовалюте и Блокчейну в Армении | Смарт-Контракты и ICO",
-    "/tax-and-business-advisory-services": "Бизнес Консалтинг и Налоговая Консультация в Армении | Бухгалтерия и M&A",
-    "/practice-areas/accounting-bookkeeping": "Бухгалтерские Услуги в Армении | Финансовая Отчетность, Бухгалтерский Учет",
-    "/practice-areas/tax-advisory": "Налоговая Консультация в Армении | НДС, Налоговое Планирование и Споры",
-    "/practice-areas/corporate-finance-advisory": "Финансовый Консалтинг в Армении | Корпоративные Финансы и M&A",
-    "/practice-areas/ma-advising": "Слияния и Поглощения в Армении | Сделки M&A | Консалтинг",
-    "/about-us": "О нас | Юристы по Бзнесу и Корпоративному Праву в Армении",
-    "/blog": "Юридический Блог | Бизнес-право и Изменения Законодательства в Армении",
-    "/legal-updates": "Юридические Новости в Армении | Анализ Законов и Регулирования Бизнеса"
-};
+function getMetaKey(path: string): string {
+    const cleanPath = path.trim().replace(/^\/+|\/+$/g, "");
+    if (!cleanPath) return "home";
+    
+    if (cleanPath === "about-us") return "about_us";
+    if (cleanPath === "legal-services") return "legal_services";
+    if (cleanPath === "tax-and-business-advisory-services") return "tax_and_business_advisory_services";
+    if (cleanPath === "blog") return "blog";
+    if (cleanPath === "legal-updates") return "legal_updates";
+    
+    const segments = cleanPath.split("/");
+    const lastSegment = segments[segments.length - 1];
+    return lastSegment.replace(/-/g, "_");
+}
 
 const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wp.retrieve.am/wp-json/wp/v2";
 const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
@@ -153,19 +122,12 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
 
         const $ = cheerio.load(html);
 
-        // Use Armenian and Russian meta titles for respective languages
-        let title = "";
-        if (lang === "am") {
-            title = ARMENIAN_META_TITLES[path] ||
-                ARMENIAN_META_TITLES[path.replace(/\/$/, "")] ||
-                ARMENIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
-                "";
-        } else if (lang === "ru") {
-            title = RUSSIAN_META_TITLES[path] ||
-                RUSSIAN_META_TITLES[path.replace(/\/$/, "")] ||
-                RUSSIAN_META_TITLES[path === "/" ? "/" : path.replace(/\/$/, "")] ||
-                "";
-        }
+        // Resolve translated title and description from common.json
+        const dict = dictionaries[lang] || enCommon;
+        const metaKey = getMetaKey(path);
+        
+        let title = dict.meta_titles?.[metaKey] || "";
+        let description = dict.meta_descriptions?.[metaKey] || "";
 
         // Fallback to scraped titles if localized title not found
         if (!title) {
@@ -174,7 +136,9 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 $("meta[name='twitter:title']").attr("content") ||
                 $("h1").first().text();
         }
-        const description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content");
+        if (!description) {
+            description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content") || "";
+        }
         const ogImage = $("meta[property='og:image']").attr("content");
 
         const BASE_URL = "https://www.retrieve.am";
