@@ -140,6 +140,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content") || "";
         }
         const ogImage = $("meta[property='og:image']").attr("content");
+        const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.png";
 
         const BASE_URL = "https://www.retrieve.am";
         const nextPath = overridePath || path;
@@ -165,14 +166,14 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 type: "website",
                 title: title || undefined,
                 description: description || undefined,
-                images: ["https://www.retrieve.am/logo.png"],
+                images: [finalOgImage],
                 url: finalCanonical,
             },
             twitter: {
                 card: "summary_large_image",
                 title: title || undefined,
                 description: description || undefined,
-                images: ["https://www.retrieve.am/logo.png"],
+                images: [finalOgImage],
             },
         };
     } catch (e) {
