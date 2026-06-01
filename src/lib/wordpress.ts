@@ -11,6 +11,8 @@ const dictionaries: Record<string, any> = {
     am: amCommon,
 };
 
+const SCRAPER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
+
 function getMetaKey(path: string): string {
     const cleanPath = path.trim().replace(/^\/+|\/+$/g, "");
     if (!cleanPath) return "home";
@@ -69,7 +71,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             let response = await fetch(url, {
                 signal: controller.signal,
                 cache: "no-store",
-                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
 
             // Fallback 1: If 404 and path has a subdirectory (like /practice-areas/slug), try the root slug (/slug)
@@ -79,7 +81,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 const fallbackResponse = await fetch(fallbackRootUrl, {
                     signal: controller.signal,
                     cache: "no-store",
-                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                    headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
                 if (fallbackResponse.ok) {
                     response = fallbackResponse;
@@ -93,7 +95,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 const fallbackResponse = await fetch(fallbackUrl, {
                     signal: controller.signal,
                     cache: "no-store",
-                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                    headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
 
                 if (fallbackResponse.ok) {
@@ -105,7 +107,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                     const engRootResponse = await fetch(engRootUrl, {
                         signal: controller.signal,
                         cache: "no-store",
-                        headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                        headers: { "User-Agent": SCRAPER_USER_AGENT },
                     });
                     if (engRootResponse.ok) response = engRootResponse;
                 }
@@ -384,7 +386,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
         const response = await fetch(`${baseUrl}our-team/`, {
             cache: "no-store",
             headers: {
-                "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
+                "User-Agent": SCRAPER_USER_AGENT,
             },
         });
 
@@ -437,7 +439,7 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
         const response = await fetch(`${WP_BASE_URL}/`, {
             cache: "no-store",
             headers: {
-                "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
+                "User-Agent": SCRAPER_USER_AGENT,
             },
         });
 
@@ -530,7 +532,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
         const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
             const res = await fetch(scrapeUrl, {
                 cache: "no-store",
-                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" }
+                headers: { "User-Agent": SCRAPER_USER_AGENT }
             });
             if (!res.ok) return [];
             const html = await res.text();
@@ -609,7 +611,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
         let response = await fetch(fetchUrl, {
             cache: "no-store",
             headers: {
-                "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
+                "User-Agent": SCRAPER_USER_AGENT,
             },
         });
 
@@ -618,7 +620,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
             response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
                 cache: "no-store",
                 headers: {
-                    "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)",
+                    "User-Agent": SCRAPER_USER_AGENT,
                 },
             });
         }
@@ -737,7 +739,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
@@ -776,7 +778,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
@@ -814,7 +816,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
@@ -857,7 +859,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
@@ -890,7 +892,7 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
@@ -1032,7 +1034,26 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             return null;
         }
 
-        const data = await response.json();
+        let data = await response.json();
+
+        // Fallback: If no post is found with the author filter, query again without the author filter
+        if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
+            const fallbackUrl = new URL(`${WP_API_URL}/posts`);
+            fallbackUrl.searchParams.append("slug", slug);
+            fallbackUrl.searchParams.append("_embed", "1");
+            fallbackUrl.searchParams.append("v", Date.now().toString());
+            const fallbackResponse = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+            if (fallbackResponse.ok) {
+                const fallbackContentType = fallbackResponse.headers.get("content-type");
+                if (fallbackContentType && fallbackContentType.includes("application/json")) {
+                    const fallbackData = await fallbackResponse.json();
+                    if (fallbackData.length) {
+                        data = fallbackData;
+                    }
+                }
+            }
+        }
+
         if (!data.length) return null;
 
         const p = data[0];
@@ -1203,7 +1224,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
 
         let response = await fetch(fetchUrl, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         let isFallback = false;
@@ -1213,7 +1234,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
             const rootUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/${slug}/` : `${WP_BASE_URL}/${slug}/`;
             const rootResponse = await fetch(rootUrl, {
                 cache: "no-store",
-                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
             if (rootResponse.ok) {
                 response = rootResponse;
@@ -1225,14 +1246,14 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
             // Try English version
             let engResponse = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
                 cache: "no-store",
-                headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
 
             if (!engResponse.ok) {
                 // Try English root
                 engResponse = await fetch(`${WP_BASE_URL}/${slug}/`, {
                     cache: "no-store",
-                    headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+                    headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
             }
 
@@ -1313,7 +1334,7 @@ export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/legal-updates/`, {
             cache: "no-store",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; RetrieveBot/1.0)" },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
         if (!response.ok) return [];
