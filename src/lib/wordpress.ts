@@ -51,6 +51,64 @@ function fixHttps(url: string | null | undefined): string {
     return fixedUrl;
 }
 
+/**
+ * Pick the highest-resolution image URL from an <img>, accounting for lazy-loading
+ * plugins (data-src) and responsive srcset attributes.
+ */
+function pickBestImage($img: cheerio.Cheerio<any>): string {
+    const dataSrc = $img.attr("data-src");
+    const srcset = $img.attr("srcset") || $img.attr("data-srcset");
+    let rawImage = dataSrc || $img.attr("src") || "";
+    if (srcset) {
+        const candidates = srcset.split(",").map((s) => s.trim());
+        let bestUrl = "";
+        let bestWidth = 0;
+        for (const candidate of candidates) {
+            const parts = candidate.split(/\s+/);
+            const url = parts[0];
+            const width = parseInt((parts[1] || "").replace("w", ""), 10) || 0;
+            if (width > bestWidth || !bestUrl) {
+                bestWidth = width;
+                bestUrl = url;
+            }
+        }
+        if (bestUrl) rawImage = bestUrl;
+    }
+    return rawImage;
+}
+
+/**
+ * Fetch the slugs of every PUBLISHED personnel from the WordPress personnel sitemap.
+ * This is the source of truth for who is published, independent of the curated
+ * our-team page (which may omit some published members).
+ */
+async function getPublishedPersonnelSlugs(): Promise<string[]> {
+    try {
+        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml`, {
+            cache: "no-store",
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
+        });
+        if (!res.ok) return [];
+
+        const xml = await res.text();
+        const slugs: string[] = [];
+        const seen = new Set<string>();
+        const regex = /\/personnel\/([a-z0-9-]+)\/?/gi;
+        let match: RegExpExecArray | null;
+        while ((match = regex.exec(xml)) !== null) {
+            const slug = match[1];
+            if (slug && !seen.has(slug)) {
+                seen.add(slug);
+                slugs.push(slug);
+            }
+        }
+        return slugs;
+    } catch (error) {
+        console.error("Error fetching personnel sitemap:", error);
+        return [];
+    }
+}
+
 
 /**
  * Scrape the WordPress page <head> for Yoast SEO data and convert it to Next.js Metadata.
@@ -379,54 +437,162 @@ export async function getMasonryPosts(
     }
 }
 
-export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        // Fallback to our-team page scraping since API is hidden
-        const response = await fetch(`${baseUrl}our-team/`, {
-            cache: "no-store",
-            headers: {
-                "User-Agent": SCRAPER_USER_AGENT,
-            },
-        });
+// Explicit display order for the team. Published members not listed here are
+// appended afterwards (in sitemap order).
+const PERSONNEL_ORDER = [
+    "michael-hovhannesyan",  // Michael
+    "feliks-hovakimyan",     // Feliks
+    "vache-simonyan",        // Vache
+    "aleksandr-harutyunyan", // Aleksandr
+    "iren-aghasyan",         // Irene
+    "mikayel-sargsyan",      // Mikayel
+    "yeghishe-manukyan",     // Eghishe
+    "lia-nikoghosyan",       // Lia
+    "lilit-petrosyan",       // Lilit
+    "renata-martirosyan",    // Renata
+    "larisa-petrosyan",      // Larisa
+    "anahit-petrosyan",      // Anahit
+    "levon-aghbalyan",       // Levon
+    "nanar-siravyan",        // Nanar
+];
 
-        if (!response.ok) {
-            console.error("Failed to fetch team page");
-            return [];
+/**
+ * Build a team card for a single personnel by scraping their profile page.
+ * The position comes from the profile's title caption (e.g. "Tax Specialist"),
+ * which is where the caption is set in WordPress — the our-team list card does
+ * not render it for most members.
+ *
+ * Cached for an hour: getTeamMembers runs on the home page, about-us page and
+ * the sitemap, so we avoid re-fetching every profile on every request.
+ */
+async function getTeamMemberCard(slug: string, lang?: string): Promise<WPTeamMember | null> {
+    try {
+        const fetchUrl =
+            lang === "am"
+                ? `${WP_BASE_URL}/personnel/${slug}/?lang=hy`
+                : lang && lang !== "en"
+                    ? `${WP_BASE_URL}/${lang}/personnel/${slug}/`
+                    : `${WP_BASE_URL}/personnel/${slug}/`;
+
+        const fetchOpts = {
+            next: { revalidate: 3600 },
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
+        } as const;
+
+        let response = await fetch(fetchUrl, fetchOpts);
+
+        // Fall back to the English profile if the translated one is missing.
+        if (!response.ok && lang && lang !== "en") {
+            response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, fetchOpts);
         }
 
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const teamMembers: WPTeamMember[] = [];
-        const seenLinks = new Set<string>();
+        if (!response.ok) return null;
 
-        // Select team member elements - broader selector to catch all published personnel
-        $(".gdlr-core-personnel-list-column, .gdlr-core-personnel-grid-column, .gdlr-core-personnel-item").each((i, el) => {
+        const $ = cheerio.load(await response.text());
+
+        const name =
+            $(".gdlr-core-title-item-title").first().text().trim() ||
+            $("h1").first().text().trim();
+        if (!name) return null;
+
+        // Caption / position set on the profile page.
+        const position = $(".gdlr-core-title-item-caption").first().text().trim();
+
+        const $img = $(".gdlr-core-column-20 img").first().length
+            ? $(".gdlr-core-column-20 img").first()
+            : $("img[src*='wp-content/uploads']").first();
+        const rawImage = pickBestImage($img);
+
+        const link =
+            lang && lang !== "en"
+                ? `${WP_BASE_URL}/${lang}/personnel/${slug}/`
+                : `${WP_BASE_URL}/personnel/${slug}/`;
+
+        return {
+            id: `team-${slug}`,
+            name,
+            position,
+            image: rawImage ? fixHttps(rawImage) : "",
+            imageAlt: $img.attr("alt") || "",
+            link,
+        };
+    } catch (error) {
+        console.error(`Error fetching team member card for ${slug}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Fallback: scrape the curated our-team page for team members. Used only when the
+ * personnel sitemap is unavailable. Does not include the profile-page caption.
+ */
+async function scrapeOurTeamPage(lang?: string): Promise<WPTeamMember[]> {
+    try {
+        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
+        const response = await fetch(`${baseUrl}our-team/`, {
+            cache: "no-store",
+            headers: { "User-Agent": SCRAPER_USER_AGENT },
+        });
+        if (!response.ok) return [];
+
+        const $ = cheerio.load(await response.text());
+        const members: WPTeamMember[] = [];
+        const seen = new Set<string>();
+
+        $(".gdlr-core-personnel-list-column, .gdlr-core-personnel-grid-column, .gdlr-core-personnel-item").each((_, el) => {
             const name = $(el).find("[class*='-title'] a, [class*='-title']").first().text().trim();
             const position = $(el).find("[class*='-position']").first().text().trim();
             const $img = $(el).find("img");
-            const rawImage = $img.attr("src");
-            const imageAlt = $img.attr("alt") || "";
-            const image = rawImage ? fixHttps(rawImage) : "";
-            const link = $(el).find("a").attr("href") || "";
-            const httpsLink = fixHttps(link);
+            const rawImage = pickBestImage($img);
+            const link = fixHttps($(el).find("a").attr("href") || "");
+            const slug = link.split("/personnel/")[1]?.replace(/\//g, "") || "";
 
-            if (name && httpsLink && !seenLinks.has(httpsLink)) {
-                seenLinks.add(httpsLink);
-                teamMembers.push({
-                    id: `team-${i}`,
+            if (name && slug && !seen.has(slug)) {
+                seen.add(slug);
+                members.push({
+                    id: `team-${slug}`,
                     name,
                     position,
-                    image,
-                    imageAlt,
-                    link: httpsLink,
+                    image: rawImage ? fixHttps(rawImage) : "",
+                    imageAlt: $img.attr("alt") || "",
+                    link,
                 });
             }
         });
 
-        return teamMembers;
+        return members;
     } catch (error) {
-        console.error("Error scraping team members:", error);
+        console.error("Error scraping our-team page:", error);
+        return [];
+    }
+}
+
+export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
+    try {
+        // Authoritative list of every PUBLISHED personnel, regardless of whether they
+        // were placed on the curated our-team page.
+        const publishedSlugs = await getPublishedPersonnelSlugs();
+
+        // If the sitemap is unavailable, fall back to scraping the our-team page.
+        if (publishedSlugs.length === 0) {
+            return scrapeOurTeamPage(lang);
+        }
+
+        const orderIndex = (slug: string) => {
+            const i = PERSONNEL_ORDER.indexOf(slug);
+            return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+        };
+        const orderedSlugs = [...publishedSlugs].sort((a, b) => orderIndex(a) - orderIndex(b));
+
+        // Build each card from the member's profile page so the caption/position shows
+        // for everyone (not just those whose position appears on the our-team list).
+        const members = await Promise.all(
+            orderedSlugs.map((slug) => getTeamMemberCard(slug, lang))
+        );
+
+        return members.filter((m): m is WPTeamMember => m !== null);
+    } catch (error) {
+        console.error("Error fetching team members:", error);
         return [];
     }
 }
@@ -643,18 +809,24 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
             ? $(".gdlr-core-column-20 img").first()
             : $("img[src*='wp-content/uploads']").first();
 
-        let image = $img.attr("src") || "";
+        // Prefer data-src (lazy-loading plugins), then srcset highest-res, then src
+        let image = pickBestImage($img);
         const image_alt = $img.attr("alt") || "";
 
         if (image.startsWith("http://")) {
             image = image.replace("http://", "https://");
         }
 
-        // Extract biography from main content column
+        // Extract biography from main content column. The bio can be split across more
+        // than one text-box block in WordPress (e.g. a second block with extra
+        // paragraphs), so include every block, not just the first.
         let biography = "";
-        const bioContainer = $(".gdlr-core-column-40 .gdlr-core-text-box-item-content").first();
-        if (bioContainer.length) {
-            biography = bioContainer.html() || "";
+        const bioContainers = $(".gdlr-core-column-40 .gdlr-core-text-box-item-content");
+        if (bioContainers.length) {
+            biography = bioContainers
+                .map((_, el) => $(el).html() || "")
+                .get()
+                .join("");
         }
 
         // Extract practice areas from icon list or text box

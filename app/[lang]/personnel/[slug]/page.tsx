@@ -172,9 +172,15 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_biography}</h2>
                                 </div>
                                 {(t.personnel_bios as Record<string, string>)?.[slug] ? (
-                                    <p className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words">
-                                        {(t.personnel_bios as Record<string, string>)[slug]}
-                                    </p>
+                                    <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words [&_p]:mb-4">
+                                        {(t.personnel_bios as Record<string, string>)[slug]
+                                            .split(/\n+/)
+                                            .map((para) => para.trim())
+                                            .filter(Boolean)
+                                            .map((para, i) => (
+                                                <p key={i}>{para}</p>
+                                            ))}
+                                    </div>
                                 ) : (
                                     <div
                                         className="prose prose-lg max-w-none text-gray-600 leading-relaxed break-words

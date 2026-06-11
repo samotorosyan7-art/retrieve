@@ -47,9 +47,32 @@ const getAreaKey = (label: string): string => {
     return "";
 };
 
+// Normalize a practice-area label so spelling/spacing/punctuation variants
+// ("Corporate / M&A" vs "Corporate/M&A", "Labour" vs "Labor", "and" vs "&")
+// collapse to the same lookup key.
+const normalizeArea = (s: string) =>
+    s.toLowerCase()
+        .replace(/labour/g, "labor")
+        .replace(/\s+/g, " ")
+        .replace(/\s*&\s*/g, " & ")
+        .replace(/\s+and\s+/g, " & ")
+        .replace(/\s*\/\s*/g, " / ")
+        .replace(/[()]/g, "")
+        .replace(/[.\s]+$/, "")
+        .trim();
+
 export default function PracticeAreasAccordion({ areas }: PracticeAreasAccordionProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const { t } = useTranslation();
+
+    // Build a normalized index of the per-language practice-area translations.
+    const itemsMap = t("practice_area_items", { returnObjects: true }) as unknown;
+    const normIndex: Record<string, string> = {};
+    if (itemsMap && typeof itemsMap === "object") {
+        for (const [k, v] of Object.entries(itemsMap as Record<string, string>)) {
+            if (typeof v === "string") normIndex[normalizeArea(k)] = v;
+        }
+    }
 
     return (
         <div className="space-y-2">
@@ -58,7 +81,9 @@ export default function PracticeAreasAccordion({ areas }: PracticeAreasAccordion
                 const key = getAreaKey(area);
                 const titleKey = key ? `practice_area_title_${key}` : "";
                 const descKey = key ? `practice_area_desc_${key}` : "practice_area_desc_default";
-                const title = titleKey ? t(titleKey, { defaultValue: area }) : area;
+                // Prefer an exact (normalized) translation of the scraped term, so the
+                // specific wording is preserved; fall back to the keyword-based title.
+                const title = normIndex[normalizeArea(area)] || (titleKey ? t(titleKey, { defaultValue: area }) : area);
                 const isOpen = openIndex === index;
                 return (
                     <div
