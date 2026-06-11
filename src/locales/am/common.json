@@ -100,6 +100,7 @@
     "footer_quick_links": "Արագ հղումներ",
     "footer_contact_info": "Կոնտակտային տվյալներ",
     "footer_address": "Բաղրամյան 41, Երևան, Հայաստան",
+    "address": "Հասցե",
     "footer_rights": "Բոլոր իրավունքները պաշտպանված են:",
     "who_we_are": "Ով ենք Մենք",
     "how_we_work": "Ինչպե՞ս ենք մենք աշխատում",
@@ -1167,5 +1168,6 @@
     "our_services_prefix": "Մեր ",
     "our_services_suffix": " ծառայությունները",
     "why_choose_title_prefix": "Ինչու՞ ընտրել Retrieve-ի ",
-    "why_choose_title_suffix": " մասնագետներին"
+    "why_choose_title_suffix": " մասնագետներին",
+    "address": "Հասցե"
 }

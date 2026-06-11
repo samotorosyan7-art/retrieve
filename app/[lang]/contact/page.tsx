@@ -37,9 +37,9 @@ export default async function ContactPage() {
         },
         {
             icon: MapPin,
-            label: t.footer_address,
-            value: "Armenia, Yerevan, Argishti 11/11",
-            href: "https://maps.google.com/?q=Argishti+11/11,+Yerevan,+Armenia",
+            label: t.address,
+            value: t.footer_address,
+            href: `https://www.google.com/maps/place/41+Marshal+Baghramyan+Ave,+Yerevan+0019,+Armenia/@40.1920144,44.49638,17z/data=!3m1!4b1!4m6!3m5!1s0x406abd10eb4785df:0xf6421d569d789cea!8m2!3d40.1920145!4d44.5012509!16s%2Fg%2F1v6l5_3m?hl=en-US&entry=ttu&g_ep=EgoyMDI2MDYwMy4xIKXMDSoASAFQAw%3D%3D`,
         },
         {
             icon: Clock,
@@ -120,7 +120,7 @@ export default async function ContactPage() {
                         {/* Map embed */}
                         <div className="rounded-3xl overflow-hidden border border-gray-100 shadow-sm h-56">
                             <iframe
-                                src="https://maps.google.com/maps?q=Argishti%2011%2F11%2C%20Yerevan%2C%20Armenia&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                                src={`https://maps.google.com/maps?q=${encodeURIComponent(t.footer_address)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
                                 className="w-full h-full border-0"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
