@@ -42,20 +42,20 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
-            
+
             {/* ── Hero strip ── */}
             <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-24">
                 <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
-                    <motion.span 
+                    <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-block text-blue-200 font-bold tracking-widest uppercase text-xs mb-4"
                     >
                         {t("hero_badge")}
                     </motion.span>
-                    <motion.h1 
+                    <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
@@ -63,7 +63,7 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                     >
                         {t("about_us_hero_title")}
                     </motion.h1>
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
@@ -80,7 +80,7 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
 
                     {/* LEFT — Side Info */}
                     <aside className="w-full lg:w-80 xl:w-96 shrink-0 space-y-6 lg:sticky lg:top-28">
-                        
+
                         {/* Values Card */}
                         <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated overflow-hidden">
                             <div className="bg-gradient-to-r from-[#003d7a] to-[#005CB9] px-6 py-5">
@@ -125,7 +125,7 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             <p className="text-sm text-gray-600">{t("about_us_address")}</p>
                             <div className="rounded-2xl overflow-hidden h-32 border border-gray-50">
                                 <iframe
-                                    src="https://maps.google.com/maps?q=Argishti%2011%2F11%2C%20Yerevan%2C%20Armenia&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                                    src="https://maps.google.com/maps?q=Baghramyan%2041%2C%20Yerevan%2C%20Armenia&t=&z=14&ie=UTF8&iwloc=&output=embed"
                                     className="w-full h-full border-0"
                                     loading="lazy"
                                 />

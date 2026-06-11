@@ -59,9 +59,6 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
         redirect(`/${lang}/tax-and-business-advisory-services`);
     }
 
-    const allAreas = await getPortfolioItems(lang);
-    const sidebarAreas = allAreas.filter(a => a.slug !== slug).slice(0, 5);
-
     // Override content if local Armenian translations exist
     if (lang === 'am' && (t as any).practice_content?.[slug]) {
         const local = (t as any).practice_content[slug];
@@ -92,8 +89,36 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
         }))
     } : null;
 
+    // Helper function to parse bullet points (e.g. "Title: Description")
+    const parseBullet = (item: string) => {
+        if (item.includes(":")) {
+            const parts = item.split(":");
+            const title = parts[0].trim();
+            const description = parts.slice(1).join(":").trim();
+            return { title, description };
+        }
+        return { title: item, description: "" };
+    };
+
+    const parsedHelp = (content.howWeCanHelp || []).map(item => parseBullet(item));
+    const parsedWhy = (content.whyChooseUs || []).map(item => parseBullet(item));
+
+    // Dynamic Title Formats
+    const heroDescription = (t as any).book_legal_consultation
+        ? `${t.our_services_prefix || "Our "}${displayTitle.toLowerCase()} ${t.services_for_businesses_in_armenia || "services for businesses in Armenia"}.`
+        : "";
+
+    const introTitle = lang === 'en'
+        ? `${displayTitle} Services for Businesses in Armenia`
+        : lang === 'am'
+        ? `${displayTitle} ծառայություններ բիզնեսի համար Հայաստանում`
+        : `${displayTitle} услуги для бизнеса в Армении`;
+
+    const ourServicesTitle = `${t.our_services_prefix || "Our "}${displayTitle}${t.our_services_suffix || " Services"}`;
+    const whyChooseTitle = `${t.why_choose_title_prefix || "Why Choose the "}${displayTitle}${t.why_choose_title_suffix || " Attorneys at Retrieve Legal & Tax?"}`;
+
     return (
-        <div className="min-h-screen bg-[#F4F7FB]">
+        <div className="min-h-screen bg-[#F4F7FB] pb-12">
             {/* JSON-LD FAQ Schema Markup */}
             {faqSchemaMarkup && (
                 <script
@@ -102,187 +127,169 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                 />
             )}
 
-            {/* ── Hero Strip ── */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-20">
-                <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+            {/* ── Breadcrumbs and Hero Section ── */}
+            <div className="container mx-auto px-4 md:px-8 pt-36 pb-6">
+                <Breadcrumbs items={[
+                    { label: t.cat_tax_advisory_services || "Tax & Business Advisory Services", href: "/tax-and-business-advisory-services" },
+                    { label: displayTitle }
+                ]} />
 
-                <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <Breadcrumbs items={[
-                        { label: t.cat_tax_advisory_services || "Tax & Business Advisory Services", href: "/tax-and-business-advisory-services" },
-                        { label: displayTitle }
-                    ]} />
+                {/* Curved Hero Inset Card */}
+                <div className="relative mt-6 bg-gradient-to-br from-[#003D7A] via-[#005CB9] to-[#0070DB] rounded-[2rem] overflow-hidden shadow-xl py-16 px-6 md:py-24 md:px-12 text-center text-white">
+                    <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 
-                    <div className="max-w-4xl">
-                        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-5">
-                            <ShieldCheck size={14} />
-                            {t.our_expertise}
+                    <div className="max-w-3xl mx-auto relative z-10 space-y-6">
+                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                            {displayTitle}
+                        </h1>
+                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                            {lang === 'en' 
+                                ? `Retrieve Legal & Tax provides comprehensive ${displayTitle.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
+                                : lang === 'am'
+                                ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${displayTitle.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
+                                : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${displayTitle.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`
+                            }
+                        </p>
+                        <div className="pt-4">
+                            <Link href="/contact" className="inline-block bg-white text-[#005CB9] hover:bg-gray-50 font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
+                                {t.book_legal_consultation || "Book Legal Consultation"}
+                            </Link>
                         </div>
-                        <h1
-                            className="text-4xl md:text-6xl font-bold text-white leading-tight break-words"
-                            dangerouslySetInnerHTML={{ __html: displayTitle }}
-                        />
                     </div>
                 </div>
             </div>
 
-            {/* ── Main Layout ── */}
-            <div className="container mx-auto px-4 md:px-8 py-16 -mt-8 relative z-20">
-                <div className="flex flex-col lg:flex-row gap-12 items-start">
-
-                    {/* ── Main Content Area ── */}
-                    <article className="flex-1 min-w-0">
+            {/* ── Overview Section ── */}
+            {content.overview && (
+                <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div className="lg:col-span-7 space-y-6 text-left">
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                                {introTitle}
+                            </h2>
+                            <div 
+                                className="overflow-x-auto prose prose-lg max-w-none text-gray-700 break-words
+                                    prose-headings:font-extrabold prose-headings:text-gray-900
+                                    prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+                                    prose-strong:text-gray-900
+                                    prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
+                                    prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
+                                    prose-li:mb-2 prose-li:pl-2
+                                    prose-li:marker:text-[#005CB9]
+                                    [&_p]:mb-5 [&_p]:leading-relaxed [&_p]:text-gray-600 [&_p]:font-medium"
+                                dangerouslySetInnerHTML={{ __html: content.overview }}
+                            />
+                        </div>
                         {content.image && (
-                            <div className="relative w-full h-80 md:h-[400px] rounded-3xl overflow-hidden mb-12 shadow-xl border border-white">
+                            <div className="lg:col-span-5 relative w-full h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-gray-100">
                                 <Image
                                     src={content.image}
-                                    alt={content.imageAlt || content.title}
+                                    alt={content.imageAlt || displayTitle}
                                     fill
                                     className="object-cover"
                                     priority
-                                    sizes="(max-width: 768px) 100vw, 66vw"
+                                    sizes="(max-width: 768px) 100vw, 40vw"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             </div>
                         )}
+                    </div>
+                </section>
+            )}
 
-                        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 space-y-16">
-
-                            {content.overview && (
-                                <section>
-                                    <h2 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3">
-                                        <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        {t.overview}
-                                    </h2>
-                                    <div 
-                                        className="overflow-x-auto prose prose-lg max-w-none text-gray-700 break-words
-                                            prose-headings:font-extrabold prose-headings:text-gray-900
-                                            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-                                            prose-strong:text-gray-900
-                                            prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
-                                            prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
-                                            prose-li:mb-2 prose-li:pl-2
-                                            prose-li:marker:text-[#005CB9]
-                                            [&_p]:mb-5 [&_p]:leading-relaxed [&_p]:text-gray-600 [&_p]:font-medium"
-                                        dangerouslySetInnerHTML={{ __html: content.overview }}
-                                    />
-                                </section>
-                            )}
-
-                            {content.howWeCanHelp.length > 0 && (
-                                <section>
-                                    <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
-                                        <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        {t.how_we_can_help}
-                                    </h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {content.howWeCanHelp.map((item, idx) => (
-                                            <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-blue-50/50 hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
-                                                <CheckCircle2 className="text-[#005CB9] shrink-0 mt-0.5" size={20} />
-                                                <span className="text-gray-700 font-medium leading-snug">{item}</span>
-                                            </div>
-                                        ))}
+            {/* ── Services Section (Our [Title] Services) ── */}
+            {content.howWeCanHelp && content.howWeCanHelp.length > 0 && (
+                <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">
+                        {ourServicesTitle}
+                    </h2>
+                    <div className="flex flex-wrap justify-center gap-6 w-full">
+                        {parsedHelp.map((item, idx) => (
+                            <div 
+                                key={idx} 
+                                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-md bg-white rounded-3xl border border-gray-100 shadow-sm p-8 hover:shadow-md transition-all flex flex-col items-start text-left"
+                            >
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="bg-blue-50 p-2 rounded-full text-[#005CB9] shrink-0">
+                                        <CheckCircle2 size={20} strokeWidth={2.5} />
                                     </div>
-                                </section>
-                            )}
+                                    <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                                        {item.title}
+                                    </h3>
+                                </div>
+                                {item.description && (
+                                    <p className="text-gray-600 text-sm font-medium leading-relaxed">
+                                        {item.description}
+                                    </p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
 
-                            {content.whyChooseUs.length > 0 && (
-                                <section>
-                                    <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
-                                        <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        {t.why_choose_us_question}
-                                    </h2>
-                                    <div className="space-y-4">
-                                        {content.whyChooseUs.map((item, idx) => (
-                                            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-gradient-to-r from-[#005CB9] to-[#003d7a] text-white shadow-md transform transition-transform hover:-translate-y-1">
-                                                <div className="flex bg-white/20 p-3 rounded-full shrink-0">
-                                                    <ShieldCheck size={24} className="text-white" />
-                                                </div>
-                                                <span className="text-lg font-semibold leading-snug">{item}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {content.faqs.length > 0 && (
-                                <section>
-                                    <h2 className="text-2xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
-                                        <div className="w-8 h-1 bg-[#005CB9] rounded-full"></div>
-                                        {t.faqs}
-                                    </h2>
-                                    <div className="space-y-4">
-                                        {content.faqs.map((faq, idx) => (
-                                            <details key={idx} className="group bg-gray-50 rounded-2xl p-6 cursor-pointer open:bg-white open:ring-1 open:ring-gray-200 transition-all">
-                                                <summary className="flex items-center justify-between font-bold text-gray-900 text-lg outline-none select-none">
-                                                    {faq.question}
-                                                    <span className="ml-4 flex-shrink-0 transition duration-300 group-open:-rotate-180 text-[#005CB9] bg-blue-100 p-2 rounded-full">
-                                                        <ChevronDown size={18} strokeWidth={3} />
-                                                    </span>
-                                                </summary>
-                                                <div className="mt-5 text-gray-600 leading-relaxed text-base border-t border-gray-100 pt-5">
-                                                    {faq.answer}
-                                                </div>
-                                            </details>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                        </div>
-                    </article>
-
-                    {/* ── Sidebar ── */}
-                    <aside className="w-full lg:w-80 xl:w-96 shrink-0 space-y-8 lg:sticky lg:top-32">
-
-                        <div className="bg-gradient-to-br from-[#003d7a] to-[#005CB9] rounded-3xl p-8 relative overflow-hidden shadow-xl shadow-blue-900/10">
-                            <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none" />
-                            <h3 className="text-white text-2xl font-extrabold mb-3">
-                                {t.require_legal_assistance}
-                            </h3>
-                            <p className="text-blue-100 text-base mb-8 leading-relaxed font-medium">
-                                {t.require_legal_assistance_desc}
-                            </p>
-                            <Link href="/contact" className="block text-center bg-white text-[#005CB9] hover:bg-gray-50 font-bold text-base rounded-2xl px-6 py-4 transition-all shadow-md hover:shadow-lg">
-                                {t.schedule_consultation}
-                            </Link>
-                        </div>
-
-                        {sidebarAreas.length > 0 && (
-                            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
-                                <h3 className="font-extrabold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                                    <FileText size={20} className="text-[#005CB9]" />
-                                    {t.other_services}
+            {/* ── Why Choose Us Section ── */}
+            {content.whyChooseUs && content.whyChooseUs.length > 0 && (
+                <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
+                    <div className="max-w-3xl mx-auto mb-12 space-y-4">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                            {whyChooseTitle}
+                        </h2>
+                        <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed">
+                            {lang === 'en'
+                                ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${displayTitle.toLowerCase()} services:`
+                                : lang === 'am'
+                                ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${displayTitle.toLowerCase()} ծառայությունները.`
+                                : `Retrieve Legal & Tax предлагает ориентированные на клиента и результат юридические услуги. Вот почему компании выбирают нас для услуг в сфере ${displayTitle.toLowerCase()}:`
+                            }
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-6 w-full">
+                        {parsedWhy.map((item, idx) => (
+                            <div 
+                                key={idx} 
+                                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-md bg-white rounded-3xl border border-gray-100 shadow-sm p-8 hover:shadow-md transition-all flex flex-col items-start text-left"
+                            >
+                                <h3 className="text-lg font-bold text-gray-900 leading-tight mb-3">
+                                    {item.title}
                                 </h3>
-                                <div className="space-y-2">
-                                    {sidebarAreas.map((area) => {
-                                        const translatedAreaTitle = (t as any).practice_content?.[area.slug]?.title 
-                                            || (t.practice_titles as any)?.[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === area.slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""]
-                                            || area.title;
-                                        return (
-                                            <Link
-                                                key={area.slug}
-                                                href={`${getCategoryRoute(area.category)}/${area.slug}`}
-                                                className="group flex items-center justify-between p-3 -mx-3 rounded-xl hover:bg-gray-50 transition-colors"
-                                            >
-                                                <span className="text-gray-700 font-semibold group-hover:text-[#005CB9] transition-colors">{translatedAreaTitle}</span>
-                                                <ArrowRight size={16} className="text-gray-300 group-hover:text-[#005CB9] group-hover:translate-x-1 transition-all" />
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
-
-                                <div className="mt-8 pt-6 border-t border-gray-100">
-                                    <Link href="/tax-and-business-advisory-services" className="inline-flex items-center justify-center w-full gap-2 text-sm font-bold text-[#005CB9] hover:text-[#003d7a] transition-colors bg-blue-50/50 hover:bg-blue-50 py-3 rounded-xl">
-                                        {t.view_all_practice_areas_btn}
-                                    </Link>
-                                </div>
+                                {item.description && (
+                                    <p className="text-gray-600 text-sm font-medium leading-relaxed">
+                                        {item.description}
+                                    </p>
+                                )}
                             </div>
-                        )}
+                        ))}
+                    </div>
+                </section>
+            )}
 
-                    </aside>
-                </div>
-            </div>
+            {/* ── FAQs Section ── */}
+            {content.faqs && content.faqs.length > 0 && (
+                <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">
+                        {t.faqs}
+                    </h2>
+                    <div className="max-w-4xl mx-auto space-y-4 w-full">
+                        {content.faqs.map((faq, idx) => (
+                            <details 
+                                key={idx} 
+                                className="group bg-white rounded-2xl p-6 cursor-pointer open:bg-white open:ring-1 open:ring-gray-200 transition-all shadow-sm border border-gray-100"
+                            >
+                                <summary className="flex items-center justify-between font-bold text-gray-900 text-base md:text-lg outline-none select-none text-left">
+                                    {faq.question}
+                                    <span className="ml-4 flex-shrink-0 transition duration-300 group-open:-rotate-180 text-[#005CB9] bg-blue-50 p-2 rounded-full">
+                                        <ChevronDown size={18} strokeWidth={3} />
+                                    </span>
+                                </summary>
+                                <div className="mt-5 text-gray-600 leading-relaxed text-sm md:text-base border-t border-gray-100 pt-5 text-left font-medium">
+                                    {faq.answer}
+                                </div>
+                            </details>
+                        ))}
+                    </div>
+                </section>
+            )}
         </div>
     );
 }

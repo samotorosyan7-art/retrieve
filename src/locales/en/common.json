@@ -99,7 +99,7 @@
     "footer_description": "Providing comprehensive legal and tax solutions for businesses and individuals with integrity and precision.",
     "footer_quick_links": "Quick Links",
     "footer_contact_info": "Contact Info",
-    "footer_address": "Yerevan, Armenia",
+    "footer_address": "Baghramyan 41, Yerevan, Armenia",
     "footer_rights": "All rights reserved.",
     "who_we_are": "Who We Are",
     "how_we_work": "How We Work",
@@ -119,7 +119,7 @@
     "about_us_value_client_focused_title": "Client-Focused",
     "about_us_value_client_focused_text": "Our clients' success is our top priority.",
     "about_us_location_title": "Our Location",
-    "about_us_address": "Argishti 11/11, Yerevan, Armenia",
+    "about_us_address": "Baghramyan 41, Yerevan, Armenia",
     "about_us_story_title_1": "Committed to Providing",
     "about_us_story_title_2": "Reliable Results",
     "about_us_story_text": "Over the years, Retrieve Legal & Tax has grown into one of Armenia's most trusted legal and tax advisory firms. Our law firm is built on four principles that guide everything we do, from how we think to how we communicate and deliver results.",
@@ -553,5 +553,11 @@
         "residence-in-armenia": "Residence in Armenia",
         "armenian-citizenship": "Armenian Citizenship",
         "work-permit": "Work Permit"
-    }
+    },
+    "book_legal_consultation": "Book Legal Consultation",
+    "services_for_businesses_in_armenia": "Services for Businesses in Armenia",
+    "our_services_prefix": "Our ",
+    "our_services_suffix": " Services",
+    "why_choose_title_prefix": "Why Choose the ",
+    "why_choose_title_suffix": " Attorneys at Retrieve Legal & Tax?"
 }

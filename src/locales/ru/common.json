@@ -99,7 +99,7 @@
     "footer_description": "Предоставление комплексных юридических и налоговых решений для бизнеса и частных лиц с честностью и точностью.",
     "footer_quick_links": "Быстрые ссылки",
     "footer_contact_info": "Контактная информация",
-    "footer_address": "Ереван, Армения",
+    "footer_address": "Баграмян 41 ,Ереван, Армения",
     "footer_rights": "Все права защищены.",
     "who_we_are": "Кто мы",
     "how_we_work": "Как мы работаем",
@@ -121,7 +121,7 @@
     "about_us_value_client_focused_title": "Ориентированность на клиента",
     "about_us_value_client_focused_text": "Успех наших клиентов является нашим главным приоритетом.",
     "about_us_location_title": "Наше местоположение",
-    "about_us_address": "ул. Аргишти 11/11, Ереван, Армения",
+    "about_us_address": "ул. Баграмян 41, Ереван, Армения",
     "about_us_story_title_1": "Стремление к",
     "about_us_story_title_2": "надежным результатам",
     "about_us_story_text": "За годы работы Retrieve Legal & Tax стала одной из наиболее надёжных юридических и налоговых консультинговых фирм в Армении. Наша фирма строится на четырёх принципах, которые определяют всё — от нашего подхода к работе до коммуникации и достижения результатов.",
@@ -553,5 +553,11 @@
         "residence-in-armenia": "Проживание в Армении",
         "armenian-citizenship": "Гражданство Армении",
         "work-permit": "Разрешение на работу"
-    }
+    },
+    "book_legal_consultation": "Записаться на консультацию",
+    "services_for_businesses_in_armenia": "услуги для бизнеса в Армении",
+    "our_services_prefix": "Наши услуги в сфере ",
+    "our_services_suffix": "",
+    "why_choose_title_prefix": "Почему выбирают юристов Retrieve по ",
+    "why_choose_title_suffix": "?"
 }
