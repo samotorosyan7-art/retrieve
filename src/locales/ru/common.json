@@ -164,7 +164,10 @@
         "Tax Specialist": "Налоговый специалист",
         "Associate Lawyer": "Юрист",
         "Junior Lawyer": "Младший юрист",
-        "Office Manager & HR": "Офис-менеджер и HR"
+        "Office Manager & HR": "Офис-менеджер и HR",
+        "Managing Director": "Управляющий директор",
+        "Off Counsel": "Советник",
+        "Finance specialist": "Финансовый специалист"
     },
     "practice_area_title_corporate": "Корпоративное и коммерческое право",
     "practice_area_title_tax": "Налоговое право и соответствие",

@@ -40,6 +40,41 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
         { label: t("about_us_stat_partners", { defaultValue: "Global Partners" }), value: "120+", icon: Globe },
     ];
 
+    // Reusable cards — rendered in the desktop sidebar and, on mobile, inline within
+    // the main content (Stats under "How We Work", Location under "Our Team").
+    const statsCard = (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated p-6 space-y-6">
+            {stats.map((s, idx) => (
+                <div key={idx} className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center">
+                        <s.icon size={20} className="text-gray-400" />
+                    </div>
+                    <div>
+                        <div className="text-2xl font-black text-[#005CB9]">{s.value}</div>
+                        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">{s.label}</div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+
+    const locationCard = (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated p-6 space-y-4">
+            <div className="flex items-center gap-3 text-[#005CB9]">
+                <MapPin size={20} />
+                <h3 className="font-bold text-gray-900">{t("about_us_location_title")}</h3>
+            </div>
+            <p className="text-sm text-gray-600">{t("about_us_address")}</p>
+            <div className="rounded-2xl overflow-hidden h-32 border border-gray-50">
+                <iframe
+                    src="https://maps.google.com/maps?q=Baghramyan%2041%2C%20Yerevan%2C%20Armenia&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                />
+            </div>
+        </div>
+    );
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
@@ -78,8 +113,8 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
             <div className="container mx-auto px-4 md:px-8 py-16 -mt-10 relative z-20">
                 <div className="flex flex-col lg:flex-row gap-10 items-start">
 
-                    {/* LEFT — Side Info */}
-                    <aside className="w-full lg:w-80 xl:w-96 shrink-0 space-y-6 lg:sticky lg:top-28">
+                    {/* LEFT — Side Info (desktop only; on mobile these move into the main column) */}
+                    <aside className="hidden lg:block w-full lg:w-80 xl:w-96 shrink-0 space-y-6 lg:sticky lg:top-28">
 
                         {/* Values Card */}
                         <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated overflow-hidden">
@@ -102,35 +137,10 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                         </div>
 
                         {/* Stats Card */}
-                        <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated p-6 space-y-6">
-                            {stats.map((s, idx) => (
-                                <div key={idx} className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center">
-                                        <s.icon size={20} className="text-gray-400" />
-                                    </div>
-                                    <div>
-                                        <div className="text-2xl font-black text-[#005CB9]">{s.value}</div>
-                                        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">{s.label}</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        {statsCard}
 
                         {/* Location Mini-Card */}
-                        <div className="bg-white rounded-3xl border border-gray-100 shadow-elevated p-6 space-y-4">
-                            <div className="flex items-center gap-3 text-[#005CB9]">
-                                <MapPin size={20} />
-                                <h3 className="font-bold text-gray-900">{t("about_us_location_title")}</h3>
-                            </div>
-                            <p className="text-sm text-gray-600">{t("about_us_address")}</p>
-                            <div className="rounded-2xl overflow-hidden h-32 border border-gray-50">
-                                <iframe
-                                    src="https://maps.google.com/maps?q=Baghramyan%2041%2C%20Yerevan%2C%20Armenia&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                                    className="w-full h-full border-0"
-                                    loading="lazy"
-                                />
-                            </div>
-                        </div>
+                        {locationCard}
                     </aside>
 
                     {/* RIGHT — Main Content */}
@@ -224,10 +234,16 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                             </div>
                         </motion.div>
 
+                        {/* Stats — mobile only, placed under "How We Work" */}
+                        <div className="lg:hidden">{statsCard}</div>
+
                         {/* Team Section Integration */}
                         <div className="pt-10">
                             <TeamSection teamMembers={teamMembers} showAll={true} showCta={false} />
                         </div>
+
+                        {/* Location — mobile only, placed under "Our Team" */}
+                        <div className="lg:hidden">{locationCard}</div>
 
                         {/* FINAL CTA SECTION */}
                         <div className="bg-gradient-to-r from-[#003d7a] to-[#005CB9] rounded-[2.5rem] p-10 md:p-16 text-center text-white relative overflow-hidden shadow-2xl group">

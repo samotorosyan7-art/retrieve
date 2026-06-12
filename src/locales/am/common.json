@@ -166,7 +166,10 @@
         "Tax Specialist": "Հարկային մասնագետ",
         "Associate Lawyer": "Իրավաբան",
         "Junior Lawyer": "Կրտսեր իրավաբան",
-        "Office Manager & HR": "Գրասենյակի մենեջեր և HR"
+        "Office Manager & HR": "Գրասենյակի մենեջեր և HR",
+        "Managing Director": "Գործադիր տնօրեն",
+        "Off Counsel": "Խորհրդատու",
+        "Finance specialist": "Ֆինանսական մասնագետ"
     },
     "practice_area_title_corporate": "Կորպորատիվ և բիզնես իրավունք",
     "practice_area_title_tax": "Հարկային իրավունք և համապատասխանություն",

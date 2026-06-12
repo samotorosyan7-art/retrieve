@@ -440,19 +440,19 @@ export async function getMasonryPosts(
 // Explicit display order for the team. Published members not listed here are
 // appended afterwards (in sitemap order).
 const PERSONNEL_ORDER = [
-    "michael-hovhannesyan",  // Michael
     "feliks-hovakimyan",     // Feliks
+    "michael-hovhannesyan",  // Maykl (Michael)
     "vache-simonyan",        // Vache
-    "aleksandr-harutyunyan", // Aleksandr
-    "iren-aghasyan",         // Irene
-    "mikayel-sargsyan",      // Mikayel
-    "yeghishe-manukyan",     // Eghishe
+    "aleksandr-harutyunyan", // Aleksander Harutyunyan
     "lia-nikoghosyan",       // Lia
+    "anahit-petrosyan",      // Anahit
+    "larisa-petrosyan",      // Larisa
     "lilit-petrosyan",       // Lilit
     "renata-martirosyan",    // Renata
-    "larisa-petrosyan",      // Larisa
-    "anahit-petrosyan",      // Anahit
     "levon-aghbalyan",       // Levon
+    "mikayel-sargsyan",      // Mikayel
+    "yeghishe-manukyan",     // Yeghishe
+    "iren-aghasyan",         // Iren
     "nanar-siravyan",        // Nanar
 ];
 
@@ -817,17 +817,26 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
             image = image.replace("http://", "https://");
         }
 
-        // Extract biography from main content column. The bio can be split across more
-        // than one text-box block in WordPress (e.g. a second block with extra
-        // paragraphs), so include every block, not just the first.
+        // Extract biography. Each personnel bio is authored as TWO (or more) separate
+        // text blocks in WordPress, which may live in different columns, so collect
+        // every paragraph text block on the page rather than scoping to one column.
+        // List blocks (the practice areas) and empty blocks are skipped, and identical
+        // blocks are de-duplicated.
         let biography = "";
-        const bioContainers = $(".gdlr-core-column-40 .gdlr-core-text-box-item-content");
-        if (bioContainers.length) {
-            biography = bioContainers
-                .map((_, el) => $(el).html() || "")
-                .get()
-                .join("");
-        }
+        const bioSeen = new Set<string>();
+        $(".gdlr-core-text-box-item-content").each((_, el) => {
+            const $el = $(el);
+            if ($el.find("ul, ol").length > 0) return;       // practice-area lists, not bio
+            // Skip contact blocks — the email / phone belong in the sidebar, not the bio.
+            if ($el.find("a[href^='mailto:'], a[href^='tel:']").length > 0) return;
+            const text = $el.text().trim();
+            if (!text) return;                                // skip empty blocks
+            if (text.includes("@") || /\+\d[\d\s.\-()]{6,}\d/.test(text)) return; // email / phone
+            const html = ($el.html() || "").trim();
+            if (!html || bioSeen.has(html)) return;           // de-duplicate
+            bioSeen.add(html);
+            biography += html;
+        });
 
         // Extract practice areas from icon list or text box
         const practiceAreas: string[] = [];
@@ -869,6 +878,12 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
         }
         if (!phone) {
             phone = $("a[href^='tel:']").attr("href")?.replace("tel:", "").replace(/\s/g, "") || "";
+        }
+
+        // The firm has a single public phone number: +374 41 777 332. Normalize any
+        // scraped variant of the firm line (e.g. the incorrect +374 44 777 332) to it.
+        if (phone && phone.replace(/\D/g, "").endsWith("777332")) {
+            phone = "+374 41 777 332";
         }
 
         const linkedin = $("a[href*='linkedin.com']").attr("href") || "";

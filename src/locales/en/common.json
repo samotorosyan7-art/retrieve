@@ -162,7 +162,10 @@
         "Tax Specialist": "Tax Specialist",
         "Associate Lawyer": "Associate Lawyer",
         "Junior Lawyer": "Junior Lawyer",
-        "Office Manager & HR": "Office Manager & HR"
+        "Office Manager & HR": "Office Manager & HR",
+        "Managing Director": "Managing Director",
+        "Off Counsel": "Of Counsel",
+        "Finance specialist": "Finance Specialist"
     },
     "practice_area_title_corporate": "Corporate & Business Law",
     "practice_area_title_tax": "Tax Law & Compliance",
