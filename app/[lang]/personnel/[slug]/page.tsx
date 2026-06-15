@@ -37,6 +37,11 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
         ? personnel.linkedin.startsWith("http") ? personnel.linkedin : `https://${personnel.linkedin}`
         : null;
 
+    // Use the contact details scraped from WordPress; fall back to the firm's
+    // general contact info when a specific person's details aren't published.
+    const email = personnel.email || "info@retrieve.am";
+    const phone = personnel.phone || "+374 41 777 332";
+
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
 
@@ -100,29 +105,25 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
                             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">{t.personnel_contact}</h3>
 
-                            {personnel.email && (
-                                <a href={`mailto:${personnel.email}`} className="flex items-start gap-3 group">
-                                    <div className="w-9 h-9 rounded-xl bg-[#005CB9]/10 flex items-center justify-center shrink-0 group-hover:bg-[#005CB9] transition-colors mt-0.5">
-                                        <Mail size={15} className="text-[#005CB9] group-hover:text-white transition-colors" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[11px] text-gray-400 font-medium mb-0.5">Email</div>
-                                        <div className="text-sm font-semibold text-gray-800 break-all group-hover:text-[#005CB9] transition-colors">{personnel.email}</div>
-                                    </div>
-                                </a>
-                            )}
+                            <a href={`mailto:${email}`} className="flex items-start gap-3 group">
+                                <div className="w-9 h-9 rounded-xl bg-[#005CB9]/10 flex items-center justify-center shrink-0 group-hover:bg-[#005CB9] transition-colors mt-0.5">
+                                    <Mail size={15} className="text-[#005CB9] group-hover:text-white transition-colors" />
+                                </div>
+                                <div>
+                                    <div className="text-[11px] text-gray-400 font-medium mb-0.5">Email</div>
+                                    <div className="text-sm font-semibold text-gray-800 break-all group-hover:text-[#005CB9] transition-colors">{email}</div>
+                                </div>
+                            </a>
 
-                            {personnel.phone && (
-                                <a href={`tel:${personnel.phone}`} className="flex items-start gap-3 group">
-                                    <div className="w-9 h-9 rounded-xl bg-[#005CB9]/10 flex items-center justify-center shrink-0 group-hover:bg-[#005CB9] transition-colors mt-0.5">
-                                        <Phone size={15} className="text-[#005CB9] group-hover:text-white transition-colors" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[11px] text-gray-400 font-medium mb-0.5">Phone</div>
-                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-[#005CB9] transition-colors">{personnel.phone}</div>
-                                    </div>
-                                </a>
-                            )}
+                            <a href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-start gap-3 group">
+                                <div className="w-9 h-9 rounded-xl bg-[#005CB9]/10 flex items-center justify-center shrink-0 group-hover:bg-[#005CB9] transition-colors mt-0.5">
+                                    <Phone size={15} className="text-[#005CB9] group-hover:text-white transition-colors" />
+                                </div>
+                                <div>
+                                    <div className="text-[11px] text-gray-400 font-medium mb-0.5">Phone</div>
+                                    <div className="text-sm font-semibold text-gray-800 group-hover:text-[#005CB9] transition-colors">{phone}</div>
+                                </div>
+                            </a>
 
                             {linkedinUrl && (
                                 <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group">

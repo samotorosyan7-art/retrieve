@@ -3,16 +3,16 @@
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { motion } from "framer-motion";
-import { ArrowRight, User } from "lucide-react";
+import { ArrowRight, ArrowUpRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { WPTeamMember } from "@/types/wordpress";
 
-export default function TeamSection({ 
-    teamMembers, 
-    showAll = false, 
-    showCta = true 
-}: { 
-    teamMembers: WPTeamMember[]; 
+export default function TeamSection({
+    teamMembers,
+    showAll = false,
+    showCta = true
+}: {
+    teamMembers: WPTeamMember[];
     showAll?: boolean;
     showCta?: boolean;
 }) {
@@ -54,7 +54,7 @@ export default function TeamSection({
                 </motion.div>
 
                 {/* Cards grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-9">
                     {displayMembers.map((member, idx) => {
                         const slug = member.link?.split("/personnel/")[1]?.replace(/\//g, "") || "";
                         const localLink = slug ? `/personnel/${slug}` : "#";
@@ -67,42 +67,42 @@ export default function TeamSection({
                                 viewport={{ once: true, margin: "-60px" }}
                                 transition={{ duration: 0.5, delay: idx * 0.12 }}
                             >
-                                <Link href={localLink} className="group block rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#005CB9]/20 transition-all duration-400">
-
-                                    {/* Image \u2014 extra tall portrait */}
-                                    <div className="relative h-[26rem] overflow-hidden bg-gray-100">
-                                        {member.image ? (
-                                            <Image
-                                                src={member.image}
-                                                alt={member.imageAlt || member.name}
-                                                fill
-                                                className="object-cover object-top transition-transform duration-600 group-hover:scale-105"
-                                                sizes="(max-width: 768px) 100vw, 33vw"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center">
-                                                <User size={64} className="text-gray-300" />
-                                            </div>
-                                        )}
-
-                                        {/* Dark gradient overlay always visible at bottom */}
-                                        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
-
-                                        <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                                            {/* "View Profile" pill — slides up on hover */}
-                                            <div className="mb-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                                                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white bg-[#005CB9] rounded-full px-3 py-1.5 shadow-lg">
-                                                    {t("btn_view_profile")} <ArrowRight size={10} />
-                                                </span>
-                                            </div>
-
-                                            <h3 className="text-xl font-extrabold text-white leading-tight mb-1 group-hover:text-blue-200 transition-colors">
-                                                {member.name}
-                                            </h3>
-                                            <p className="text-blue-200 text-xs font-medium uppercase tracking-wider">
-                                                {t(`team_member_positions.${member.position}`, { defaultValue: member.position })}
-                                            </p>
+                                <Link
+                                    href={localLink}
+                                    className="group block relative overflow-hidden rounded-[1.75rem] aspect-[3/4] bg-gradient-to-b from-gray-100 to-gray-200 shadow-[0_12px_40px_-16px_rgba(0,60,122,0.3)] ring-1 ring-gray-200/80 transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_34px_70px_-22px_rgba(0,92,185,0.5)] hover:ring-[#005CB9]/40"
+                                >
+                                    {/* Portrait */}
+                                    {member.image ? (
+                                        <Image
+                                            src={member.image}
+                                            alt={member.imageAlt || member.name}
+                                            fill
+                                            className="object-cover object-top transition-transform duration-[800ms] ease-out group-hover:scale-[1.06]"
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <User size={80} className="text-gray-300" />
                                         </div>
+                                    )}
+
+                                    {/* Layered gradients for legibility, plus a blue wash on hover */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#02152b] via-[#02152b]/30 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#005CB9]/45 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                                    {/* Hover arrow */}
+                                    <div className="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/95 text-[#005CB9] flex items-center justify-center shadow-lg opacity-0 -translate-y-2 scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100">
+                                        <ArrowUpRight size={20} strokeWidth={2.5} />
+                                    </div>
+
+                                    {/* Info */}
+                                    <div className="absolute inset-x-0 bottom-0 p-7 z-20">
+                                        <h3 className="text-2xl font-extrabold text-white leading-tight tracking-tight mb-2">
+                                            {member.name}
+                                        </h3>
+                                        <p className="text-blue-100/85 text-[11px] font-semibold uppercase tracking-[0.18em]">
+                                            {t(`team_member_positions.${member.position}`, { defaultValue: member.position })}
+                                        </p>
                                     </div>
                                 </Link>
                             </motion.div>

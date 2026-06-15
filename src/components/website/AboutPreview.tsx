@@ -36,7 +36,7 @@ export default function AboutPreviewNew() {
                             </motion.div>
 
                             {/* Smaller overlapping image - NEW URL */}
-                            <motion.div
+                            {/* <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -50,7 +50,7 @@ export default function AboutPreviewNew() {
                                     className="object-cover transition-transform duration-700"
                                     sizes="(max-width: 768px) 50vw, 25vw"
                                 />
-                            </motion.div>
+                            </motion.div> */}
 
                             {/* Abstract accent shape */}
                             <div className="absolute -left-4 -bottom-4 w-32 h-32 bg-primary/10 rounded-full blur-3xl z-0"></div>

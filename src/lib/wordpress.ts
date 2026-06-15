@@ -905,22 +905,36 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
             });
         }
 
-        // Extract contact info from icon list
+        // Extract contact info. Personnel pages publish the email / phone inside the
+        // bio content blocks (as plain text or mailto/tel links), not always in an icon
+        // list — so read the content first, then the icon list, then any page-wide link.
         let email = "";
         let phone = "";
 
+        const $contactContent = $(".gdlr-core-text-box-item-content");
+        email = $contactContent.find("a[href^='mailto:']").first().attr("href")?.replace("mailto:", "").trim()
+            || $contactContent.text().match(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/)?.[0]
+            || "";
+        // Prefer the tel link's visible (formatted) text over the raw href so the
+        // displayed number keeps its spacing (e.g. "+374 41 777 332", not "+37441777332").
+        const $tel = $contactContent.find("a[href^='tel:']").first();
+        phone = ($tel.text().trim()
+            || $contactContent.text().match(/\+\d[\d\s().\-]{6,}\d/)?.[0]?.trim()
+            || $tel.attr("href")?.replace("tel:", "").trim()
+            || "").replace(/\s+/g, " ").trim();
+
         $(".gdlr-core-icon-list-content").each((_, el) => {
             const text = $(el).text().trim();
-            if (text.includes('@')) {
+            if (!email && text.includes('@')) {
                 email = text;
-            } else if (text.includes('+') || text.match(/\d{2,}/)) {
+            } else if (!phone && (text.includes('+') || text.match(/\d{2,}/))) {
                 phone = text;
             }
         });
 
-        // Also check mailto and tel links
+        // Final fallback: any mailto / tel link anywhere on the page
         if (!email) {
-            email = $("a[href^='mailto:']").attr("href")?.replace("mailto:", "") || "";
+            email = $("a[href^='mailto:']").attr("href")?.replace("mailto:", "").trim() || "";
         }
         if (!phone) {
             phone = $("a[href^='tel:']").attr("href")?.replace("tel:", "").replace(/\s/g, "") || "";

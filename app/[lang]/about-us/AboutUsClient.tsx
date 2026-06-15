@@ -35,7 +35,7 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
     ];
 
     const stats = [
-        { label: t("about_us_stat_experience", { defaultValue: "Years of Experience" }), value: "15+", icon: Briefcase },
+        { label: t("about_us_stat_experience", { defaultValue: "Years of Experience" }), value: "10+", icon: Briefcase },
         { label: t("about_us_stat_cases", { defaultValue: "Successful Cases" }), value: "500+", icon: Scale },
         { label: t("about_us_stat_partners", { defaultValue: "Global Partners" }), value: "120+", icon: Globe },
     ];
@@ -222,13 +222,24 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="w-full md:w-1/2 shrink-0 relative min-h-[350px]">
+                                <div className="w-full md:w-1/2 shrink-0 relative min-h-[350px] overflow-hidden bg-gray-100">
+                                    {/* Blurred fill so the full photo shows without empty bands */}
                                     <Image
-                                        src="https://wp.retrieve.am/wp-content/uploads/2026/04/Law-Firm-Retrieve-Team-1.jpg"
+                                        src="https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+                                        alt=""
+                                        aria-hidden
+                                        fill
+                                        className="object-cover scale-110 blur-2xl opacity-40"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                    />
+                                    {/* Full team photo — contained and centered so everyone is visible */}
+                                    <Image
+                                        src="https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
                                         alt="About Retrieve Law Firm"
                                         fill
-                                        className="object-cover object-top"
-                                        sizes="(max-width: 768px) 100vw, 288px"
+                                        quality={90}
+                                        className="object-cover object-center"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                                     />
                                 </div>
                             </div>
