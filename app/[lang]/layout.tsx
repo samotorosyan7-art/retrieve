@@ -4,7 +4,7 @@ import Header from "@/components/website/Header";
 import Footer from "@/components/website/Footer";
 import I18nProvider from "@/components/providers/I18nProvider";
 import MobileFAB from "@/components/website/MobileFAB";
-import { getPortfolioCategories } from "@/lib/wordpress";
+import { getPracticeAreasNav } from "@/lib/wordpress";
 import { cookies } from "next/headers";
 import Script from "next/script";
 
@@ -45,7 +45,7 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const practiceAreas = await getPortfolioCategories();
+    const practiceAreas = await getPracticeAreasNav();
     const cookieStore = await cookies();
     const lang = cookieStore.get("i18next")?.value || "en";
 

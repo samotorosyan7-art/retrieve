@@ -53,20 +53,46 @@ function getCategoryRoute(category?: string): string {
 export default async function LegalServiceDetailPage({ params }: { params: Promise<{ slug: string; lang: string }> }) {
     const { slug, lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
-    const content = await getPracticeAreaContent(slug, lang);
+    let content = await getPracticeAreaContent(slug, lang);
+
+    // If WordPress has no content, check if we have local fallback translations
+    if (!content && (t as any).practice_content?.[slug]) {
+        const local = (t as any).practice_content[slug];
+        content = {
+            title: local.title || "",
+            overview: local.overview || "",
+            howWeCanHelp: local.how_we_can_help || [],
+            whyChooseUs: local.why_choose_us || [],
+            faqs: local.faqs || [],
+            image: local.image || "",
+            imageAlt: local.imageAlt || ""
+        };
+    }
 
     if (!content) {
         redirect(`/${lang}/legal-services`);
     }
 
-    // Override content if local Armenian translations exist
-    if (lang === 'am' && (t as any).practice_content?.[slug]) {
+    // Override content if local translations exist for any language
+    if ((t as any).practice_content?.[slug]) {
         const local = (t as any).practice_content[slug];
+        content.title = local.title || content.title;
         content.overview = local.overview || content.overview;
         content.howWeCanHelp = local.how_we_can_help || content.howWeCanHelp;
-        content.whyChooseUs = local.why_choose_us || content.whyChooseUs;
+        // Standard practice areas pull "Why Choose Us" from WordPress (falling back to
+        // local only when WP has none). Curated pages authored locally in every language
+        // (e.g. iGaming, which is present in the English dictionary) keep their local translations.
+        const isCuratedPage = !!(dictionaries.en as any).practice_content?.[slug];
+        content.whyChooseUs = isCuratedPage
+            ? (local.why_choose_us || content.whyChooseUs)
+            : ((content.whyChooseUs && content.whyChooseUs.length > 0)
+                ? content.whyChooseUs
+                : (local.why_choose_us || content.whyChooseUs));
         if (local.faqs) {
             content.faqs = local.faqs;
+        }
+        if (local.image) {
+            content.image = local.image;
         }
     }
 
@@ -104,9 +130,17 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
     const parsedWhy = (content.whyChooseUs || []).map(item => parseBullet(item));
 
     // Dynamic Title Formats
-    const heroDescription = (t as any).book_legal_consultation
-        ? `${t.our_services_prefix || "Our "}${displayTitle.toLowerCase()} ${t.services_for_businesses_in_armenia || "services for businesses in Armenia"}.`
-        : "";
+    const heroDescriptionText = (t as any).practice_content?.[slug]?.hero_desc 
+        ? (t as any).practice_content[slug].hero_desc
+        : lang === 'en' 
+        ? `Retrieve Legal & Tax provides comprehensive ${displayTitle.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
+        : lang === 'am'
+        ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${displayTitle.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
+        : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${displayTitle.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`;
+
+    const heroButtonText = (t as any).practice_content?.[slug]?.hero_btn
+        ? (t as any).practice_content[slug].hero_btn
+        : t.book_legal_consultation || "Book Legal Consultation";
 
     const introTitle = lang === 'en'
         ? `${displayTitle} Services for Businesses in Armenia`
@@ -129,31 +163,30 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
 
             {/* ── Breadcrumbs and Hero Section ── */}
             <div className="container mx-auto px-4 md:px-8 pt-36 pb-6">
-                <Breadcrumbs items={[
-                    { label: t.cat_legal_services || "Legal Services", href: "/legal-services" },
-                    { label: displayTitle }
-                ]} />
-
                 {/* Curved Hero Inset Card */}
-                <div className="relative mt-6 bg-gradient-to-br from-[#003D7A] via-[#005CB9] to-[#0070DB] rounded-[2rem] overflow-hidden shadow-xl py-16 px-6 md:py-24 md:px-12 text-center text-white">
+                <div className="relative bg-gradient-to-br from-[#003D7A] via-[#005CB9] to-[#0070DB] rounded-[2rem] overflow-hidden shadow-xl pt-8 pb-16 px-6 md:pt-10 md:pb-24 md:px-12 text-white">
                     <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                     <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 
-                    <div className="max-w-3xl mx-auto relative z-10 space-y-6">
+                    {/* Breadcrumbs — same style as the blog section (light text on the gradient hero) */}
+                    <Breadcrumbs
+                        className="relative z-10"
+                        items={[
+                            { label: t.cat_legal_services || "Legal Services", href: "/legal-services" },
+                            { label: displayTitle }
+                        ]}
+                    />
+
+                    <div className="max-w-3xl mx-auto relative z-10 space-y-6 text-center">
                         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
                             {displayTitle}
                         </h1>
                         <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
-                            {lang === 'en' 
-                                ? `Retrieve Legal & Tax provides comprehensive ${displayTitle.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
-                                : lang === 'am'
-                                ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${displayTitle.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
-                                : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${displayTitle.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`
-                            }
+                            {heroDescriptionText}
                         </p>
                         <div className="pt-4">
                             <Link href="/contact" className="inline-block bg-white text-[#005CB9] hover:bg-gray-50 font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
-                                {t.book_legal_consultation || "Book Legal Consultation"}
+                                {heroButtonText}
                             </Link>
                         </div>
                     </div>
@@ -199,33 +232,66 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
 
             {/* ── Services Section (Our [Title] Services) ── */}
             {content.howWeCanHelp && content.howWeCanHelp.length > 0 && (
-                <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">
-                        {ourServicesTitle}
-                    </h2>
-                    <div className="flex flex-wrap justify-center gap-6 w-full">
-                        {parsedHelp.map((item, idx) => (
-                            <div 
-                                key={idx} 
-                                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-md bg-white rounded-3xl border border-gray-100 shadow-sm p-8 hover:shadow-md transition-all flex flex-col items-start text-left"
-                            >
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="bg-blue-50 p-2 rounded-full text-[#005CB9] shrink-0">
-                                        <CheckCircle2 size={20} strokeWidth={2.5} />
+                <>
+                    <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">
+                            {ourServicesTitle}
+                        </h2>
+                        <div className="flex flex-wrap justify-center gap-6 w-full">
+                            {parsedHelp.map((item, idx) => (
+                                <div 
+                                    key={idx} 
+                                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-md bg-white rounded-3xl border border-gray-100 shadow-sm p-8 hover:shadow-md transition-all flex flex-col items-start text-left"
+                                >
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="bg-blue-50 p-2 rounded-full text-[#005CB9] shrink-0">
+                                            <CheckCircle2 size={20} strokeWidth={2.5} />
+                                        </div>
+                                        <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                                            {item.title}
+                                        </h3>
                                     </div>
-                                    <h3 className="text-lg font-bold text-gray-900 leading-tight">
-                                        {item.title}
-                                    </h3>
+                                    {item.description && (
+                                        <p className="text-gray-600 text-sm font-medium leading-relaxed">
+                                            {item.description}
+                                        </p>
+                                    )}
                                 </div>
-                                {item.description && (
-                                    <p className="text-gray-600 text-sm font-medium leading-relaxed">
-                                        {item.description}
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* ── CTA 2 Section (Under Services) ── */}
+                    <section className="container mx-auto px-4 md:px-8 py-6 text-center">
+                        <div className="relative max-w-5xl mx-auto">
+                            {/* Dot patterns overflowing */}
+                            <div className="absolute -top-4 -right-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                            <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                            
+                            <div className="relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 z-10 text-left">
+                                <div className="space-y-4 max-w-3xl">
+                                    <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+                                        {(t as any).practice_content?.[slug]?.cta_services_title
+                                            ? (t as any).practice_content[slug].cta_services_title
+                                            : `${t.cta_looking_title_prefix}${displayTitle}${t.cta_looking_title_suffix}`}
+                                    </h3>
+                                    <p className="text-gray-500 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
+                                        {(t as any).practice_content?.[slug]?.cta_services_desc
+                                            ? (t as any).practice_content[slug].cta_services_desc
+                                            : t.cta_services_desc}
                                     </p>
-                                )}
+                                </div>
+                                <div className="shrink-0">
+                                    <Link href="/contact" className="inline-block bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
+                                        {(t as any).practice_content?.[slug]?.cta_services_btn
+                                            ? (t as any).practice_content[slug].cta_services_btn
+                                            : (t.contact_badge || "Get in touch")}
+                                    </Link>
+                                </div>
                             </div>
-                        ))}
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                </>
             )}
 
             {/* ── Why Choose Us Section ── */}
@@ -233,10 +299,12 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                 <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
                     <div className="max-w-3xl mx-auto mb-12 space-y-4">
                         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                            {whyChooseTitle}
+                            {(t as any).practice_content?.[slug]?.why_choose_title || whyChooseTitle}
                         </h2>
-                        <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed">
-                            {lang === 'en'
+                        <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
+                            {(t as any).practice_content?.[slug]?.why_choose_desc
+                                ? (t as any).practice_content[slug].why_choose_desc
+                                : lang === 'en'
                                 ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${displayTitle.toLowerCase()} services:`
                                 : lang === 'am'
                                 ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${displayTitle.toLowerCase()} ծառայությունները.`
@@ -290,6 +358,35 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                     </div>
                 </section>
             )}
+
+            {/* ── CTA 3 Section (After FAQ) ── */}
+            <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
+                <div className="relative bg-gradient-to-br from-[#E8F1FC] via-[#F1F6FC] to-[#E8F1FC] rounded-3xl p-8 md:p-12 border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
+                    {/* Subtle decorative background shapes */}
+                    <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-blue-200/20 blur-2xl pointer-events-none" />
+                    <div className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-blue-200/20 blur-2xl pointer-events-none" />
+                    
+                    <div className="relative z-10 text-left max-w-3xl space-y-4">
+                        <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+                            {(t as any).practice_content?.[slug]?.cta_journey_title
+                                ? (t as any).practice_content[slug].cta_journey_title
+                                : t.cta_journey_title}
+                        </h3>
+                        {(t as any).practice_content?.[slug]?.cta_journey_desc ? (
+                            <p className="text-gray-500 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
+                                {(t as any).practice_content[slug].cta_journey_desc}
+                            </p>
+                        ) : null}
+                    </div>
+                    <div className="relative z-10 shrink-0">
+                        <Link href="/contact" className="inline-block bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
+                            {(t as any).practice_content?.[slug]?.cta_journey_btn
+                                ? (t as any).practice_content[slug].cta_journey_btn
+                                : (t.cta_journey_btn || "Contact us now")}
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

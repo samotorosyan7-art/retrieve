@@ -83,17 +83,20 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
             />
 
-            {/* Hero strip */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-12">
-                <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-                <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <Breadcrumbs items={[
+            {/* Hero */}
+            <div className="container mx-auto px-4 md:px-8 pt-36 pb-6">
+                {/* Curved Hero Inset Card */}
+                <div className="relative bg-gradient-to-br from-[#003D7A] via-[#005CB9] to-[#0070DB] rounded-[2rem] overflow-hidden shadow-xl pt-8 pb-16 px-6 md:pt-10 md:pb-24 md:px-12 text-white">
+                    <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+
+                    <Breadcrumbs className="relative z-10" items={[
                         { label: t.page_blog_title || "Insights & News", href: "/blog" },
                         { label: post.title }
                     ]} />
 
-                    <div className="max-w-5xl">
-                        <div className="flex items-center gap-4 text-blue-200 text-sm mb-5">
+                    <div className="max-w-3xl mx-auto relative z-10 space-y-6 text-center">
+                        <div className="flex items-center justify-center gap-4 text-blue-200 text-sm">
                             <span className="flex items-center gap-1.5">
                                 <Calendar size={13} /> {formatDate(post.date, lang)}
                             </span>
@@ -102,7 +105,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             </span>
                         </div>
                         <h1
-                            className="text-3xl md:text-5xl font-extrabold text-white leading-tight break-words"
+                            className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight break-words"
                             dangerouslySetInnerHTML={{ __html: post.title }}
                         />
                     </div>

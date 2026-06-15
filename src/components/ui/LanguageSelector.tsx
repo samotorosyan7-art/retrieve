@@ -49,14 +49,12 @@ export default function LanguageSelector() {
         if (parts.length > 1 && ["en", "ru", "am"].includes(parts[1])) {
             parts[1] = lang.code;
             
-            // Special handling for detail pages to avoid 404s when slugs are not shared across languages
+            // Blog post slugs differ per language, so fall back to the blog index.
+            // Practice-area slugs are shared across languages, so keep the same
+            // service open when switching language.
             if (parts.length > 3) {
                 if (parts[2] === "blog") {
                     newPathname = `/${lang.code}/blog`;
-                } else if (parts[2] === "legal-services") {
-                    newPathname = `/${lang.code}/legal-services`;
-                } else if (parts[2] === "tax-and-business-advisory-services") {
-                    newPathname = `/${lang.code}/tax-and-business-advisory-services`;
                 } else {
                     newPathname = parts.join("/");
                 }

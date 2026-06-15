@@ -558,7 +558,8 @@
         "Accounting & Bookkeeping": "Accounting & Bookkeeping",
         "Tax Advisory": "Tax Advisory",
         "Corporate Finance Advisory": "Corporate Finance Advisory",
-        "M&A Advising": "M&A Advising"
+        "M&A Advising": "M&A Advising",
+        "iGaming & Licensing": "iGaming & Licensing"
     },
     "team_roles": {
         "Managing Partner": "Managing Partner",
@@ -617,5 +618,64 @@
     "our_services_prefix": "Our ",
     "our_services_suffix": " Services",
     "why_choose_title_prefix": "Why Choose the ",
-    "why_choose_title_suffix": " Attorneys at Retrieve Legal & Tax?"
+    "why_choose_title_suffix": " Attorneys at Retrieve Legal & Tax?",
+    "cta_looking_title_prefix": "Looking for Full-scope ",
+    "cta_looking_title_suffix": " Services in Armenia?",
+    "cta_services_desc": "Retrieve offers customized legal solutions to help you navigate every stage of business growth.",
+    "cta_journey_title": "Start Your Business Journey in Armenia with the Right Legal Foundation.",
+    "cta_journey_btn": "Contact us now",
+    "practice_content": {
+        "igaming-licensing": {
+            "title": "iGaming & Licensing",
+            "hero_desc": "From B2C operator licenses to B2B supplier structures, Retrieve Legal & Tax advises gaming businesses on Armenian licensing, compliance, and multi-jurisdictional structuring.",
+            "hero_btn": "Book a Consultation",
+            "overview": "<p>Armenia has emerged as a practical and cost-effective jurisdiction for iGaming licensing. Retrieve Legal & Tax knows the process from the inside.</p><p>Armenia offers a streamlined, commercially attractive licensing environment for online gaming operators and B2B suppliers. At Retrieve Legal & Tax, our iGaming practice advises operators, platform providers, payment processors, and B2B suppliers on every aspect of entering and operating in the Armenian iGaming market - from initial licensing through to ongoing compliance.</p>",
+            "how_we_can_help": [
+                "Armenian iGaming license applications - B2C operator and B2B supplier licenses",
+                "Corporate structure advisory for licensing - Armenian operating entity, holding company, and beneficial ownership documentation",
+                "KYC/AML policy preparation and compliance program development",
+                "Regulatory analysis and licensing feasibility assessment",
+                "Technical, financial, and legal documentation packages for regulators",
+                "Payment and banking support for iGaming operators - account documentation, bank introductions, and payment processor arrangements",
+                "White label, sub-operator, and platform agreements",
+                "Ongoing regulatory compliance - reporting, license maintenance, and changes of ownership",
+                "Multi-jurisdictional operator structure advisory - Armenia in combination with Curaçao, Malta, Anjouan, and other jurisdictions"
+            ],
+            "why_choose_us": [
+                "Proven End-to-End Experience: We have handled Armenian iGaming licensing end-to-end, including corporate structuring for multi-jurisdictional operator groups.",
+                "Full Operator Stack Advisory: We advise the full operator stack - from holding company to licensed entity to payment infrastructure.",
+                "Trusted Industry Partner: Trusted by international casino operators, B2B platform providers, and payment processors entering the Armenian market."
+            ],
+            "why_choose_title": "Why Clients Choose the iGaming & Licensing Attorneys at Retrieve Legal & Tax",
+            "why_choose_desc": "Retrieve Legal & Tax provides client-focused, results-driven legal advice to gaming businesses operating across borders. Here is why operators and providers choose our iGaming practice:",
+            "faqs": [
+                {
+                    "question": "What types of iGaming licenses are available in Armenia?",
+                    "answer": "Armenia issues both B2C operator licenses and B2B supplier licenses. B2C licenses cover online casino, sports betting, and other player-facing gaming activities. B2B licenses cover platform providers, software suppliers, and other entities providing services to licensed operators. The licensing authority is the Tax Committee of the Republic of Armenia."
+                },
+                {
+                    "question": "How long does the Armenian iGaming licensing process take?",
+                    "answer": "Timelines vary depending on the completeness of the application package and the structure of the applicant entity. We prepare comprehensive documentation packages designed to minimise back-and-forth with the regulator and move the application forward efficiently."
+                },
+                {
+                    "question": "Can an Armenian iGaming license be used as part of a multi-jurisdictional structure?",
+                    "answer": "Yes. Armenian licensing is frequently used alongside Curaçao, Anjouan, Malta, and other jurisdictions. We advise on structuring the Armenian entity within a broader holding and operational group, including beneficial ownership documentation, intercompany agreements, and regulatory disclosure requirements."
+                },
+                {
+                    "question": "What KYC and AML obligations apply to Armenian-licensed operators?",
+                    "answer": "Licensed operators are subject to Armenian AML legislation and must maintain a compliance program covering customer due diligence, transaction monitoring, suspicious activity reporting, and record-keeping. We prepare full KYC/AML policy packages and compliance frameworks tailored to the operator’s business model."
+                },
+                {
+                    "question": "Can you assist with banking and payment processing for an Armenian-licensed operator?",
+                    "answer": "Yes. Banking access is one of the most practical challenges for iGaming operators. We assist with account documentation, regulatory opinion letters, and introductions to banks and payment processors with experience in the gaming sector."
+                }
+            ],
+            "cta_services_title": "Ready to Launch Your Armenian iGaming Operation?",
+            "cta_services_desc": "Whether you are an online casino or sportsbook operator, platform provider, or payment processor, our team can guide you through every stage of Armenian iGaming licensing and compliance. Speak with our attorneys to discuss your business model, licensing requirements, and market-entry strategy.",
+            "cta_services_btn": "Get In Touch",
+            "cta_journey_title": "Speak with an iGaming Licensing Attorney Before You Apply",
+            "cta_journey_desc": "Every iGaming project is different. Before investing time and resources into licensing, speak with attorneys who understand Armenian gaming regulations, corporate structuring, banking requirements, and ongoing compliance obligations.",
+            "cta_journey_btn": "Contact Our iGaming Lawyers"
+        }
+    }
 }

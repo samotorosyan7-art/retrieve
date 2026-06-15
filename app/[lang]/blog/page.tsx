@@ -118,25 +118,28 @@ export default async function BlogPage({
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* Hero */}
-            <div className="relative bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db] overflow-hidden pt-44 pb-12">
-                <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-1/4 w-64 h-64 rounded-full bg-white/5 blur-2xl pointer-events-none" />
-                <div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase mb-6">
-                        <FileText size={13} />
-                        {t.blog_insights_badge}
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-5 tracking-tight">
-                        {t.page_blog_title}
-                    </h1>
-                    <p className="text-blue-200 text-lg max-w-xl mx-auto">
-                        {t.page_blog_subtitle}
-                    </p>
-                    {total > 0 && (
-                        <div className="mt-6 inline-block bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white text-sm font-semibold">
-                            {total} {t.blog_articles_published || "articles published"}
+            <div className="container mx-auto px-4 md:px-8 pt-36 pb-6">
+                {/* Curved Hero Inset Card */}
+                <div className="relative bg-gradient-to-br from-[#003D7A] via-[#005CB9] to-[#0070DB] rounded-[2rem] overflow-hidden shadow-xl py-16 px-6 md:py-24 md:px-12 text-center text-white">
+                    <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+                    <div className="max-w-3xl mx-auto relative z-10 space-y-6">
+                        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-xs font-bold tracking-widest uppercase">
+                            <FileText size={13} />
+                            {t.blog_insights_badge}
                         </div>
-                    )}
+                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                            {t.page_blog_title}
+                        </h1>
+                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                            {t.page_blog_subtitle}
+                        </p>
+                        {total > 0 && (
+                            <div className="inline-block bg-white/10 border border-white/20 rounded-full px-5 py-2 text-white text-sm font-semibold">
+                                {total} {t.blog_articles_published || "articles published"}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

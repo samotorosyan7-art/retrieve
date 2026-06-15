@@ -691,6 +691,52 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
 }
 
 /**
+ * Build the Practice Areas navigation (Header + Footer) from the full listing
+ * pages instead of the curated WP nav menu, so EVERY service is shown and the
+ * navigation stays in sync with the /legal-services and
+ * /tax-and-business-advisory-services pages.
+ *
+ * Always uses the English listing pages so the labels match the i18n keys
+ * (practice_categories / practice_titles); display translation happens client side.
+ */
+export async function getPracticeAreasNav(): Promise<MenuItem[]> {
+    const items = await getPortfolioItems();
+    if (items.length === 0) return [];
+
+    const legalOrder = [
+        "corporate-business-law",
+        "immigration-residence-services",
+        "employment-law",
+        "intellectual-property-law",
+        "real-estate-construction-law",
+        "investment-law",
+        "arbitration-ligitation",
+    ];
+
+    const buildChildren = (category: string, order?: string[]): MenuItem[] => {
+        const children = items.filter((item) => item.category === category);
+        if (order) {
+            children.sort((a, b) => {
+                const aIdx = order.indexOf(a.slug);
+                const bIdx = order.indexOf(b.slug);
+                if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+                if (aIdx !== -1) return -1;
+                if (bIdx !== -1) return 1;
+                return 0;
+            });
+        }
+        return children.map((item) => ({ label: item.title, url: `/${item.slug}` }));
+    };
+
+    const menu: MenuItem[] = [];
+    const legal = buildChildren("Legal services", legalOrder);
+    const tax = buildChildren("Tax & Business advisory services");
+    if (legal.length > 0) menu.push({ label: "Legal services", url: "#", children: legal });
+    if (tax.length > 0) menu.push({ label: "Tax & Business advisory services", url: "#", children: tax });
+    return menu;
+}
+
+/**
  * Get all portfolio items (practice areas) - Scraped from Live WP HTML
  */
 export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]> {
