@@ -272,7 +272,7 @@
     "expert_areas_title": "Our Expert Practice Areas",
     "expert_areas_subtitle": "Comprehensive legal and tax solutions tailored to your specific needs",
     "team_title": "Our Leadership Team",
-    "team_subtitle": "Meet our experienced legal professionals dedicated to your success.",
+    "team_subtitle": "Behind every client matter at Retrieve Legal & Tax is a dedicated team of lawyers who bring hands-on experience across the full range of Armenian legal and regulatory practice. We believe that legal expertise is most valuable when it is accessible, clear, and genuinely client-focused — and that is the standard every member of our team is held to.",
     "blog_title": "Latest Insights",
     "blog_subtitle": "Stay updated with our latest legal perspectives and company news.",
     "expert_areas_desc": "We offer a wide range of legal services tailored to meet the diverse needs of our clients.",
@@ -322,7 +322,7 @@
     "counters_professionals": "Legal Professionals",
     "clients_carousel_title": "Trusted by Industry Leaders",
     "testimonials_title": "Client Success Stories",
-    "testimonials_subtitle": "Hear directly from the businesses and individuals we've partnered with.",
+    "testimonials_subtitle": "Explore what our clients say about our legal services.",
     "newsletter_title": "Stay Ahead of the Curve",
     "newsletter_desc": "Get the latest legal insights and tax updates delivered directly to your inbox.",
     "placeholder_email": "Enter your email address",
@@ -348,9 +348,7 @@
         "Reliable Results_desc": "Trusted by global brands like Shell, WWF, QLESS, and REMAX, as well as local startups and organizations — a track record that speaks to the quality and consistency of our legal services across corporate, tax, and immigration matters."
     },
     "team_our_team": "Our Team",
-    "team_subtitle": "Behind every client matter at Retrieve Legal & Tax is a dedicated team of lawyers who bring hands-on experience across the full range of Armenian legal and regulatory practice. We believe that legal expertise is most valuable when it is accessible, clear, and genuinely client-focused — and that is the standard every member of our team is held to.",
     "hero_title_full": "Trusted Law Firm in Armenia: Legal & Tax Advisory Services",
-    "btn_book_consultation": "Book Consultation",
     "intake_badge": "Instant Intake",
     "intake_step1_title": "How can we help?",
     "intake_step2_title": "A few details",
@@ -371,7 +369,6 @@
     "btn_view_all_members": "View All Members",
     "testimonials_badge": "Client Success Stories",
     "testimonials_main_title": "Client Testimonials",
-    "testimonials_subtitle": "Explore what our clients say about our legal services.",
     "testimonials_list": [
         {
             "text": "The legal support we received for our market entry in Armenia was exceptional. Their team's deep understanding of local regulations made the process seamless.",
@@ -626,6 +623,68 @@
     "cta_journey_title": "Start Your Business Journey in Armenia with the Right Legal Foundation.",
     "cta_journey_btn": "Contact us now",
     "practice_content": {
+        "corporate-business-law": {
+            "hero_desc": "Retrieve Legal & Tax provides comprehensive corporate law services for local and international businesses in Armenia. We assist clients with company formation, corporate governance, mergers and acquisitions, restructuring, and day-to-day legal compliance. Our corporate lawyers deliver practical, business-focused solutions that help you make confident decisions and manage legal risks effectively.",
+            "intro_title": "Corporate Law Services for Businesses in Armenia",
+            "overview": "<p>Corporate law governs how companies are formed, structured, operated, and eventually reorganized or dissolved. It defines the legal framework that allows businesses to function as independent legal entities capable of owning assets, entering contracts, and managing obligations.</p><p>At Retrieve Legal & Tax, we help companies navigate these legal frameworks with clarity and confidence, ensuring every decision is legally sound and strategically aligned with business goals.</p>",
+            "cta_overview_title": "Need legal support for your business in Armenia?",
+            "cta_overview_desc": "Our corporate lawyers are ready to help you with formation, compliance, and complex transactions.",
+            "cta_overview_btn": "Talk to a Corporate Lawyer",
+            "services_intro": "We provide full-cycle legal support for businesses at every stage - from incorporation to complex corporate transactions and restructuring.",
+            "how_we_can_help": [
+                "Company Formation & Structuring: We assist with the incorporation of legal entities in Armenia, including LLCs and joint-stock companies, ensuring proper structuring from the start.",
+                "Corporate Governance & Compliance: We support businesses in establishing internal governance systems, shareholder agreements, and compliance frameworks aligned with Armenian law.",
+                "Mergers & Acquisitions (M&A): We provide full legal support for business acquisitions, sales, and mergers, including due diligence, transaction structuring, and contract negotiation.",
+                "Corporate Restructuring: We advise on reorganizations, spin-offs, asset transfers, and liquidation processes, ensuring full legal compliance and risk control.",
+                "Commercial Contracts & Legal Support: We draft and review commercial agreements to protect business interests and minimize legal exposure in day-to-day operations."
+            ],
+            "mna_title": "Legal Support for M&A and Business Transactions in Armenia",
+            "mna_desc": "Mergers and acquisitions require careful legal planning to ensure compliance, minimize risks, and protect business value. Our team provides end-to-end legal assistance throughout the entire transaction lifecycle.\nWe support clients in due diligence, negotiation, structuring, and execution of corporate deals, ensuring every step is legally secure and strategically optimized.",
+            "mna_items": [
+                "Legal due diligence",
+                "Transaction structuring",
+                "Contract negotiation and drafting",
+                "Regulatory compliance review",
+                "Closing support"
+            ],
+            "cta_services_title": "Looking for full-scope corporate legal services in Armenia?",
+            "cta_services_desc": "Speak with our corporate lawyers to get clear legal guidance tailored to your goals.",
+            "cta_services_btn": "Get in Touch",
+            "why_choose_title": "Why Choose the Business and Corporate Law Attorneys at Retrieve Legal & Tax?",
+            "why_choose_desc": "Retrieve Legal & Tax is a trusted corporate law firm in Armenia, supporting both local and international businesses with practical, results-driven legal solutions. We combine deep knowledge of Armenian corporate legislation with cross-border experience to help clients operate confidently and make informed business decisions.",
+            "why_choose_us": [
+                "Legal strategies for all business stages: Our services are tailored for startups, SMEs, and multinational companies operating or entering the Armenian market.",
+                "Trusted by local and international clients: We work with both Armenian companies and international clients seeking reliable corporate legal support in Armenia.",
+                "Cross-border and international advisory experience: We assist foreign investors and international businesses with structuring operations and navigating Armenian legal requirements.",
+                "Strong focus on M&A and business transactions: We support clients in mergers, acquisitions, restructurings, and investment transactions, ensuring legally secure and commercially effective outcomes.",
+                "Deep expertise in Armenian corporate law: We have extensive experience advising on corporate law matters in Armenia, including company formation, governance, regulatory compliance, and cross-border transactions."
+            ],
+            "faqs": [
+                {
+                    "question": "What Types of Business Structures Can Be Established in Armenia?",
+                    "answer": "Armenia recognizes several business structures - Limited Liability Companies (LLCs), Joint-Stock Companies (JSCs), Sole Proprietorships, and Partnerships. For most foreign investors and small-to-mid-size businesses, the LLC is the most practical choice: it's straightforward to set up, offers limited liability protection, and has no minimum capital requirement. That said, the right structure depends on your specific goals, ownership setup, and long-term plans. We help clients think through these decisions before filing a single document."
+                },
+                {
+                    "question": "What Are the Legal Requirements for Registering an LLC or JSC in Armenia?",
+                    "answer": "You'll need to prepare a company charter, provide information about shareholders or participants, and submit the official registration forms. The company also needs to be registered with Armenian tax authorities and a corporate bank account must be opened before you can operate.\nIn practice, the process is more manageable than it sounds - especially with the right guidance. Our team handles the entire registration process, so you're not left deciphering bureaucratic requirements on your own."
+                },
+                {
+                    "question": "Can Foreign Citizens Own and Manage a Business in Armenia?",
+                    "answer": "Yes - fully. Armenian law permits 100% foreign ownership, and foreign nationals have the same rights to establish, own, and manage a company as Armenian citizens. There are no mandatory local partners or resident director requirements.\nThis is one of the reasons Armenia has become an increasingly popular destination for international entrepreneurs and investors looking for a straightforward entry point into the region."
+                },
+                {
+                    "question": "Are Shareholder and Director Agreements Necessary for My Business?",
+                    "answer": "Technically, they're not always required by law. In practice, we strongly recommend them - and most clients who've dealt with a corporate dispute wish they'd had them in place from the start.\nThese agreements define who has decision-making authority, how disputes get resolved, what happens if a shareholder wants to exit, and much more. They're far easier to put together at the beginning than to negotiate after a conflict arises."
+                },
+                {
+                    "question": "How Does Armenia's Legal System Support Foreign Investment?",
+                    "answer": "Armenia has built a genuinely open environment for foreign investors. Your rights are protected under both domestic law and international treaties, including bilateral investment protection agreements with a number of countries.\nPractically speaking, this means no restrictions on repatriating profits, a competitive tax system, and a legal framework that treats foreign and local investors on equal footing. If you're evaluating Armenia as a jurisdiction, we're happy to walk you through what this means for your specific situation."
+                }
+            ],
+            "cta_journey_title": "Start your business journey in Armenia with the right legal foundation.",
+            "cta_journey_desc": "Our corporate lawyers are ready to support your company at every stage.",
+            "cta_journey_btn": "Contact Us Today"
+        },
         "igaming-licensing": {
             "title": "iGaming & Licensing",
             "hero_desc": "From B2C operator licenses to B2B supplier structures, Retrieve Legal & Tax advises gaming businesses on Armenian licensing, compliance, and multi-jurisdictional structuring.",

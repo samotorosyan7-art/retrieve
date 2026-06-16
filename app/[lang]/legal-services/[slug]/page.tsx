@@ -151,6 +151,9 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
     const ourServicesTitle = `${t.our_services_prefix || "Our "}${displayTitle}${t.our_services_suffix || " Services"}`;
     const whyChooseTitle = `${t.why_choose_title_prefix || "Why Choose the "}${displayTitle}${t.why_choose_title_suffix || " Attorneys at Retrieve Legal & Tax?"}`;
 
+    // Optional, page-specific content blocks (e.g. the fully authored Corporate page).
+    const pc = ((t as any).practice_content?.[slug] || {}) as Record<string, any>;
+
     return (
         <div className="min-h-screen bg-[#F4F7FB] pb-12">
             {/* JSON-LD FAQ Schema Markup */}
@@ -199,7 +202,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                         <div className="lg:col-span-7 space-y-6 text-left">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                                {introTitle}
+                                {pc.intro_title || introTitle}
                             </h2>
                             <div 
                                 className="overflow-x-auto prose prose-lg max-w-none text-gray-700 break-words
@@ -230,14 +233,46 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                 </section>
             )}
 
+            {/* ── CTA (after Overview) ── */}
+            {pc.cta_overview_title && (
+                <section className="container mx-auto px-4 md:px-8 py-6 text-center">
+                    <div className="relative max-w-5xl mx-auto">
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                        <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                        <div className="relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 z-10 text-left">
+                            <div className="space-y-4 max-w-3xl">
+                                <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+                                    {pc.cta_overview_title}
+                                </h3>
+                                {pc.cta_overview_desc && (
+                                    <p className="text-gray-500 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
+                                        {pc.cta_overview_desc}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="shrink-0">
+                                <Link href="/contact" className="inline-block bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
+                                    {pc.cta_overview_btn || (t.contact_badge || "Get in touch")}
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* ── Services Section (Our [Title] Services) ── */}
             {content.howWeCanHelp && content.howWeCanHelp.length > 0 && (
                 <>
                     <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
                             {ourServicesTitle}
                         </h2>
-                        <div className="flex flex-wrap justify-center gap-6 w-full">
+                        {pc.services_intro && (
+                            <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed max-w-3xl mx-auto mt-4">
+                                {pc.services_intro}
+                            </p>
+                        )}
+                        <div className="flex flex-wrap justify-center gap-6 w-full mt-12">
                             {parsedHelp.map((item, idx) => (
                                 <div 
                                     key={idx} 
@@ -260,6 +295,36 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                             ))}
                         </div>
                     </section>
+
+                    {/* ── Section: M&A / Transactions ── */}
+                    {pc.mna_title && (
+                        <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
+                            <div className="max-w-4xl mx-auto text-left">
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
+                                    {pc.mna_title}
+                                </h2>
+                                {pc.mna_desc && (
+                                    <div className="space-y-4 text-gray-600 font-medium text-sm md:text-base leading-relaxed mb-8">
+                                        {String(pc.mna_desc).split(/\n+/).map((p: string) => p.trim()).filter(Boolean).map((p: string, i: number) => (
+                                            <p key={i}>{p}</p>
+                                        ))}
+                                    </div>
+                                )}
+                                {Array.isArray(pc.mna_items) && pc.mna_items.length > 0 && (
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        {pc.mna_items.map((item: string, i: number) => (
+                                            <div key={i} className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4">
+                                                <div className="bg-blue-50 p-1.5 rounded-full text-[#005CB9] shrink-0">
+                                                    <CheckCircle2 size={18} strokeWidth={2.5} />
+                                                </div>
+                                                <span className="text-gray-800 font-semibold text-sm">{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    )}
 
                     {/* ── CTA 2 Section (Under Services) ── */}
                     <section className="container mx-auto px-4 md:px-8 py-6 text-center">
@@ -350,7 +415,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                         <ChevronDown size={18} strokeWidth={3} />
                                     </span>
                                 </summary>
-                                <div className="mt-5 text-gray-600 leading-relaxed text-sm md:text-base border-t border-gray-100 pt-5 text-left font-medium">
+                                <div className="mt-5 text-gray-600 leading-relaxed text-sm md:text-base border-t border-gray-100 pt-5 text-left font-medium whitespace-pre-line">
                                     {faq.answer}
                                 </div>
                             </details>
