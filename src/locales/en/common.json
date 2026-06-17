@@ -321,6 +321,40 @@
     "counters_clients": "Global Clients",
     "counters_professionals": "Legal Professionals",
     "clients_carousel_title": "Trusted by Industry Leaders",
+    "clients_eyebrow": "Our Clients",
+    "clients_section_title": "Trusted by the organizations shaping Armenia's economy",
+    "clients_section_subtitle": "From global nonprofits and universities to fast-scaling startups, we advise across industries and borders.",
+    "clients_stat_clients": "Clients & partners",
+    "clients_stat_clients_only": "Clients",
+    "clients_stat_partners": "Partners",
+    "clients_stat_industries": "Industries",
+    "clients_view_all": "View all clients",
+    "clients_prev": "Previous",
+    "clients_next": "Next",
+    "clients_breadcrumb": "Clients",
+    "clients_page_title": "The organizations we work with",
+    "clients_page_intro": "We've advised 200+ organizations — from global nonprofits and universities to established enterprises and fast-scaling startups. Below is a selection of the clients and partners we work with.",
+    "clients_about_title": "Trusted by 200+ clients",
+    "clients_about_desc": "A selection of the organizations we advise across industries and borders.",
+    "clients_meta_title": "Our Clients",
+    "clients_meta_desc": "The organizations Retrieve Legal & Tax advises — from global nonprofits and universities to fast-scaling startups across Armenia and beyond.",
+    "clients_filter_all": "All",
+    "clients_partners_eyebrow": "Affiliations",
+    "clients_partners_title": "Partners & Affiliations",
+    "clients_partners_intro": "Institutions and networks we collaborate with to serve clients across borders.",
+    "clients_cta_title": "Join the organizations we advise.",
+    "clients_cta_desc": "Whether you're entering the Armenian market or scaling globally, our legal and tax team is ready to help.",
+    "clients_cta_btn": "Become a client",
+    "clients_cat_technology": "Technology",
+    "clients_cat_finance": "Finance & Investment",
+    "clients_cat_healthcare": "Healthcare",
+    "clients_cat_realestate": "Real Estate",
+    "clients_cat_logistics": "Logistics & Travel",
+    "clients_cat_media": "Media & Culture",
+    "clients_cat_education": "Education",
+    "clients_cat_nonprofit": "Nonprofit & Public",
+    "clients_cat_services": "Professional Services",
+    "clients_cat_legal": "Legal",
     "testimonials_title": "Client Success Stories",
     "testimonials_subtitle": "Explore what our clients say about our legal services.",
     "newsletter_title": "Stay Ahead of the Curve",
@@ -626,18 +660,10 @@
         "corporate-business-law": {
             "hero_desc": "Retrieve Legal & Tax provides comprehensive corporate law services for local and international businesses in Armenia. We assist clients with company formation, corporate governance, mergers and acquisitions, restructuring, and day-to-day legal compliance. Our corporate lawyers deliver practical, business-focused solutions that help you make confident decisions and manage legal risks effectively.",
             "intro_title": "Corporate Law Services for Businesses in Armenia",
-            "overview": "<p>Corporate law governs how companies are formed, structured, operated, and eventually reorganized or dissolved. It defines the legal framework that allows businesses to function as independent legal entities capable of owning assets, entering contracts, and managing obligations.</p><p>At Retrieve Legal & Tax, we help companies navigate these legal frameworks with clarity and confidence, ensuring every decision is legally sound and strategically aligned with business goals.</p>",
             "cta_overview_title": "Need legal support for your business in Armenia?",
             "cta_overview_desc": "Our corporate lawyers are ready to help you with formation, compliance, and complex transactions.",
             "cta_overview_btn": "Talk to a Corporate Lawyer",
             "services_intro": "We provide full-cycle legal support for businesses at every stage - from incorporation to complex corporate transactions and restructuring.",
-            "how_we_can_help": [
-                "Company Formation & Structuring: We assist with the incorporation of legal entities in Armenia, including LLCs and joint-stock companies, ensuring proper structuring from the start.",
-                "Corporate Governance & Compliance: We support businesses in establishing internal governance systems, shareholder agreements, and compliance frameworks aligned with Armenian law.",
-                "Mergers & Acquisitions (M&A): We provide full legal support for business acquisitions, sales, and mergers, including due diligence, transaction structuring, and contract negotiation.",
-                "Corporate Restructuring: We advise on reorganizations, spin-offs, asset transfers, and liquidation processes, ensuring full legal compliance and risk control.",
-                "Commercial Contracts & Legal Support: We draft and review commercial agreements to protect business interests and minimize legal exposure in day-to-day operations."
-            ],
             "mna_title": "Legal Support for M&A and Business Transactions in Armenia",
             "mna_desc": "Mergers and acquisitions require careful legal planning to ensure compliance, minimize risks, and protect business value. Our team provides end-to-end legal assistance throughout the entire transaction lifecycle.\nWe support clients in due diligence, negotiation, structuring, and execution of corporate deals, ensuring every step is legally secure and strategically optimized.",
             "mna_items": [
@@ -652,35 +678,6 @@
             "cta_services_btn": "Get in Touch",
             "why_choose_title": "Why Choose the Business and Corporate Law Attorneys at Retrieve Legal & Tax?",
             "why_choose_desc": "Retrieve Legal & Tax is a trusted corporate law firm in Armenia, supporting both local and international businesses with practical, results-driven legal solutions. We combine deep knowledge of Armenian corporate legislation with cross-border experience to help clients operate confidently and make informed business decisions.",
-            "why_choose_us": [
-                "Legal strategies for all business stages: Our services are tailored for startups, SMEs, and multinational companies operating or entering the Armenian market.",
-                "Trusted by local and international clients: We work with both Armenian companies and international clients seeking reliable corporate legal support in Armenia.",
-                "Cross-border and international advisory experience: We assist foreign investors and international businesses with structuring operations and navigating Armenian legal requirements.",
-                "Strong focus on M&A and business transactions: We support clients in mergers, acquisitions, restructurings, and investment transactions, ensuring legally secure and commercially effective outcomes.",
-                "Deep expertise in Armenian corporate law: We have extensive experience advising on corporate law matters in Armenia, including company formation, governance, regulatory compliance, and cross-border transactions."
-            ],
-            "faqs": [
-                {
-                    "question": "What Types of Business Structures Can Be Established in Armenia?",
-                    "answer": "Armenia recognizes several business structures - Limited Liability Companies (LLCs), Joint-Stock Companies (JSCs), Sole Proprietorships, and Partnerships. For most foreign investors and small-to-mid-size businesses, the LLC is the most practical choice: it's straightforward to set up, offers limited liability protection, and has no minimum capital requirement. That said, the right structure depends on your specific goals, ownership setup, and long-term plans. We help clients think through these decisions before filing a single document."
-                },
-                {
-                    "question": "What Are the Legal Requirements for Registering an LLC or JSC in Armenia?",
-                    "answer": "You'll need to prepare a company charter, provide information about shareholders or participants, and submit the official registration forms. The company also needs to be registered with Armenian tax authorities and a corporate bank account must be opened before you can operate.\nIn practice, the process is more manageable than it sounds - especially with the right guidance. Our team handles the entire registration process, so you're not left deciphering bureaucratic requirements on your own."
-                },
-                {
-                    "question": "Can Foreign Citizens Own and Manage a Business in Armenia?",
-                    "answer": "Yes - fully. Armenian law permits 100% foreign ownership, and foreign nationals have the same rights to establish, own, and manage a company as Armenian citizens. There are no mandatory local partners or resident director requirements.\nThis is one of the reasons Armenia has become an increasingly popular destination for international entrepreneurs and investors looking for a straightforward entry point into the region."
-                },
-                {
-                    "question": "Are Shareholder and Director Agreements Necessary for My Business?",
-                    "answer": "Technically, they're not always required by law. In practice, we strongly recommend them - and most clients who've dealt with a corporate dispute wish they'd had them in place from the start.\nThese agreements define who has decision-making authority, how disputes get resolved, what happens if a shareholder wants to exit, and much more. They're far easier to put together at the beginning than to negotiate after a conflict arises."
-                },
-                {
-                    "question": "How Does Armenia's Legal System Support Foreign Investment?",
-                    "answer": "Armenia has built a genuinely open environment for foreign investors. Your rights are protected under both domestic law and international treaties, including bilateral investment protection agreements with a number of countries.\nPractically speaking, this means no restrictions on repatriating profits, a competitive tax system, and a legal framework that treats foreign and local investors on equal footing. If you're evaluating Armenia as a jurisdiction, we're happy to walk you through what this means for your specific situation."
-                }
-            ],
             "cta_journey_title": "Start your business journey in Armenia with the right legal foundation.",
             "cta_journey_desc": "Our corporate lawyers are ready to support your company at every stage.",
             "cta_journey_btn": "Contact Us Today"
@@ -736,6 +733,183 @@
             "cta_journey_title": "Speak with an iGaming Licensing Attorney Before You Apply",
             "cta_journey_desc": "Every iGaming project is different. Before investing time and resources into licensing, speak with attorneys who understand Armenian gaming regulations, corporate structuring, banking requirements, and ongoing compliance obligations.",
             "cta_journey_btn": "Contact Our iGaming Lawyers"
+        },
+        "immigration-residence-services": {
+            "title": "Immigration & Residency Services",
+            "hero_title": "Immigration Services in Armenia",
+            "hero_desc": "Retrieve Legal & Tax handles the full Armenian immigration process for individuals and businesses - including visas, work permits, residency permits, and citizenship applications. We manage documentation, communicate with Armenian authorities, and ensure full compliance from initial application through every renewal.",
+            "hero_btn": "Get Consultation",
+            "intro_title": "Immigration Law and Relocation in Armenia",
+            "intro_lead": "Armenia is becoming an increasingly attractive destination for entrepreneurs, professionals, investors, and digital nomads.",
+            "intro_body": "Immigration law in Armenia defines the legal framework for entering, living, working, and obtaining residency or citizenship in the country. These procedures require accurate documentation, compliance with legal requirements, and timely submission to the relevant authorities.",
+            "services_title": "Our Immigration Services in Armenia",
+            "services_intro": "We cover the full spectrum of Armenian immigration and residency matters.",
+            "included_label": "What's included",
+            "services_cards": [
+                {
+                    "title": "Business & Investor Visas",
+                    "body": [
+                        "We assist entrepreneurs, executives, and professionals in obtaining entry and multi-entry business visas for short-term or long-term stays in Armenia.",
+                        "Armenia offers e-visas and visa-free or visa-on-arrival access to citizens of many countries, depending on nationality. However, business-related activities - especially longer stays, recurring visits, or work-related engagement - may require the appropriate visa category to ensure full compliance with Armenian immigration rules.",
+                        "We advise on the correct visa type, prepare supporting documentation such as invitation letters and company registration evidence, and ensure your application reflects the actual purpose of your visit."
+                    ],
+                    "included": [
+                        "Visa category assessment and selection",
+                        "Preparation of invitation letters and supporting documents",
+                        "Application submission and tracking",
+                        "Advice on extensions and re-entry conditions"
+                    ]
+                },
+                {
+                    "title": "Work Permits for Foreign Employees",
+                    "body": [
+                        "We support companies in hiring foreign workers by handling work permit applications and compliance requirements.",
+                        "Foreign nationals working for Armenian-registered entities must hold a valid work permit. This is a two-part process: the employer must receive authorization to hire a foreign worker, and the employee must then obtain their individual work permit. Both steps involve separate applications to the State Employment Agency. We handle both sides - employer authorization and employee permit - as a single coordinated process, and advise on employment contract compliance requirements."
+                    ],
+                    "included": [
+                        "Employer authorization application",
+                        "Individual work permit application for the employee",
+                        "Employment contract review for regulatory compliance",
+                        "Renewal management and deadline tracking"
+                    ]
+                },
+                {
+                    "title": "Residency Permits",
+                    "body": [
+                        "We help clients obtain temporary and permanent residency in Armenia, including options for investors, digital nomads, and long-term residents.",
+                        "Armenian residency permits allow foreign nationals to live in Armenia legally for extended periods. Temporary residency is granted for 1 year and is renewable; permanent residency can be applied for after 3 consecutive years of temporary residency. To qualify for a permanent resident card in Armenia, a foreign national must meet one or more of the following grounds: family-based eligibility, business and economic residency, Armenian national origin, or other compelling personal circumstances."
+                    ],
+                    "included": [
+                        "Eligibility assessment and grounds selection",
+                        "Full document preparation, translation, and notarization",
+                        "Application submission to the Police Passport Department",
+                        "Residence card assistance upon approval",
+                        "Annual renewal reminders and re-application management"
+                    ]
+                },
+                {
+                    "title": "Citizenship Applications",
+                    "body": [
+                        "We advise on Armenian citizenship through naturalization or descent, and assist with full application preparation.",
+                        "Armenia offers two main pathways to citizenship. Naturalization requires 3 years of continuous legal residence, basic Armenian language proficiency, knowledge of the Constitution, and renunciation of prior citizenship. Citizenship by descent applies to individuals who can prove Armenian ancestry - this route does not require prior residency and often involves tracing records through Armenian church registers, civil archives, or diaspora community records. Armenia also recognizes dual citizenship, meaning individuals may hold an Armenian passport alongside another nationality."
+                    ],
+                    "included": [
+                        "Pathway assessment - naturalization vs. descent",
+                        "Ancestry documentation and archive research",
+                        "Full application preparation and submission",
+                        "Advice on renunciation requirements and exceptions"
+                    ]
+                },
+                {
+                    "title": "Family Reunification & Dependent Visas",
+                    "body": [
+                        "We support families in joining relatives in Armenia through dependent visas and reunification procedures.",
+                        "If you hold a valid Armenian residency or work permit, you can apply to bring immediate family members - spouses, minor children, and in some cases dependent parents - under family reunification provisions. Each family member requires their own dependent visa or residency permit application linked to the principal permit holder, supported by proof of family relationship, valid permit, and sufficient accommodation and means of support."
+                    ],
+                    "included": [
+                        "Eligibility check for each family member",
+                        "Document collection, translation, and apostille where required",
+                        "Coordinated submission for all applicants",
+                        "Dependent residence card assistance upon approval"
+                    ]
+                },
+                {
+                    "title": "Investment Residency",
+                    "body": [
+                        "Fast-track residency pathways tied to qualifying real estate or business investment in Armenia.",
+                        "Investors who make a qualifying investment in Armenia can apply for residency on investment grounds, which typically offers a more streamlined pathway than standard residency. Qualifying investments include purchasing real estate above a certain value threshold or registering and capitalizing a business in Armenia. Thresholds and qualifying criteria are assessed case by case - the structuring of the investment matters as much as the amount."
+                    ],
+                    "included": [
+                        "Investment structuring advice for residency eligibility",
+                        "Coordination with notaries and property or company registrars",
+                        "Full residency application on investment grounds",
+                        "Guidance on maintaining qualifying investment status"
+                    ]
+                }
+            ],
+            "cta_services_title": "Looking to obtain Armenian citizenship or residency?",
+            "cta_services_desc": "Get clear legal guidance on residency and immigration requirements.",
+            "cta_services_btn": "Talk to an Immigration Lawyer",
+            "process_title": "Step-by-Step Process",
+            "process_optional_label": "Optional",
+            "process_steps": [
+                {
+                    "title": "Free initial consultation",
+                    "desc": "We assess your situation, goals, and eligibility. You'll leave the call knowing exactly which route applies to you and what to expect in terms of cost and timeline."
+                },
+                {
+                    "title": "Document preparation",
+                    "desc": "We compile, translate, notarize, and organize your full application package - minimizing back-and-forth with authorities and reducing rejection risk."
+                },
+                {
+                    "title": "Submission & tracking",
+                    "desc": "We submit directly to the relevant Armenian authorities (Migration Service, Ministry of Foreign Affairs, or Police Passport Department) and monitor progress on your behalf."
+                },
+                {
+                    "title": "Approval & issuance",
+                    "desc": "We notify you at every stage. Upon approval, we guide you through collecting your permit, ID card, or travel document."
+                },
+                {
+                    "title": "Ongoing compliance",
+                    "desc": "We track your renewal deadlines, monitor residency status changes, and keep your documentation up to date - so you never fall out of compliance.",
+                    "optional": true
+                }
+            ],
+            "company_title": "Immigration Support for Companies in Armenia",
+            "company_desc": [
+                "We assist businesses operating in Armenia with hiring and managing foreign employees in compliance with local immigration and labor laws.",
+                "Our services include work permit applications, employee documentation, and ongoing compliance support for international teams."
+            ],
+            "company_items": [
+                "Work permits for foreign staff",
+                "Employment compliance support",
+                "Documentation and renewals",
+                "Legal advisory for HR teams",
+                "Immigration risk management"
+            ],
+            "why_choose_title": "Why Choose Our Immigration Lawyers",
+            "why_choose_cards": [
+                {
+                    "title": "Clear, predictable process from day one",
+                    "desc": "From your first consultation, we map out the exact route, documents, timeline, and costs for your case - no surprises at any stage."
+                },
+                {
+                    "title": "Armenian and international immigration expertise",
+                    "desc": "We combine knowledge of Armenian immigration law with international mobility requirements, supporting both individual and corporate cross-border cases, including investment residency."
+                },
+                {
+                    "title": "Appeals representation",
+                    "desc": "If an application is delayed, flagged, or refused, we represent clients in immigration appeals and administrative hearings until the matter is resolved."
+                }
+            ],
+            "cta_hiring_title": "Hiring foreign employees in Armenia?",
+            "cta_hiring_desc": "We handle work permits, employment compliance, and documentation for international teams - so your HR department stays focused on people, not paperwork.",
+            "cta_hiring_btn": "Get Consultation",
+            "faqs": [
+                {
+                    "question": "Do I need to be in Armenia to apply for residency?",
+                    "answer": "No - physical presence in Armenia is not required. Applications can be submitted remotely through a power of attorney, allowing an authorized representative to act on your behalf throughout the process. Preparatory steps such as document collection, translation, and notarization can also be handled from abroad. We guide you through setting up the power of attorney and manage the entire application on your behalf."
+                },
+                {
+                    "question": "Can you help if my application was already refused?",
+                    "answer": "Yes. We handle immigration appeals and administrative hearings. The first step is a review of your refusal notice to identify grounds for appeal or reapplication. Contact us as soon as possible after a refusal - appeal deadlines are strict."
+                },
+                {
+                    "question": "How long does it take to get temporary residency in Armenia?",
+                    "answer": "Temporary residency is initially granted for one year and is renewable. Processing times depend on the completeness of your documentation and the reviewing authority. We prepare comprehensive application packages designed to minimize delays and reduce the risk of requests for additional information."
+                },
+                {
+                    "question": "Does Armenia allow dual citizenship?",
+                    "answer": "Yes. Armenia officially recognizes dual citizenship, so you may hold an Armenian passport alongside another nationality. Naturalization may still involve renunciation requirements depending on your circumstances - we advise on the applicable exceptions and the documentation involved."
+                },
+                {
+                    "question": "Can my family join me in Armenia?",
+                    "answer": "Yes. If you hold a valid residency or work permit, you can apply to bring immediate family members - spouses, minor children, and in some cases dependent parents - under family reunification provisions. Each member files a linked dependent application, which we prepare and coordinate together."
+                }
+            ],
+            "cta_journey_title": "Start your relocation or business journey in Armenia with legal confidence.",
+            "cta_journey_desc": "Our immigration team is ready to assist you from application to approval.",
+            "cta_journey_btn": "Contact Us Today"
         }
     }
 }

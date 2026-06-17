@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { Button } from "@/components/ui/Button";
 import TeamSection from "@/components/website/TeamSection";
+import AboutClientsSection from "@/components/website/AboutClientsSection";
 import { WPTeamMember } from "@/types/wordpress";
 
 interface AboutUsClientProps {
@@ -252,6 +253,9 @@ export default function AboutUsClient({ teamMembers }: AboutUsClientProps) {
                         <div className="pt-10">
                             <TeamSection teamMembers={teamMembers} showAll={true} showCta={false} />
                         </div>
+
+                        {/* Clients Section */}
+                        <AboutClientsSection />
 
                         {/* Location — mobile only, placed under "Our Team" */}
                         <div className="lg:hidden">{locationCard}</div>

@@ -180,8 +180,8 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                         ]}
                     />
 
-                    <div className="max-w-3xl mx-auto relative z-10 space-y-6 text-center">
-                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    <div className="max-w-[52rem] mx-auto relative z-10 space-y-6 text-center">
+                        <h1 className="text-3xl md:text-[52px] font-extrabold tracking-tight leading-tight max-w-[52rem] mx-auto">
                             {displayTitle}
                         </h1>
                         <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">

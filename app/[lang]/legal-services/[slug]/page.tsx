@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
 import amCommon from "@/locales/am/common.json";
+import ImmigrationServicePage from "./ImmigrationServicePage";
 
 const dictionaries = {
     en: enCommon,
@@ -53,6 +54,14 @@ function getCategoryRoute(category?: string): string {
 export default async function LegalServiceDetailPage({ params }: { params: Promise<{ slug: string; lang: string }> }) {
     const { slug, lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
+
+    // The immigration page has a bespoke, fully-authored layout (rich service cards,
+    // step-by-step process, company support block) that doesn't fit the generic
+    // practice-area template, so it renders its own component from local translations.
+    if (slug === "immigration-residence-services") {
+        return <ImmigrationServicePage lang={lang} />;
+    }
+
     let content = await getPracticeAreaContent(slug, lang);
 
     // If WordPress has no content, check if we have local fallback translations
@@ -102,6 +111,13 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
             ? (t.practice_titles as any)[Object.keys(t.practice_titles || {}).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '') === slug.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/law$/, '')) || ""]
             : content.title;
 
+    // Some source titles (e.g. from WordPress) already include the word "Services"
+    // — like "Immigration & Residency Services". Strip a trailing services-word so the
+    // composed headings/descriptions below don't read "… Services Services". The H1,
+    // breadcrumb and image alt keep the full `displayTitle`. Falls back to the full
+    // title if stripping would leave it empty. Covers en/ru/am service wording.
+    const titleStem = displayTitle.replace(/\s+(services|услуги|услуг|ծառայություններ|ծառայությունները)\s*$/iu, "").trim() || displayTitle;
+
     const faqSchemaMarkup = content.faqs && content.faqs.length > 0 ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -133,23 +149,23 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
     const heroDescriptionText = (t as any).practice_content?.[slug]?.hero_desc 
         ? (t as any).practice_content[slug].hero_desc
         : lang === 'en' 
-        ? `Retrieve Legal & Tax provides comprehensive ${displayTitle.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
+        ? `Retrieve Legal & Tax provides comprehensive ${titleStem.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
         : lang === 'am'
-        ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${displayTitle.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
-        : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${displayTitle.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`;
+        ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${titleStem.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
+        : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${titleStem.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`;
 
     const heroButtonText = (t as any).practice_content?.[slug]?.hero_btn
         ? (t as any).practice_content[slug].hero_btn
         : t.book_legal_consultation || "Book Legal Consultation";
 
     const introTitle = lang === 'en'
-        ? `${displayTitle} Services for Businesses in Armenia`
+        ? `${titleStem} Services for Businesses in Armenia`
         : lang === 'am'
-        ? `${displayTitle} ծառայություններ բիզնեսի համար Հայաստանում`
-        : `${displayTitle} услуги для бизнеса в Армении`;
+        ? `${titleStem} ծառայություններ բիզնեսի համար Հայաստանում`
+        : `${titleStem} услуги для бизнеса в Армении`;
 
-    const ourServicesTitle = `${t.our_services_prefix || "Our "}${displayTitle}${t.our_services_suffix || " Services"}`;
-    const whyChooseTitle = `${t.why_choose_title_prefix || "Why Choose the "}${displayTitle}${t.why_choose_title_suffix || " Attorneys at Retrieve Legal & Tax?"}`;
+    const ourServicesTitle = `${t.our_services_prefix || "Our "}${titleStem}${t.our_services_suffix || " Services"}`;
+    const whyChooseTitle = `${t.why_choose_title_prefix || "Why Choose the "}${titleStem}${t.why_choose_title_suffix || " Attorneys at Retrieve Legal & Tax?"}`;
 
     // Optional, page-specific content blocks (e.g. the fully authored Corporate page).
     const pc = ((t as any).practice_content?.[slug] || {}) as Record<string, any>;
@@ -180,8 +196,8 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                         ]}
                     />
 
-                    <div className="max-w-3xl mx-auto relative z-10 space-y-6 text-center">
-                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    <div className="max-w-[52rem] mx-auto relative z-10 space-y-6 text-center">
+                        <h1 className="text-3xl md:text-[52px] font-extrabold tracking-tight leading-tight max-w-[52rem] mx-auto">
                             {displayTitle}
                         </h1>
                         <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
@@ -300,7 +316,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                     {pc.mna_title && (
                         <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
                             <div className="max-w-4xl mx-auto text-left">
-                                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight text-center">
                                     {pc.mna_title}
                                 </h2>
                                 {pc.mna_desc && (
@@ -338,7 +354,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                     <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
                                         {(t as any).practice_content?.[slug]?.cta_services_title
                                             ? (t as any).practice_content[slug].cta_services_title
-                                            : `${t.cta_looking_title_prefix}${displayTitle}${t.cta_looking_title_suffix}`}
+                                            : `${t.cta_looking_title_prefix}${titleStem}${t.cta_looking_title_suffix}`}
                                     </h3>
                                     <p className="text-gray-500 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
                                         {(t as any).practice_content?.[slug]?.cta_services_desc
@@ -370,10 +386,10 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                             {(t as any).practice_content?.[slug]?.why_choose_desc
                                 ? (t as any).practice_content[slug].why_choose_desc
                                 : lang === 'en'
-                                ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${displayTitle.toLowerCase()} services:`
+                                ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${titleStem.toLowerCase()} services:`
                                 : lang === 'am'
-                                ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${displayTitle.toLowerCase()} ծառայությունները.`
-                                : `Retrieve Legal & Tax предлагает ориентированные на клиента и результат юридические услуги. Вот почему компании выбирают нас для услуг в сфере ${displayTitle.toLowerCase()}:`
+                                ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${titleStem.toLowerCase()} ծառայությունները.`
+                                : `Retrieve Legal & Tax предлагает ориентированные на клиента и результат юридические услуги. Вот почему компании выбирают нас для услуг в сфере ${titleStem.toLowerCase()}:`
                             }
                         </p>
                     </div>
