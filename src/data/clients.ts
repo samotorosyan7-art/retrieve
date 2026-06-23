@@ -21,6 +21,8 @@ export interface Client {
     description: string;
     /** Partners & affiliations are grouped separately from commercial clients */
     partner?: boolean;
+    /** External website — rendered as a nofollow link on the logo */
+    url?: string;
 }
 
 /**
@@ -261,6 +263,7 @@ export const CLIENTS: Client[] = [
         short: "IP",
         category: "legal",
         partner: true,
+        url: "https://ip-coster.com/",
         description:
             "IP-Coster is a global intellectual property management platform that helps businesses, inventors, and legal professionals estimate costs, file, and manage patents, trademarks, industrial designs, and other IP rights worldwide. It provides online quotations, filing services, workflow management, and access to a network of IP professionals across more than 160 countries.",
     },

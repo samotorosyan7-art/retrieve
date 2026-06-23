@@ -19,12 +19,23 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             <div className="mb-5 flex items-start justify-between gap-4">
                 <div className="flex h-12 items-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={clientLogo(client)}
-                        alt={client.name}
-                        loading="lazy"
-                        className="h-11 w-auto max-w-[140px] object-contain"
-                    />
+                    {client.url ? (
+                        <a href={client.url} target="_blank" rel="nofollow noopener noreferrer" aria-label={client.name}>
+                            <img
+                                src={clientLogo(client)}
+                                alt={client.name}
+                                loading="lazy"
+                                className="h-11 w-auto max-w-[140px] object-contain"
+                            />
+                        </a>
+                    ) : (
+                        <img
+                            src={clientLogo(client)}
+                            alt={client.name}
+                            loading="lazy"
+                            className="h-11 w-auto max-w-[140px] object-contain"
+                        />
+                    )}
                 </div>
                 <span className="shrink-0 rounded-full border border-gray-200 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500 transition-colors group-hover:border-[#005CB9]/30 group-hover:text-[#005CB9]">
                     {t(`clients_cat_${client.category}`) || client.category}

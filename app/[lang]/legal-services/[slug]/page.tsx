@@ -200,7 +200,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                         <h1 className="text-3xl md:text-[52px] font-extrabold tracking-tight leading-tight max-w-[52rem] mx-auto">
                             {displayTitle}
                         </h1>
-                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-5xl mx-auto">
                             {heroDescriptionText}
                         </p>
                         <div className="pt-4">
@@ -281,7 +281,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                 <>
                     <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center">
                         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-                            {ourServicesTitle}
+                            {pc.our_services_title || ourServicesTitle}
                         </h2>
                         {pc.services_intro && (
                             <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed max-w-3xl mx-auto mt-4">

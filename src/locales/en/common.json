@@ -544,7 +544,8 @@
         "ma_advising": "M&A Advisory in Armenia | Mergers, Acquisitions & Deal Structuring",
         "about_us": "Expert Corporate Attorneys & Lawyers in Armenia",
         "blog": "Legal Blog | Business Law Insights & Regulatory Updates in Armenia",
-        "legal_updates": "Legal Updates in Armenia | Law & Business Regulation Analysis"
+        "legal_updates": "Legal Updates in Armenia | Law & Business Regulation Analysis",
+        "igaming_licensing": "iGaming License in Armenia | B2C & B2B Licensing Lawyers"
     },
     "meta_descriptions": {
         "home": "Expert legal & tax services in Armenia. We handle business law, real estate, investment, tax advisory, arbitration, and more. Expertise you can rely on.",
@@ -570,7 +571,8 @@
         "ma_advising": "Our expert team offers M&A advisory services covering due diligence, deal negotiation, regulatory approvals & post-merger integration support for businesses.",
         "about_us": "Meet Retrieve's experienced attorneys and legal experts in Armenia. Our team brings deep expertise across business law, tax, real estate, IP, & dispute resolution.",
         "blog": "Stay ahead with Retrieve's legal blog. Expert insights on Armenian business law, tax regulations, real estate, IP, crypto & more from our experienced legal team.",
-        "legal_updates": "Stay compliant & informed with Retrieve's legal updates. In-depth analysis of Armenian laws, business regulations & legal framework changes affecting your business."
+        "legal_updates": "Stay compliant & informed with Retrieve's legal updates. In-depth analysis of Armenian laws, business regulations & legal framework changes affecting your business.",
+        "igaming_licensing": "Armenian iGaming lawyers for B2B & B2C license applications, corporate structuring, KYC/AML compliance, and multi-jurisdictional operator setups."
     },
     "practice_titles": {
         "Employment Law": "Employment Law",
@@ -676,7 +678,7 @@
             "cta_services_title": "Looking for full-scope corporate legal services in Armenia?",
             "cta_services_desc": "Speak with our corporate lawyers to get clear legal guidance tailored to your goals.",
             "cta_services_btn": "Get in Touch",
-            "why_choose_title": "Why Choose the Business and Corporate Law Attorneys at Retrieve Legal & Tax?",
+            "why_choose_title": "Why Choose Our Business and Corporate Lawyers?",
             "why_choose_desc": "Retrieve Legal & Tax is a trusted corporate law firm in Armenia, supporting both local and international businesses with practical, results-driven legal solutions. We combine deep knowledge of Armenian corporate legislation with cross-border experience to help clients operate confidently and make informed business decisions.",
             "cta_journey_title": "Start your business journey in Armenia with the right legal foundation.",
             "cta_journey_desc": "Our corporate lawyers are ready to support your company at every stage.",
@@ -910,6 +912,12 @@
             "cta_journey_title": "Start your relocation or business journey in Armenia with legal confidence.",
             "cta_journey_desc": "Our immigration team is ready to assist you from application to approval.",
             "cta_journey_btn": "Contact Us Today"
+        },
+        "tax-law-compliance": {
+            "why_choose_title": "Why Choose Our Tax Law & Compliance Lawyers?"
+        },
+        "intellectual-property-law": {
+            "why_choose_title": "Why Choose the Intellectual Property Lawyers at Retrieve Legal & Tax?"
         }
     }
 }

@@ -269,7 +269,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
                     })}
                 </div>
 
-                {/* ─── Bottom stats bar (animated count-up) ─── */}
+                {/* ─── Bottom stats bar (animated count-up) ───
                 <motion.div
                     className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
                     initial={{ opacity: 0, y: 20 }}
@@ -281,7 +281,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
                     <StatCounter value={500} suffix="+" label={t("counters_cases")} />
                     <StatCounter value={120} suffix="+" label={t("counters_clients")} />
                     <StatCounter value={15} suffix="" label={t("counters_professionals")} />
-                </motion.div>
+                </motion.div> */}
             </div>
         </section>
     );

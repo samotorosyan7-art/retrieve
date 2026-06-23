@@ -40,21 +40,30 @@ export default function AboutClientsSection() {
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
-                {FEATURED.map((client) => (
-                    <div
-                        key={client.name}
-                        title={client.name}
-                        className="flex h-20 items-center justify-center rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-[#005CB9]/40 hover:shadow-sm"
-                    >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                {FEATURED.map((client) => {
+                    const logo = (
+                        /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                             src={clientLogo(client)}
                             alt={client.name}
                             loading="lazy"
                             className="max-h-10 max-w-[85%] object-contain grayscale-[0.2] transition-all duration-300 hover:grayscale-0"
                         />
-                    </div>
-                ))}
+                    );
+                    return (
+                        <div
+                            key={client.name}
+                            title={client.name}
+                            className="flex h-20 items-center justify-center rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-[#005CB9]/40 hover:shadow-sm"
+                        >
+                            {client.url ? (
+                                <a href={client.url} target="_blank" rel="nofollow noopener noreferrer" aria-label={client.name}>
+                                    {logo}
+                                </a>
+                            ) : logo}
+                        </div>
+                    );
+                })}
             </div>
         </motion.div>
     );

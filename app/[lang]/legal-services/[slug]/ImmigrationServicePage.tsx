@@ -49,6 +49,7 @@ interface Faq {
 interface ImmigrationContent {
     title: string;
     hero_title: string;
+    hero_subtitle?: string;
     hero_desc: string;
     hero_btn: string;
     intro_title: string;
@@ -118,11 +119,16 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
                         ]}
                     />
 
-                    <div className="max-w-[52rem] mx-auto relative z-10 space-y-6 text-center">
-                        <h1 className="text-3xl md:text-[52px] font-extrabold tracking-tight leading-tight max-w-[52rem] mx-auto">
+                    <div className="max-w-5xl mx-auto relative z-10 space-y-6 text-center">
+                        <h1 className="text-3xl md:text-[52px] font-extrabold tracking-tight leading-tight max-w-5xl mx-auto">
                             {c.hero_title}
                         </h1>
-                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                        {c.hero_subtitle && (
+                            <p className="text-white text-base md:text-xl font-semibold leading-snug max-w-5xl mx-auto">
+                                {c.hero_subtitle}
+                            </p>
+                        )}
+                        <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-5xl mx-auto">
                             {c.hero_desc}
                         </p>
                         <div className="pt-4">

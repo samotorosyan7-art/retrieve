@@ -12,12 +12,23 @@ function LogoCard({ client }: { client: Client }) {
         <div className="group/card flex w-[180px] shrink-0 snap-start flex-col items-center rounded-2xl border border-gray-200/80 bg-white px-5 py-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] transition-all duration-300 hover:border-[#005CB9]/40 hover:shadow-[0_16px_32px_-16px_rgba(0,92,185,0.4)] hover:-translate-y-1 sm:w-[200px]">
             <div className="flex h-16 w-full items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={clientLogo(client)}
-                    alt={client.name}
-                    loading="lazy"
-                    className="max-h-14 max-w-[85%] object-contain grayscale-[0.15] transition-all duration-300 group-hover/card:grayscale-0"
-                />
+                {client.url ? (
+                    <a href={client.url} target="_blank" rel="nofollow noopener noreferrer" aria-label={client.name}>
+                        <img
+                            src={clientLogo(client)}
+                            alt={client.name}
+                            loading="lazy"
+                            className="max-h-14 max-w-[85%] object-contain grayscale-[0.15] transition-all duration-300 group-hover/card:grayscale-0"
+                        />
+                    </a>
+                ) : (
+                    <img
+                        src={clientLogo(client)}
+                        alt={client.name}
+                        loading="lazy"
+                        className="max-h-14 max-w-[85%] object-contain grayscale-[0.15] transition-all duration-300 group-hover/card:grayscale-0"
+                    />
+                )}
             </div>
             <div className="mt-4 line-clamp-1 text-center text-[14px] font-semibold leading-tight text-gray-900">
                 {client.name}
