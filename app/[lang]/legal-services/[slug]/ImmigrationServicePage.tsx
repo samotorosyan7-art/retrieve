@@ -129,7 +129,23 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
                             </p>
                         )}
                         <p className="text-blue-100 text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-5xl mx-auto">
-                            {c.hero_desc}
+                            {(() => {
+                                const firmName = "Retrieve Legal & Tax";
+                                const parts = c.hero_desc.split(firmName);
+                                if (parts.length < 2) return c.hero_desc;
+                                return (
+                                    <>
+                                        {parts[0]}
+                                        <Link
+                                            href="/"
+                                            className="underline decoration-blue-300 underline-offset-2 font-bold text-white hover:text-blue-200 transition-colors"
+                                        >
+                                            {firmName}
+                                        </Link>
+                                        {parts.slice(1).join(firmName)}
+                                    </>
+                                );
+                            })()}
                         </p>
                         <div className="pt-4">
                             <Link
@@ -145,16 +161,30 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
 
             {/* ── Section 1: Immigration Law and Relocation ── */}
             <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
-                <div className="max-w-4xl mx-auto text-left space-y-6">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                        {c.intro_title}
-                    </h2>
-                    <p className="text-gray-800 font-semibold text-base md:text-lg leading-relaxed">
-                        {c.intro_lead}
-                    </p>
-                    <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed">
-                        {c.intro_body}
-                    </p>
+                <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                        {/* Left: text content */}
+                        <div className="p-8 md:p-12 flex flex-col justify-center space-y-5">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                                {c.intro_title}
+                            </h2>
+                            <p className="text-gray-800 font-semibold text-base leading-relaxed">
+                                {c.intro_lead}
+                            </p>
+                            <p className="text-gray-600 font-medium text-sm md:text-base leading-relaxed">
+                                {c.intro_body}
+                            </p>
+                        </div>
+                        {/* Right: image */}
+                        <div className="relative min-h-[300px] lg:min-h-0 p-6 lg:p-8 flex items-center justify-center">
+                            <img
+                                src="https://wp.retrieve.am/wp-content/uploads/2026/06/desired3-image.jpeg"
+                                alt={c.intro_title}
+                                className="w-full h-full object-cover rounded-2xl"
+                                style={{ maxHeight: "420px" }}
+                            />
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -274,27 +304,39 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
 
             {/* ── Section 4: Immigration Support for Companies ── */}
             <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
-                <div className="max-w-4xl mx-auto text-left">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight text-center">
-                        {c.company_title}
-                    </h2>
-                    <div className="space-y-4 text-gray-600 font-medium text-sm md:text-base leading-relaxed mb-8">
-                        {c.company_desc.map((p, i) => (
-                            <p key={i}>{p}</p>
-                        ))}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {c.company_items.map((item, i) => (
-                            <div
-                                key={i}
-                                className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4"
-                            >
-                                <div className="bg-blue-50 p-1.5 rounded-full text-[#005CB9] shrink-0">
-                                    <CheckCircle2 size={18} strokeWidth={2.5} />
-                                </div>
-                                <span className="text-gray-800 font-semibold text-sm">{item}</span>
+                <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-2">
+                        {/* Left: text content */}
+                        <div className="p-8 md:p-12 flex flex-col justify-center space-y-6">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                                {c.company_title}
+                            </h2>
+                            <div className="space-y-3 text-gray-600 font-medium text-sm md:text-base leading-relaxed">
+                                {c.company_desc.map((p, i) => (
+                                    <p key={i}>{p}</p>
+                                ))}
                             </div>
-                        ))}
+                            <ul className="space-y-3">
+                                {c.company_items.map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3">
+                                        <CheckCircle2
+                                            size={20}
+                                            strokeWidth={2.5}
+                                            className="text-[#005CB9] shrink-0"
+                                        />
+                                        <span className="text-gray-900 font-bold text-sm md:text-base">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        {/* Right: image */}
+                        <div className="relative min-h-[320px] lg:min-h-0">
+                            <img
+                                src="https://wp.retrieve.am/wp-content/uploads/2026/06/Immigration-Support-for-Companies-in-Armenia.jpg"
+                                alt={c.company_title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>

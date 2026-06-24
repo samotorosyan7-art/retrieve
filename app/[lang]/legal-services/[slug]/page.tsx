@@ -315,29 +315,46 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                     {/* ── Section: M&A / Transactions ── */}
                     {pc.mna_title && (
                         <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
-                            <div className="max-w-4xl mx-auto text-left">
-                                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight text-center">
-                                    {pc.mna_title}
-                                </h2>
-                                {pc.mna_desc && (
-                                    <div className="space-y-4 text-gray-600 font-medium text-sm md:text-base leading-relaxed mb-8">
-                                        {String(pc.mna_desc).split(/\n+/).map((p: string) => p.trim()).filter(Boolean).map((p: string, i: number) => (
-                                            <p key={i}>{p}</p>
-                                        ))}
-                                    </div>
-                                )}
-                                {Array.isArray(pc.mna_items) && pc.mna_items.length > 0 && (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        {pc.mna_items.map((item: string, i: number) => (
-                                            <div key={i} className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4">
-                                                <div className="bg-blue-50 p-1.5 rounded-full text-[#005CB9] shrink-0">
-                                                    <CheckCircle2 size={18} strokeWidth={2.5} />
-                                                </div>
-                                                <span className="text-gray-800 font-semibold text-sm">{item}</span>
+                            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                                <div className="grid grid-cols-1 lg:grid-cols-2">
+                                    {/* Left: text content */}
+                                    <div className="p-8 md:p-12 flex flex-col justify-center space-y-6">
+                                        <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                                            {pc.mna_title}
+                                        </h2>
+                                        {pc.mna_desc && (
+                                            <div className="space-y-3 text-gray-600 font-medium text-sm md:text-base leading-relaxed">
+                                                {String(pc.mna_desc).split(/\n+/).map((p: string) => p.trim()).filter(Boolean).map((p: string, i: number) => (
+                                                    <p key={i}>{p}</p>
+                                                ))}
                                             </div>
-                                        ))}
+                                        )}
+                                        {Array.isArray(pc.mna_items) && pc.mna_items.length > 0 && (
+                                            <ul className="space-y-3">
+                                                {pc.mna_items.map((item: string, i: number) => (
+                                                    <li key={i} className="flex items-center gap-3">
+                                                        <CheckCircle2
+                                                            size={20}
+                                                            strokeWidth={2.5}
+                                                            className="text-[#005CB9] shrink-0"
+                                                        />
+                                                        <span className="text-gray-900 font-bold text-sm md:text-base">{item}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </div>
-                                )}
+                                    {/* Right: image */}
+                                    {pc.mna_image && (
+                                        <div className="relative min-h-[320px] lg:min-h-0">
+                                            <img
+                                                src={pc.mna_image}
+                                                alt={pc.mna_title}
+                                                className="absolute inset-0 w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </section>
                     )}

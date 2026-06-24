@@ -105,7 +105,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                             </span>
                         </div>
                         <h1
-                            className="text-3xl md:text-[52px] lg:text-6xl font-extrabold tracking-tight leading-tight break-words max-w-[52rem]"
+                            className="text-3xl md:text-[52px] lg:text-4xl font-extrabold tracking-tight leading-tight break-words max-w-5xl"
                             dangerouslySetInnerHTML={{ __html: post.title }}
                         />
                     </div>
