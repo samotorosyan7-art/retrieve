@@ -83,13 +83,15 @@ export default function AboutPreviewNew() {
                         </div>
 
                         {/* CTA */}
-                        <Link
-                            href="/about-us"
-                            className="inline-flex items-center gap-2.5 bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm rounded-full px-8 py-4 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-                        >
-                            {t("btn_about_us")}
-                            <ArrowRight size={16} />
-                        </Link>
+                        <div className="flex justify-center lg:justify-start">
+                            <Link
+                                href="/about-us"
+                                className="inline-flex items-center gap-2.5 bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm rounded-full px-8 py-4 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                            >
+                                {t("btn_about_us")}
+                                <ArrowRight size={16} />
+                            </Link>
+                        </div>
                     </motion.div>
 
                 </div>

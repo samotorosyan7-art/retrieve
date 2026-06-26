@@ -1,5 +1,6 @@
 import Link from "@/components/ui/LocalizedLink";
 import { ChevronRight, Home } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface BreadcrumbItem {
     label: string | React.ReactNode;
@@ -10,7 +11,7 @@ export default function Breadcrumbs({ items, className = "", theme = "dark" }: {
     const isDark = theme === "dark";
     
     return (
-        <nav aria-label="Breadcrumb" className={`flex items-center flex-wrap gap-2 text-sm font-medium ${isDark ? 'text-blue-200' : 'text-gray-500'} mb-8 ${className}`}>
+        <nav aria-label="Breadcrumb" className={cn("flex items-center flex-wrap gap-2 text-sm font-medium mb-8", isDark ? 'text-blue-200' : 'text-gray-500', className)}>
             <Link href="/" className={`${isDark ? 'hover:text-white' : 'hover:text-[#005CB9]'} transition-colors flex items-center gap-1`} aria-label="Home">
                 <Home size={14} className="mb-[1px]" />
             </Link>

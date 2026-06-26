@@ -235,32 +235,35 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
 
                     {/* Mobile Practice Areas */}
                     <div className="flex flex-col">
-                        <Link
-                            href="/legal-services"
-                            className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-primary bg-primary/5 transition-colors"
-                            onClick={() => setIsOpen(false)}
-                        >
+                        <span className="px-4 py-3 rounded-xl font-medium text-primary bg-primary/5 cursor-default select-none">
                             {t("nav_practice_areas")}
-                        </Link>
+                        </span>
 
                         <div className="pl-6 flex flex-col mt-1 space-y-1 border-l-2 border-gray-100 ml-5 py-2">
-                            {/* Removed 'All Practice Areas' and 'Our Portfolio' per request */}
-
                             {practiceAreas.map((category, idx) => {
                                 const categoryRoute = category.label.toLowerCase().includes("tax")
                                     ? "/tax-and-business-advisory-services"
                                     : "/legal-services";
                                 return (
                                 <div key={idx} className="flex flex-col">
-                                    <button
-                                        onClick={() => toggleMobileCategory(category.label)}
-                                        className="flex items-center justify-between py-2 px-3 text-sm font-medium text-gray-600 hover:text-primary rounded-lg hover:bg-gray-50 text-left"
-                                    >
-                                        {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
+                                    <div className="flex items-center rounded-lg hover:bg-gray-50">
+                                        <Link
+                                            href={categoryRoute}
+                                            onClick={() => setIsOpen(false)}
+                                            className="flex-1 py-2 px-3 text-sm font-medium text-gray-600 hover:text-primary text-left"
+                                        >
+                                            {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
+                                        </Link>
                                         {category.children && category.children.length > 0 && (
-                                            <ChevronDown size={14} className={cn("transition-transform", expandedMobileCategories[category.label] && "rotate-180")} />
+                                            <button
+                                                onClick={() => toggleMobileCategory(category.label)}
+                                                className="p-2 text-gray-500 hover:text-primary shrink-0"
+                                                aria-label="Toggle submenu"
+                                            >
+                                                <ChevronDown size={14} className={cn("transition-transform", expandedMobileCategories[category.label] && "rotate-180")} />
+                                            </button>
                                         )}
-                                    </button>
+                                    </div>
 
                                     {/* Mobile Level 3 */}
                                     {expandedMobileCategories[category.label] && category.children && (

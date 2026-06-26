@@ -52,9 +52,10 @@ export default async function LegalServicesPage() {
         <div className="pt-40 min-h-screen bg-gray-50">
             <div className="container mx-auto px-4 md:px-8 mb-8">
                 <div className="flex justify-between items-center">
-                    <Breadcrumbs 
-                        items={[{ label: (dictionaries[lang] as any).cat_legal_services || "Legal Services" }]} 
+                    <Breadcrumbs
+                        items={[{ label: (dictionaries[lang] as any).cat_legal_services || "Legal Services" }]}
                         theme="light"
+                        className="mb-0"
                     />
                     <Link 
                         href="/tax-and-business-advisory-services"

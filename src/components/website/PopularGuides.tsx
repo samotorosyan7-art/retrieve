@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "@/components/ui/LocalizedLink";
 import { LegalUpdate } from "@/types/wordpress";
-import { ArrowUpRight, Clock } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, "").trim();
@@ -63,6 +63,7 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                                     src={featured.image}
                                     alt={featured.imageAlt || featured.title}
                                     fill
+                                    quality={90}
                                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                     sizes="(max-width: 768px) 100vw, 66vw"
                                 />
@@ -102,11 +103,7 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                                     {stripHtml(featured.excerpt)}
                                 </p>
                             )}
-                            <div className="flex items-center justify-between">
-                                <span className="flex items-center gap-1.5 text-xs font-medium text-white/40">
-                                    <Clock size={12} />
-                                    {featured.readTime} min read
-                                </span>
+                            <div className="flex items-center justify-end">
                                 <div
                                     className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[#005CB9]"
                                     style={{ background: "rgba(255,255,255,0.12)" }}
@@ -126,13 +123,14 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                                 className="flex-1 rounded-2xl overflow-hidden group border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 bg-white flex flex-col"
                             >
                                 {/* Image */}
-                                <div className="relative h-[140px] overflow-hidden shrink-0">
+                                <div className="relative h-[200px] overflow-hidden shrink-0 bg-gray-50">
                                     {post.image ? (
                                         <Image
                                             src={post.image}
                                             alt={post.imageAlt || post.title}
                                             fill
-                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            quality={90}
+                                            className="object-contain transition-transform duration-500 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, 33vw"
                                         />
                                     ) : (
@@ -152,11 +150,7 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                                             {post.title}
                                         </h3>
                                     </div>
-                                    <div className="flex items-center justify-between mt-3">
-                                        <span className="flex items-center gap-1 text-xs font-medium text-gray-400">
-                                            <Clock size={11} />
-                                            {post.readTime} min read
-                                        </span>
+                                    <div className="flex items-center justify-end mt-3">
                                         <ArrowUpRight
                                             size={15}
                                             className="text-gray-300 group-hover:text-[#005CB9] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -175,13 +169,14 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                             className="rounded-2xl overflow-hidden group border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 bg-white flex flex-col"
                         >
                             {/* Image */}
-                            <div className="relative h-[170px] overflow-hidden shrink-0">
+                            <div className="relative h-[220px] overflow-hidden shrink-0 bg-gray-50">
                                 {post.image ? (
                                     <Image
                                         src={post.image}
                                         alt={post.imageAlt || post.title}
                                         fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        quality={90}
+                                        className="object-contain transition-transform duration-500 group-hover:scale-105"
                                         sizes="(max-width: 768px) 100vw, 33vw"
                                     />
                                 ) : (
@@ -201,11 +196,7 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
                                         {post.title}
                                     </h3>
                                 </div>
-                                <div className="flex items-center justify-between mt-4">
-                                    <span className="flex items-center gap-1 text-xs font-medium text-gray-400">
-                                        <Clock size={11} />
-                                        {post.readTime} min read
-                                    </span>
+                                <div className="flex items-center justify-end mt-4">
                                     <ArrowUpRight
                                         size={15}
                                         className="text-gray-300 group-hover:text-[#005CB9] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
