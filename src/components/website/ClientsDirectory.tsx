@@ -45,7 +45,9 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             <h3 className="text-xl font-bold leading-snug tracking-tight text-gray-900">
                 {client.name}
             </h3>
-            <p className="mt-3 text-[14px] leading-relaxed text-gray-600">{client.description}</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-gray-600">
+                {t(`client_desc_${client.short.toLowerCase().replace(/[^a-z0-9]/g, "")}`) || client.description}
+            </p>
         </motion.article>
     );
 }
