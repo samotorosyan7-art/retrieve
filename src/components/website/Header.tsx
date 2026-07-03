@@ -2,7 +2,7 @@
 
 import Link from "@/components/ui/LocalizedLink";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ChevronRight, Phone, Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -20,6 +20,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isPracticeOpen, setIsPracticeOpen] = useState(false);
+    const [isMobilePracticeOpen, setIsMobilePracticeOpen] = useState(false);
     const [expandedMobileCategories, setExpandedMobileCategories] = useState<Record<string, boolean>>({});
     const pathname = usePathname();
     const practiceRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,8 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
     useEffect(() => {
         setIsPracticeOpen(false);
         setIsOpen(false);
+        setIsMobilePracticeOpen(false);
+        setExpandedMobileCategories({});
     }, [pathname]);
 
     // Close dropdown when clicking outside
@@ -49,12 +52,34 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
         return () => document.removeEventListener("mousedown", handleClick);
     }, []);
 
-    const navLinks = [
-        { name: t("nav_home"), href: "/" },
-        { name: t("nav_about_us"), href: "/about-us" },
-        { name: t("nav_blog"), href: "/blog" },
-        { name: t("nav_legal_updates"), href: "/legal-updates" },
-    ];
+    // Lock body scroll while the fullscreen mobile menu is open
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? "hidden" : "";
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isOpen]);
+
+    // Escape closes the menu; resizing past the mobile breakpoint closes it too
+    useEffect(() => {
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setIsOpen(false);
+        };
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) setIsOpen(false);
+        };
+        window.addEventListener("keydown", handleKey);
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("keydown", handleKey);
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    const closeMenu = () => {
+        setIsOpen(false);
+        setIsMobilePracticeOpen(false);
+    };
 
     const toggleMobileCategory = (label: string) => {
         setExpandedMobileCategories(prev => ({
@@ -63,28 +88,58 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
         }));
     };
 
+    const navLinks = [
+        { name: t("nav_home"), href: "/" },
+        { name: t("nav_about_us"), href: "/about-us" },
+        { name: t("nav_blog"), href: "/blog" },
+        { name: t("nav_legal_updates"), href: "/legal-updates" },
+    ];
+
+    const mobileNavTop = [
+        { name: t("nav_home"), href: "/" },
+        { name: t("nav_about_us"), href: "/about-us" },
+    ];
+    const mobileNavBottom = [
+        { name: t("nav_blog"), href: "/blog" },
+        { name: t("nav_legal_updates"), href: "/legal-updates" },
+        { name: t("nav_contact"), href: "/contact" },
+    ];
+
+    const staggerStyle = (index: number): CSSProperties => ({
+        transitionDelay: isOpen ? `${120 + index * 70}ms` : "0ms",
+    });
+
     return (
-        <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-gray-200">
-            {/* Top Bar - Contact Info Only */}
-            <div className="bg-gray-50 border-b border-gray-200">
+        <header
+            className={cn(
+                "fixed top-0 left-0 right-0 z-[100] bg-white flex flex-col transition-shadow duration-300",
+                scrolled && !isOpen
+                    ? "shadow-[0_1px_0_0_rgba(0,0,0,0.06),0_10px_30px_-15px_rgba(0,0,0,0.15)]"
+                    : "border-b border-gray-100",
+                isOpen && "h-[100dvh] overflow-hidden"
+            )}
+        >
+            {/* Top Bar - Contact Info Only (desktop) */}
+            <div className="hidden lg:block bg-gray-50 border-b border-gray-200 shrink-0">
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center py-2 text-xs text-gray-600">
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-5 items-center">
                         <a
                             href="tel:+37441777332"
                             className="flex items-center gap-1.5 hover:text-primary transition-colors"
                         >
                             <Phone size={14} className="text-primary" />
-                            <span className="font-medium">+374 41 777 332</span>
+                            <span className="font-medium tracking-wide">+374 41 777 332</span>
                         </a>
+                        <span className="w-1 h-1 rounded-full bg-gray-300" />
                         <a
                             href="mailto:info@retrieve.am"
                             className="flex items-center gap-1.5 hover:text-primary transition-colors"
                         >
                             <Mail size={14} className="text-primary" />
-                            <span className="font-medium">info@retrieve.am</span>
+                            <span className="font-medium tracking-wide">info@retrieve.am</span>
                         </a>
                     </div>
-                    <div className="hidden sm:block text-gray-500">
+                    <div className="text-gray-500 tracking-wide">
                         {t("working_hours")}
                     </div>
                 </div>
@@ -93,20 +148,20 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
             {/* Main Header */}
             <div
                 className={cn(
-                    "transition-all duration-300",
+                    "shrink-0 transition-all duration-300",
                     scrolled ? "py-0" : "py-1"
                 )}
             >
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center py-1">
+                    <Link href="/" className="flex items-center py-1" onClick={closeMenu}>
                         <Image
                             src="/logo.jpg"
                             alt="Retrieve Legal & Tax law firm"
                             width={200}
                             height={80}
                             priority
-                            className="h-16 md:h-20 w-50 object-none transition-transform"
+                            className="h-14 lg:h-20 w-auto object-contain transition-transform"
                         />
                     </Link>
                     <nav className="hidden lg:flex gap-1 items-center">
@@ -114,9 +169,10 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-600 px-4 py-2 rounded-full hover:text-[#005CB9] transition-colors"
+                                className="relative text-sm font-medium text-gray-600 px-4 py-2 hover:text-primary transition-colors group"
                             >
                                 {link.name}
+                                <span className="absolute left-4 right-4 -bottom-0.5 h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                             </Link>
                         ))}
 
@@ -124,7 +180,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <div ref={practiceRef} className="relative px-4 py-2 cursor-pointer">
                             <button
                                 onClick={() => setIsPracticeOpen(v => !v)}
-                                className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#005CB9] transition-colors focus:outline-none"
+                                className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-primary transition-colors focus:outline-none"
                             >
                                 {t("nav_practice_areas")}
                                 <ChevronDown size={14} className={cn("transition-transform duration-200", isPracticeOpen && "rotate-180")} />
@@ -143,7 +199,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                 <Link
                                                     href={categoryRoute}
                                                     onClick={() => setIsPracticeOpen(false)}
-                                                    className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:text-[#005CB9] transition-colors"
+                                                    className="flex items-center justify-between px-4 py-2.5 text-sm rounded-lg text-gray-700 font-semibold hover:text-primary transition-colors"
                                                 >
                                                     <span>
                                                         {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
@@ -165,7 +221,7 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                                                                     key={sIdx}
                                                                     href={subItemHref}
                                                                     onClick={() => setIsPracticeOpen(false)}
-                                                                    className="block px-4 py-2 text-sm rounded-lg text-gray-600 hover:text-[#005CB9] transition-colors"
+                                                                    className="block px-4 py-2 text-sm rounded-lg text-gray-600 hover:text-primary transition-colors"
                                                                 >
                                                                     {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
                                                                 </Link>
@@ -186,17 +242,20 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-600 px-4 py-2 rounded-full hover:text-[#005CB9] transition-colors"
+                                className="relative text-sm font-medium text-gray-600 px-4 py-2 hover:text-primary transition-colors group"
                             >
                                 {link.name}
+                                <span className="absolute left-4 right-4 -bottom-0.5 h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                             </Link>
                         ))}
                     </nav>
 
                     {/* Right Actions */}
                     <div className="flex items-center gap-2 md:gap-4">
-                        <LanguageSelector />
-                        
+                        <div className={cn(isOpen && "lg:block hidden")}>
+                            <LanguageSelector />
+                        </div>
+
                         <div className="hidden lg:flex items-center gap-4">
                             <Button asChild className="rounded-full px-8 shadow-soft hover:shadow-medium transition-all bg-[#005CB9] text-white hover:bg-[#004a96]">
                                 <Link href="/contact" className="flex items-center gap-2">
@@ -205,124 +264,193 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             </Button>
                         </div>
 
-                        {/* Mobile Menu Button */}
+                        {/* Mobile Menu Toggle */}
                         <button
-                            className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
-                            onClick={() => setIsOpen(!isOpen)}
-                            aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
+                            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full text-gray-800 hover:bg-gray-50 active:scale-95 transition-all"
+                            onClick={() => setIsOpen(v => !v)}
+                            aria-label={isOpen ? "Close menu" : "Open menu"}
                             aria-expanded={isOpen}
                         >
-                            {isOpen ? <X size={24} /> : <Menu size={24} />}
+                            {isOpen ? <X size={26} /> : <Menu size={26} />}
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile Menu Drawer */}
-            <div className={cn(
-                "lg:hidden fixed inset-x-0 bg-white border-b border-gray-100 overflow-y-auto transition-all duration-300 ease-in-out shadow-medium custom-scrollbar",
-                isOpen ? "max-h-[80vh] py-4 border-t" : "max-h-0 py-0"
-            )}>
-                <div className="container mx-auto px-4 flex flex-col gap-1">
+            {/* Fullscreen Mobile Menu */}
+            <div
+                className={cn(
+                    "lg:hidden relative overflow-hidden",
+                    isOpen ? "flex-1 min-h-0" : "flex-none h-0"
+                )}
+            >
+                <div className="absolute inset-0 bg-white border-t border-gray-100" />
 
-                    <Link
-                        href="/about-us"
-                        className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {t("nav_about_us")}
-                    </Link>
+                <div
+                    className={cn(
+                        "relative h-full overflow-y-auto flex flex-col transition-opacity duration-200",
+                        isOpen ? "opacity-100" : "opacity-0"
+                    )}
+                >
+                    <nav className="flex flex-col px-6 pt-2">
+                        {mobileNavTop.map((link, idx) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                onClick={closeMenu}
+                                style={staggerStyle(idx)}
+                                className={cn(
+                                    "block py-4 border-b border-gray-100 text-3xl font-extrabold text-gray-900 hover:text-primary transition-all duration-500 ease-out",
+                                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                                )}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
 
-                    {/* Mobile Practice Areas */}
-                    <div className="flex flex-col">
-                        <span className="px-4 py-3 rounded-xl font-medium text-primary bg-primary/5 cursor-default select-none">
-                            {t("nav_practice_areas")}
-                        </span>
-
-                        <div className="pl-6 flex flex-col mt-1 space-y-1 border-l-2 border-gray-100 ml-5 py-2">
-                            {practiceAreas.map((category, idx) => {
-                                const categoryRoute = category.label.toLowerCase().includes("tax")
-                                    ? "/tax-and-business-advisory-services"
-                                    : "/legal-services";
-                                return (
-                                <div key={idx} className="flex flex-col">
-                                    <div className="flex items-center rounded-lg hover:bg-gray-50">
-                                        <Link
-                                            href={categoryRoute}
-                                            onClick={() => setIsOpen(false)}
-                                            className="flex-1 py-2 px-3 text-sm font-medium text-gray-600 hover:text-primary text-left"
-                                        >
-                                            {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
-                                        </Link>
-                                        {category.children && category.children.length > 0 && (
-                                            <button
-                                                onClick={() => toggleMobileCategory(category.label)}
-                                                className="p-2 text-gray-500 hover:text-primary shrink-0"
-                                                aria-label="Toggle submenu"
-                                            >
-                                                <ChevronDown size={14} className={cn("transition-transform", expandedMobileCategories[category.label] && "rotate-180")} />
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    {/* Mobile Level 3 */}
-                                    {expandedMobileCategories[category.label] && category.children && (
-                                        <div className="pl-4 flex flex-col mt-1 space-y-0.5 border-l border-gray-100 ml-2 py-1">
-                                            {category.children.map((subItem, sIdx) => {
-                                                const slug = subItem.url.replace(/\/$/, "").split("/").pop() || "";
-                                                return (
-                                                <Link
-                                                    key={sIdx}
-                                                    href={`${categoryRoute}/${slug}`}
-                                                    onClick={() => setIsOpen(false)}
-                                                    className="py-2 px-3 text-xs text-gray-500 hover:text-primary rounded-lg hover:bg-gray-50"
-                                                >
-                                                    {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
-                                                </Link>
-                                                );
-                                            })}
-                                        </div>
+                        {/* Mobile Practice Areas — accordion */}
+                        <div
+                            style={staggerStyle(2)}
+                            className={cn(
+                                "border-b border-gray-100 transition-all duration-500 ease-out",
+                                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                            )}
+                        >
+                            <button
+                                onClick={() => setIsMobilePracticeOpen(v => !v)}
+                                className="w-full flex items-center justify-between py-4 text-left"
+                                aria-expanded={isMobilePracticeOpen}
+                            >
+                                <span className={cn("text-3xl font-extrabold transition-colors", isMobilePracticeOpen ? "text-primary" : "text-gray-900")}>
+                                    {t("nav_practice_areas")}
+                                </span>
+                                <ChevronDown
+                                    size={22}
+                                    className={cn(
+                                        "text-gray-400 transition-transform duration-300 shrink-0",
+                                        isMobilePracticeOpen && "rotate-180 text-primary"
                                     )}
+                                />
+                            </button>
+
+                            <div className={cn(
+                                "grid transition-all duration-300 ease-in-out",
+                                isMobilePracticeOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                            )}>
+                                <div className="overflow-hidden">
+                                    <div className="flex flex-col gap-1 pl-6 pb-4 border-l-2 border-gray-100 ml-1">
+                                        {practiceAreas.map((category, idx) => {
+                                            const categoryRoute = category.label.toLowerCase().includes("tax")
+                                                ? "/tax-and-business-advisory-services"
+                                                : "/legal-services";
+                                            const isSubOpen = expandedMobileCategories[category.label];
+                                            return (
+                                                <div key={idx}>
+                                                    <div className="flex items-center justify-between">
+                                                        <Link
+                                                            href={categoryRoute}
+                                                            onClick={closeMenu}
+                                                            className="flex-1 py-2 text-base font-semibold text-gray-700 hover:text-primary transition-colors"
+                                                        >
+                                                            {t(`practice_categories.${category.label}`, { defaultValue: category.label })}
+                                                        </Link>
+                                                        {category.children && category.children.length > 0 && (
+                                                            <button
+                                                                onClick={() => toggleMobileCategory(category.label)}
+                                                                className="p-2 text-gray-400 hover:text-primary shrink-0"
+                                                                aria-label="Toggle submenu"
+                                                            >
+                                                                <ChevronDown size={16} className={cn("transition-transform duration-300", isSubOpen && "rotate-180")} />
+                                                            </button>
+                                                        )}
+                                                    </div>
+
+                                                    {category.children && category.children.length > 0 && (
+                                                        <div className={cn(
+                                                            "grid transition-all duration-300 ease-in-out",
+                                                            isSubOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                                        )}>
+                                                            <div className="overflow-hidden">
+                                                                <div className="flex flex-col gap-0.5 pl-3 pb-1">
+                                                                    {category.children.map((subItem, sIdx) => {
+                                                                        const slug = subItem.url.replace(/\/$/, "").split("/").pop() || "";
+                                                                        return (
+                                                                            <Link
+                                                                                key={sIdx}
+                                                                                href={`${categoryRoute}/${slug}`}
+                                                                                onClick={closeMenu}
+                                                                                className="py-2 text-sm text-gray-500 hover:text-primary transition-colors"
+                                                                            >
+                                                                                {t(`practice_titles.${subItem.label}`, { defaultValue: subItem.label })}
+                                                                            </Link>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                                );
-                            })}
+                            </div>
                         </div>
-                    </div>
 
+                        {mobileNavBottom.map((link, i) => {
+                            const idx = i + 3;
+                            return (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={closeMenu}
+                                    style={staggerStyle(idx)}
+                                    className={cn(
+                                        "block py-4 border-b border-gray-100 text-3xl font-extrabold text-gray-900 hover:text-primary transition-all duration-500 ease-out",
+                                        isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                                    )}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
+                    </nav>
 
-                    <Link
-                        href="/blog"
-                        className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
+                    <div
+                        style={staggerStyle(6)}
+                        className={cn(
+                            "mt-auto px-6 pb-8 pt-6 flex flex-col gap-4 transition-all duration-500 ease-out",
+                            isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                        )}
                     >
-                        {t("nav_blog")}
-                    </Link>
-                    <Link
-                        href="/legal-updates"
-                        className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {t("nav_legal_updates")}
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className="px-4 py-3 rounded-xl hover:bg-gray-50 font-medium text-gray-800 hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {t("nav_contact")}
-                    </Link>
-
-                    <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 px-2 pb-4">
-                        <div className="flex justify-center">
-                            <LanguageSelector />
+                        <div className="flex flex-wrap gap-3">
+                            <a
+                                href="tel:+37441777332"
+                                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-100 hover:text-primary transition-colors"
+                            >
+                                <Phone size={15} className="text-primary" /> +374 41 777 332
+                            </a>
+                            <a
+                                href="mailto:info@retrieve.am"
+                                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-100 hover:text-primary transition-colors"
+                            >
+                                <Mail size={15} className="text-primary" /> info@retrieve.am
+                            </a>
                         </div>
-                        <Button className="w-full justify-center rounded-xl py-6 bg-[#005CB9] text-white" asChild>
-                            <Link href="/contact" onClick={() => setIsOpen(false)}>{t("btn_contact_us")}</Link>
-                        </Button>
+
+                        <div className="flex items-center gap-3">
+                            <div className="shrink-0 rounded-full border border-gray-200">
+                                <LanguageSelector />
+                            </div>
+                            <Button asChild size="lg" className="flex-1 justify-center rounded-full shadow-elevated bg-[#005CB9] text-white hover:bg-[#004a96]">
+                                <Link href="/contact" onClick={closeMenu} className="flex items-center justify-center gap-2">
+                                    {t("btn_contact_us")} <ArrowRight size={18} />
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
         </header>
     );
 }
-

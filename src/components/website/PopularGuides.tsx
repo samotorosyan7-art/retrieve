@@ -1,221 +1,134 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import Link from "@/components/ui/LocalizedLink";
 import { LegalUpdate } from "@/types/wordpress";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, "").trim();
 
-const ImagePlaceholder = () => (
-    <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(135deg, #003D7A 0%, #005CB9 55%, #0070DB 100%)" }}
-    />
-);
+const SLIDE_INTERVAL_MS = 5000;
+
+function GuideCard({ post, t }: { post: LegalUpdate; t: (key: string) => string }) {
+    return (
+        <Link
+            href={`/offer/${post.slug}`}
+            className="group flex h-full min-h-[280px] flex-col rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+        >
+            {post.tags && post.tags.length > 0 && (
+                <span className="mb-3 self-start text-[10px] font-bold uppercase tracking-wider text-[#005CB9]">
+                    {post.tags[0].name}
+                </span>
+            )}
+            <h3 className="font-bold text-lg leading-snug text-[#111827] line-clamp-3 group-hover:text-[#005CB9] transition-colors duration-200 mb-3">
+                {post.title}
+            </h3>
+            {post.excerpt && (
+                <p className="text-sm text-gray-500 leading-relaxed line-clamp-4 mb-6">
+                    {stripHtml(post.excerpt)}
+                </p>
+            )}
+            <div className="mt-auto flex items-center gap-1.5 text-sm font-bold text-[#005CB9]">
+                {t("btn_learn_more")}
+                <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </div>
+        </Link>
+    );
+}
 
 export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
     const { t } = useTranslation();
+    const scrollRef = useRef<HTMLDivElement>(null);
 
-    if (!posts || posts.length === 0) return null;
+    const slides = posts ?? [];
+    const canSlide = slides.length > 3;
 
-    const [featured, ...rest] = posts;
+    const scrollByOneCard = (dir: 1 | -1) => {
+        const el = scrollRef.current;
+        if (!el) return;
+        const card = el.children[0] as HTMLElement | undefined;
+        if (!card) return;
+
+        const gap = parseFloat(getComputedStyle(el).columnGap || "16");
+        const step = card.offsetWidth + gap;
+        const maxScroll = el.scrollWidth - el.clientWidth;
+
+        if (dir === 1 && el.scrollLeft >= maxScroll - 8) {
+            el.scrollTo({ left: 0, behavior: "smooth" });
+            return;
+        }
+        if (dir === -1 && el.scrollLeft <= 8) {
+            el.scrollTo({ left: maxScroll, behavior: "smooth" });
+            return;
+        }
+        el.scrollBy({ left: dir * step, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        if (!canSlide) return;
+        const id = setInterval(() => scrollByOneCard(1), SLIDE_INTERVAL_MS);
+        return () => clearInterval(id);
+    }, [canSlide, slides.length]);
+
+    if (slides.length === 0) return null;
 
     return (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
 
-                {/* ── Header ── */}
-                <div className="flex items-end justify-between mb-12">
-                    <div>
+                    {/* ── Left column — static ── */}
+                    <div className="lg:col-span-4 lg:pt-3">
                         <span className="block mb-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#005CB9]">
                             Knowledge Center
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-none text-[#1A1A1A]">
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.05] text-[#1A1A1A] mb-5">
                             {t("popular_guides_title")}
                         </h2>
+                        <p className="text-[15px] leading-relaxed text-gray-500 font-medium max-w-sm">
+                            {t("popular_guides_subtitle")}
+                        </p>
                     </div>
-                    <Link
-                        href="/blog"
-                        className="hidden md:flex items-center gap-1.5 text-sm font-bold text-[#005CB9] group hover:opacity-70 transition-opacity duration-200"
-                    >
-                        View all
-                        <ArrowUpRight
-                            size={15}
-                            className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        />
-                    </Link>
-                </div>
 
-                {/* ── Bento Grid ── */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-                    {/* Featured card — spans 2 cols, image as full-bleed background */}
-                    <Link
-                        href={`/offer/${featured.slug}`}
-                        className="md:col-span-2 relative rounded-2xl overflow-hidden group block"
-                        style={{ minHeight: "460px" }}
-                    >
-                        <div className="absolute inset-0">
-                            {featured.image ? (
-                                <Image
-                                    src={featured.image}
-                                    alt={featured.imageAlt || featured.title}
-                                    fill
-                                    quality={90}
-                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                    sizes="(max-width: 768px) 100vw, 66vw"
-                                />
-                            ) : (
-                                <ImagePlaceholder />
-                            )}
-                        </div>
-
-                        {/* Gradient overlay */}
-                        <div
-                            className="absolute inset-0"
-                            style={{
-                                background:
-                                    "linear-gradient(to top, rgba(2,8,20,0.95) 0%, rgba(2,8,20,0.4) 55%, rgba(2,8,20,0.05) 100%)",
-                            }}
-                        />
-
-                        {/* Content */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-9">
-                            {featured.tags && featured.tags.length > 0 && (
-                                <span
-                                    className="self-start mb-3 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase"
-                                    style={{
-                                        background: "rgba(74,159,255,0.18)",
-                                        color: "#4A9FFF",
-                                        border: "1px solid rgba(74,159,255,0.3)",
-                                    }}
-                                >
-                                    {featured.tags[0].name}
-                                </span>
-                            )}
-                            <h3 className="text-white text-2xl md:text-[28px] font-black leading-tight mb-3">
-                                {featured.title}
-                            </h3>
-                            {featured.excerpt && (
-                                <p className="text-white/55 text-sm font-medium leading-relaxed mb-5 line-clamp-2">
-                                    {stripHtml(featured.excerpt)}
-                                </p>
-                            )}
-                            <div className="flex items-center justify-end">
-                                <div
-                                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-[#005CB9]"
-                                    style={{ background: "rgba(255,255,255,0.12)" }}
-                                >
-                                    <ArrowUpRight size={16} className="text-white" />
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Right column — 2 stacked cards with images */}
-                    <div className="flex flex-col gap-4">
-                        {rest.slice(0, 2).map((post) => (
-                            <Link
-                                key={post.id}
-                                href={`/offer/${post.slug}`}
-                                className="flex-1 rounded-2xl overflow-hidden group border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 bg-white flex flex-col"
+                    {/* ── Right column — native-scroll carousel, one card per step ── */}
+                    <div className="lg:col-span-8">
+                        <div className="rounded-3xl bg-[#64748b] p-5 md:p-7">
+                            <div
+                                ref={scrollRef}
+                                className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                             >
-                                {/* Image */}
-                                <div className="relative h-[200px] overflow-hidden shrink-0 bg-gray-50">
-                                    {post.image ? (
-                                        <Image
-                                            src={post.image}
-                                            alt={post.imageAlt || post.title}
-                                            fill
-                                            quality={90}
-                                            className="object-contain transition-transform duration-500 group-hover:scale-105"
-                                            sizes="(max-width: 768px) 100vw, 33vw"
-                                        />
-                                    ) : (
-                                        <ImagePlaceholder />
-                                    )}
-                                </div>
+                                {slides.map((post) => (
+                                    <div
+                                        key={post.id}
+                                        className="w-[85vw] sm:w-[calc((100%-2rem)/3)] shrink-0 snap-start"
+                                    >
+                                        <GuideCard post={post} t={t} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
 
-                                {/* Content */}
-                                <div className="p-5 flex flex-col flex-1 justify-between">
-                                    <div>
-                                        {post.tags && post.tags.length > 0 && (
-                                            <span className="block mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#005CB9]">
-                                                {post.tags[0].name}
-                                            </span>
-                                        )}
-                                        <h3 className="font-bold text-sm leading-snug text-[#111827] line-clamp-3 group-hover:text-[#005CB9] transition-colors duration-200">
-                                            {post.title}
-                                        </h3>
-                                    </div>
-                                    <div className="flex items-center justify-end mt-3">
-                                        <ArrowUpRight
-                                            size={15}
-                                            className="text-gray-300 group-hover:text-[#005CB9] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                                        />
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
+                        {/* Arrows — centered */}
+                        <div className="flex items-center justify-center gap-3 mt-8">
+                            <button
+                                type="button"
+                                onClick={() => scrollByOneCard(-1)}
+                                aria-label="Previous guides"
+                                className="w-10 h-10 cursor-pointer rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-white hover:bg-[#005CB9] hover:border-[#005CB9] transition-all duration-200"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => scrollByOneCard(1)}
+                                aria-label="Next guides"
+                                className="w-10 h-10 cursor-pointer rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-white hover:bg-[#005CB9] hover:border-[#005CB9] transition-all duration-200"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
                     </div>
-
-                    {/* Bottom row — up to 3 equal cards with images */}
-                    {rest.slice(2, 5).map((post) => (
-                        <Link
-                            key={post.id}
-                            href={`/offer/${post.slug}`}
-                            className="rounded-2xl overflow-hidden group border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 bg-white flex flex-col"
-                        >
-                            {/* Image */}
-                            <div className="relative h-[220px] overflow-hidden shrink-0 bg-gray-50">
-                                {post.image ? (
-                                    <Image
-                                        src={post.image}
-                                        alt={post.imageAlt || post.title}
-                                        fill
-                                        quality={90}
-                                        className="object-contain transition-transform duration-500 group-hover:scale-105"
-                                        sizes="(max-width: 768px) 100vw, 33vw"
-                                    />
-                                ) : (
-                                    <ImagePlaceholder />
-                                )}
-                            </div>
-
-                            {/* Content */}
-                            <div className="p-5 flex flex-col flex-1 justify-between">
-                                <div>
-                                    {post.tags && post.tags.length > 0 && (
-                                        <span className="block mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#005CB9]">
-                                            {post.tags[0].name}
-                                        </span>
-                                    )}
-                                    <h3 className="font-bold text-sm leading-snug text-[#111827] line-clamp-3 group-hover:text-[#005CB9] transition-colors duration-200">
-                                        {post.title}
-                                    </h3>
-                                </div>
-                                <div className="flex items-center justify-end mt-4">
-                                    <ArrowUpRight
-                                        size={15}
-                                        className="text-gray-300 group-hover:text-[#005CB9] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                                    />
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Mobile: view all */}
-                <div className="mt-10 flex md:hidden justify-center">
-                    <Link
-                        href="/blog"
-                        className="flex items-center gap-1.5 text-sm font-bold text-[#005CB9]"
-                    >
-                        View all guides
-                        <ArrowUpRight size={15} />
-                    </Link>
                 </div>
             </div>
         </section>

@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { Mail, Phone, Linkedin, User, GraduationCap, Scale, MapPin } from "lucide-react";
 import { getPersonnelDetails, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
+import { personnelEducation } from "@/data/personnel-education";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
 import ru from "@/locales/ru/common.json";
@@ -41,6 +42,12 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
     // general contact info when a specific person's details aren't published.
     const email = personnel.email || "info@retrieve.am";
     const phone = personnel.phone || "+374 41 777 332";
+
+    const localizedEducation = personnelEducation[slug];
+    const education =
+        localizedEducation?.[lang as keyof typeof localizedEducation] ||
+        localizedEducation?.en ||
+        personnel.education;
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
@@ -197,21 +204,8 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                             </div>
                         )}
 
-                        {/* Practice Areas */}
-                        {personnel.practiceAreas && personnel.practiceAreas.length > 0 && (
-                            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
-                                        <Scale size={20} className="text-[#005CB9]" />
-                                    </div>
-                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_practice_areas}</h2>
-                                </div>
-                                <PracticeAreasAccordion areas={personnel.practiceAreas} />
-                            </div>
-                        )}
-
                         {/* Education */}
-                        {personnel.education && personnel.education.length > 0 && (
+                        {education && education.length > 0 && (
                             <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
@@ -220,7 +214,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_education}</h2>
                                 </div>
                                 <div className="relative pl-6 border-l-2 border-[#005CB9]/20 space-y-8">
-                                    {personnel.education.map((edu, index) => (
+                                    {education.map((edu, index) => (
                                         <div key={index} className="relative">
                                             <div className="absolute -left-[25px] top-1 w-4 h-4 rounded-full bg-[#005CB9] border-4 border-white shadow-md" />
                                             <div className="bg-[#F4F7FB] rounded-xl p-5 border border-gray-100">
@@ -235,6 +229,19 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                         </div>
                                     ))}
                                 </div>
+                            </div>
+                        )}
+
+                        {/* Practice Areas */}
+                        {personnel.practiceAreas && personnel.practiceAreas.length > 0 && (
+                            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-[#005CB9]/10 flex items-center justify-center">
+                                        <Scale size={20} className="text-[#005CB9]" />
+                                    </div>
+                                    <h2 className="text-2xl font-extrabold text-gray-900">{t.personnel_practice_areas}</h2>
+                                </div>
+                                <PracticeAreasAccordion areas={personnel.practiceAreas} />
                             </div>
                         )}
 
