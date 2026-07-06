@@ -58,55 +58,55 @@ export default async function LegalUpdatesPage({ params }: { params: Promise<{ l
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
                         {pdfs.map((pdf, idx) => (
                             <a
                                 key={idx}
                                 href={pdf.pdfLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl hover:border-[#005CB9]/20 transition-all duration-300 flex flex-col overflow-hidden h-full transform hover:-translate-y-1"
+                                className="group relative bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-[#005CB9]/20 transition-all duration-300 flex flex-col overflow-hidden h-full transform hover:-translate-y-0.5"
                             >
                                 {/* Icon Header */}
-                                <div className="relative h-48 sm:h-56 bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden shrink-0 border-b border-gray-50">
+                                <div className="relative h-20 sm:h-24 bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden shrink-0 border-b border-gray-50">
                                     <div className="w-full h-full flex items-center justify-center">
-                                        <FileText size={48} className="text-white/20" />
+                                        <FileText size={26} className="text-white/20" />
                                     </div>
                                     {/* Hover Overlay Glassmorphism */}
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                        <div className="bg-[#005CB9] text-white p-4 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                            <Download size={24} />
+                                        <div className="bg-[#005CB9] text-white p-2.5 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                                            <Download size={16} />
                                         </div>
                                     </div>
 
                                     {/* PDF Badge */}
-                                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-[#005CB9] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
-                                        <FileText size={12} />
+                                    <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm text-[#005CB9] text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                                        <FileText size={9} />
                                         PDF
                                     </div>
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-6 flex flex-col flex-1 relative bg-white z-10">
+                                <div className="p-3.5 flex flex-col flex-1 relative bg-white z-10">
                                     <h2
-                                        className="text-lg font-bold text-gray-900 group-hover:text-[#005CB9] transition-colors leading-snug line-clamp-3"
+                                        className="text-xs font-bold text-gray-900 group-hover:text-[#005CB9] transition-colors leading-snug line-clamp-3"
                                         title={pdf.title}
                                     >
                                         {pdf.title}
                                     </h2>
 
                                     {/* Download Footer */}
-                                    <div className="mt-auto pt-6 flex flex-col">
-                                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#005CB9]">
+                                    <div className="mt-auto pt-3 flex flex-col">
+                                        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#005CB9]">
                                             {t.btn_download_article}
-                                            <div className="w-6 h-6 rounded-full bg-[#005CB9]/5 flex items-center justify-center group-hover:bg-[#005CB9]/10 group-hover:translate-x-1 transition-all">
-                                                <Download size={12} />
+                                            <div className="w-4 h-4 rounded-full bg-[#005CB9]/5 flex items-center justify-center group-hover:bg-[#005CB9]/10 group-hover:translate-x-1 transition-all">
+                                                <Download size={9} />
                                             </div>
                                         </span>
                                     </div>
                                 </div>
                                 {/* Bottom Accent Line */}
-                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#003d7a] to-[#005CB9] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
+                                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#003d7a] to-[#005CB9] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
                             </a>
                         ))}
                     </div>
