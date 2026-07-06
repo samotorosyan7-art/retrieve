@@ -1568,57 +1568,6 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
     }
 }
 
-export interface LegalUpdatePDF {
-    title: string;
-    image: string;
-    pdfLink: string;
-}
-
-/**
- * Fetch legal updates (PDFs) by scraping https://retrieve.am/legal-updates/
- */
-export async function getLegalUpdatesPDFs(): Promise<LegalUpdatePDF[]> {
-    try {
-        const response = await fetch(`${WP_BASE_URL}/legal-updates/`, {
-            cache: "no-store",
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const pdfs: LegalUpdatePDF[] = [];
-
-        $(".gdlr-core-column-service-item").each((_, el) => {
-            const title = $(el).find(".gdlr-core-column-service-title").text().trim();
-            const pdfLink = $(el).find("a[href$='.pdf']").attr("href");
-            const image = $(el).find("img").attr("src");
-
-            if (title && pdfLink) {
-                // To fix the 403 Forbidden / 404 error, we will ensure that the PDF link
-                // ALWAYS points directly to the headless CMS (wp.retrieve.am) instead of the Next.js app (www.retrieve.am).
-                let correctLink = pdfLink;
-                if (pdfLink.includes("/wp-content/uploads/")) {
-                    correctLink = pdfLink.replace(/^https?:\/\/(?:[a-z0-9-]+\.)?retrieve\.am\/wp-content\/uploads\//i, "https://wp.retrieve.am/wp-content/uploads/");
-                }
-
-                pdfs.push({
-                    title,
-                    pdfLink: correctLink,
-                    image: image || "",
-                });
-            }
-        });
-
-        return pdfs;
-    } catch (error) {
-        console.error("Error scraping legal updates PDFs:", error);
-        return [];
-    }
-}
-
-
 export async function getTags(lang?: string): Promise<WPTag[]> {
     try {
         const url = new URL(`${WP_API_URL}/tags`);

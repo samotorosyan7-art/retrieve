@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Legal update PDFs are listed at request time via fs.readdir(public/legal-updates/<lang>).
+    // Without this, Vercel's function bundler can exclude that dir since it's only referenced dynamically.
+    experimental: {
+        outputFileTracingIncludes: {
+            "/[lang]/legal-updates": ["./public/legal-updates/**/*"],
+            "/[lang]/legal-updates/page": ["./public/legal-updates/**/*"],
+        },
+    },
     images: {
         remotePatterns: [
             {

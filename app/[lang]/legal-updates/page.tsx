@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Link from "@/components/ui/LocalizedLink";
 import { cookies } from "next/headers";
-import { getLegalUpdatesPDFs, getYoastMetadata } from "@/lib/wordpress";
+import { getYoastMetadata } from "@/lib/wordpress";
+import { getLegalUpdatesPDFs } from "@/lib/legal-updates";
 import { Download, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
@@ -23,7 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function LegalUpdatesPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
-    const pdfs = await getLegalUpdatesPDFs();
+    const pdfs = await getLegalUpdatesPDFs(lang);
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
@@ -61,28 +60,18 @@ export default async function LegalUpdatesPage({ params }: { params: Promise<{ l
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
                         {pdfs.map((pdf, idx) => (
-                            <Link
+                            <a
                                 key={idx}
                                 href={pdf.pdfLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl hover:border-[#005CB9]/20 transition-all duration-300 flex flex-col overflow-hidden h-full transform hover:-translate-y-1"
                             >
-                                {/* Thumbnail */}
+                                {/* Icon Header */}
                                 <div className="relative h-48 sm:h-56 bg-gradient-to-br from-[#003d7a] to-[#005CB9] overflow-hidden shrink-0 border-b border-gray-50">
-                                    {pdf.image ? (
-                                        <Image
-                                            src={pdf.image}
-                                            alt={pdf.title}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <FileText size={48} className="text-white/20" />
-                                        </div>
-                                    )}
+                                    <div className="w-full h-full flex items-center justify-center">
+                                        <FileText size={48} className="text-white/20" />
+                                    </div>
                                     {/* Hover Overlay Glassmorphism */}
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                                         <div className="bg-[#005CB9] text-white p-4 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
@@ -118,7 +107,7 @@ export default async function LegalUpdatesPage({ params }: { params: Promise<{ l
                                 </div>
                                 {/* Bottom Accent Line */}
                                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#003d7a] to-[#005CB9] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
-                            </Link>
+                            </a>
                         ))}
                     </div>
                 )}
