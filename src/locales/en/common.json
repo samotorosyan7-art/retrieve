@@ -693,6 +693,110 @@
     "cta_journey_title": "Start Your Business Journey in Armenia with the Right Legal Foundation.",
     "cta_journey_btn": "Contact us now",
     "practice_content": {
+        "ma-advising": {
+            "cta_services_title": "Navigate Mergers and Acquisitions with Confidence in Armenia",
+            "cta_services_desc": "From initial due diligence and deal structuring to agreement negotiations and regulatory approvals, our M&A advisors help you mitigate risk and maximize value at every stage of the deal.",
+            "cta_services_btn": "Speak to an M&A Advisor",
+            "cta_journey_title": "Let's Discuss Your Next M&A Move in Armenia",
+            "cta_journey_desc": "Whether you're evaluating a target business, structuring a complex cross-border transaction, or negotiating deal terms, our M&A lawyers provide strategic legal guidance to protect your interests at every stage.",
+            "cta_journey_btn": "Get M&A Advice Today"
+        },
+        "corporate-finance-advisory": {
+            "cta_services_title": "Support Smarter Capital Decisions with Corporate Finance Advisory in Armenia",
+            "cta_services_desc": "From business valuations and financial modeling to fundraising strategy and M&A due diligence, our corporate finance advisors help you structure deals and optimize capital with total clarity.",
+            "cta_services_btn": "Speak to a Corporate Finance Advisor",
+            "cta_journey_title": "Let's Plan Your Next Stage of Business Growth in Armenia",
+            "cta_journey_desc": "Whether you're raising capital, preparing for a strategic acquisition, or looking to optimize your financial structure, we provide the clear guidance you need to execute complex transactions with confidence.",
+            "cta_journey_btn": "Get Corporate Finance Advice"
+        },
+        "tax-advisory": {
+            "cta_services_title": "Optimize Your Tax Strategy and Reduce Regulatory Risks",
+            "cta_services_desc": "From local tax planning and VAT compliance to cross-border structuring and dispute resolution, our advisors help you protect your bottom line while staying fully compliant in Armenia.",
+            "cta_services_btn": "Speak to a Tax Advisor",
+            "cta_journey_title": "Let's Build a Smarter Tax Strategy for Your Business in Armenia",
+            "cta_journey_desc": "Whether you're expanding across borders, facing an inquiry from tax authorities, or simply want to optimize your current structure, we provide the clear guidance you need to move forward with confidence.",
+            "cta_journey_btn": "Get Tax Advice Today"
+        },
+        "accounting-bookkeeping": {
+            "cta_services_title": "Keep Your Financial Records Accurate and Audit-Ready",
+            "cta_services_desc": "From day-to-day bookkeeping and payroll to comprehensive financial reporting, our experts ensure your business remains fully compliant with Armenian accounting and tax standards.",
+            "cta_services_btn": "Talk to an Accounting Expert",
+            "cta_journey_title": "Let's Build a Reliable Financial Foundation for Your Business in Armenia",
+            "cta_journey_desc": "Whether you are launching a new enterprise, restructuring your internal accounting systems, or simply need dependable ongoing bookkeeping support, we are here to streamline your finances.",
+            "cta_journey_btn": "Get Started Today"
+        },
+        "health-pharmaceuticals": {
+            "cta_services_title": "Keep Your Business Protected at Every Regulatory Stage",
+            "cta_services_desc": "From navigating initial approvals to managing unexpected disputes, our healthcare lawyers handle the legal complexities so you can focus on your operations.",
+            "cta_services_btn": "Speak to a Healthcare Lawyer",
+            "cta_journey_title": "Let's Talk About Your Compliance Needs",
+            "cta_journey_desc": "Whatever stage your business is at, our healthcare lawyers provide practical, industry-specific legal guidance to help you meet regulatory requirements, manage risk, and operate with confidence.",
+            "cta_journey_btn": "Schedule a Consultation"
+        },
+        "it-data-privacy-protection": {
+            "cta_services_title": "Secure Your Digital Operations and Ensure Compliance",
+            "cta_services_desc": "From GDPR and local data protection compliance to drafting technology agreements, our IT lawyers help you mitigate risk and protect your digital assets in Armenia.",
+            "cta_services_btn": "Speak to an IT Lawyer",
+            "cta_journey_title": "Let's Talk About Your IT & Data Protection Legal Strategy in Armenia",
+            "cta_journey_desc": "Whether you're building a new tech startup, updating your privacy policies, or dealing with an urgent data issue, we provide the practical guidance you need to move forward with confidence.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "energy-law": {
+            "cta_services_title": "Power Your Energy Projects with Legal Clarity in Armenia",
+            "cta_services_desc": "From licensing and permitting to PPAs and renewable energy financing, our energy lawyers support developers, investors, and utilities in structuring projects, meeting regulatory requirements, and moving forward with confidence.",
+            "cta_services_btn": "Speak to an Energy Lawyer",
+            "cta_journey_title": "Facing Legal or Regulatory Challenges on an Energy Project in Armenia?",
+            "cta_journey_desc": "Energy projects move within tight timelines and complex regulations. Don't let permitting delays, compliance gaps, or contract disputes stall your progress. Retrieve Legal & Tax provides the strategic legal backing to protect your investment and keep your project on track.",
+            "cta_journey_btn": "Book Legal Consultation"
+        },
+        "competition-law": {
+            "cta_services_title": "Protect Your Business from Complex Antitrust and Competition Risks",
+            "cta_services_desc": "From merger control and regulatory investigations to competition compliance and pricing practices, our competition lawyers help businesses navigate complex regulations and remain compliant with Armenian and international competition laws.",
+            "cta_services_btn": "Speak to a Competition Lawyer",
+            "cta_journey_title": "Let's Assess Your Competition Law Exposure in Armenia",
+            "cta_journey_desc": "Whether you're planning a major merger, facing an active investigation, or reviewing your distribution networks, we help you identify and neutralize legal risks before they turn into costly liabilities.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "banking-finance-law": {
+            "cta_services_title": "Banking & Finance Lawyers in Armenia for Businesses, Investors & Financial Institutions",
+            "cta_services_desc": "From complex corporate lending and fintech licensing to AML/KYC compliance and cross-border investments, our banking and finance lawyers help clients structure complex financial transactions while minimising regulatory risk.",
+            "cta_services_btn": "Speak to a Finance Lawyer",
+            "cta_journey_title": "Secure the Legal Framework for Your Financial Operations",
+            "cta_journey_desc": "Whether you're negotiating a major credit facility, launching a digital payment system, or managing international capital flows, our team delivers the sharp, commercial guidance needed to protect your assets.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "arbitration-ligitation": {
+            "cta_services_title": "Commercial Litigation & Arbitration Services in Armenia for Businesses",
+            "cta_services_desc": "From pre-trial strategy and commercial litigation to complex cross-border arbitration, our experienced litigators help businesses protect their commercial interests and resolve disputes efficiently.",
+            "cta_services_btn": "Speak to a Litigation Lawyer",
+            "cta_journey_title": "Protect Your Assets and Resolve Your Dispute Efficiently",
+            "cta_journey_desc": "Whether you need to enforce a foreign arbitral award, manage an active contract conflict, or negotiate a strategic pre-trial settlement, Retrieve Legal & Tax provides the sharp representation your business requires.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "investment-law": {
+            "cta_services_title": "Investment Law Services in Armenia for Foreign & Domestic Investors",
+            "cta_services_desc": "From FDI and joint ventures to treaty protections, due diligence, and dispute resolution, our investment lawyers help you structure investments with confidence and protect your interests at every stage.",
+            "cta_services_btn": "Speak to an Investment Lawyer",
+            "cta_journey_title": "Planning Your Next Investment in Armenia?",
+            "cta_journey_desc": "Whether you're entering the Armenian market, expanding your business, or evaluating a new investment opportunity, our legal team provides strategic guidance to help you invest with confidence.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "real-estate-construction-law": {
+            "cta_services_title": "Real Estate Legal Services in Armenia for Buyers, Developers & Investors",
+            "cta_services_desc": "From property due diligence and lease agreements to construction contracts and zoning compliance, our lawyers help you avoid disputes and protect your investment at every stage.",
+            "cta_services_btn": "Speak to a Real Estate Lawyer",
+            "cta_journey_title": "Planning a Property Deal or Construction Project in Armenia?",
+            "cta_journey_desc": "Our legal team handles the contracts, compliance, and disputes so your real estate investment stays on solid ground.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
+        "employment-law": {
+            "cta_services_title": "Protect Your Business. Empower Your Workforce.",
+            "cta_services_desc": "Whether you're drafting contracts or navigating a dispute, our employment law team provides clear, practical advice so you can move forward with confidence.",
+            "cta_services_btn": "Speak to an Employment Lawyer",
+            "cta_journey_title": "Have an Employment Issue? Let's Resolve It.",
+            "cta_journey_desc": "From compliance audits to labor disputes, Retrieve Legal & Tax handles the legal complexity so you can focus on running your business.",
+            "cta_journey_btn": "Get Legal Advice Today"
+        },
         "corporate-business-law": {
             "hero_desc": "Retrieve Legal & Tax provides comprehensive corporate law services for local and international businesses in Armenia. We assist clients with company formation, corporate governance, mergers and acquisitions, restructuring, and day-to-day legal compliance. Our corporate lawyers deliver practical, business-focused solutions that help you make confident decisions and manage legal risks effectively.",
             "intro_title": "Corporate Law Services for Businesses in Armenia",
@@ -949,10 +1053,22 @@
             "cta_journey_btn": "Contact Us Today"
         },
         "tax-law-compliance": {
-            "why_choose_title": "Why Choose Our Tax Law & Compliance Lawyers?"
+            "why_choose_title": "Why Choose Our Tax Law & Compliance Lawyers?",
+            "cta_services_title": "Simplify Your Tax Obligations and Simplify Compliance in Armenia",
+            "cta_services_desc": "From cross-border taxation structures and transfer pricing to proactive tax planning, our experienced tax lawyers help you meet every regulatory demand while protecting your hard-earned assets.",
+            "cta_services_btn": "Speak to a Tax Lawyer",
+            "cta_journey_title": "Is Your Business Vulnerable to an Armenian Tax Audit?",
+            "cta_journey_desc": "Don't wait for a notice from the authorities to find out. Whether you need to resolve an active tax dispute, appeal a flawed assessment, or secure robust representation, Retrieve Legal & Tax handles the legal defense so you can focus on your business.",
+            "cta_journey_btn": "Get Legal Advice Today"
         },
         "intellectual-property-law": {
-            "why_choose_title": "Why Choose the Intellectual Property Lawyers at Retrieve Legal & Tax?"
+            "why_choose_title": "Why Choose the Intellectual Property Lawyers at Retrieve Legal & Tax?",
+            "cta_services_title": "Protect Your Intellectual Property in Armenia",
+            "cta_services_desc": "From trademark registration to patent prosecution, we make sure your intellectual property works as hard as your business does.",
+            "cta_services_btn": "Talk to an IP Lawyer",
+            "cta_journey_title": "Need an IP Lawyer in Armenia for Your Brand or Patent?",
+            "cta_journey_desc": "Our IP lawyers help businesses in Armenia and beyond protect what they've built—and prevent others from profiting from it.",
+            "cta_journey_btn": "Get IP Legal Advice Today"
         }
     }
 }
