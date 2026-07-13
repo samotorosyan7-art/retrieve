@@ -13,6 +13,18 @@ const dictionaries: Record<string, any> = {
 
 const SCRAPER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
 
+/**
+ * fetch() wrapper for the WP REST API (/wp-json/wp/v2/*) that always sends a
+ * browser User-Agent. wp.retrieve.am's firewall intermittently 403s requests
+ * with no/generic UA, which was making the blog page flash empty on refresh.
+ */
+function wpFetch(url: string, options: RequestInit = {}): Promise<Response> {
+    return fetch(url, {
+        ...options,
+        headers: { "User-Agent": SCRAPER_USER_AGENT, ...(options.headers || {}) },
+    });
+}
+
 function getMetaKey(path: string): string {
     const cleanPath = path.trim().replace(/^\/+|\/+$/g, "");
     if (!cleanPath) return "home";
@@ -255,7 +267,7 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         }
 
-        const response = await fetch(url.toString(), {
+        const response = await wpFetch(url.toString(), {
             cache: "no-store",
         });
 
@@ -280,6 +292,13 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
 }
 
 /**
+ * Last-known-good result per (lang, page, limit), used as a fallback when a
+ * live WP fetch fails so a transient error doesn't blank the blog page.
+ * In-memory only: helps on warm server instances, reset on cold start.
+ */
+const blogPostsFallbackCache = new Map<string, { posts: LegalUpdate[]; total: number; totalPages: number }>();
+
+/**
  * Fetch blog posts from retrieve.am, excluding legal-updates (category 2)
  */
 export async function getBlogPosts(
@@ -287,6 +306,7 @@ export async function getBlogPosts(
     page = 1,
     lang?: string
 ): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
+    const cacheKey = `${lang ?? "all"}:${page}:${limit}`;
     try {
         const url = new URL(`${WP_API_URL}/posts`);
         url.searchParams.append("categories_exclude", "3");
@@ -302,9 +322,12 @@ export async function getBlogPosts(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
 
-        if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
+        if (!response.ok) {
+            console.error(`Failed to fetch blog posts: ${response.status} ${response.statusText}`);
+            return blogPostsFallbackCache.get(cacheKey) ?? { posts: [], total: 0, totalPages: 0 };
+        }
 
         const total = parseInt(response.headers.get("X-WP-Total") || "0");
         const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "0");
@@ -351,10 +374,12 @@ export async function getBlogPosts(
             };
         });
 
-        return { posts, total, totalPages };
+        const result = { posts, total, totalPages };
+        blogPostsFallbackCache.set(cacheKey, result);
+        return result;
     } catch (error) {
         console.error("Error fetching blog posts:", error);
-        return { posts: [], total: 0, totalPages: 0 };
+        return blogPostsFallbackCache.get(cacheKey) ?? { posts: [], total: 0, totalPages: 0 };
     }
 }
 
@@ -379,11 +404,11 @@ export async function getMasonryPosts(
         }
 
         let data = [];
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
 
         if (response.ok) {
             data = await response.json();
-            
+
             // Fallback: If no posts found with author filter, try without it
             if (data.length === 0 && lang && LANGUAGE_AUTHOR_MAP[lang]) {
                 const fallbackUrl = new URL(`${WP_API_URL}/posts`);
@@ -391,7 +416,7 @@ export async function getMasonryPosts(
                 fallbackUrl.searchParams.append("per_page", limit.toString());
                 fallbackUrl.searchParams.append("_embed", "1");
                 fallbackUrl.searchParams.append("v", Date.now().toString());
-                const fallbackRes = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+                const fallbackRes = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
                 if (fallbackRes.ok) {
                     data = await fallbackRes.json();
                 }
@@ -1201,7 +1226,7 @@ export async function getLegalUpdates(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -1266,7 +1291,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         }
 
         console.log("url", url);
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) {
             console.error(`WordPress API error: ${response.status} ${response.statusText}`);
@@ -1289,7 +1314,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             fallbackUrl.searchParams.append("slug", slug);
             fallbackUrl.searchParams.append("_embed", "1");
             fallbackUrl.searchParams.append("v", Date.now().toString());
-            const fallbackResponse = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+            const fallbackResponse = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
             if (fallbackResponse.ok) {
                 const fallbackContentType = fallbackResponse.headers.get("content-type");
                 if (fallbackContentType && fallbackContentType.includes("application/json")) {
@@ -1351,7 +1376,7 @@ export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag |
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
         if (!response.ok) return null;
 
         // Check if response is JSON
@@ -1400,7 +1425,7 @@ export async function getPostsByTag(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -1577,7 +1602,7 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
             url.searchParams.append("lang", lang);
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
         if (!response.ok) return [];
 
         const data = await response.json();
@@ -1597,14 +1622,14 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
 export async function getContentTypeBySlug(slug: string): Promise<"post" | "portfolio" | null> {
     try {
         // 1. Try fetching as a post
-        const postRes = await fetch(`${WP_API_URL}/posts?slug=${slug}`, { cache: "no-store" });
+        const postRes = await wpFetch(`${WP_API_URL}/posts?slug=${slug}`, { cache: "no-store" });
         if (postRes.ok) {
             const posts = await postRes.json();
             if (posts.length > 0) return "post";
         }
 
         // 2. Try fetching as a portfolio item (practice area)
-        const portfolioRes = await fetch(`${WP_API_URL}/portfolio?slug=${slug}`, { cache: "no-store" });
+        const portfolioRes = await wpFetch(`${WP_API_URL}/portfolio?slug=${slug}`, { cache: "no-store" });
         if (portfolioRes.ok) {
             const items = await portfolioRes.json();
             if (items.length > 0) return "portfolio";
@@ -1628,7 +1653,7 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         }
 
-        const response = await fetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
         if (!response.ok) return null;
 
         let data = await response.json();
@@ -1637,7 +1662,7 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
         if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
             const fallbackUrl = new URL(`${WP_API_URL}/pages`);
             fallbackUrl.searchParams.append("slug", slug);
-            const fallbackRes = await fetch(fallbackUrl.toString(), { cache: "no-store" });
+            const fallbackRes = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
             if (fallbackRes.ok) data = await fallbackRes.json();
         }
 
