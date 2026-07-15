@@ -25,6 +25,18 @@ function wpFetch(url: string, options: RequestInit = {}): Promise<Response> {
     });
 }
 
+/**
+ * Next.js throws an internal error (digest "DYNAMIC_SERVER_USAGE") out of a
+ * no-store fetch when it's attempting to statically render a route (e.g. the
+ * sitemap's generateSitemaps output) and needs to bail to dynamic rendering.
+ * That error must propagate to Next's render boundary — catching it here and
+ * returning an empty result instead hides the bailout signal, so Next never
+ * switches the route to dynamic and it can ship with empty WP data baked in.
+ */
+function isDynamicServerUsageError(error: unknown): boolean {
+    return typeof error === "object" && error !== null && (error as { digest?: unknown }).digest === "DYNAMIC_SERVER_USAGE";
+}
+
 function getMetaKey(path: string): string {
     const cleanPath = path.trim().replace(/^\/+|\/+$/g, "");
     if (!cleanPath) return "home";
@@ -116,6 +128,7 @@ async function getPublishedPersonnelSlugs(): Promise<string[]> {
         }
         return slugs;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching personnel sitemap:", error);
         return [];
     }
@@ -286,6 +299,7 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
 
         return await response.json();
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching posts:", error);
         return [];
     }
@@ -378,6 +392,7 @@ export async function getBlogPosts(
         blogPostsFallbackCache.set(cacheKey, result);
         return result;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching blog posts:", error);
         return blogPostsFallbackCache.get(cacheKey) ?? { posts: [], total: 0, totalPages: 0 };
     }
@@ -457,6 +472,7 @@ export async function getMasonryPosts(
 
         return { posts };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching masonry posts:", error);
         return { posts: [] };
     }
@@ -542,6 +558,7 @@ async function getTeamMemberCard(slug: string, lang?: string): Promise<WPTeamMem
             link,
         };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error fetching team member card for ${slug}:`, error);
         return null;
     }
@@ -587,6 +604,7 @@ async function scrapeOurTeamPage(lang?: string): Promise<WPTeamMember[]> {
 
         return members;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping our-team page:", error);
         return [];
     }
@@ -617,6 +635,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
 
         return members.filter((m): m is WPTeamMember => m !== null);
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching team members:", error);
         return [];
     }
@@ -710,6 +729,7 @@ export async function getPortfolioCategories(): Promise<MenuItem[]> {
 
         return menuItems;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping portfolio categories:", error);
         return [];
     }
@@ -810,6 +830,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
 
         return [...legalItems, ...taxItems];
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping portfolio data:", error);
         return [];
     }
@@ -824,6 +845,7 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
         const allItems = await getPortfolioItems();
         return allItems.filter(item => item.category === category);
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error filtering portfolio by category:", error);
         return [];
     }
@@ -998,6 +1020,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
             education,
         };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error scraping personnel details for ${slug}:`, error);
         return null;
     }
@@ -1037,6 +1060,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
 
         return testimonials;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping testimonials:", error);
         return [];
     }
@@ -1075,6 +1099,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
 
         return logos;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping client logos:", error);
         return [];
     }
@@ -1118,6 +1143,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
         // Filter out irrelevant short ones or mismatched
         return reasons.filter(r => r.title.length > 5 && r.description.length > 10).slice(0, 4); // Take exact 4
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping why choose us:", error);
         return [];
     }
@@ -1151,6 +1177,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
 
         return areas;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping legal practice areas:", error);
         return [];
     }
@@ -1183,6 +1210,7 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
 
         return services;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error scraping tax advisory services:", error);
         return [];
     }
@@ -1270,6 +1298,7 @@ export async function getLegalUpdates(
 
         return { posts, total, totalPages };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching legal updates:", error);
         return { posts: [], total: 0, totalPages: 0 };
     }
@@ -1360,6 +1389,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             tags,
         };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching legal update by slug:", error);
         return null;
     }
@@ -1396,6 +1426,7 @@ export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag |
             slug: data[0].slug,
         };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error fetching tag by slug ${slug}:`, error);
         return null;
     }
@@ -1467,6 +1498,7 @@ export async function getPostsByTag(
 
         return { posts, total, totalPages };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching posts by tag:", error);
         return { posts: [], total: 0, totalPages: 0 };
     }
@@ -1588,6 +1620,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
 
         return data;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error scraping practice area content for ${slug}:`, error);
         return null;
     }
@@ -1612,6 +1645,7 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
             slug: t.slug,
         }));
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching tags:", error);
         return [];
     }
@@ -1637,6 +1671,7 @@ export async function getContentTypeBySlug(slug: string): Promise<"post" | "port
 
         return null;
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error("Error resolving content type:", error);
         return null;
     }
@@ -1676,6 +1711,7 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
             content: p.content?.rendered ?? "",
         };
     } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error fetching page by slug ${slug}:`, error);
         return null;
     }
