@@ -1716,3 +1716,154 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
         return null;
     }
 }
+
+/**
+ * ---------------------------------------------------------------------------
+ * Test fetchers — used only by the hidden /article, /article/[slug] routes to
+ * verify that switching the site's language re-renders Ani Mkhitaryan's (WP
+ * user id 4) test post in that language's translation.
+ *
+ * wp.retrieve.am's Polylang REST integration is NOT actually wired up:
+ * /wp/v2/posts has no `lang` arg (checked via an OPTIONS request), no
+ * `language`/`post_translations` taxonomy shows up in /wp/v2/taxonomies, and
+ * Yoast's og_locale field doesn't reflect a post's real Polylang language
+ * either — a post with a fully Russian title/body still reported "en_US".
+ * So instead of trusting any WP-side language metadata, each translation's
+ * language is detected from the actual script of its title/content. That
+ * works regardless of how (or whether) Polylang's own tagging gets fixed.
+ * Do not wire any of this into the real blog pages.
+ * ---------------------------------------------------------------------------
+ */
+
+// The /article test routes only ever show this author's post(s) — Ani Mkhitaryan
+// (WP user id 4), who authored the Polylang test post used to verify translations.
+const ARTICLE_TEST_AUTHOR_ID = 4;
+
+function detectArticleLang(title: string, content: string): "en" | "am" | "ru" {
+    const text = `${title} ${content}`;
+    if (/[԰-֏]/.test(text)) return "am"; // Armenian script
+    if (/[Ѐ-ӿ]/.test(text)) return "ru"; // Cyrillic script
+    return "en";
+}
+
+function mapArticlePost(p: any): LegalUpdate {
+    const wordCount = p.content?.rendered?.replace(/<[^>]+>/g, "").split(/\s+/).length ?? 0;
+    const rawImage =
+        p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large?.source_url ||
+        p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+        null;
+    const image = rawImage ? fixHttps(rawImage) : null;
+    const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
+
+    const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
+        id: tag.id,
+        name: tag.name.replace(/&amp;/g, "&"),
+        slug: tag.slug,
+    })) || [];
+
+    const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
+
+    return {
+        id: p.id,
+        slug: p.slug,
+        title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;/g, "'").replace(/&#8211;/g, "–") ?? "",
+        excerpt: rawExcerpt.replace(/&nbsp;/g, " "),
+        content: p.content?.rendered ?? "",
+        date: p.date,
+        modified: p.modified,
+        image,
+        imageAlt,
+        author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
+        readTime: Math.max(1, Math.ceil(wordCount / 200)),
+        link: p.link ?? "",
+        tags,
+    };
+}
+
+async function fetchArticleAuthorPosts(): Promise<any[]> {
+    const url = new URL(`${WP_API_URL}/posts`);
+    url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
+    url.searchParams.append("categories_exclude", "3");
+    url.searchParams.append("per_page", "50");
+    url.searchParams.append("_embed", "1");
+    url.searchParams.append("orderby", "date");
+    url.searchParams.append("order", "desc");
+    url.searchParams.append("v", Date.now().toString());
+
+    const response = await wpFetch(url.toString(), { cache: "no-store" });
+    if (!response.ok) return [];
+    return await response.json();
+}
+
+// All of Ani Mkhitaryan's posts are treated as translations of the same test
+// article. Picks the one whose detected language matches `lang`, falling
+// back to the English version, then to whatever comes back first.
+function pickArticleForLang(posts: any[], lang?: string): any | null {
+    if (!posts.length) return null;
+    const withLang = posts.map((p) => ({
+        p,
+        lang: detectArticleLang(p.title?.rendered ?? "", p.content?.rendered ?? ""),
+    }));
+    return (
+        withLang.find((x) => x.lang === lang)?.p ||
+        withLang.find((x) => x.lang === "en")?.p ||
+        posts[0]
+    );
+}
+
+export async function getArticles(
+    limit = 12,
+    page = 1,
+    lang?: string
+): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
+    try {
+        const authorPosts = await fetchArticleAuthorPosts();
+        const chosen = pickArticleForLang(authorPosts, lang);
+        if (!chosen) return { posts: [], total: 0, totalPages: 0 };
+        if (page > 1) return { posts: [], total: 1, totalPages: 1 };
+        return { posts: [mapArticlePost(chosen)], total: 1, totalPages: 1 };
+    } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
+        console.error("Error fetching articles:", error);
+        return { posts: [], total: 0, totalPages: 0 };
+    }
+}
+
+export async function getArticleBySlug(slug: string, lang?: string): Promise<LegalUpdate | null> {
+    try {
+        const authorPosts = await fetchArticleAuthorPosts();
+        // The slug only needs to identify the translation group (any post in
+        // it); the actual language rendered is picked below independent of it,
+        // so switching the site language re-renders the same article correctly.
+        if (!authorPosts.some((p) => p.slug === slug)) return null;
+
+        const chosen = pickArticleForLang(authorPosts, lang);
+        return chosen ? mapArticlePost(chosen) : null;
+    } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
+        console.error("Error fetching article by slug:", error);
+        return null;
+    }
+}
+
+export async function getArticleTags(): Promise<WPTag[]> {
+    try {
+        const url = new URL(`${WP_API_URL}/tags`);
+        url.searchParams.append("per_page", "100");
+        url.searchParams.append("hide_empty", "true");
+
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return [];
+
+        const data = await response.json();
+        return data.map((t: any) => ({
+            id: t.id,
+            name: t.name.replace(/&amp;/g, "&"),
+            slug: t.slug,
+        }));
+    } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
+        console.error("Error fetching article tags:", error);
+        return [];
+    }
+}

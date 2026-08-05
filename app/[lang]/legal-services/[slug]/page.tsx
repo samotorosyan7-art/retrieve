@@ -312,11 +312,38 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                         </div>
                     </section>
 
+                    {/* ── CTA (Between Services and the extra info block below) ── */}
+                    {pc.services_cta_title && (
+                        <section className="container mx-auto px-4 md:px-8 py-6 text-center">
+                            <div className="relative max-w-5xl mx-auto">
+                                <div className="absolute -top-4 -right-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-[radial-gradient(#005CB9_3px,transparent_3px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
+                                <div className="relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 z-10 text-left">
+                                    <div className="space-y-4 max-w-3xl">
+                                        <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+                                            {pc.services_cta_title}
+                                        </h3>
+                                        {pc.services_cta_desc && (
+                                            <p className="text-gray-500 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line">
+                                                {pc.services_cta_desc}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="shrink-0">
+                                        <Link href="/contact" className="inline-block bg-[#005CB9] hover:bg-[#004791] text-white font-bold text-sm md:text-base rounded-full px-8 py-4 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-200">
+                                            {pc.services_cta_btn || (t.contact_badge || "Get in touch")}
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
                     {/* ── Section: M&A / Transactions ── */}
                     {pc.mna_title && (
                         <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
                             <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-                                <div className="grid grid-cols-1 lg:grid-cols-2">
+                                <div className={`grid grid-cols-1 ${pc.mna_image ? "lg:grid-cols-2" : ""}`}>
                                     {/* Left: text content */}
                                     <div className="p-8 md:p-12 flex flex-col justify-center space-y-6">
                                         <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">

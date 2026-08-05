@@ -1062,13 +1062,80 @@
             "cta_journey_btn": "Get Legal Advice Today"
         },
         "intellectual-property-law": {
-            "why_choose_title": "Why Choose the Intellectual Property Lawyers at Retrieve Legal & Tax?",
-            "cta_services_title": "Protect Your Intellectual Property in Armenia",
-            "cta_services_desc": "From trademark registration to patent prosecution, we make sure your intellectual property works as hard as your business does.",
-            "cta_services_btn": "Talk to an IP Lawyer",
-            "cta_journey_title": "Need an IP Lawyer in Armenia for Your Brand or Patent?",
-            "cta_journey_desc": "Our IP lawyers help businesses in Armenia and beyond protect what they've built—and prevent others from profiting from it.",
-            "cta_journey_btn": "Get IP Legal Advice Today"
+            "title": "Intellectual Property Law",
+            "hero_desc": "Retrieve Legal & Tax provides comprehensive intellectual property (IP) law services for local and international businesses in Armenia. We assist clients with trademark, patent, and industrial design registration, copyright protection, licensing and commercialization, and IP enforcement against infringement and counterfeiting. Our IP lawyers deliver practical, business-focused solutions that help you protect your brand, inventions, and creative assets while managing legal risk effectively.",
+            "hero_btn": "Book Legal Consultation",
+            "intro_title": "Intellectual Property Law Services for Businesses in Armenia",
+            "overview": "<p>Intellectual property law protects the intangible assets that drive business value - brand names, inventions, designs, and creative works. It gives businesses the exclusive legal right to use, license, and enforce these assets, turning ideas and innovation into protectable, transferable, and monetizable property.</p><p>Armenia's IP framework is built on national legislation - including the Law on Trademarks, the Law on Patents, the Law on Industrial Designs, and the Law on Copyright and Related Rights - and aligned with the country's membership in the World Intellectual Property Organization (WIPO), the World Trade Organization (WTO/TRIPS), the Paris Convention, the Madrid Agreement and Protocol, the Patent Cooperation Treaty (PCT), the Eurasian Patent Convention, and the Hague Agreement. This gives rights holders in Armenia access to both strong domestic protection and streamlined international registration routes.</p><p>At Retrieve Legal & Tax, we help businesses and creators navigate this framework with clarity and confidence, ensuring every registration, contract, and enforcement action is legally sound and strategically aligned with your goals.</p>",
+            "cta_overview_title": "Need to protect your brand, invention, or creative work in Armenia?",
+            "cta_overview_desc": "Our IP lawyers are ready to help you with registration, licensing, and enforcement.",
+            "cta_overview_btn": "Talk to an IP Lawyer",
+            "our_services_title": "Our Intellectual Property Law Services",
+            "services_intro": "We provide full-cycle legal support for every category of intellectual property - from initial registration to licensing, enforcement, and portfolio management.",
+            "how_we_can_help": [
+                "Trademark Registration & Prosecution: We provide comprehensive trademark services, including clearance searches, trademark application preparation and filing, prosecution before the Intellectual Property Office of the Republic of Armenia (AIPO), responses to office actions, and representation in opposition and cancellation proceedings.",
+                "Patent Filing & Prosecution: We assist with both standard patents (20-year term) and short-term patents (10-year term) in Armenia, as well as international filings under the PCT and the Eurasian Patent Convention.",
+                "Industrial Design Registration: We register the visual appearance of your products - shape, pattern, and ornamentation - locally and internationally through the Hague system.",
+                "Copyright & Related Rights Protection: We advise on copyright ownership, moral and economic rights, licensing, assignments, and enforcement for literary, artistic, musical, audiovisual, architectural, and software works. We also assist with matters involving collective management organizations where applicable.",
+                "Licensing, Franchising & IP Commercialization: We draft and negotiate licensing, franchising, assignment, and technology transfer agreements that let you monetize your IP assets securely.",
+                "IP Enforcement & Anti-Counterfeiting: We pursue cease-and-desist actions, opposition and cancellation proceedings, customs border measures, and litigation against infringement, piracy, and counterfeit goods.",
+                "Trade Secrets & Confidentiality Agreements: We draft and enforce non-disclosure agreements and confidentiality frameworks to protect know-how and undisclosed business information.",
+                "IP Portfolio Audits & Renewal Management: We review and manage your intellectual property portfolio, including trademarks, patents, and industrial designs, identify legal risks and protection gaps, and monitor renewal deadlines to help maintain your rights in force.",
+                "Domain Name & Online Brand Protection: We assist with .am domain registration and disputes and advise on strategies to prevent cybersquatting and unauthorized online use of your brand."
+            ],
+            "services_cta_title": "Looking for full-scope intellectual property legal services in Armenia?",
+            "services_cta_desc": "Speak with our IP lawyers to get clear legal guidance tailored to your goals.",
+            "services_cta_btn": "Get in Touch",
+            "mna_title": "Registering and Protecting Trademarks, Patents & Copyright in Armenia",
+            "mna_desc": "Each category of intellectual property in Armenia follows its own registration process, protection term, and renewal rules. Getting these details right from the outset determines how enforceable and how valuable your rights will be.\nTrademarks are registered with the Intellectual Property Office of the Republic of Armenia (AIPO) following formal examination, substantive examination, and a two-month opposition period, with the full process typically taking around 8 to 12 months. Protection lasts 10 years from filing and can be renewed indefinitely for further 10-year periods.\nPatents are granted for 20 years from the filing date following substantive examination, or as a faster 10-year short-term patent without substantive examination. Pharmaceutical and agrochemical patents may qualify for a supplementary extension. Industrial designs are protected for an initial 5 years, renewable in 5-year increments up to a maximum of 25 years.\nCopyright arises automatically on creation, with no registration required, and protects the author's work for their lifetime plus 70 years. Foreign applicants must act through a locally registered IP representative before AIPO, so early coordination with experienced counsel avoids delays and procedural refusals.",
+            "mna_items": [
+                "Trademark clearance searches and availability assessments",
+                "Trademark application filing and prosecution before AIPO",
+                "Opposition, cancellation, and infringement proceedings",
+                "International IP filings through the Madrid, PCT, Eurasian, and Hague systems",
+                "IP portfolio audits, renewal tracking, and ongoing maintenance"
+            ],
+            "cta_services_title": "Ready to register or defend your intellectual property in Armenia?",
+            "cta_services_desc": "Speak with our IP lawyers to get clear legal guidance tailored to your goals.",
+            "cta_services_btn": "Get in Touch",
+            "why_choose_title": "Why Choose Our Intellectual Property Law Attorneys?",
+            "why_choose_desc": "Retrieve Legal & Tax is a trusted IP law firm in Armenia, supporting both local and international businesses in protecting and commercializing their most valuable intangible assets.",
+            "why_choose_us": [
+                "Full coverage across all IP rights: We advise on trademarks, patents, industrial designs, copyright, and trade secrets, so you have a single point of contact for your entire IP portfolio.",
+                "Deep expertise in Armenian and international IP law: We combine strong knowledge of Armenian IP legislation with experience in Madrid, PCT, Eurasian, and Hague international filing systems.",
+                "Trusted by local and international clients: We represent Armenian businesses and creators alongside foreign companies and investors entering the Armenian market.",
+                "Strong focus on enforcement and dispute resolution: We actively pursue infringement, counterfeiting, and opposition matters, not just registrations, to keep your rights meaningfully protected.",
+                "Practical, business-focused legal strategy: Our advice is built around your commercial goals - so your IP protection strategy supports growth, licensing, and investment rather than sitting in a drawer."
+            ],
+            "faqs": [
+                {
+                    "question": "What Types of Intellectual Property Can Be Registered in Armenia?",
+                    "answer": "Armenia protects trademarks, patents, industrial designs, copyright and related rights, geographical indications and appellations of origin, trade secrets (undisclosed know-how), and integrated circuit topographies. Trademarks, patents, and industrial designs are registered through the Intellectual Property Office of the Republic of Armenia (AIPO), while copyright protection arises automatically upon creation and does not require registration. We help clients identify which rights apply to their business and which ones are worth formally registering."
+                },
+                {
+                    "question": "Can I Protect My Patent or Trademark Internationally From Armenia?",
+                    "answer": "Yes. Armenia's membership in the Madrid Agreement and Protocol, the Patent Cooperation Treaty (PCT), and the Eurasian Patent Convention allows rights holders to extend protection abroad through streamlined international filing systems, rather than filing separately in every country. We help clients choose the most efficient route based on their target markets and budget."
+                },
+                {
+                    "question": "What Can I Do if My Trademark, Patent, or Copyright Is Infringed in Armenia?",
+                    "answer": "We assist clients in enforcing their intellectual property rights through cease-and-desist notices, administrative proceedings, opposition and cancellation actions, customs border measures against counterfeit goods, and litigation before Armenian courts. Depending on the circumstances, available remedies may include injunctions, compensation for damages, seizure or destruction of infringing goods, and other legal measures provided by law."
+                },
+                {
+                    "question": "Do Foreign Companies Need a Local Representative to Register IP in Armenia?",
+                    "answer": "Yes. Foreign applicants are required to act through a registered local IP representative before AIPO; applications filed without one are typically returned without examination. This is one of the most common procedural mistakes we see from international clients, and it's easily avoided with the right local counsel from the start."
+                },
+                {
+                    "question": "Can I License or Sell My Intellectual Property in Armenia?",
+                    "answer": "Yes. Intellectual property in Armenia can generally be licensed or transferred to another person or company. A licence allows others to use your IP while you retain ownership, whereas an assignment transfers ownership entirely. For registered rights such as trademarks and patents, the agreement should be recorded with the Intellectual Property Office of the Republic of Armenia (AIPO) to be effective against third parties. We help clients draft, negotiate, and register IP agreements to protect their commercial interests."
+                },
+                {
+                    "question": "Is Registering a Trademark Mandatory to Protect My Brand in Armenia?",
+                    "answer": "While not mandatory, registration provides legal advantages, including easier enforcement of your rights."
+                }
+            ],
+            "cta_journey_title": "Start protecting what makes your business valuable in Armenia.",
+            "cta_journey_desc": "Our IP lawyers are ready to support your brand, inventions, and creative assets at every stage.",
+            "cta_journey_btn": "Contact Us Today"
         }
     }
 }
