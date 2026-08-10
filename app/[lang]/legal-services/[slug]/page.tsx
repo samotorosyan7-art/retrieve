@@ -376,7 +376,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                         <div className="relative min-h-[320px] lg:min-h-0">
                                             <img
                                                 src={pc.mna_image}
-                                                alt={pc.mna_title}
+                                                alt={pc.mna_image_alt || pc.mna_title}
                                                 className="absolute inset-0 w-full h-full object-cover"
                                             />
                                         </div>

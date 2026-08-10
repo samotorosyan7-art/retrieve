@@ -17,13 +17,13 @@ interface Props {
 
 /**
  * Hidden test route (not linked in nav/sitemap) mirroring /blog/[slug], used
- * to verify Polylang's REST `lang` filtering across en/am/ru. See
+ * to verify WPGlobus's REST language routing across en/am/ru. See
  * getArticleBySlug in src/lib/wordpress.ts. Does not affect /blog/[slug].
  */
 export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
     return {
-        title: `Article (Polylang test): ${slug}`,
+        title: `Article (WPGlobus test): ${slug}`,
         robots: { index: false, follow: false },
     };
 }

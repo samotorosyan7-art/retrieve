@@ -11,12 +11,12 @@ const dictionaries = { en, am, ru };
 
 /**
  * Hidden test route (not linked in nav/sitemap) mirroring /blog, used to
- * verify Polylang's REST `lang` filtering across en/am/ru. See getArticles
+ * verify WPGlobus's REST language routing across en/am/ru. See getArticles
  * in src/lib/wordpress.ts. Does not affect the real /blog routes.
  */
 export async function generateMetadata() {
     return {
-        title: "Article (Polylang test)",
+        title: "Article (WPGlobus test)",
         robots: { index: false, follow: false },
     };
 }

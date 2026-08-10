@@ -1723,27 +1723,34 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
  * verify that switching the site's language re-renders Ani Mkhitaryan's (WP
  * user id 4) test post in that language's translation.
  *
- * wp.retrieve.am's Polylang REST integration is NOT actually wired up:
- * /wp/v2/posts has no `lang` arg (checked via an OPTIONS request), no
- * `language`/`post_translations` taxonomy shows up in /wp/v2/taxonomies, and
- * Yoast's og_locale field doesn't reflect a post's real Polylang language
- * either — a post with a fully Russian title/body still reported "en_US".
- * So instead of trusting any WP-side language metadata, each translation's
- * language is detected from the actual script of its title/content. That
- * works regardless of how (or whether) Polylang's own tagging gets fixed.
- * Do not wire any of this into the real blog pages.
+ * wp.retrieve.am now runs the WPGlobus plugin, which stores each translation
+ * on the SAME post (one post id, one slug across languages) and serves the
+ * translated title/content/excerpt by prefixing the REST base with a language
+ * segment before /wp-json — e.g. https://wp.retrieve.am/ru/wp-json/wp/v2/...
+ * or .../hy/wp-json/wp/v2/... (WPGlobus's code for Armenian is "hy", not our
+ * app's "am"). No prefix serves the primary language (English). Confirmed via
+ * the `translation` field WPGlobus adds to REST post responses
+ * (provider/version/language/enabled_languages/languages), and confirmed that
+ * a language whose title/content hasn't been filled in yet gracefully falls
+ * back to the English text rather than erroring or returning blank. Do not
+ * wire any of this into the real blog pages — this is scoped to /article only.
  * ---------------------------------------------------------------------------
  */
 
 // The /article test routes only ever show this author's post(s) — Ani Mkhitaryan
-// (WP user id 4), who authored the Polylang test post used to verify translations.
+// (WP user id 4), who authored the WPGlobus test post used to verify translations.
 const ARTICLE_TEST_AUTHOR_ID = 4;
 
-function detectArticleLang(title: string, content: string): "en" | "am" | "ru" {
-    const text = `${title} ${content}`;
-    if (/[԰-֏]/.test(text)) return "am"; // Armenian script
-    if (/[Ѐ-ӿ]/.test(text)) return "ru"; // Cyrillic script
-    return "en";
+// Our app's language codes vs. WPGlobus's REST URL segment. English is
+// WPGlobus's primary language here, so it takes no prefix.
+const WPGLOBUS_LANG_SEGMENT: Partial<Record<string, string>> = {
+    ru: "ru",
+    am: "hy",
+};
+
+function articleApiUrl(lang?: string): string {
+    const segment = lang ? WPGLOBUS_LANG_SEGMENT[lang] : undefined;
+    return segment ? `${WP_BASE_URL}/${segment}/wp-json/wp/v2` : WP_API_URL;
 }
 
 function mapArticlePost(p: any): LegalUpdate {
@@ -1780,48 +1787,29 @@ function mapArticlePost(p: any): LegalUpdate {
     };
 }
 
-async function fetchArticleAuthorPosts(): Promise<any[]> {
-    const url = new URL(`${WP_API_URL}/posts`);
-    url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
-    url.searchParams.append("categories_exclude", "3");
-    url.searchParams.append("per_page", "50");
-    url.searchParams.append("_embed", "1");
-    url.searchParams.append("orderby", "date");
-    url.searchParams.append("order", "desc");
-    url.searchParams.append("v", Date.now().toString());
-
-    const response = await wpFetch(url.toString(), { cache: "no-store" });
-    if (!response.ok) return [];
-    return await response.json();
-}
-
-// All of Ani Mkhitaryan's posts are treated as translations of the same test
-// article. Picks the one whose detected language matches `lang`, falling
-// back to the English version, then to whatever comes back first.
-function pickArticleForLang(posts: any[], lang?: string): any | null {
-    if (!posts.length) return null;
-    const withLang = posts.map((p) => ({
-        p,
-        lang: detectArticleLang(p.title?.rendered ?? "", p.content?.rendered ?? ""),
-    }));
-    return (
-        withLang.find((x) => x.lang === lang)?.p ||
-        withLang.find((x) => x.lang === "en")?.p ||
-        posts[0]
-    );
-}
-
 export async function getArticles(
     limit = 12,
     page = 1,
     lang?: string
 ): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
     try {
-        const authorPosts = await fetchArticleAuthorPosts();
-        const chosen = pickArticleForLang(authorPosts, lang);
-        if (!chosen) return { posts: [], total: 0, totalPages: 0 };
-        if (page > 1) return { posts: [], total: 1, totalPages: 1 };
-        return { posts: [mapArticlePost(chosen)], total: 1, totalPages: 1 };
+        const url = new URL(`${articleApiUrl(lang)}/posts`);
+        url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
+        url.searchParams.append("categories_exclude", "3");
+        url.searchParams.append("per_page", limit.toString());
+        url.searchParams.append("page", page.toString());
+        url.searchParams.append("_embed", "1");
+        url.searchParams.append("orderby", "date");
+        url.searchParams.append("order", "desc");
+        url.searchParams.append("v", Date.now().toString());
+
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
+
+        const total = parseInt(response.headers.get("X-WP-Total") || "0");
+        const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "0");
+        const data = await response.json();
+        return { posts: data.map(mapArticlePost), total, totalPages };
     } catch (error) {
         if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching articles:", error);
@@ -1831,14 +1819,17 @@ export async function getArticles(
 
 export async function getArticleBySlug(slug: string, lang?: string): Promise<LegalUpdate | null> {
     try {
-        const authorPosts = await fetchArticleAuthorPosts();
-        // The slug only needs to identify the translation group (any post in
-        // it); the actual language rendered is picked below independent of it,
-        // so switching the site language re-renders the same article correctly.
-        if (!authorPosts.some((p) => p.slug === slug)) return null;
+        const url = new URL(`${articleApiUrl(lang)}/posts`);
+        url.searchParams.append("slug", slug);
+        url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
+        url.searchParams.append("_embed", "1");
+        url.searchParams.append("v", Date.now().toString());
 
-        const chosen = pickArticleForLang(authorPosts, lang);
-        return chosen ? mapArticlePost(chosen) : null;
+        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        if (!response.ok) return null;
+
+        const data = await response.json();
+        return data.length ? mapArticlePost(data[0]) : null;
     } catch (error) {
         if (isDynamicServerUsageError(error)) throw error;
         console.error("Error fetching article by slug:", error);
