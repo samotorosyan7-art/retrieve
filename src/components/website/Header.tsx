@@ -158,8 +158,8 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                         <Image
                             src="/logo.jpg"
                             alt="Retrieve Legal & Tax law firm"
-                            width={200}
-                            height={80}
+                            width={602}
+                            height={205}
                             priority
                             className="h-14 lg:h-20 w-auto object-contain transition-transform"
                         />
@@ -169,18 +169,28 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="relative text-sm font-medium text-gray-600 px-4 py-2 hover:text-primary transition-colors group"
+                                className="text-base font-medium text-gray-600 px-4 py-2 rounded-full hover:bg-primary hover:text-white hover:shadow-soft transition-all duration-300"
                             >
                                 {link.name}
-                                <span className="absolute left-4 right-4 -bottom-0.5 h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                             </Link>
                         ))}
 
                         {/* Practice Areas Dropdown — state-based so it closes on navigate */}
-                        <div ref={practiceRef} className="relative px-4 py-2 cursor-pointer">
+                        <div
+                            ref={practiceRef}
+                            className={cn(
+                                "relative px-4 py-2 rounded-full cursor-pointer transition-all duration-300 hover:bg-primary hover:shadow-soft",
+                                isPracticeOpen && "bg-primary shadow-soft"
+                            )}
+                            onMouseEnter={() => setIsPracticeOpen(true)}
+                            onMouseLeave={() => setIsPracticeOpen(false)}
+                        >
                             <button
                                 onClick={() => setIsPracticeOpen(v => !v)}
-                                className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-primary transition-colors focus:outline-none"
+                                className={cn(
+                                    "flex items-center gap-1 text-base font-medium text-gray-600 hover:text-white transition-colors focus:outline-none",
+                                    isPracticeOpen && "text-white"
+                                )}
                             >
                                 {t("nav_practice_areas")}
                                 <ChevronDown size={14} className={cn("transition-transform duration-200", isPracticeOpen && "rotate-180")} />
@@ -242,10 +252,9 @@ export default function Header({ practiceAreas = [] }: HeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="relative text-sm font-medium text-gray-600 px-4 py-2 hover:text-primary transition-colors group"
+                                className="text-base font-medium text-gray-600 px-4 py-2 rounded-full hover:bg-primary hover:text-white hover:shadow-soft transition-all duration-300"
                             >
                                 {link.name}
-                                <span className="absolute left-4 right-4 -bottom-0.5 h-[1.5px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                             </Link>
                         ))}
                     </nav>

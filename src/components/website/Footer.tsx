@@ -53,8 +53,8 @@ export default function Footer({ practiceAreas = [] }: FooterProps) {
                                 <Image
                                     src="/logo.jpg"
                                     alt="Retrieve Legal & Tax law firm"
-                                    width={200}
-                                    height={56}
+                                    width={602}
+                                    height={205}
                                     className="h-14 w-auto object-contain"
                                 />
                             </div>
