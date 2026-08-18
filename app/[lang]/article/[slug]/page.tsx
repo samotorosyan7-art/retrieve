@@ -72,7 +72,7 @@ export default async function ArticleSinglePage({ params }: Props) {
             "url": "https://www.retrieve.am/",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.retrieve.am/logo.png"
+                "url": "https://www.retrieve.am/logo.jpg"
             }
         },
         "datePublished": `${publishDate}T00:00:00+04:00`,
