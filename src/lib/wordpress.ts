@@ -225,7 +225,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content") || "";
         }
         const ogImage = $("meta[property='og:image']").attr("content");
-        const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.png";
+        const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.jpg";
 
         const BASE_URL = "https://www.retrieve.am";
         const nextPath = overridePath || path;

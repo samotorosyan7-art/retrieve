@@ -30,11 +30,11 @@ export const metadata: Metadata = {
         },
     },
     openGraph: {
-        images: ["https://www.retrieve.am/logo.png"],
+        images: ["https://www.retrieve.am/logo.jpg"],
     },
     twitter: {
         card: "summary_large_image",
-        images: ["https://www.retrieve.am/logo.png"],
+        images: ["https://www.retrieve.am/logo.jpg"],
     },
 };
 

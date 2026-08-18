@@ -59,7 +59,7 @@ export default async function ArticleSinglePage({ params }: Props) {
         "description": post.excerpt || "",
         "image": {
             "@type": "ImageObject",
-            "url": post.image || "https://www.retrieve.am/logo.png"
+            "url": post.image || "https://www.retrieve.am/logo.jpg"
         },
         "author": {
             "@type": "Organization",
