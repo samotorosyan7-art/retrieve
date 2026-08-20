@@ -354,6 +354,7 @@ export async function getBlogPosts(
                 p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large
                     ?.source_url ||
                 p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                p.yoast_head_json?.og_image?.[0]?.url ||
                 null;
             const image = rawImage ? fixHttps(rawImage) : null;
             const rawExcerpt =
@@ -445,6 +446,7 @@ export async function getMasonryPosts(
                 p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large
                     ?.source_url ||
                 p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                p.yoast_head_json?.og_image?.[0]?.url ||
                 null;
             const image = rawImage ? fixHttps(rawImage) : null;
             const rawExcerpt =
@@ -489,7 +491,6 @@ const PERSONNEL_ORDER = [
     "anahit-petrosyan",      // Anahit
     "larisa-petrosyan",      // Larisa
     "lilit-petrosyan",       // Lilit
-    "renata-martirosyan",    // Renata
     "levon-aghbalyan",       // Levon
     "mikayel-sargsyan",      // Mikayel
     "yeghishe-manukyan",     // Yeghishe
@@ -1267,6 +1268,7 @@ export async function getLegalUpdates(
             const image =
                 p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large?.source_url ||
                 p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                p.yoast_head_json?.og_image?.[0]?.url ||
                 null;
 
             // Strip HTML from excerpt
@@ -1362,6 +1364,7 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         const image =
             p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.large?.source_url ||
             p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+            p.yoast_head_json?.og_image?.[0]?.url ||
             null;
         const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
 
@@ -1469,6 +1472,7 @@ export async function getPostsByTag(
             const image =
                 p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large?.source_url ||
                 p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                p.yoast_head_json?.og_image?.[0]?.url ||
                 null;
 
             const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";

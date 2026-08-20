@@ -132,13 +132,13 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
                                 className="
                                     blog-content prose prose-lg max-w-none text-gray-700 break-words
                                     prose-headings:font-extrabold prose-headings:text-gray-900
-                                    prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
+                                    prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
                                     prose-h3:text-base prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-3
                                     prose-h4:text-sm prose-h4:font-bold prose-h4:mt-6 prose-h4:mb-2
                                     prose-strong:text-gray-900
                                     prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
                                     prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
-                                    prose-li:mb-2 prose-li:pl-2
+                                    prose-li:text-base prose-li:mb-2 prose-li:pl-2
                                     prose-li:marker:text-[#005CB9]
                                     prose-blockquote:border-l-4 prose-blockquote:border-[#005CB9] prose-blockquote:bg-blue-50 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:rounded-r-xl prose-blockquote:not-italic
                                     [&_p]:mb-5 [&_p]:leading-relaxed

@@ -17,8 +17,11 @@ export const metadata: Metadata = {
     },
     description: "Expert legal and tax services in Armenia for businesses and individuals.",
     icons: {
-        icon: "/favicon.ico",
-        apple: "/favicon.ico",
+        icon: [
+            { url: "/favicon.ico", sizes: "any" },
+            { url: "/favicon.png", type: "image/png" },
+        ],
+        apple: "/favicon.png",
     },
     alternates: {
         canonical: "/",

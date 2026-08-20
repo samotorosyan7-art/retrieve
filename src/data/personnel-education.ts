@@ -96,18 +96,4 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2014–2018", degree: "Տնտեսագիտության և մարքեթինգի կառավարման բակալավրի աստիճան", institution: "Հայաստանի ֆրանսիական համալսարան" },
         ],
     },
-    "renata-martirosyan": {
-        en: [
-            { year: "2025 – 2027 (pending)", degree: "Master of Laws (LL.M)", institution: "Yerevan State University" },
-            { year: "2025", degree: "LL.B (Bachelor of Law)", institution: "Branch of Moscow State University after M.V. Lomonosov in Armenia" },
-        ],
-        ru: [
-            { year: "2025–2027 (ожидается завершение)", degree: "Магистр права (LL.M)", institution: "Ереванский государственный университет" },
-            { year: "2025", degree: "Бакалавр права (LL.B)", institution: "Филиал Московского государственного университета имени М. В. Ломоносова" },
-        ],
-        am: [
-            { year: "2025–ներկայումս", degree: "Իրավագիտության մագիստրատուրա (LL.M)", institution: "Երևանի պետական համալսարան" },
-            { year: "2025", degree: "Իրավագիտության բակալավրի աստիճան (LL.B)", institution: "Մ. Վ. Լոմոնոսովի անվան Մոսկվայի պետական համալսարանի Երևանյան մասնաճյուղ" },
-        ],
-    },
 };
