@@ -480,6 +480,12 @@ export async function getMasonryPosts(
     }
 }
 
+// Personnel to hide from the site's team listings even though WP still has
+// them published (sitemap is otherwise the source of truth).
+const PERSONNEL_HIDDEN = [
+    "renata-martirosyan",
+];
+
 // Explicit display order for the team. Published members not listed here are
 // appended afterwards (in sitemap order).
 const PERSONNEL_ORDER = [
@@ -626,7 +632,9 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
             const i = PERSONNEL_ORDER.indexOf(slug);
             return i === -1 ? Number.MAX_SAFE_INTEGER : i;
         };
-        const orderedSlugs = [...publishedSlugs].sort((a, b) => orderIndex(a) - orderIndex(b));
+        const orderedSlugs = publishedSlugs
+            .filter((slug) => !PERSONNEL_HIDDEN.includes(slug))
+            .sort((a, b) => orderIndex(a) - orderIndex(b));
 
         // Build each card from the member's profile page so the caption/position shows
         // for everyone (not just those whose position appears on the our-team list).
