@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "@/components/ui/LocalizedLink";
+import { useParams } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -7,21 +10,48 @@ export interface BreadcrumbItem {
     href?: string;
 }
 
+function stripHtml(value: string) {
+    return value.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+}
+
 export default function Breadcrumbs({ items, className = "", theme = "dark" }: { items: BreadcrumbItem[], className?: string, theme?: "dark" | "light" }) {
     const isDark = theme === "dark";
-    
+    const params = useParams();
+    const lang = (params?.lang as string) || "en";
+    const baseUrl = `https://www.retrieve.am/${lang}`;
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": baseUrl },
+            ...items.map((item, idx) => {
+                const listItem: { "@type": string; position: number; name: string; item?: string } = {
+                    "@type": "ListItem",
+                    position: idx + 2,
+                    name: typeof item.label === "string" ? stripHtml(item.label) : "",
+                };
+                if (item.href) {
+                    listItem.item = item.href === "/" ? baseUrl : `${baseUrl}${item.href}`;
+                }
+                return listItem;
+            }),
+        ],
+    };
+
     return (
+        <>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
         <nav aria-label="Breadcrumb" className={cn("flex items-center flex-wrap gap-2 text-sm font-medium mb-8", isDark ? 'text-blue-200' : 'text-gray-500', className)}>
             <Link href="/" className={`${isDark ? 'hover:text-white' : 'hover:text-[#005CB9]'} transition-colors flex items-center gap-1`} aria-label="Home">
                 <Home size={14} className="mb-[1px]" />
             </Link>
             {items.map((item, idx) => {
                 const isLast = idx === items.length - 1;
-                // If the label is a string and contains HTML, we strip it for safety and clean display
-                let cleanLabel = item.label;
-                if (typeof cleanLabel === "string") {
-                    cleanLabel = cleanLabel.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
-                }
+                const cleanLabel = typeof item.label === "string" ? stripHtml(item.label) : item.label;
 
                 return (
                     <div key={idx} className="flex items-center gap-2">
@@ -47,5 +77,6 @@ export default function Breadcrumbs({ items, className = "", theme = "dark" }: {
                 );
             })}
         </nav>
+        </>
     );
 }
