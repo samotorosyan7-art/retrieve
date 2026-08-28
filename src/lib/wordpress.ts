@@ -61,6 +61,26 @@ const LANGUAGE_AUTHOR_MAP: Record<string, number> = {
     ru: 3, // Lilya Zalinyan
 };
 
+/**
+ * wp.retrieve.am runs the WPGlobus plugin, which stores each translation on
+ * the SAME post (one post id, one slug across languages) and serves the
+ * translated title/content/excerpt by prefixing the REST base with a language
+ * segment before /wp-json — e.g. https://wp.retrieve.am/ru/wp-json/wp/v2/...
+ * or .../hy/wp-json/wp/v2/... (WPGlobus's code for Armenian is "hy", not our
+ * app's "am"). No prefix serves the primary language (English). A language
+ * whose title/content hasn't been filled in yet gracefully falls back to the
+ * English text rather than erroring or returning blank.
+ */
+const WPGLOBUS_LANG_SEGMENT: Partial<Record<string, string>> = {
+    ru: "ru",
+    am: "hy",
+};
+
+function wpGlobusApiUrl(lang?: string): string {
+    const segment = lang ? WPGLOBUS_LANG_SEGMENT[lang] : undefined;
+    return segment ? `${WP_BASE_URL}/${segment}/wp-json/wp/v2` : WP_API_URL;
+}
+
 function fixHttps(url: string | null | undefined): string {
     if (!url) return "";
     let fixedUrl = url;
@@ -1315,51 +1335,71 @@ export async function getLegalUpdates(
 }
 
 /**
- * Fetch a single legal update post by slug
+ * Fetch a single legal update post by slug.
+ *
+ * Priority: 1) fetch the English (WPGlobus primary-language) post as the
+ * baseline, 2) for a non-English lang, prefer WPGlobus's translation of that
+ * SAME post/slug (which itself falls back to English text if untranslated),
+ * 3) if WPGlobus has no such post at all, fall back to the legacy
+ * per-language author account, 4) if nothing matched anywhere, return null so
+ * the caller can redirect to /blog.
  */
 export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise<LegalUpdate | null> {
     try {
-        const url = new URL(`${WP_API_URL}/posts`);
-        url.searchParams.append("slug", slug);
-        url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
-        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
-            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
-        } else if (lang) {
-            url.searchParams.append("lang", lang);
-        }
+        const englishUrl = new URL(`${WP_API_URL}/posts`);
+        englishUrl.searchParams.append("slug", slug);
+        englishUrl.searchParams.append("_embed", "1");
+        englishUrl.searchParams.append("v", Date.now().toString());
 
-        console.log("url", url);
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
-
-        if (!response.ok) {
-            console.error(`WordPress API error: ${response.status} ${response.statusText}`);
+        const englishResponse = await wpFetch(englishUrl.toString(), { cache: "no-store" });
+        if (!englishResponse.ok) {
+            console.error(`WordPress API error: ${englishResponse.status} ${englishResponse.statusText}`);
             return null;
         }
 
-        // Check if response is JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            const text = await response.text();
-            console.error(`WordPress API returned non-JSON response: ${contentType}. Body: ${text.substring(0, 500)}`);
+        const englishContentType = englishResponse.headers.get("content-type");
+        if (!englishContentType || !englishContentType.includes("application/json")) {
+            const text = await englishResponse.text();
+            console.error(`WordPress API returned non-JSON response: ${englishContentType}. Body: ${text.substring(0, 500)}`);
             return null;
         }
 
-        let data = await response.json();
+        let data = await englishResponse.json();
 
-        // Fallback: If no post is found with the author filter, query again without the author filter
+        // Non-English: prefer WPGlobus's translation of this same post/slug.
+        if (lang && WPGLOBUS_LANG_SEGMENT[lang]) {
+            const translationUrl = new URL(`${wpGlobusApiUrl(lang)}/posts`);
+            translationUrl.searchParams.append("slug", slug);
+            translationUrl.searchParams.append("_embed", "1");
+            translationUrl.searchParams.append("v", Date.now().toString());
+
+            const translationResponse = await wpFetch(translationUrl.toString(), { cache: "no-store" });
+            if (translationResponse.ok) {
+                const translationContentType = translationResponse.headers.get("content-type");
+                if (translationContentType && translationContentType.includes("application/json")) {
+                    const translationData = await translationResponse.json();
+                    if (translationData.length) {
+                        data = translationData;
+                    }
+                }
+            }
+        }
+
+        // Not a WPGlobus post: fall back to the legacy per-language author account.
         if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
-            const fallbackUrl = new URL(`${WP_API_URL}/posts`);
-            fallbackUrl.searchParams.append("slug", slug);
-            fallbackUrl.searchParams.append("_embed", "1");
-            fallbackUrl.searchParams.append("v", Date.now().toString());
-            const fallbackResponse = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
-            if (fallbackResponse.ok) {
-                const fallbackContentType = fallbackResponse.headers.get("content-type");
-                if (fallbackContentType && fallbackContentType.includes("application/json")) {
-                    const fallbackData = await fallbackResponse.json();
-                    if (fallbackData.length) {
-                        data = fallbackData;
+            const authorUrl = new URL(`${WP_API_URL}/posts`);
+            authorUrl.searchParams.append("slug", slug);
+            authorUrl.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
+            authorUrl.searchParams.append("_embed", "1");
+            authorUrl.searchParams.append("v", Date.now().toString());
+
+            const authorResponse = await wpFetch(authorUrl.toString(), { cache: "no-store" });
+            if (authorResponse.ok) {
+                const authorContentType = authorResponse.headers.get("content-type");
+                if (authorContentType && authorContentType.includes("application/json")) {
+                    const authorData = await authorResponse.json();
+                    if (authorData.length) {
+                        data = authorData;
                     }
                 }
             }
@@ -1726,147 +1766,5 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
         if (isDynamicServerUsageError(error)) throw error;
         console.error(`Error fetching page by slug ${slug}:`, error);
         return null;
-    }
-}
-
-/**
- * ---------------------------------------------------------------------------
- * Test fetchers — used only by the hidden /article, /article/[slug] routes to
- * verify that switching the site's language re-renders Ani Mkhitaryan's (WP
- * user id 4) test post in that language's translation.
- *
- * wp.retrieve.am now runs the WPGlobus plugin, which stores each translation
- * on the SAME post (one post id, one slug across languages) and serves the
- * translated title/content/excerpt by prefixing the REST base with a language
- * segment before /wp-json — e.g. https://wp.retrieve.am/ru/wp-json/wp/v2/...
- * or .../hy/wp-json/wp/v2/... (WPGlobus's code for Armenian is "hy", not our
- * app's "am"). No prefix serves the primary language (English). Confirmed via
- * the `translation` field WPGlobus adds to REST post responses
- * (provider/version/language/enabled_languages/languages), and confirmed that
- * a language whose title/content hasn't been filled in yet gracefully falls
- * back to the English text rather than erroring or returning blank. Do not
- * wire any of this into the real blog pages — this is scoped to /article only.
- * ---------------------------------------------------------------------------
- */
-
-// The /article test routes only ever show this author's post(s) — Ani Mkhitaryan
-// (WP user id 4), who authored the WPGlobus test post used to verify translations.
-const ARTICLE_TEST_AUTHOR_ID = 4;
-
-// Our app's language codes vs. WPGlobus's REST URL segment. English is
-// WPGlobus's primary language here, so it takes no prefix.
-const WPGLOBUS_LANG_SEGMENT: Partial<Record<string, string>> = {
-    ru: "ru",
-    am: "hy",
-};
-
-function articleApiUrl(lang?: string): string {
-    const segment = lang ? WPGLOBUS_LANG_SEGMENT[lang] : undefined;
-    return segment ? `${WP_BASE_URL}/${segment}/wp-json/wp/v2` : WP_API_URL;
-}
-
-function mapArticlePost(p: any): LegalUpdate {
-    const wordCount = p.content?.rendered?.replace(/<[^>]+>/g, "").split(/\s+/).length ?? 0;
-    const rawImage =
-        p._embedded?.["wp:featuredmedia"]?.[0]?.media_details?.sizes?.medium_large?.source_url ||
-        p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-        null;
-    const image = rawImage ? fixHttps(rawImage) : null;
-    const rawExcerpt = p.excerpt?.rendered?.replace(/<[^>]+>/g, "").replace(/\[&hellip;\]/, "…").trim() ?? "";
-
-    const tags = p._embedded?.["wp:term"]?.[1]?.map((tag: any) => ({
-        id: tag.id,
-        name: tag.name.replace(/&amp;/g, "&"),
-        slug: tag.slug,
-    })) || [];
-
-    const imageAlt = p._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || "";
-
-    return {
-        id: p.id,
-        slug: p.slug,
-        title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;/g, "'").replace(/&#8211;/g, "–") ?? "",
-        excerpt: rawExcerpt.replace(/&nbsp;/g, " "),
-        content: p.content?.rendered ?? "",
-        date: p.date,
-        modified: p.modified,
-        image,
-        imageAlt,
-        author: p._embedded?.author?.[0]?.name ?? "RETRIEVE",
-        readTime: Math.max(1, Math.ceil(wordCount / 200)),
-        link: p.link ?? "",
-        tags,
-    };
-}
-
-export async function getArticles(
-    limit = 12,
-    page = 1,
-    lang?: string
-): Promise<{ posts: LegalUpdate[]; total: number; totalPages: number }> {
-    try {
-        const url = new URL(`${articleApiUrl(lang)}/posts`);
-        url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
-        url.searchParams.append("categories_exclude", "3");
-        url.searchParams.append("per_page", limit.toString());
-        url.searchParams.append("page", page.toString());
-        url.searchParams.append("_embed", "1");
-        url.searchParams.append("orderby", "date");
-        url.searchParams.append("order", "desc");
-        url.searchParams.append("v", Date.now().toString());
-
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
-        if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
-
-        const total = parseInt(response.headers.get("X-WP-Total") || "0");
-        const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "0");
-        const data = await response.json();
-        return { posts: data.map(mapArticlePost), total, totalPages };
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching articles:", error);
-        return { posts: [], total: 0, totalPages: 0 };
-    }
-}
-
-export async function getArticleBySlug(slug: string, lang?: string): Promise<LegalUpdate | null> {
-    try {
-        const url = new URL(`${articleApiUrl(lang)}/posts`);
-        url.searchParams.append("slug", slug);
-        url.searchParams.append("author", ARTICLE_TEST_AUTHOR_ID.toString());
-        url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
-
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
-        if (!response.ok) return null;
-
-        const data = await response.json();
-        return data.length ? mapArticlePost(data[0]) : null;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching article by slug:", error);
-        return null;
-    }
-}
-
-export async function getArticleTags(): Promise<WPTag[]> {
-    try {
-        const url = new URL(`${WP_API_URL}/tags`);
-        url.searchParams.append("per_page", "100");
-        url.searchParams.append("hide_empty", "true");
-
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
-        if (!response.ok) return [];
-
-        const data = await response.json();
-        return data.map((t: any) => ({
-            id: t.id,
-            name: t.name.replace(/&amp;/g, "&"),
-            slug: t.slug,
-        }));
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching article tags:", error);
-        return [];
     }
 }

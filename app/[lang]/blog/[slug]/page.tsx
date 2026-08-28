@@ -31,7 +31,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
 
     const post = await getLegalUpdateBySlug(slug, lang);
     if (!post) {
-        redirect(`/${lang}/blog`);
+        redirect("/blog");
     }
 
     const { posts: related } = await getLegalUpdates(1, 4, lang);
