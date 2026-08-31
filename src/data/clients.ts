@@ -267,6 +267,15 @@ export const CLIENTS: Client[] = [
         description:
             "IP-Coster is a global intellectual property management platform that helps businesses, inventors, and legal professionals estimate costs, file, and manage patents, trademarks, industrial designs, and other IP rights worldwide. It provides online quotations, filing services, workflow management, and access to a network of IP professionals across more than 160 countries.",
     },
+    {
+        name: "Lawzana",
+        short: "LZ",
+        category: "legal",
+        partner: true,
+        url: "https://lawzana.com/",
+        description:
+            "Lawzana is a global legal marketplace and lawyer directory that helps individuals and businesses find and connect with qualified lawyers and law firms worldwide. It provides access to legal professionals across numerous practice areas and jurisdictions, allowing users to compare profiles, explore legal services, and contact lawyers directly. Lawzana also offers law firms an international platform to showcase their expertise, reach potential clients, and expand their global presence.",
+    },
 ];
 
 /**

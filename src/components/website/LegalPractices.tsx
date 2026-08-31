@@ -49,9 +49,6 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                     transition={{ duration: 0.7 }}
                     className="text-center mb-16 max-w-3xl mx-auto"
                 >
-                    <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">
-                        {t("legal_practices_subtitle") || "Specialized Expertise"}
-                    </span>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-950 mb-6 tracking-tight">
                         {t("page_legal_services_title")}
                     </h2>
