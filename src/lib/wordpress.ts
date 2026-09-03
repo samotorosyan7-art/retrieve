@@ -14,18 +14,6 @@ const dictionaries: Record<string, any> = {
 const SCRAPER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
 
 /**
- * fetch() wrapper for the WP REST API (/wp-json/wp/v2/*) that always sends a
- * browser User-Agent. wp.retrieve.am's firewall intermittently 403s requests
- * with no/generic UA, which was making the blog page flash empty on refresh.
- */
-function wpFetch(url: string, options: RequestInit = {}): Promise<Response> {
-    return fetch(url, {
-        ...options,
-        headers: { "User-Agent": SCRAPER_USER_AGENT, ...(options.headers || {}) },
-    });
-}
-
-/**
  * Next.js throws an internal error (digest "DYNAMIC_SERVER_USAGE") out of a
  * no-store fetch when it's attempting to statically render a route (e.g. the
  * sitemap's generateSitemaps output) and needs to bail to dynamic rendering.
@@ -35,6 +23,42 @@ function wpFetch(url: string, options: RequestInit = {}): Promise<Response> {
  */
 function isDynamicServerUsageError(error: unknown): boolean {
     return typeof error === "object" && error !== null && (error as { digest?: unknown }).digest === "DYNAMIC_SERVER_USAGE";
+}
+
+function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// wp.retrieve.am's firewall intermittently 403s (or times out) requests even
+// with a browser UA. These are the statuses worth a short retry for — a 404
+// means the resource genuinely isn't there, so retrying it is pointless.
+const RETRYABLE_STATUSES = new Set([403, 429, 500, 502, 503, 504]);
+
+/**
+ * fetch() wrapper for the WP REST API (/wp-json/wp/v2/*) that always sends a
+ * browser User-Agent and retries a couple of times on a transient failure,
+ * so a one-off block from WP's firewall doesn't surface as an empty result
+ * (e.g. the blog page flashing "No articles found") — it gets absorbed here
+ * instead of requiring the visitor to reload the page.
+ */
+async function wpFetch(url: string, options: RequestInit = {}, attempts = 3): Promise<Response> {
+    const headers = { "User-Agent": SCRAPER_USER_AGENT, ...(options.headers || {}) };
+    let lastResponse: Response | undefined;
+
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+        try {
+            const response = await fetch(url, { ...options, headers });
+            if (response.ok || !RETRYABLE_STATUSES.has(response.status)) {
+                return response;
+            }
+            lastResponse = response;
+        } catch (error) {
+            if (isDynamicServerUsageError(error) || attempt === attempts) throw error;
+        }
+        if (attempt < attempts) await sleep(250 * attempt);
+    }
+
+    return lastResponse!;
 }
 
 function getMetaKey(path: string): string {
