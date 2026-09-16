@@ -152,7 +152,12 @@ function pickBestImage($img: cheerio.Cheerio<any>): string {
  */
 async function getPublishedPersonnelSlugs(): Promise<string[]> {
     try {
-        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml`, {
+        // wp.retrieve.am sits behind a hosting-level proxy cache that serves a
+        // stale personnel-sitemap.xml regardless of Next's "no-store" (that only
+        // controls Next's own fetch cache, not the origin's proxy cache) — a
+        // cache-busting query param is required to reach a fresh copy, same as
+        // the "v" param on the other WP fetches in this file.
+        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml?v=${Date.now()}`, {
             cache: "no-store",
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
