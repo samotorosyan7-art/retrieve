@@ -77,29 +77,6 @@ body {
   margin: 0;
 }
 
-/* Blog single page heading sizes */
-.blog-content h2 {
-  font-size: 20px !important;
-  font-weight: 800 !important;
-  line-height: 1.4;
-}
-
-.blog-content h3 {
-  font-size: 18px !important;
-  font-weight: 800 !important;
-  line-height: 1.5;
-}
-
-.blog-content h4 {
-  font-size: 14px !important;
-  font-weight: 800 !important;
-  line-height: 1.5;
-}
-
-.blog-content p {
-  font-size: 16px !important;
-}
-
 /* Prose List Styles — override Tailwind Preflight reset (list-style: none) */
 .prose ul {
   list-style-type: disc !important;
