@@ -34,6 +34,30 @@ function sleep(ms: number): Promise<void> {
 // means the resource genuinely isn't there, so retrying it is pointless.
 const RETRYABLE_STATUSES = new Set([403, 429, 500, 502, 503, 504]);
 
+// Every one of these functions used to fetch with cache: "no-store", meaning
+// EVERY visitor page-load re-scraped wp.retrieve.am live with no caching
+// anywhere — on a page like the homepage that fans out into ~5+ WP requests
+// (testimonials, logos, why-choose-us, latest posts, ~16 team member profile
+// pages), real traffic produces bursty, uncached request volume that looks
+// like bot activity to SiteGround's Anti-Bot AI and trips its 403 protection,
+// even from the production IP. A short revalidate window lets concurrent
+// requests share one cached fetch instead of each hitting WP directly.
+const WP_REVALIDATE_SECONDS = 120;
+
+/**
+ * A cache-busting value for the "v" query param used to defeat wp.retrieve.am's
+ * hosting-level proxy cache (see getPublishedPersonnelSlugs). Bucketed to the
+ * same window as WP_REVALIDATE_SECONDS, rather than a raw Date.now(), so the
+ * URL — and therefore Next's own fetch cache key — stays stable within a
+ * window instead of being unique on every call, which would silently defeat
+ * the `next: { revalidate }` option below (a fresh URL every millisecond
+ * means every request is a "cache miss" and hits the origin regardless of
+ * revalidate). It still forces a fresh origin fetch once per window.
+ */
+function cacheBuster(): string {
+    return Math.floor(Date.now() / (WP_REVALIDATE_SECONDS * 1000)).toString();
+}
+
 /**
  * fetch() wrapper for the WP REST API (/wp-json/wp/v2/*) that always sends a
  * browser User-Agent and retries a couple of times on a transient failure,
@@ -152,13 +176,13 @@ function pickBestImage($img: cheerio.Cheerio<any>): string {
  */
 async function getPublishedPersonnelSlugs(): Promise<string[]> {
     try {
-        // wp.retrieve.am sits behind a hosting-level proxy cache that serves a
-        // stale personnel-sitemap.xml regardless of Next's "no-store" (that only
-        // controls Next's own fetch cache, not the origin's proxy cache) — a
-        // cache-busting query param is required to reach a fresh copy, same as
-        // the "v" param on the other WP fetches in this file.
-        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml?v=${Date.now()}`, {
-            cache: "no-store",
+        // wp.retrieve.am sits behind a hosting-level proxy cache that can serve a
+        // stale personnel-sitemap.xml regardless of Next's own fetch cache (that
+        // only controls Next's cache, not the origin's proxy cache) — cacheBuster()
+        // forces past it once per WP_REVALIDATE_SECONDS window, same as the "v"
+        // param on the other WP fetches in this file.
+        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml?v=${cacheBuster()}`, {
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
         if (!res.ok) return [];
@@ -202,7 +226,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
         try {
             let response = await fetch(url, {
                 signal: controller.signal,
-                cache: "no-store",
+                next: { revalidate: WP_REVALIDATE_SECONDS },
                 headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
 
@@ -212,7 +236,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 const fallbackRootUrl = `${baseUrl}/${slug}/`;
                 const fallbackResponse = await fetch(fallbackRootUrl, {
                     signal: controller.signal,
-                    cache: "no-store",
+                    next: { revalidate: WP_REVALIDATE_SECONDS },
                     headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
                 if (fallbackResponse.ok) {
@@ -226,7 +250,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                 const fallbackUrl = `${englishBaseUrl}${cleanPath === "/" ? "" : cleanPath}/`;
                 const fallbackResponse = await fetch(fallbackUrl, {
                     signal: controller.signal,
-                    cache: "no-store",
+                    next: { revalidate: WP_REVALIDATE_SECONDS },
                     headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
 
@@ -238,7 +262,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
                     const engRootUrl = `${englishBaseUrl}/${slug}/`;
                     const engRootResponse = await fetch(engRootUrl, {
                         signal: controller.signal,
-                        cache: "no-store",
+                        next: { revalidate: WP_REVALIDATE_SECONDS },
                         headers: { "User-Agent": SCRAPER_USER_AGENT },
                     });
                     if (engRootResponse.ok) response = engRootResponse;
@@ -323,14 +347,14 @@ export async function getLatestPosts(limit = 3, lang?: string): Promise<WPPost[]
         url.searchParams.append("categories_exclude", "3");
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("v", cacheBuster());
 
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         }
 
         const response = await wpFetch(url.toString(), {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
         });
 
         if (!response.ok) {
@@ -376,7 +400,7 @@ export async function getBlogPosts(
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("v", cacheBuster());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
@@ -385,7 +409,7 @@ export async function getBlogPosts(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
 
         if (!response.ok) {
             console.error(`Failed to fetch blog posts: ${response.status} ${response.statusText}`);
@@ -460,7 +484,7 @@ export async function getMasonryPosts(
         url.searchParams.append("categories", "3"); // Masonry category ID
         url.searchParams.append("per_page", limit.toString());
         url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("v", cacheBuster());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
 
@@ -469,7 +493,7 @@ export async function getMasonryPosts(
         }
 
         let data = [];
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
 
         if (response.ok) {
             data = await response.json();
@@ -480,8 +504,8 @@ export async function getMasonryPosts(
                 fallbackUrl.searchParams.append("categories", "3");
                 fallbackUrl.searchParams.append("per_page", limit.toString());
                 fallbackUrl.searchParams.append("_embed", "1");
-                fallbackUrl.searchParams.append("v", Date.now().toString());
-                const fallbackRes = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
+                fallbackUrl.searchParams.append("v", cacheBuster());
+                const fallbackRes = await wpFetch(fallbackUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
                 if (fallbackRes.ok) {
                     data = await fallbackRes.json();
                 }
@@ -635,7 +659,7 @@ async function scrapeOurTeamPage(lang?: string): Promise<WPTeamMember[]> {
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}our-team/`, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
         if (!response.ok) return [];
@@ -712,7 +736,7 @@ export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
 export async function getPortfolioCategories(): Promise<MenuItem[]> {
     try {
         const response = await fetch(`${WP_BASE_URL}/`, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: {
                 "User-Agent": SCRAPER_USER_AGENT,
             },
@@ -853,7 +877,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
     try {
         const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
             const res = await fetch(scrapeUrl, {
-                cache: "no-store",
+                next: { revalidate: WP_REVALIDATE_SECONDS },
                 headers: { "User-Agent": SCRAPER_USER_AGENT }
             });
             if (!res.ok) return [];
@@ -933,7 +957,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
         }
 
         let response = await fetch(fetchUrl, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: {
                 "User-Agent": SCRAPER_USER_AGENT,
             },
@@ -942,7 +966,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
         // Fallback to English if the translated path doesn't exist
         if (!response.ok && lang && lang !== "en") {
             response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
-                cache: "no-store",
+                next: { revalidate: WP_REVALIDATE_SECONDS },
                 headers: {
                     "User-Agent": SCRAPER_USER_AGENT,
                 },
@@ -1098,7 +1122,7 @@ export async function getTestimonials(lang?: string): Promise<{ text: string; au
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1138,7 +1162,7 @@ export async function getClientLogos(lang?: string): Promise<{ id: string; url: 
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1177,7 +1201,7 @@ export async function getWhyChooseUs(lang?: string): Promise<{ title: string; de
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(baseUrl, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1221,7 +1245,7 @@ export async function getLegalPracticeAreas(lang?: string): Promise<{ label: str
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1255,7 +1279,7 @@ export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: st
     try {
         const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
         const response = await fetch(`${baseUrl}legal-services/`, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1310,7 +1334,7 @@ export async function getLegalUpdates(
         url.searchParams.append("per_page", perPage.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("v", cacheBuster());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
@@ -1319,7 +1343,7 @@ export async function getLegalUpdates(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -1385,9 +1409,9 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
         const englishUrl = new URL(`${WP_API_URL}/posts`);
         englishUrl.searchParams.append("slug", slug);
         englishUrl.searchParams.append("_embed", "1");
-        englishUrl.searchParams.append("v", Date.now().toString());
+        englishUrl.searchParams.append("v", cacheBuster());
 
-        const englishResponse = await wpFetch(englishUrl.toString(), { cache: "no-store" });
+        const englishResponse = await wpFetch(englishUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (!englishResponse.ok) {
             console.error(`WordPress API error: ${englishResponse.status} ${englishResponse.statusText}`);
             return null;
@@ -1407,9 +1431,9 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             const translationUrl = new URL(`${wpGlobusApiUrl(lang)}/posts`);
             translationUrl.searchParams.append("slug", slug);
             translationUrl.searchParams.append("_embed", "1");
-            translationUrl.searchParams.append("v", Date.now().toString());
+            translationUrl.searchParams.append("v", cacheBuster());
 
-            const translationResponse = await wpFetch(translationUrl.toString(), { cache: "no-store" });
+            const translationResponse = await wpFetch(translationUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
             if (translationResponse.ok) {
                 const translationContentType = translationResponse.headers.get("content-type");
                 if (translationContentType && translationContentType.includes("application/json")) {
@@ -1427,9 +1451,9 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
             authorUrl.searchParams.append("slug", slug);
             authorUrl.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
             authorUrl.searchParams.append("_embed", "1");
-            authorUrl.searchParams.append("v", Date.now().toString());
+            authorUrl.searchParams.append("v", cacheBuster());
 
-            const authorResponse = await wpFetch(authorUrl.toString(), { cache: "no-store" });
+            const authorResponse = await wpFetch(authorUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
             if (authorResponse.ok) {
                 const authorContentType = authorResponse.headers.get("content-type");
                 if (authorContentType && authorContentType.includes("application/json")) {
@@ -1493,7 +1517,7 @@ export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag |
             url.searchParams.append("lang", lang);
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (!response.ok) return null;
 
         // Check if response is JSON
@@ -1534,7 +1558,7 @@ export async function getPostsByTag(
         url.searchParams.append("per_page", perPage.toString());
         url.searchParams.append("page", page.toString());
         url.searchParams.append("_embed", "1");
-        url.searchParams.append("v", Date.now().toString());
+        url.searchParams.append("v", cacheBuster());
         url.searchParams.append("orderby", "date");
         url.searchParams.append("order", "desc");
         if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
@@ -1543,7 +1567,7 @@ export async function getPostsByTag(
             url.searchParams.append("lang", lang);
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
 
         if (!response.ok) return { posts: [], total: 0, totalPages: 0 };
 
@@ -1615,7 +1639,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         const fetchUrl = lang === "am" ? `${WP_BASE_URL}/practice-areas/${slug}/?lang=hy` : url;
 
         let response = await fetch(fetchUrl, {
-            cache: "no-store",
+            next: { revalidate: WP_REVALIDATE_SECONDS },
             headers: { "User-Agent": SCRAPER_USER_AGENT },
         });
 
@@ -1625,7 +1649,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
         if (!response.ok) {
             const rootUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/${slug}/` : `${WP_BASE_URL}/${slug}/`;
             const rootResponse = await fetch(rootUrl, {
-                cache: "no-store",
+                next: { revalidate: WP_REVALIDATE_SECONDS },
                 headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
             if (rootResponse.ok) {
@@ -1637,14 +1661,14 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
             isFallback = true;
             // Try English version
             let engResponse = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
-                cache: "no-store",
+                next: { revalidate: WP_REVALIDATE_SECONDS },
                 headers: { "User-Agent": SCRAPER_USER_AGENT },
             });
 
             if (!engResponse.ok) {
                 // Try English root
                 engResponse = await fetch(`${WP_BASE_URL}/${slug}/`, {
-                    cache: "no-store",
+                    next: { revalidate: WP_REVALIDATE_SECONDS },
                     headers: { "User-Agent": SCRAPER_USER_AGENT },
                 });
             }
@@ -1723,7 +1747,7 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
             url.searchParams.append("lang", lang);
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (!response.ok) return [];
 
         const data = await response.json();
@@ -1744,14 +1768,14 @@ export async function getTags(lang?: string): Promise<WPTag[]> {
 export async function getContentTypeBySlug(slug: string): Promise<"post" | "portfolio" | null> {
     try {
         // 1. Try fetching as a post
-        const postRes = await wpFetch(`${WP_API_URL}/posts?slug=${slug}`, { cache: "no-store" });
+        const postRes = await wpFetch(`${WP_API_URL}/posts?slug=${slug}`, { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (postRes.ok) {
             const posts = await postRes.json();
             if (posts.length > 0) return "post";
         }
 
         // 2. Try fetching as a portfolio item (practice area)
-        const portfolioRes = await wpFetch(`${WP_API_URL}/portfolio?slug=${slug}`, { cache: "no-store" });
+        const portfolioRes = await wpFetch(`${WP_API_URL}/portfolio?slug=${slug}`, { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (portfolioRes.ok) {
             const items = await portfolioRes.json();
             if (items.length > 0) return "portfolio";
@@ -1776,7 +1800,7 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
             url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
         }
 
-        const response = await wpFetch(url.toString(), { cache: "no-store" });
+        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
         if (!response.ok) return null;
 
         let data = await response.json();
@@ -1785,7 +1809,7 @@ export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPa
         if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
             const fallbackUrl = new URL(`${WP_API_URL}/pages`);
             fallbackUrl.searchParams.append("slug", slug);
-            const fallbackRes = await wpFetch(fallbackUrl.toString(), { cache: "no-store" });
+            const fallbackRes = await wpFetch(fallbackUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
             if (fallbackRes.ok) data = await fallbackRes.json();
         }
 
