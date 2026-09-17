@@ -553,6 +553,13 @@ const PERSONNEL_ORDER = [
     "nanar-siravyan",        // Nanar
 ];
 
+// Position overrides — WP's profile-page caption widget is the source of truth
+// for position, but these two haven't been updated there yet.
+const PERSONNEL_POSITION_OVERRIDES: Record<string, string> = {
+    "michael-hovhannesyan": "Senior Partner",
+    "vache-simonyan": "Partner",
+};
+
 /**
  * Build a team card for a single personnel by scraping their profile page.
  * The position comes from the profile's title caption (e.g. "Tax Specialist"),
@@ -593,7 +600,7 @@ async function getTeamMemberCard(slug: string, lang?: string): Promise<WPTeamMem
         if (!name) return null;
 
         // Caption / position set on the profile page.
-        const position = $(".gdlr-core-title-item-caption").first().text().trim();
+        const position = PERSONNEL_POSITION_OVERRIDES[slug] ?? $(".gdlr-core-title-item-caption").first().text().trim();
 
         const $img = $(".gdlr-core-column-20 img").first().length
             ? $(".gdlr-core-column-20 img").first()
@@ -953,7 +960,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
         // Extract basic info - using correct Goodlayers selectors
         const name = $(".gdlr-core-title-item-title").first().text().trim() ||
             $("h1").first().text().trim();
-        const position = $(".gdlr-core-title-item-caption").first().text().trim();
+        const position = PERSONNEL_POSITION_OVERRIDES[slug] ?? $(".gdlr-core-title-item-caption").first().text().trim();
 
         // Extract image from the left column (gdlr-core-column-20)
         const $img = $(".gdlr-core-column-20 img").first().length
