@@ -567,13 +567,14 @@ const PERSONNEL_ORDER = [
     "vache-simonyan",        // Vache
     "aleksandr-harutyunyan", // Aleksander Harutyunyan
     "lia-nikoghosyan",       // Lia
+    "meline-nadaryan",        // Meline
+    "mariam-dovlatyan",      // Mariam
+    "papin-karapetyan",      // Papin
     "anahit-petrosyan",      // Anahit
     "larisa-petrosyan",      // Larisa
     "lilit-petrosyan",       // Lilit
-    "levon-aghbalyan",       // Levon
     "mikayel-sargsyan",      // Mikayel
     "yeghishe-manukyan",     // Yeghishe
-    "iren-aghasyan",         // Iren
     "nanar-siravyan",        // Nanar
 ];
 
