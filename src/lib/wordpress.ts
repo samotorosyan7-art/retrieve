@@ -567,8 +567,8 @@ const PERSONNEL_ORDER = [
     "vache-simonyan",        // Vache
     "aleksandr-harutyunyan", // Aleksander Harutyunyan
     "lia-nikoghosyan",       // Lia
-    "meline-nadaryan",        // Meline
     "mariam-dovlatyan",      // Mariam
+    "meline-nadaryan",        // Meline
     "papin-karapetyan",      // Papin
     "anahit-petrosyan",      // Anahit
     "larisa-petrosyan",      // Larisa
