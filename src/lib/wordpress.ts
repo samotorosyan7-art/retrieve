@@ -569,10 +569,10 @@ const PERSONNEL_ORDER = [
     "lia-nikoghosyan",       // Lia
     "mariam-dovlatyan",      // Mariam
     "meline-nadaryan",        // Meline
-    "papin-karapetyan",      // Papin
     "anahit-petrosyan",      // Anahit
     "larisa-petrosyan",      // Larisa
     "lilit-petrosyan",       // Lilit
+    "papin-karapetyan",      // Papin
     "mikayel-sargsyan",      // Mikayel
     "yeghishe-manukyan",     // Yeghishe
     "nanar-siravyan",        // Nanar
