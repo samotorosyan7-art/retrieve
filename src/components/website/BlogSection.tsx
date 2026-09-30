@@ -17,11 +17,11 @@ export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
     const displayPosts = posts.slice(0, 6);
 
     return (
-        <section className="py-28 bg-[#F4F8FF]">
+        <section className="py-14 md:py-28 bg-[#F4F8FF]">
             <div className="container mx-auto px-4 md:px-8">
                 {/* ── Header ── */}
                 <motion.div
-                    className="flex flex-col md:flex-row items-start md:items-end justify-between mb-14 gap-6"
+                    className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-14 gap-6"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -119,7 +119,7 @@ export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
 
                 {/* ── View More button ── */}
                 <motion.div
-                    className="flex justify-center mt-14"
+                    className="flex justify-center mt-8 md:mt-14"
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

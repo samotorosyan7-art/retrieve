@@ -74,7 +74,7 @@ export default function PopularGuides({ posts }: { posts: LegalUpdate[] }) {
     if (slides.length === 0) return null;
 
     return (
-        <section className="py-20 bg-white overflow-hidden">
+        <section className="pt-12 pb-4 md:py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
 

@@ -18,9 +18,9 @@ export default function AboutPreviewNew() {
     ];
 
     return (
-        <section className="relative py-20 md:py-28 bg-white overflow-hidden">
+        <section className="relative pt-4 pb-6 md:py-28 bg-white overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
 
                     {/* ── LEFT: Single image ── */}
                     <motion.div
@@ -28,15 +28,15 @@ export default function AboutPreviewNew() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="lg:col-span-6 relative h-[320px] sm:h-[450px] md:h-[560px]"
+                        className="lg:col-span-6 relative aspect-[3/2] sm:aspect-auto sm:h-[450px] md:h-[560px]"
                     >
                         <div className="absolute -left-4 -bottom-4 w-32 h-32 bg-primary/10 rounded-full blur-3xl z-0" />
-                        <div className="relative w-[85%] h-[80%] overflow-hidden z-10">
+                        <div className="relative w-full h-full sm:w-[85%] sm:h-[80%] overflow-hidden z-10">
                             <Image
                                 src={MAIN_PHOTO}
                                 alt="Law Firm in Yerevan"
                                 fill
-                                className="object-contain p-6 transition-transform duration-700"
+                                className="object-contain sm:p-6 transition-transform duration-700"
                                 sizes="(max-width: 1024px) 70vw, 35vw"
                                 priority
                             />

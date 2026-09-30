@@ -39,7 +39,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
     };
 
     return (
-        <section ref={sectionRef} className="py-24 bg-white relative overflow-hidden">
+        <section ref={sectionRef} className="pt-6 pb-12 md:py-24 bg-white relative overflow-hidden">
             <div className="container mx-auto px-4 md:px-8 relative z-10">
 
                 <motion.div
@@ -47,7 +47,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.7 }}
-                    className="text-center mb-16 max-w-3xl mx-auto"
+                    className="text-center mb-10 md:mb-16 max-w-3xl mx-auto"
                 >
                     <h2 className="text-3xl md:text-5xl font-extrabold text-gray-950 mb-6 tracking-tight">
                         {t("page_legal_services_title")}
@@ -55,9 +55,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                     <p className="text-gray-600 text-lg mb-8 leading-relaxed">
                         {t("legal_services_description")}
                     </p>
-                    <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
-                        <div className="w-1/2 h-full bg-primary rounded-full"></div>
-                    </div>
+                    <div className="w-20 h-1.5 bg-[#005CB9] mx-auto rounded-full" />
                 </motion.div>
 
                 <motion.div
@@ -80,7 +78,7 @@ export default function LegalPractices({ items = [] }: LegalPracticesProps) {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-center mt-16"
+                    className="text-center mt-10 md:mt-16"
                 >
                     <Button variant="outline" size="lg" asChild className="rounded-full px-10 border-[#005CB9] text-[#005CB9] hover:bg-[#005CB9] hover:text-white hover:border-[#005CB9] transition-colors shadow-sm">
                         <Link href="/legal-services">

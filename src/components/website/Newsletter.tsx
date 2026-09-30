@@ -20,7 +20,7 @@ export default function Newsletter() {
     };
 
     return (
-        <section className="relative py-24 overflow-hidden">
+        <section className="relative py-14 md:py-24 overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#003d7a] via-[#005CB9] to-[#0070db]" />
 

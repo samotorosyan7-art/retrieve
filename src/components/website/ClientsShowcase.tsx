@@ -74,7 +74,7 @@ export default function ClientsShowcase() {
     };
 
     return (
-        <section className="relative overflow-hidden border-y border-gray-100 bg-[#F7F7F4] py-20 md:py-28">
+        <section className="relative overflow-hidden border-y border-gray-100 bg-[#F7F7F4] py-12 md:py-28">
             {/* Precision grid + soft glow atmosphere */}
             <div
                 aria-hidden

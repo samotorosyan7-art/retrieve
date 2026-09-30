@@ -9,7 +9,7 @@ export default function ContactSection() {
     const { t } = useTranslation();
 
     return (
-        <section id="contact" className="py-24 bg-white relative overflow-hidden">
+        <section id="contact" className="py-12 md:py-24 bg-white relative overflow-hidden">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#005CB9 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
             
@@ -24,13 +24,13 @@ export default function ContactSection() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">
+                            <span className="text-[#005CB9] font-bold tracking-widest uppercase text-sm mb-4 block">
                                 {t("contact_badge") || "Get in Touch"}
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 mb-8 tracking-tight">
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 mb-6 md:mb-8 tracking-tight">
                                 {t("contact_main_title") || "Contact Retrieve"}
                             </h2>
-                            <p className="text-gray-600 text-lg leading-relaxed mb-10 max-w-xl">
+                            <p className="text-gray-600 text-lg leading-relaxed mb-8 md:mb-10 max-w-xl">
                                 {t("contact_desc") || "Have questions about our services or need legal assistance? Our team is ready to provide the guidance you need. Reach out to us today."}
                             </p>
 

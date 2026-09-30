@@ -133,7 +133,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
     const cards = displayReasons.slice(0, 4);
 
     return (
-        <section className="relative py-28 overflow-hidden bg-[#F4F8FF]">
+        <section className="relative py-14 md:py-28 overflow-hidden bg-[#F4F8FF]">
             {/* ─── Decorative background blobs ─── */}
             <div
                 aria-hidden
@@ -168,7 +168,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
             <div className="relative z-10 container mx-auto px-4 md:px-8">
                 {/* ─── Section header ─── */}
                 <motion.div
-                    className="text-center max-w-3xl mx-auto mb-20"
+                    className="text-center max-w-3xl mx-auto mb-10 md:mb-20"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -271,7 +271,7 @@ export default function WhyChooseUs({ reasons = [] }: WhyChooseUsProps) {
 
                 {/* ─── Bottom stats bar (animated count-up) ───
                 <motion.div
-                    className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
+                    className="mt-10 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

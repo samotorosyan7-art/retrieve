@@ -24,7 +24,7 @@ export default function TeamSection({
     if (teamMembers.length === 0) return null;
 
     return (
-        <section className="py-28 bg-white relative overflow-hidden">
+        <section className="py-14 md:py-28 bg-white relative overflow-hidden">
             {/* Subtle decorative blobs */}
             <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-blue-50 blur-3xl opacity-60 pointer-events-none" />
             <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-blue-50 blur-3xl opacity-40 pointer-events-none" />
@@ -37,7 +37,7 @@ export default function TeamSection({
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.7 }}
-                    className="text-center mb-20 max-w-2xl mx-auto"
+                    className="text-center mb-10 md:mb-20 max-w-2xl mx-auto"
                 >
                     <span className="text-[#005CB9] font-bold tracking-widest uppercase text-sm mb-4 block">
                         {t("team_meet_experts")}
@@ -48,9 +48,7 @@ export default function TeamSection({
                     <p className="text-gray-500 text-lg leading-relaxed mb-8">
                         {t("about_us_cta_text")}
                     </p>
-                    <div className="w-20 h-1.5 bg-primary/20 mx-auto rounded-full overflow-hidden">
-                        <div className="w-1/2 h-full bg-[#005CB9] rounded-full" />
-                    </div>
+                    <div className="w-20 h-1.5 bg-[#005CB9] mx-auto rounded-full" />
                 </motion.div>
 
                 {/* Cards grid */}
@@ -117,7 +115,7 @@ export default function TeamSection({
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.5, duration: 0.6 }}
-                        className="text-center mt-16"
+                        className="text-center mt-10 md:mt-16"
                     >
                         <Link
                             href="/about-us"

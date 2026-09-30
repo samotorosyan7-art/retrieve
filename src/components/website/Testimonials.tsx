@@ -27,8 +27,8 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
     };
 
     return (
-        <section className="py-24 bg-white overflow-hidden relative border-t border-gray-100">
-            <div className="container mx-auto px-4 md:px-8 mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
+        <section className="py-12 md:py-24 bg-white overflow-hidden relative border-t border-gray-100">
+            <div className="container mx-auto px-4 md:px-8 mb-6 md:mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
                 <div className="max-w-2xl">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F4F6F8] rounded-full border border-gray-100 mb-6">
                         <span className="w-2 h-2 rounded-full bg-primary"></span>
@@ -71,7 +71,7 @@ export default function Testimonials({ testimonials = [] }: TestimonialsProps) {
 
                 <div
                     ref={scrollRef}
-                    className="flex overflow-x-auto gap-6 sm:gap-8 pb-12 pt-4 snap-x snap-mandatory hide-scrollbar relative z-0"
+                    className="flex overflow-x-auto gap-6 sm:gap-8 pb-4 md:pb-12 pt-4 snap-x snap-mandatory hide-scrollbar relative z-0"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {displayTestimonials?.map((testy, idx) => (
