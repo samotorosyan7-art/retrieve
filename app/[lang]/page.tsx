@@ -78,9 +78,9 @@ export default async function HomePage() {
                 },
                 "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "Argishti 11/11",
+                    "streetAddress": "Baghramyan 41",
                     "addressLocality": "Yerevan",
-                    "postalCode": "0015",
+                    "postalCode": "0019",
                     "addressCountry": "AM"
                 },
                 "geo": {
