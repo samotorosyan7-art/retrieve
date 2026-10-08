@@ -171,6 +171,63 @@ function pickBestImage($img: cheerio.Cheerio<any>): string {
 }
 
 /**
+ * Normalize an uploads URL to a lookup key, so every resized variant
+ * (-300x200, -scaled) and host (www/wp) maps to the same original file.
+ */
+function mediaKey(url: string): string {
+    const match = url.match(/\/wp-content\/uploads\/[^?#]+/);
+    if (!match) return "";
+    return match[0]
+        .replace(/-\d+x\d+(?=\.\w+$)/, "")
+        .replace(/-scaled(?=\.\w+$)/, "")
+        .toLowerCase();
+}
+
+/**
+ * Map of upload file → alt text from the WP Media Library (REST API), per language.
+ * Image alts come from here rather than the scraped page HTML. Next's fetch cache
+ * dedupes and caches the requests, so calling this once per image is cheap.
+ */
+async function getMediaAltMap(lang?: string): Promise<Map<string, string>> {
+    const altMap = new Map<string, string>();
+    const pageUrl = (page: number) =>
+        `${wpGlobusApiUrl(lang)}/media?per_page=100&page=${page}&_fields=source_url,alt_text`;
+    const fetchOpts = { next: { revalidate: 3600 } };
+
+    const addPage = async (response: Response) => {
+        if (!response.ok) return;
+        const items: { source_url?: string; alt_text?: string }[] = await response.json();
+        for (const item of items) {
+            const key = mediaKey(item.source_url || "");
+            const alt = item.alt_text?.trim();
+            if (key && alt) altMap.set(key, alt);
+        }
+    };
+
+    try {
+        const first = await wpFetch(pageUrl(1), fetchOpts);
+        const totalPages = Math.min(parseInt(first.headers.get("X-WP-TotalPages") || "1", 10) || 1, 20);
+        await addPage(first);
+        const rest = await Promise.all(
+            Array.from({ length: totalPages - 1 }, (_, i) => wpFetch(pageUrl(i + 2), fetchOpts))
+        );
+        await Promise.all(rest.map(addPage));
+    } catch (error) {
+        if (isDynamicServerUsageError(error)) throw error;
+        console.error("Error fetching media alt texts:", error);
+    }
+    return altMap;
+}
+
+/** Alt text for an uploaded image, or "" so callers fall back to the title/name. */
+async function getMediaAlt(imageUrl: string | null | undefined, lang?: string): Promise<string> {
+    if (!imageUrl) return "";
+    const key = mediaKey(imageUrl);
+    if (!key) return "";
+    return (await getMediaAltMap(lang)).get(key) || "";
+}
+
+/**
  * Fetch the slugs of every PUBLISHED personnel from the WordPress personnel sitemap.
  * This is the source of truth for who is published, independent of the curated
  * our-team page (which may omit some published members).
@@ -633,7 +690,7 @@ async function getTeamMemberCard(slug: string, lang?: string): Promise<WPTeamMem
             name,
             position,
             image: rawImage ? fixHttps(rawImage) : "",
-            imageAlt: $img.attr("alt") || "",
+            imageAlt: await getMediaAlt(rawImage, lang),
             link,
         };
     } catch (error) {
@@ -675,12 +732,13 @@ async function scrapeOurTeamPage(lang?: string): Promise<WPTeamMember[]> {
                     name,
                     position,
                     image: rawImage ? fixHttps(rawImage) : "",
-                    imageAlt: $img.attr("alt") || "",
+                    imageAlt: "",
                     link,
                 });
             }
         });
 
+        await Promise.all(members.map(async (m) => { m.imageAlt = await getMediaAlt(m.image, lang); }));
         return members;
     } catch (error) {
         if (isDynamicServerUsageError(error)) throw error;
@@ -881,7 +939,6 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
                 const title = $(el).find("h3, .gdlr-core-portfolio-title, .gdlr-core-column-service-title").text().trim();
                 const $img = $(el).find("img");
                 const image = $img.attr("src") || null;
-                const image_alt = $img.attr("alt") || "";
                 const link = $(el).find("a").attr("href");
 
                 if (title && link && link !== "#") {
@@ -893,7 +950,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
                             slug: slug,
                             title: title,
                             image: image,
-                            imageAlt: image_alt,
+                            imageAlt: "",
                             category: category,
                             categories: [],
                             tags: []
@@ -901,6 +958,7 @@ export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]>
                     }
                 }
             });
+            await Promise.all(items.map(async (item) => { item.imageAlt = await getMediaAlt(item.image, lang); }));
             return items;
         };
 
@@ -985,7 +1043,7 @@ export async function getPersonnelDetails(slug: string, lang?: string): Promise<
 
         // Prefer data-src (lazy-loading plugins), then srcset highest-res, then src
         let image = pickBestImage($img);
-        const image_alt = $img.attr("alt") || "";
+        const image_alt = await getMediaAlt(image, lang);
 
         if (image.startsWith("http://")) {
             image = image.replace("http://", "https://");
@@ -1719,7 +1777,7 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
 
         if (img) {
             data.image = img;
-            data.imageAlt = $img.attr("alt") || "";
+            data.imageAlt = await getMediaAlt(img, lang);
         }
 
         return data;
