@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getPortfolioItems, getTeamMembers, getBlogPosts, getLegalUpdates } from '@/lib/wordpress'
+import { getPortfolioItems, getTeamMembers, getBlogPosts } from '@/lib/wordpress'
 
 export const dynamic = "force-dynamic";
 
@@ -19,16 +19,6 @@ export default async function sitemap(
   const lang = typeof id === 'string' ? id : "en";
 
   let allPages: MetadataRoute.Sitemap = []
-
-  // Global root (redirects or canonical base). Only add on 'en' to avoid duplication in each sitemap.
-  if (lang === "en") {
-    allPages.push({
-      url: `${baseUrl}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 1,
-    })
-  }
 
   // Static core routes
   const staticRoutes = [
@@ -87,22 +77,12 @@ export default async function sitemap(
     priority: 0.5,
   }))
 
-  // 5. Dynamic Legal Updates
-  const { posts: legalUpdates } = await getLegalUpdates(1, 100, lang)
-  const legalUpdatePages = legalUpdates.map((post) => ({
-    url: `${baseUrl}/${lang}/legal-updates/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }))
-
   allPages = [
     ...allPages,
     ...staticPages,
     ...practiceAreaPages,
     ...personnelPages,
     ...blogPages,
-    ...legalUpdatePages,
   ]
 
   return allPages

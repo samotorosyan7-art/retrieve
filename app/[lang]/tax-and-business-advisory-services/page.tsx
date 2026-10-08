@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import PortfolioCard from "@/components/ui/PortfolioCard";
@@ -14,17 +13,15 @@ const dictionaries = {
     am: amCommon,
 } as const;
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     return getYoastMetadata("/tax-and-business-advisory-services", lang);
 }
 
 export const dynamic = "force-dynamic";
 
-export default async function TaxAdvisoryServicesPage() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export default async function TaxAdvisoryServicesPage({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     const items = await getPortfolioItems(lang);
 
     const sortedItems = [...items].sort((a, b) => a.title.localeCompare(b.title));

@@ -1,5 +1,4 @@
 
-import { cookies } from "next/headers";
 import Hero from "@/components/website/Hero";
 import WhyChooseUs from "@/components/website/WhyChooseUs";
 import ClientsShowcase from "@/components/website/ClientsShowcase";
@@ -15,18 +14,16 @@ import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
 import { getPortfolioItems, getTeamMembers, getLegalUpdates, getYoastMetadata, getMasonryPosts } from "@/lib/wordpress";
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang;
     return getYoastMetadata("/", lang);
 }
 
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang;
 
     const portfolioItems = await getPortfolioItems(lang);
     const teamMembers = await getTeamMembers(lang);

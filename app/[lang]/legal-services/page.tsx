@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { getPortfolioItems, getYoastMetadata } from "@/lib/wordpress";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import PortfolioCard from "@/components/ui/PortfolioCard";
@@ -14,17 +13,15 @@ const dictionaries = {
     am: amCommon,
 } as const;
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     return getYoastMetadata("/legal-services", lang);
 }
 
 export const dynamic = "force-dynamic";
 
-export default async function LegalServicesPage() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export default async function LegalServicesPage({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     const items = await getPortfolioItems(lang);
 
     const orderSlugs = [

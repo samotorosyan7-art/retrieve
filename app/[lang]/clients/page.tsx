@@ -4,6 +4,7 @@ import { CLIENTS, CLIENT_INDUSTRY_COUNT, CLIENT_TOTAL_LABEL } from "@/data/clien
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
 import amCommon from "@/locales/am/common.json";
+import { buildAlternates } from "@/lib/seo";
 
 const dictionaries = {
     en: enCommon,
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         description:
             (t as any).clients_meta_desc ||
             "The organizations Retrieve Legal & Tax advises — from global nonprofits and universities to fast-scaling startups across Armenia and beyond.",
+        alternates: buildAlternates(lang, "/clients"),
     };
 }
 

@@ -5,7 +5,7 @@ import Footer from "@/components/website/Footer";
 import I18nProvider from "@/components/providers/I18nProvider";
 import MobileFAB from "@/components/website/MobileFAB";
 import { getPracticeAreasNav } from "@/lib/wordpress";
-import { cookies } from "next/headers";
+import { LOCALES, toLangCode } from "@/lib/seo";
 import Script from "next/script";
 
 
@@ -23,15 +23,6 @@ export const metadata: Metadata = {
         ],
         apple: "/favicon.png",
     },
-    alternates: {
-        canonical: "/",
-        languages: {
-            "en": "/en",
-            "am": "/am",
-            "ru": "/ru",
-            "x-default": "/en",
-        },
-    },
     openGraph: {
         images: ["https://www.retrieve.am/logo.jpg"],
     },
@@ -45,15 +36,17 @@ export const dynamic = "force-dynamic";
 
 export default async function RootLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: Promise<{ lang: string }>;
 }) {
     const practiceAreas = await getPracticeAreasNav();
-    const cookieStore = await cookies();
-    const lang = cookieStore.get("i18next")?.value || "en";
+    const { lang: routeLang } = await params;
+    const lang = (LOCALES as readonly string[]).includes(routeLang) ? routeLang : "en";
 
     return (
-        <html lang={lang} className="font-sans">
+        <html lang={toLangCode(lang)} className="font-sans">
             <Script
                 src="https://www.googletagmanager.com/gtag/js?id=AW-18179368906"
                 strategy="afterInteractive"

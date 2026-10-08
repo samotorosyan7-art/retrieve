@@ -1,5 +1,6 @@
 import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate, WPPage } from "@/types/wordpress";
 import * as cheerio from "cheerio";
+import { buildAlternates } from "./seo";
 
 import enCommon from '../locales/en/common.json';
 import ruCommon from '../locales/ru/common.json';
@@ -213,6 +214,9 @@ async function getPublishedPersonnelSlugs(): Promise<string[]> {
  * Falls back to {} gracefully if WP is slow or unavailable.
  */
 export async function getYoastMetadata(path: string, lang: string = "en", overridePath?: string): Promise<import("next").Metadata> {
+    // Canonical/hreflang come from the route, so they stay correct even if the WordPress fetch fails.
+    const alternates = buildAlternates(lang, overridePath || path);
+
     try {
         const baseUrl = lang === "en" ? WP_BASE_URL : `${WP_BASE_URL}/${lang}`;
         const cleanPath = path.startsWith("/") ? path : `/${path}`;
@@ -270,12 +274,12 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             }
 
             clearTimeout(timeout);
-            if (!response.ok) return {};
+            if (!response.ok) return { alternates };
             html = await response.text();
         } catch (err) {
             clearTimeout(timeout);
             console.error(`Fetch error in getYoastMetadata for ${url}:`, err);
-            return {};
+            return { alternates };
         }
 
         const $ = cheerio.load(html);
@@ -300,25 +304,12 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
         const ogImage = $("meta[property='og:image']").attr("content");
         const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.jpg";
 
-        const BASE_URL = "https://www.retrieve.am";
-        const nextPath = overridePath || path;
-        const normalizedPath = nextPath.startsWith("/") ? nextPath : `/${nextPath}`;
-        // Ensure path ends without slash for consistent concatenation, then add it where needed
-        const pathSuffix = normalizedPath.replace(/\/$/, "");
-        const finalCanonical = `${BASE_URL}/${lang}${pathSuffix}`.replace(/\/+$/, "");
+        const finalCanonical = alternates?.canonical as string;
 
         return {
             title: title ? { absolute: title } : undefined,
             description: description || undefined,
-            alternates: {
-                canonical: finalCanonical,
-                languages: {
-                    "en": `${BASE_URL}/en${pathSuffix}`.replace(/\/+$/, ""),
-                    "am": `${BASE_URL}/am${pathSuffix}`.replace(/\/+$/, ""),
-                    "ru": `${BASE_URL}/ru${pathSuffix}`.replace(/\/+$/, ""),
-                    "x-default": `${BASE_URL}/en${pathSuffix}`.replace(/\/+$/, ""),
-                },
-            },
+            alternates,
             openGraph: {
                 siteName: "Retrieve Legal & Tax",
                 type: "website",
@@ -336,7 +327,7 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
         };
     } catch (e) {
         console.error(`Error scraping Yoast metadata for ${path}:`, e);
-        return {};
+        return { alternates };
     }
 }
 

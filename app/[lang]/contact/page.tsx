@@ -1,7 +1,6 @@
 import { Mail, Phone, MapPin, Clock, Linkedin } from "lucide-react";
 import ContactForm from "./ContactForm";
 
-import { cookies } from "next/headers";
 import { getYoastMetadata } from "@/lib/wordpress";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -9,17 +8,15 @@ import ru from "@/locales/ru/common.json";
 
 const dictionaries = { en, am, ru };
 
-export async function generateMetadata() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     return getYoastMetadata("/contact", lang);
 }
 
 export const dynamic = "force-dynamic";
 
-export default async function ContactPage() {
-    const cookieStore = await cookies();
-    const lang = (cookieStore.get("i18next")?.value || "en") as keyof typeof dictionaries;
+export default async function ContactPage({ params }: { params: Promise<{ lang: string }> }) {
+    const lang = (await params).lang as keyof typeof dictionaries;
     const t = dictionaries[lang] || dictionaries.en;
 
     const contactInfo = [
