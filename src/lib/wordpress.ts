@@ -2,6 +2,9 @@ import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate, WPPage } from "@/ty
 import { buildAlternates } from "./seo";
 import personnelData from "../data/personnel.json";
 import practiceAreaData from "../data/practice-areas.json";
+import tagsData from "../data/tags.json";
+import pagesData from "../data/pages.json";
+import seoData from "../data/seo.json";
 
 import enCommon from '../locales/en/common.json';
 import ruCommon from '../locales/ru/common.json';
@@ -164,24 +167,33 @@ function safeDecodeURIComponent(text: string): string {
     }
 }
 
+type SeoHead = { title?: string; description?: string; ogImage?: string };
+
 /**
- * Fetch Yoast's SEO head for a WordPress URL via the Yoast REST API
- * (/wp-json/yoast/v1/get_head). Returns null if Yoast reports no page there.
+ * Yoast SEO data for a blog post / legal update, from the post's own
+ * yoast_head_json in the WordPress posts API. Returns null if there's no such post.
  */
-async function fetchYoastHead(pageUrl: string, signal: AbortSignal): Promise<Record<string, any> | null> {
+async function getPostSeoHead(slug: string, signal: AbortSignal): Promise<SeoHead | null> {
     const response = await wpFetch(
-        `${WP_BASE_URL}/wp-json/yoast/v1/get_head?url=${encodeURIComponent(pageUrl)}`,
+        `${WP_API_URL}/posts?slug=${encodeURIComponent(slug)}&_fields=yoast_head_json`,
         { signal, next: { revalidate: WP_REVALIDATE_SECONDS } },
         1
     );
     if (!response.ok) return null;
-    const data = await response.json();
-    return data?.status === 200 && data.json ? data.json : null;
+    const yoast = (await response.json())?.[0]?.yoast_head_json;
+    if (!yoast) return null;
+    return {
+        title: decodeEntities(yoast.title || yoast.og_title || yoast.twitter_title || ""),
+        description: decodeEntities(yoast.description || yoast.og_description || ""),
+        ogImage: yoast.og_image?.[0]?.url,
+    };
 }
 
 /**
- * Build Next.js Metadata from local meta titles/descriptions, falling back to
- * Yoast SEO data from the WordPress REST API.
+ * Build Next.js Metadata for a route. Title/description come from local
+ * common.json first, then from Yoast SEO data: kept locally in
+ * src/data/seo.json for site pages (practice areas, personnel, tags, ...) and
+ * read from the WordPress posts API for blog posts / legal updates.
  * Falls back to {} gracefully if WP is slow or unavailable.
  */
 export async function getYoastMetadata(path: string, lang: string = "en", overridePath?: string): Promise<import("next").Metadata> {
@@ -189,70 +201,39 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
     const alternates = buildAlternates(lang, overridePath || path);
 
     try {
-        // Route params arrive percent-encoded (e.g. Cyrillic/Armenian blog slugs);
-        // decode so fetchYoastHead's encodeURIComponent doesn't double-encode them.
+        // Route params arrive percent-encoded (e.g. Cyrillic/Armenian blog slugs).
         const decodedPath = safeDecodeURIComponent(path);
         const cleanPath = decodedPath.startsWith("/") ? decodedPath : `/${decodedPath}`;
         const segments = cleanPath.split("/").filter(Boolean);
-        const rootSlug = segments.length > 1 ? segments[segments.length - 1] : null;
-        const pageUrl = (base: string, p: string) => `${base}${p === "/" ? "" : p}/`;
-        const baseUrl = lang === "en" ? WP_BASE_URL : `${WP_BASE_URL}/${lang}`;
 
-        // Same lookup order as the site's URLs: the exact path, then its root slug
-        // (e.g. /practice-areas/slug -> /slug), then the English versions of both.
-        const candidates = [pageUrl(baseUrl, cleanPath)];
-        if (rootSlug) candidates.push(pageUrl(baseUrl, `/${rootSlug}`));
-        if (lang !== "en") {
-            candidates.push(pageUrl(WP_BASE_URL, cleanPath));
-            if (rootSlug) candidates.push(pageUrl(WP_BASE_URL, `/${rootSlug}`));
-        }
+        let head: SeoHead | null = (seoData as Record<string, Record<string, SeoHead>>)[lang]?.[cleanPath] ?? null;
 
-        // 5-second timeout to avoid hanging Vercel serverless functions
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 5000);
-
-        let head: Record<string, any> | null = null;
-        try {
-            for (const candidate of candidates) {
-                head = await fetchYoastHead(candidate, controller.signal);
-                if (head) break;
+        // Blog posts and legal updates are routed as "/<slug>" and aren't in the
+        // local SEO file — new ones are published in WordPress at any time.
+        if (!head && segments.length === 1) {
+            // 5-second timeout to avoid hanging Vercel serverless functions
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+            try {
+                head = await getPostSeoHead(segments[0], controller.signal);
+            } catch (err) {
+                if (isDynamicServerUsageError(err)) throw err;
+                console.error(`Fetch error in getYoastMetadata for ${cleanPath}:`, err);
+            } finally {
+                clearTimeout(timeout);
             }
-
-            // get_head omits the meta description for posts and pages, but their
-            // REST objects carry it in yoast_head_json — fill it in from there.
-            const slug = segments[segments.length - 1];
-            if (head && !head.description && !head.og_description && slug) {
-                for (const type of ["posts", "pages"]) {
-                    const response = await wpFetch(
-                        `${wpGlobusApiUrl(lang)}/${type}?slug=${encodeURIComponent(slug)}&_fields=yoast_head_json`,
-                        { signal: controller.signal, next: { revalidate: WP_REVALIDATE_SECONDS } },
-                        1
-                    );
-                    if (!response.ok) continue;
-                    const yoast = (await response.json())?.[0]?.yoast_head_json;
-                    if (yoast?.description || yoast?.og_description) {
-                        head = { ...head, description: yoast.description, og_description: yoast.og_description };
-                        break;
-                    }
-                }
-            }
-        } catch (err) {
-            if (isDynamicServerUsageError(err)) throw err;
-            console.error(`Fetch error in getYoastMetadata for ${candidates[0]}:`, err);
-        } finally {
-            clearTimeout(timeout);
         }
 
         // Resolve translated title and description from common.json
         const dict = dictionaries[lang] || enCommon;
         const metaKey = getMetaKey(path);
 
-        const title: string = dict.meta_titles?.[metaKey] || decodeEntities(head?.title || head?.og_title || head?.twitter_title || "");
-        const description: string = dict.meta_descriptions?.[metaKey] || decodeEntities(head?.description || head?.og_description || "");
+        const title: string = dict.meta_titles?.[metaKey] || head?.title || "";
+        const description: string = dict.meta_descriptions?.[metaKey] || head?.description || "";
 
         if (!head && !title) return { alternates };
 
-        const ogImage: string | undefined = head?.og_image?.[0]?.url;
+        const ogImage = head?.ogImage;
         const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.jpg";
 
         const finalCanonical = alternates?.canonical as string;
@@ -778,40 +759,18 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
 }
 
 /**
- * Fetch a tag by its slug
+ * Blog tags are maintained locally in src/data/tags.json (the same in every
+ * language in WordPress). Their ids match WordPress, so getPostsByTag works.
  */
-export async function getTagBySlug(slug: string, lang?: string): Promise<WPTag | null> {
-    try {
-        const url = new URL(`${WP_API_URL}/tags`);
-        url.searchParams.append("slug", slug);
-        if (lang) {
-            url.searchParams.append("lang", lang);
-        }
+function localTags(): WPTag[] {
+    return tagsData.map(({ id, name, slug }) => ({ id, name, slug }));
+}
 
-        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
-        if (!response.ok) return null;
-
-        // Check if response is JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            const text = await response.text();
-            console.error(`WordPress API returned non-JSON response for tag: ${contentType}. Body: ${text.substring(0, 500)}`);
-            return null;
-        }
-
-        const data = await response.json();
-        if (!data.length) return null;
-
-        return {
-            id: data[0].id,
-            name: data[0].name.replace(/&amp;/g, "&"),
-            slug: data[0].slug,
-        };
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error(`Error fetching tag by slug ${slug}:`, error);
-        return null;
-    }
+/**
+ * Get a tag by its slug
+ */
+export async function getTagBySlug(slug: string, _lang?: string): Promise<WPTag | null> {
+    return localTags().find((tag) => tag.slug === slug) ?? null;
 }
 
 /**
@@ -910,30 +869,12 @@ export async function getPracticeAreaContent(slug: string, lang?: string): Promi
     return english ? { ...english, isFallback: true } : null;
 }
 
-export async function getTags(lang?: string): Promise<WPTag[]> {
-    try {
-        const url = new URL(`${WP_API_URL}/tags`);
-        url.searchParams.append("per_page", "100");
-        url.searchParams.append("hide_empty", "true");
-        if (lang) {
-            url.searchParams.append("lang", lang);
-        }
-
-        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
-        if (!response.ok) return [];
-
-        const data = await response.json();
-        return data.map((t: any) => ({
-            id: t.id,
-            name: t.name.replace(/&amp;/g, "&"),
-            slug: t.slug,
-        }));
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching tags:", error);
-        return [];
-    }
+export async function getTags(_lang?: string): Promise<WPTag[]> {
+    // Only tags that have posts, like WordPress's hide_empty.
+    const used = new Set(tagsData.filter((tag) => tag.count > 0).map((tag) => tag.slug));
+    return localTags().filter((tag) => used.has(tag.slug));
 }
+
 /**
  * Resolves a slug to its content type (post or portfolio)
  */
@@ -958,41 +899,9 @@ export async function getContentTypeBySlug(slug: string): Promise<"post" | "port
 }
 
 /**
- * Fetch a generic WordPress page by its slug
+ * Get a static page (privacy policy, terms of service) by its slug, maintained
+ * locally in src/data/pages.json.
  */
-export async function getWPPageBySlug(slug: string, lang?: string): Promise<WPPage | null> {
-    try {
-        const url = new URL(`${WP_API_URL}/pages`);
-        url.searchParams.append("slug", slug);
-        if (lang && LANGUAGE_AUTHOR_MAP[lang]) {
-            url.searchParams.append("author", LANGUAGE_AUTHOR_MAP[lang].toString());
-        }
-
-        const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
-        if (!response.ok) return null;
-
-        let data = await response.json();
-
-        // Fallback 1: Try without author filter
-        if (!data.length && lang && LANGUAGE_AUTHOR_MAP[lang]) {
-            const fallbackUrl = new URL(`${WP_API_URL}/pages`);
-            fallbackUrl.searchParams.append("slug", slug);
-            const fallbackRes = await wpFetch(fallbackUrl.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
-            if (fallbackRes.ok) data = await fallbackRes.json();
-        }
-
-        if (!data.length) return null;
-
-        const p = data[0];
-        return {
-            id: p.id,
-            slug: p.slug,
-            title: p.title?.rendered?.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&") ?? "",
-            content: p.content?.rendered ?? "",
-        };
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error(`Error fetching page by slug ${slug}:`, error);
-        return null;
-    }
+export async function getWPPageBySlug(slug: string, _lang?: string): Promise<WPPage | null> {
+    return (pagesData as Record<string, WPPage>)[slug] ?? null;
 }

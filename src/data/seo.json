@@ -1,0 +1,1013 @@
+{
+  "en": {
+    "/": {
+      "title": "Law Firm Armenia | Legal Services | Armenian Lawyers | Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/about-us": {
+      "title": "Expert Corporate Attorneys & Lawyers in Armenia",
+      "description": "Meet Retrieve's experienced attorneys and legal experts in Armenia. Our team brings deep expertise across business law, tax, IP & dispute resolution.",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tax-and-business-advisory-services": {
+      "title": "Tax & Business Advisory Services in Armenia | Accounting, Tax & M&A",
+      "description": "From bookkeeping to M&A advisory, Retrieve offers comprehensive tax & business advisory services in Armenia for startups, businesses & individual clients.",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/contact": {
+      "title": "Contact - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/blog": {
+      "title": "Legal Blog | Business Law Insights & Regulatory Updates in Armenia",
+      "description": "Stay ahead with Retrieve's legal blog. Expert insights on Armenian business law, tax regulations, real estate, IP, crypto & more from our experienced legal team.",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-updates": {
+      "title": "Legal Updates in Armenia | Law & Business Regulation Analysis",
+      "description": "Stay compliant & informed with our legal updates. In-depth analysis of Armenian laws, business regulations & legal framework changes.",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-services": {
+      "title": "Legal Services in Armenia | Legal Solutions | Retrieve",
+      "description": "Comprehensive legal services in Armenia: business, real estate, investment, banking, competition, energy, IT, health & crypto law. Your trusted legal partner.",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/privacy-policy": {
+      "title": "Privacy Policy - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/terms-of-service": {
+      "title": "Terms of Service - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/practice-areas/accounting-bookkeeping": {
+      "title": "Accounting & Bookkeeping Services Armenia | Financial Reporting Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87.jpg"
+    },
+    "/practice-areas/arbitration-ligitation": {
+      "title": "Arbitration & Litigation Lawyers Armenia | Commercial Dispute Resolution",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652.jpg"
+    },
+    "/practice-areas/banking-finance-law": {
+      "title": "Banking & Finance Lawyers in Armenia | Fintech, Lending & Regulatory",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b.jpg"
+    },
+    "/practice-areas/competition-law": {
+      "title": "Competition Lawyers in Armenia | Antitrust, Merger Control & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787.jpg"
+    },
+    "/practice-areas/corporate-business-law": {
+      "title": "Business & Corporate Lawyers in Armenia | Business Formation & M&A",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg"
+    },
+    "/practice-areas/corporate-finance-advisory": {
+      "title": "Corporate Finance Advisory in Armenia | Strategy & Risk Management",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04.jpg"
+    },
+    "/practice-areas/employment-law": {
+      "title": "Employment Lawyers Armenia | Labor Law Compliance & Workplace Disputes",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3.jpg"
+    },
+    "/practice-areas/energy-law": {
+      "title": "Energy Lawyers in Armenia | Renewable Energy, PPAs & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg"
+    },
+    "/practice-areas/health-pharmaceuticals": {
+      "title": "Healthcare & Pharmaceutical Lawyer Armenia | Compliance & IP Protection",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f.jpg"
+    },
+    "/practice-areas/igaming-licensing": {
+      "title": "Crypto & Blockchain Lawyers in Armenia | ICOs, Smart Contracts & AML",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201.jpg"
+    },
+    "/practice-areas/immigration-residence-services": {
+      "title": "Immigration Lawyers Armenia | Visa, Work Permit & Residency Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_.jpg"
+    },
+    "/practice-areas/intellectual-property-law": {
+      "title": "Intellectual Property Lawyer Armenia | Trademarks, Patents & Copyright",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2.jpg"
+    },
+    "/practice-areas/investment-law": {
+      "title": "Investment Lawyers in Armenia | Foreign Investment & Joint Ventures",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186.jpg"
+    },
+    "/practice-areas/it-data-privacy-protection": {
+      "title": "IT & Data Protection Lawyers Armenia | GDPR & Cybersecurity Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg"
+    },
+    "/practice-areas/ma-advising": {
+      "title": "M&A Advisory in Armenia | Mergers, Acquisitions & Deal Structuring",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a.jpg"
+    },
+    "/practice-areas/real-estate-construction-law": {
+      "title": "Real Estate Lawyers in Armenia | Property, Development & Construction Law",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865.jpg"
+    },
+    "/practice-areas/tax-advisory": {
+      "title": "Tax Advisory Services in Armenia | Tax Planning & Financial Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg"
+    },
+    "/practice-areas/tax-law-compliance": {
+      "title": "Tax Lawyers Armenia | Tax Disputes, Legal Representation & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions-.jpg"
+    },
+    "/personnel/aleksandr-harutyunyan": {
+      "title": "Aleksandr Harutyunyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2019/02/IMG_9698-scaled-1.jpg"
+    },
+    "/personnel/anahit-petrosyan": {
+      "title": "Anahit Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2299-scaled.jpg"
+    },
+    "/personnel/feliks-hovakimyan": {
+      "title": "Feliks Hovakimyan, Esq. - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2320-scaled.jpg"
+    },
+    "/personnel/larisa-petrosyan": {
+      "title": "Larisa Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2297-scaled.jpg"
+    },
+    "/personnel/lia-nikoghosyan": {
+      "title": "Lia Nikoghosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2295-scaled.jpg"
+    },
+    "/personnel/lilit-petrosyan": {
+      "title": "Lilith Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/02/IMG_0033-scaled.jpg"
+    },
+    "/personnel/mariam-dovlatyan": {
+      "title": "Mariam Dovlatyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim-scaled.jpg"
+    },
+    "/personnel/meline-nadaryan": {
+      "title": "Meline Nadaryan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim1-scaled.jpg"
+    },
+    "/personnel/michael-hovhannesyan": {
+      "title": "Michael Hovhannesyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2304-scaled.jpg"
+    },
+    "/personnel/mikayel-sargsyan": {
+      "title": "Mikayel Sargsyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2316-scaled.jpg"
+    },
+    "/personnel/nanar-siravyan": {
+      "title": "Nanar Siravyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2307-scaled.jpg"
+    },
+    "/personnel/papin-karapetyan": {
+      "title": "Papin Karapetyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/IMG_1699-scaled.jpg"
+    },
+    "/personnel/vache-simonyan": {
+      "title": "Vache Simonyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2469-1-scaled.jpg"
+    },
+    "/personnel/yeghishe-manukyan": {
+      "title": "Yeghishe Manukyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/photo_2026-06-11-11.38.55.jpeg"
+    },
+    "/tag/bankrupcy-debt-2": {
+      "title": "\\Bankrupcy & Debt Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/antitrust": {
+      "title": "Antitrust Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/armenian-citizenship": {
+      "title": "Armenian Citizenship Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/banking-finance": {
+      "title": "Banking & Finance Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt-business-law-civil-human-rights-consumer-rights-criminal-defence-estate-planning-health-care-immigration-real-estate": {
+      "title": "Bankrupcy & Debt Business Law Civil & Human Rights Consumer Rights Criminal Defence Estate Planning Health Care Immigration Real Estate Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt%d5%b7": {
+      "title": "Bankrupcy & Debtշ Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankruptcy": {
+      "title": "Bankruptcy Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/business-law-civil-human-rights": {
+      "title": "Business Law Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rights": {
+      "title": "Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rightsconsumer-rightscriminal-defence": {
+      "title": "Civil & Human RightsConsumer RightsCriminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/consumer-rights": {
+      "title": "Consumer Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/criminal-defence": {
+      "title": "Criminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/dasd": {
+      "title": "dasd Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment": {
+      "title": "Employment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment-law": {
+      "title": "Employment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/estate-planning": {
+      "title": "Estate Planning Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/family": {
+      "title": "Family Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/general-practice": {
+      "title": "General Practice Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/health-care": {
+      "title": "Health Care Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/igaming": {
+      "title": "iGaming Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/intellectual-property": {
+      "title": "Intellectual Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment": {
+      "title": "Investment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment-law": {
+      "title": "Investment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-data-protection": {
+      "title": "IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-it-data-protection": {
+      "title": "IT IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/koko": {
+      "title": "Koko Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/law": {
+      "title": "Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit": {
+      "title": "Nonprofit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit-organizations": {
+      "title": "Nonprofit Organizations Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/permanent-residence-in-armenia": {
+      "title": "Permanent Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/personal-injury": {
+      "title": "Personal Injury Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/politics": {
+      "title": "Politics Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/property": {
+      "title": "Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation": {
+      "title": "relocation Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation-to-armenia": {
+      "title": "Relocation to Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-in-armenia": {
+      "title": "Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-permit-in-armenia": {
+      "title": "Residence Permit in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/science-technology": {
+      "title": "Science & Technology Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/test-tag": {
+      "title": "test tag Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work": {
+      "title": "work Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work-permit": {
+      "title": "Work Permit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    }
+  },
+  "ru": {
+    "/": {
+      "title": "Law Firm Armenia | Legal Services | Armenian Lawyers | Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/about-us": {
+      "title": "Expert Corporate Attorneys & Lawyers in Armenia",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tax-and-business-advisory-services": {
+      "title": "Tax & Business Advisory Services in Armenia | Accounting, Tax & M&A",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/contact": {
+      "title": "Contact - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/blog": {
+      "title": "Legal Blog | Business Law Insights & Regulatory Updates in Armenia",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-updates": {
+      "title": "Legal Updates in Armenia | Law & Business Regulation Analysis",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-services": {
+      "title": "Legal Services in Armenia | Legal Solutions | Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/practice-area-1": {
+      "title": "Practice Areas 1 - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/team-frame-style": {
+      "title": "Team / Frame Style - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/practice-areas/accounting-bookkeeping": {
+      "title": "Accounting & Bookkeeping Services Armenia | Financial Reporting Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87.jpg"
+    },
+    "/practice-areas/arbitration-ligitation": {
+      "title": "Arbitration & Litigation Lawyers Armenia | Commercial Dispute Resolution",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652.jpg"
+    },
+    "/practice-areas/banking-finance-law": {
+      "title": "Banking & Finance Lawyers in Armenia | Fintech, Lending & Regulatory",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b.jpg"
+    },
+    "/practice-areas/competition-law": {
+      "title": "Competition Lawyers in Armenia | Antitrust, Merger Control & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787.jpg"
+    },
+    "/practice-areas/corporate-business-law": {
+      "title": "Business & Corporate Lawyers in Armenia | Business Formation & M&A",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg"
+    },
+    "/practice-areas/corporate-finance-advisory": {
+      "title": "Corporate Finance Advisory in Armenia | Strategy & Risk Management",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04.jpg"
+    },
+    "/practice-areas/employment-law": {
+      "title": "Employment Lawyers Armenia | Labor Law Compliance & Workplace Disputes",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3.jpg"
+    },
+    "/practice-areas/energy-law": {
+      "title": "Energy Lawyers in Armenia | Renewable Energy, PPAs & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg"
+    },
+    "/practice-areas/health-pharmaceuticals": {
+      "title": "Healthcare & Pharmaceutical Lawyer Armenia | Compliance & IP Protection",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f.jpg"
+    },
+    "/practice-areas/igaming-licensing": {
+      "title": "Crypto & Blockchain Lawyers in Armenia | ICOs, Smart Contracts & AML",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201.jpg"
+    },
+    "/practice-areas/immigration-residence-services": {
+      "title": "Immigration Lawyers Armenia | Visa, Work Permit & Residency Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_.jpg"
+    },
+    "/practice-areas/intellectual-property-law": {
+      "title": "Intellectual Property Lawyer Armenia | Trademarks, Patents & Copyright",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2.jpg"
+    },
+    "/practice-areas/investment-law": {
+      "title": "Investment Lawyers in Armenia | Foreign Investment & Joint Ventures",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186.jpg"
+    },
+    "/practice-areas/it-data-privacy-protection": {
+      "title": "IT & Data Protection Lawyers Armenia | GDPR & Cybersecurity Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg"
+    },
+    "/practice-areas/ma-advising": {
+      "title": "M&A Advisory in Armenia | Mergers, Acquisitions & Deal Structuring",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a.jpg"
+    },
+    "/practice-areas/real-estate-construction-law": {
+      "title": "Real Estate Lawyers in Armenia | Property, Development & Construction Law",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865.jpg"
+    },
+    "/practice-areas/tax-advisory": {
+      "title": "Tax Advisory Services in Armenia | Tax Planning & Financial Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg"
+    },
+    "/practice-areas/tax-law-compliance": {
+      "title": "Tax Lawyers Armenia | Tax Disputes, Legal Representation & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions-.jpg"
+    },
+    "/personnel/aleksandr-harutyunyan": {
+      "title": "Aleksandr Harutyunyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2019/02/IMG_9698-scaled-1.jpg"
+    },
+    "/personnel/anahit-petrosyan": {
+      "title": "Anahit Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2299-scaled.jpg"
+    },
+    "/personnel/feliks-hovakimyan": {
+      "title": "Feliks Hovakimyan, Esq. - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2320-scaled.jpg"
+    },
+    "/personnel/larisa-petrosyan": {
+      "title": "Larisa Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2297-scaled.jpg"
+    },
+    "/personnel/lia-nikoghosyan": {
+      "title": "Lia Nikoghosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2295-scaled.jpg"
+    },
+    "/personnel/lilit-petrosyan": {
+      "title": "Lilith Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/02/IMG_0033-scaled.jpg"
+    },
+    "/personnel/mariam-dovlatyan": {
+      "title": "Mariam Dovlatyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim-scaled.jpg"
+    },
+    "/personnel/meline-nadaryan": {
+      "title": "Meline Nadaryan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim1-scaled.jpg"
+    },
+    "/personnel/michael-hovhannesyan": {
+      "title": "Michael Hovhannesyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2304-scaled.jpg"
+    },
+    "/personnel/mikayel-sargsyan": {
+      "title": "Mikayel Sargsyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2316-scaled.jpg"
+    },
+    "/personnel/nanar-siravyan": {
+      "title": "Nanar Siravyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2307-scaled.jpg"
+    },
+    "/personnel/papin-karapetyan": {
+      "title": "Papin Karapetyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/IMG_1699-scaled.jpg"
+    },
+    "/personnel/vache-simonyan": {
+      "title": "Vache Simonyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2469-1-scaled.jpg"
+    },
+    "/personnel/yeghishe-manukyan": {
+      "title": "Yeghishe Manukyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/photo_2026-06-11-11.38.55.jpeg"
+    },
+    "/tag/bankrupcy-debt-2": {
+      "title": "\\Bankrupcy & Debt Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/antitrust": {
+      "title": "Antitrust Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/armenian-citizenship": {
+      "title": "Armenian Citizenship Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/banking-finance": {
+      "title": "Banking & Finance Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt": {
+      "title": "Bankrupcy & Debt Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt-business-law-civil-human-rights-consumer-rights-criminal-defence-estate-planning-health-care-immigration-real-estate": {
+      "title": "Bankrupcy & Debt Business Law Civil & Human Rights Consumer Rights Criminal Defence Estate Planning Health Care Immigration Real Estate Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt%d5%b7": {
+      "title": "Bankrupcy & Debtշ Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankruptcy": {
+      "title": "Bankruptcy Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/business-law": {
+      "title": "Business Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/business-law-civil-human-rights": {
+      "title": "Business Law Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rights": {
+      "title": "Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rightsconsumer-rightscriminal-defence": {
+      "title": "Civil & Human RightsConsumer RightsCriminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/consumer-rights": {
+      "title": "Consumer Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/criminal-defence": {
+      "title": "Criminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/dasd": {
+      "title": "dasd Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment": {
+      "title": "Employment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment-law": {
+      "title": "Employment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/estate-planning": {
+      "title": "Estate Planning Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/family": {
+      "title": "Family Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/general-practice": {
+      "title": "General Practice Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/health-care": {
+      "title": "Health Care Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/igaming": {
+      "title": "iGaming Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/immigration": {
+      "title": "Immigration Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/intellectual-property": {
+      "title": "Intellectual Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment": {
+      "title": "Investment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment-law": {
+      "title": "Investment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-data-protection": {
+      "title": "IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-it-data-protection": {
+      "title": "IT IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/koko": {
+      "title": "Koko Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/law": {
+      "title": "Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit": {
+      "title": "Nonprofit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit-organizations": {
+      "title": "Nonprofit Organizations Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/permanent-residence-in-armenia": {
+      "title": "Permanent Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/personal-injury": {
+      "title": "Personal Injury Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/politics": {
+      "title": "Politics Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/property": {
+      "title": "Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/real-estate": {
+      "title": "Real Estate Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation": {
+      "title": "relocation Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation-to-armenia": {
+      "title": "Relocation to Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-in-armenia": {
+      "title": "Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-permit-in-armenia": {
+      "title": "Residence Permit in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/science-technology": {
+      "title": "Science & Technology Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/test-tag": {
+      "title": "test tag Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work": {
+      "title": "work Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work-permit": {
+      "title": "Work Permit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    }
+  },
+  "am": {
+    "/": {
+      "title": "Law Firm Armenia | Legal Services | Armenian Lawyers | Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/about-us": {
+      "title": "Expert Corporate Attorneys & Lawyers in Armenia",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tax-and-business-advisory-services": {
+      "title": "Tax & Business Advisory Services in Armenia | Accounting, Tax & M&A",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/contact": {
+      "title": "Contact - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/blog": {
+      "title": "Legal Blog | Business Law Insights & Regulatory Updates in Armenia",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-updates": {
+      "title": "Legal Updates in Armenia | Law & Business Regulation Analysis",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/legal-services": {
+      "title": "Legal Services in Armenia | Legal Solutions | Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/practice-area-2": {
+      "title": "- Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/team-plain-style": {
+      "title": "Team / Plain Style - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/practice-areas/accounting-bookkeeping": {
+      "title": "Accounting & Bookkeeping Services Armenia | Financial Reporting Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87.jpg"
+    },
+    "/practice-areas/arbitration-ligitation": {
+      "title": "Arbitration & Litigation Lawyers Armenia | Commercial Dispute Resolution",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652.jpg"
+    },
+    "/practice-areas/banking-finance-law": {
+      "title": "Banking & Finance Lawyers in Armenia | Fintech, Lending & Regulatory",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b.jpg"
+    },
+    "/practice-areas/competition-law": {
+      "title": "Competition Lawyers in Armenia | Antitrust, Merger Control & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787.jpg"
+    },
+    "/practice-areas/corporate-business-law": {
+      "title": "Business & Corporate Lawyers in Armenia | Business Formation & M&A",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg"
+    },
+    "/practice-areas/corporate-finance-advisory": {
+      "title": "Corporate Finance Advisory in Armenia | Strategy & Risk Management",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04.jpg"
+    },
+    "/practice-areas/employment-law": {
+      "title": "Employment Lawyers Armenia | Labor Law Compliance & Workplace Disputes",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3.jpg"
+    },
+    "/practice-areas/energy-law": {
+      "title": "Energy Lawyers in Armenia | Renewable Energy, PPAs & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg"
+    },
+    "/practice-areas/health-pharmaceuticals": {
+      "title": "Healthcare & Pharmaceutical Lawyer Armenia | Compliance & IP Protection",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f.jpg"
+    },
+    "/practice-areas/igaming-licensing": {
+      "title": "Crypto & Blockchain Lawyers in Armenia | ICOs, Smart Contracts & AML",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201.jpg"
+    },
+    "/practice-areas/immigration-residence-services": {
+      "title": "Immigration Lawyers Armenia | Visa, Work Permit & Residency Services",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_.jpg"
+    },
+    "/practice-areas/intellectual-property-law": {
+      "title": "Intellectual Property Lawyer Armenia | Trademarks, Patents & Copyright",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2.jpg"
+    },
+    "/practice-areas/investment-law": {
+      "title": "Investment Lawyers in Armenia | Foreign Investment & Joint Ventures",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186.jpg"
+    },
+    "/practice-areas/it-data-privacy-protection": {
+      "title": "IT & Data Protection Lawyers Armenia | GDPR & Cybersecurity Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg"
+    },
+    "/practice-areas/ma-advising": {
+      "title": "M&A Advisory in Armenia | Mergers, Acquisitions & Deal Structuring",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a.jpg"
+    },
+    "/practice-areas/real-estate-construction-law": {
+      "title": "Real Estate Lawyers in Armenia | Property, Development & Construction Law",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865.jpg"
+    },
+    "/practice-areas/tax-advisory": {
+      "title": "Tax Advisory Services in Armenia | Tax Planning & Financial Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg"
+    },
+    "/practice-areas/tax-law-compliance": {
+      "title": "Tax Lawyers Armenia | Tax Disputes, Legal Representation & Compliance",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions-.jpg"
+    },
+    "/personnel/aleksandr-harutyunyan": {
+      "title": "Aleksandr Harutyunyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2019/02/IMG_9698-scaled-1.jpg"
+    },
+    "/personnel/anahit-petrosyan": {
+      "title": "Anahit Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2299-scaled.jpg"
+    },
+    "/personnel/feliks-hovakimyan": {
+      "title": "Feliks Hovakimyan, Esq. - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2320-scaled.jpg"
+    },
+    "/personnel/larisa-petrosyan": {
+      "title": "Larisa Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2297-scaled.jpg"
+    },
+    "/personnel/lia-nikoghosyan": {
+      "title": "Lia Nikoghosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2295-scaled.jpg"
+    },
+    "/personnel/lilit-petrosyan": {
+      "title": "Lilith Petrosyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/02/IMG_0033-scaled.jpg"
+    },
+    "/personnel/mariam-dovlatyan": {
+      "title": "Mariam Dovlatyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim-scaled.jpg"
+    },
+    "/personnel/meline-nadaryan": {
+      "title": "Meline Nadaryan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/newim1-scaled.jpg"
+    },
+    "/personnel/michael-hovhannesyan": {
+      "title": "Michael Hovhannesyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2304-scaled.jpg"
+    },
+    "/personnel/mikayel-sargsyan": {
+      "title": "Mikayel Sargsyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2316-scaled.jpg"
+    },
+    "/personnel/nanar-siravyan": {
+      "title": "Nanar Siravyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2307-scaled.jpg"
+    },
+    "/personnel/papin-karapetyan": {
+      "title": "Papin Karapetyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/09/IMG_1699-scaled.jpg"
+    },
+    "/personnel/vache-simonyan": {
+      "title": "Vache Simonyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2469-1-scaled.jpg"
+    },
+    "/personnel/yeghishe-manukyan": {
+      "title": "Yeghishe Manukyan - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/photo_2026-06-11-11.38.55.jpeg"
+    },
+    "/tag/bankrupcy-debt-2": {
+      "title": "\\Bankrupcy & Debt Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/antitrust": {
+      "title": "Antitrust Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/armenian-citizenship": {
+      "title": "Armenian Citizenship Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/banking-finance": {
+      "title": "Banking & Finance Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt-business-law-civil-human-rights-consumer-rights-criminal-defence-estate-planning-health-care-immigration-real-estate": {
+      "title": "Bankrupcy & Debt Business Law Civil & Human Rights Consumer Rights Criminal Defence Estate Planning Health Care Immigration Real Estate Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankrupcy-debt%d5%b7": {
+      "title": "Bankrupcy & Debtշ Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/bankruptcy": {
+      "title": "Bankruptcy Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/business-law-civil-human-rights": {
+      "title": "Business Law Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rights": {
+      "title": "Civil & Human Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/civil-human-rightsconsumer-rightscriminal-defence": {
+      "title": "Civil & Human RightsConsumer RightsCriminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/consumer-rights": {
+      "title": "Consumer Rights Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/criminal-defence": {
+      "title": "Criminal Defence Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/dasd": {
+      "title": "dasd Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment": {
+      "title": "Employment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/employment-law": {
+      "title": "Employment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/estate-planning": {
+      "title": "Estate Planning Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/family": {
+      "title": "Family Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/general-practice": {
+      "title": "General Practice Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/health-care": {
+      "title": "Health Care Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/igaming": {
+      "title": "iGaming Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/intellectual-property": {
+      "title": "Intellectual Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment": {
+      "title": "Investment Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/investment-law": {
+      "title": "Investment Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-data-protection": {
+      "title": "IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/it-it-data-protection": {
+      "title": "IT IT & Data Protection Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/koko": {
+      "title": "Koko Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/law": {
+      "title": "Law Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit": {
+      "title": "Nonprofit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/nonprofit-organizations": {
+      "title": "Nonprofit Organizations Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/permanent-residence-in-armenia": {
+      "title": "Permanent Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/personal-injury": {
+      "title": "Personal Injury Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/politics": {
+      "title": "Politics Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/property": {
+      "title": "Property Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation": {
+      "title": "relocation Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/relocation-to-armenia": {
+      "title": "Relocation to Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-in-armenia": {
+      "title": "Residence in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/residence-permit-in-armenia": {
+      "title": "Residence Permit in Armenia Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/science-technology": {
+      "title": "Science & Technology Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/test-tag": {
+      "title": "test tag Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work": {
+      "title": "work Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    },
+    "/tag/work-permit": {
+      "title": "Work Permit Archives - Retrieve",
+      "ogImage": "https://wp.retrieve.am/wp-content/uploads/2026/06/IMG_2349-scaled.jpg"
+    }
+  }
+}

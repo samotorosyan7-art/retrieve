@@ -1,0 +1,272 @@
+[
+  {
+    "id": 128,
+    "name": "\\Bankrupcy & Debt",
+    "slug": "bankrupcy-debt-2",
+    "count": 0
+  },
+  {
+    "id": 5,
+    "name": "Antitrust",
+    "slug": "antitrust",
+    "count": 0
+  },
+  {
+    "id": 135,
+    "name": "Armenian Citizenship",
+    "slug": "armenian-citizenship",
+    "count": 3
+  },
+  {
+    "id": 6,
+    "name": "Banking & Finance",
+    "slug": "banking-finance",
+    "count": 39
+  },
+  {
+    "id": 117,
+    "name": "Bankrupcy & Debt",
+    "slug": "bankrupcy-debt",
+    "count": 76
+  },
+  {
+    "id": 125,
+    "name": "Bankrupcy & Debt Business Law Civil & Human Rights Consumer Rights Criminal Defence Estate Planning Health Care Immigration Real Estate",
+    "slug": "bankrupcy-debt-business-law-civil-human-rights-consumer-rights-criminal-defence-estate-planning-health-care-immigration-real-estate",
+    "count": 0
+  },
+  {
+    "id": 127,
+    "name": "Bankrupcy & Debtշ",
+    "slug": "bankrupcy-debt%d5%b7",
+    "count": 0
+  },
+  {
+    "id": 7,
+    "name": "Bankruptcy",
+    "slug": "bankruptcy",
+    "count": 0
+  },
+  {
+    "id": 118,
+    "name": "Business Law",
+    "slug": "business-law",
+    "count": 103
+  },
+  {
+    "id": 126,
+    "name": "Business Law Civil & Human Rights",
+    "slug": "business-law-civil-human-rights",
+    "count": 0
+  },
+  {
+    "id": 119,
+    "name": "Civil & Human Rights",
+    "slug": "civil-human-rights",
+    "count": 86
+  },
+  {
+    "id": 129,
+    "name": "Civil & Human RightsConsumer RightsCriminal Defence",
+    "slug": "civil-human-rightsconsumer-rightscriminal-defence",
+    "count": 0
+  },
+  {
+    "id": 120,
+    "name": "Consumer Rights",
+    "slug": "consumer-rights",
+    "count": 81
+  },
+  {
+    "id": 121,
+    "name": "Criminal Defence",
+    "slug": "criminal-defence",
+    "count": 72
+  },
+  {
+    "id": 37,
+    "name": "dasd",
+    "slug": "dasd",
+    "count": 0
+  },
+  {
+    "id": 8,
+    "name": "Employment",
+    "slug": "employment",
+    "count": 0
+  },
+  {
+    "id": 285,
+    "name": "Employment Law",
+    "slug": "employment-law",
+    "count": 2
+  },
+  {
+    "id": 122,
+    "name": "Estate Planning",
+    "slug": "estate-planning",
+    "count": 74
+  },
+  {
+    "id": 9,
+    "name": "Family",
+    "slug": "family",
+    "count": 0
+  },
+  {
+    "id": 10,
+    "name": "General Practice",
+    "slug": "general-practice",
+    "count": 0
+  },
+  {
+    "id": 123,
+    "name": "Health Care",
+    "slug": "health-care",
+    "count": 72
+  },
+  {
+    "id": 143,
+    "name": "iGaming",
+    "slug": "igaming",
+    "count": 1
+  },
+  {
+    "id": 11,
+    "name": "Immigration",
+    "slug": "immigration",
+    "count": 93
+  },
+  {
+    "id": 12,
+    "name": "Intellectual Property",
+    "slug": "intellectual-property",
+    "count": 0
+  },
+  {
+    "id": 139,
+    "name": "Investment",
+    "slug": "investment",
+    "count": 0
+  },
+  {
+    "id": 140,
+    "name": "Investment Law",
+    "slug": "investment-law",
+    "count": 1
+  },
+  {
+    "id": 142,
+    "name": "IT & Data Protection",
+    "slug": "it-data-protection",
+    "count": 1
+  },
+  {
+    "id": 141,
+    "name": "IT IT & Data Protection",
+    "slug": "it-it-data-protection",
+    "count": 0
+  },
+  {
+    "id": 36,
+    "name": "Koko",
+    "slug": "koko",
+    "count": 0
+  },
+  {
+    "id": 13,
+    "name": "Law",
+    "slug": "law",
+    "count": 0
+  },
+  {
+    "id": 14,
+    "name": "Nonprofit",
+    "slug": "nonprofit",
+    "count": 0
+  },
+  {
+    "id": 15,
+    "name": "Nonprofit Organizations",
+    "slug": "nonprofit-organizations",
+    "count": 0
+  },
+  {
+    "id": 132,
+    "name": "Permanent Residence in Armenia",
+    "slug": "permanent-residence-in-armenia",
+    "count": 3
+  },
+  {
+    "id": 16,
+    "name": "Personal Injury",
+    "slug": "personal-injury",
+    "count": 0
+  },
+  {
+    "id": 116,
+    "name": "Politics",
+    "slug": "politics",
+    "count": 0
+  },
+  {
+    "id": 17,
+    "name": "Property",
+    "slug": "property",
+    "count": 0
+  },
+  {
+    "id": 124,
+    "name": "Real Estate",
+    "slug": "real-estate",
+    "count": 74
+  },
+  {
+    "id": 137,
+    "name": "relocation",
+    "slug": "relocation",
+    "count": 0
+  },
+  {
+    "id": 138,
+    "name": "Relocation to Armenia",
+    "slug": "relocation-to-armenia",
+    "count": 1
+  },
+  {
+    "id": 133,
+    "name": "Residence in Armenia",
+    "slug": "residence-in-armenia",
+    "count": 3
+  },
+  {
+    "id": 131,
+    "name": "Residence Permit in Armenia",
+    "slug": "residence-permit-in-armenia",
+    "count": 4
+  },
+  {
+    "id": 18,
+    "name": "Science & Technology",
+    "slug": "science-technology",
+    "count": 0
+  },
+  {
+    "id": 130,
+    "name": "test tag",
+    "slug": "test-tag",
+    "count": 0
+  },
+  {
+    "id": 136,
+    "name": "work",
+    "slug": "work",
+    "count": 0
+  },
+  {
+    "id": 134,
+    "name": "Work Permit",
+    "slug": "work-permit",
+    "count": 6
+  }
+]
