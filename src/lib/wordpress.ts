@@ -1,6 +1,7 @@
 import { WPPost, WPTeamMember, MenuItem, WPTag, LegalUpdate, WPPage } from "@/types/wordpress";
-import * as cheerio from "cheerio";
 import { buildAlternates } from "./seo";
+import personnelData from "../data/personnel.json";
+import practiceAreaData from "../data/practice-areas.json";
 
 import enCommon from '../locales/en/common.json';
 import ruCommon from '../locales/ru/common.json';
@@ -12,7 +13,7 @@ const dictionaries: Record<string, any> = {
     am: amCommon,
 };
 
-const SCRAPER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
+const WP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
 
 /**
  * Next.js throws an internal error (digest "DYNAMIC_SERVER_USAGE") out of a
@@ -67,7 +68,7 @@ function cacheBuster(): string {
  * instead of requiring the visitor to reload the page.
  */
 async function wpFetch(url: string, options: RequestInit = {}, attempts = 3): Promise<Response> {
-    const headers = { "User-Agent": SCRAPER_USER_AGENT, ...(options.headers || {}) };
+    const headers = { "User-Agent": WP_USER_AGENT, ...(options.headers || {}) };
     let lastResponse: Response | undefined;
 
     for (let attempt = 1; attempt <= attempts; attempt++) {
@@ -144,130 +145,43 @@ function fixHttps(url: string | null | undefined): string {
     return fixedUrl;
 }
 
-/**
- * Pick the highest-resolution image URL from an <img>, accounting for lazy-loading
- * plugins (data-src) and responsive srcset attributes.
- */
-function pickBestImage($img: cheerio.Cheerio<any>): string {
-    const dataSrc = $img.attr("data-src");
-    const srcset = $img.attr("srcset") || $img.attr("data-srcset");
-    let rawImage = dataSrc || $img.attr("src") || "";
-    if (srcset) {
-        const candidates = srcset.split(",").map((s) => s.trim());
-        let bestUrl = "";
-        let bestWidth = 0;
-        for (const candidate of candidates) {
-            const parts = candidate.split(/\s+/);
-            const url = parts[0];
-            const width = parseInt((parts[1] || "").replace("w", ""), 10) || 0;
-            if (width > bestWidth || !bestUrl) {
-                bestWidth = width;
-                bestUrl = url;
-            }
-        }
-        if (bestUrl) rawImage = bestUrl;
-    }
-    return rawImage;
+/** Decode the HTML entities Yoast's REST API leaves in its strings (e.g. "&amp;"). */
+function decodeEntities(text: string): string {
+    const named: Record<string, string> = { amp: "&", quot: "\"", apos: "'", lt: "<", gt: ">", nbsp: " " };
+    return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (entity, code: string) => {
+        if (code[0] !== "#") return named[code.toLowerCase()] ?? entity;
+        const point = code[1].toLowerCase() === "x" ? parseInt(code.slice(2), 16) : parseInt(code.slice(1), 10);
+        return Number.isNaN(point) ? entity : String.fromCodePoint(point);
+    });
 }
 
-/**
- * Normalize an uploads URL to a lookup key, so every resized variant
- * (-300x200, -scaled) and host (www/wp) maps to the same original file.
- */
-function mediaKey(url: string): string {
-    const match = url.match(/\/wp-content\/uploads\/[^?#]+/);
-    if (!match) return "";
-    return match[0]
-        .replace(/-\d+x\d+(?=\.\w+$)/, "")
-        .replace(/-scaled(?=\.\w+$)/, "")
-        .toLowerCase();
-}
-
-/**
- * Map of upload file → alt text from the WP Media Library (REST API), per language.
- * Image alts come from here rather than the scraped page HTML. Next's fetch cache
- * dedupes and caches the requests, so calling this once per image is cheap.
- */
-async function getMediaAltMap(lang?: string): Promise<Map<string, string>> {
-    const altMap = new Map<string, string>();
-    const pageUrl = (page: number) =>
-        `${wpGlobusApiUrl(lang)}/media?per_page=100&page=${page}&_fields=source_url,alt_text`;
-    const fetchOpts = { next: { revalidate: 3600 } };
-
-    const addPage = async (response: Response) => {
-        if (!response.ok) return;
-        const items: { source_url?: string; alt_text?: string }[] = await response.json();
-        for (const item of items) {
-            const key = mediaKey(item.source_url || "");
-            const alt = item.alt_text?.trim();
-            if (key && alt) altMap.set(key, alt);
-        }
-    };
-
+/** decodeURIComponent that leaves malformed input as-is instead of throwing. */
+function safeDecodeURIComponent(text: string): string {
     try {
-        const first = await wpFetch(pageUrl(1), fetchOpts);
-        const totalPages = Math.min(parseInt(first.headers.get("X-WP-TotalPages") || "1", 10) || 1, 20);
-        await addPage(first);
-        const rest = await Promise.all(
-            Array.from({ length: totalPages - 1 }, (_, i) => wpFetch(pageUrl(i + 2), fetchOpts))
-        );
-        await Promise.all(rest.map(addPage));
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching media alt texts:", error);
+        return decodeURIComponent(text);
+    } catch {
+        return text;
     }
-    return altMap;
-}
-
-/** Alt text for an uploaded image, or "" so callers fall back to the title/name. */
-async function getMediaAlt(imageUrl: string | null | undefined, lang?: string): Promise<string> {
-    if (!imageUrl) return "";
-    const key = mediaKey(imageUrl);
-    if (!key) return "";
-    return (await getMediaAltMap(lang)).get(key) || "";
 }
 
 /**
- * Fetch the slugs of every PUBLISHED personnel from the WordPress personnel sitemap.
- * This is the source of truth for who is published, independent of the curated
- * our-team page (which may omit some published members).
+ * Fetch Yoast's SEO head for a WordPress URL via the Yoast REST API
+ * (/wp-json/yoast/v1/get_head). Returns null if Yoast reports no page there.
  */
-async function getPublishedPersonnelSlugs(): Promise<string[]> {
-    try {
-        // wp.retrieve.am sits behind a hosting-level proxy cache that can serve a
-        // stale personnel-sitemap.xml regardless of Next's own fetch cache (that
-        // only controls Next's cache, not the origin's proxy cache) — cacheBuster()
-        // forces past it once per WP_REVALIDATE_SECONDS window, same as the "v"
-        // param on the other WP fetches in this file.
-        const res = await fetch(`${WP_BASE_URL}/personnel-sitemap.xml?v=${cacheBuster()}`, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-        if (!res.ok) return [];
-
-        const xml = await res.text();
-        const slugs: string[] = [];
-        const seen = new Set<string>();
-        const regex = /\/personnel\/([a-z0-9-]+)\/?/gi;
-        let match: RegExpExecArray | null;
-        while ((match = regex.exec(xml)) !== null) {
-            const slug = match[1];
-            if (slug && !seen.has(slug)) {
-                seen.add(slug);
-                slugs.push(slug);
-            }
-        }
-        return slugs;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching personnel sitemap:", error);
-        return [];
-    }
+async function fetchYoastHead(pageUrl: string, signal: AbortSignal): Promise<Record<string, any> | null> {
+    const response = await wpFetch(
+        `${WP_BASE_URL}/wp-json/yoast/v1/get_head?url=${encodeURIComponent(pageUrl)}`,
+        { signal, next: { revalidate: WP_REVALIDATE_SECONDS } },
+        1
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data?.status === 200 && data.json ? data.json : null;
 }
 
-
 /**
- * Scrape the WordPress page <head> for Yoast SEO data and convert it to Next.js Metadata.
+ * Build Next.js Metadata from local meta titles/descriptions, falling back to
+ * Yoast SEO data from the WordPress REST API.
  * Falls back to {} gracefully if WP is slow or unavailable.
  */
 export async function getYoastMetadata(path: string, lang: string = "en", overridePath?: string): Promise<import("next").Metadata> {
@@ -275,90 +189,70 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
     const alternates = buildAlternates(lang, overridePath || path);
 
     try {
+        // Route params arrive percent-encoded (e.g. Cyrillic/Armenian blog slugs);
+        // decode so fetchYoastHead's encodeURIComponent doesn't double-encode them.
+        const decodedPath = safeDecodeURIComponent(path);
+        const cleanPath = decodedPath.startsWith("/") ? decodedPath : `/${decodedPath}`;
+        const segments = cleanPath.split("/").filter(Boolean);
+        const rootSlug = segments.length > 1 ? segments[segments.length - 1] : null;
+        const pageUrl = (base: string, p: string) => `${base}${p === "/" ? "" : p}/`;
         const baseUrl = lang === "en" ? WP_BASE_URL : `${WP_BASE_URL}/${lang}`;
-        const cleanPath = path.startsWith("/") ? path : `/${path}`;
-        const url = `${baseUrl}${cleanPath === "/" ? "" : cleanPath}/`;
+
+        // Same lookup order as the site's URLs: the exact path, then its root slug
+        // (e.g. /practice-areas/slug -> /slug), then the English versions of both.
+        const candidates = [pageUrl(baseUrl, cleanPath)];
+        if (rootSlug) candidates.push(pageUrl(baseUrl, `/${rootSlug}`));
+        if (lang !== "en") {
+            candidates.push(pageUrl(WP_BASE_URL, cleanPath));
+            if (rootSlug) candidates.push(pageUrl(WP_BASE_URL, `/${rootSlug}`));
+        }
 
         // 5-second timeout to avoid hanging Vercel serverless functions
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 5000);
 
-        let html: string;
+        let head: Record<string, any> | null = null;
         try {
-            let response = await fetch(url, {
-                signal: controller.signal,
-                next: { revalidate: WP_REVALIDATE_SECONDS },
-                headers: { "User-Agent": SCRAPER_USER_AGENT },
-            });
-
-            // Fallback 1: If 404 and path has a subdirectory (like /practice-areas/slug), try the root slug (/slug)
-            if (!response.ok && cleanPath.split("/").filter(Boolean).length > 1) {
-                const slug = cleanPath.split("/").filter(Boolean).pop();
-                const fallbackRootUrl = `${baseUrl}/${slug}/`;
-                const fallbackResponse = await fetch(fallbackRootUrl, {
-                    signal: controller.signal,
-                    next: { revalidate: WP_REVALIDATE_SECONDS },
-                    headers: { "User-Agent": SCRAPER_USER_AGENT },
-                });
-                if (fallbackResponse.ok) {
-                    response = fallbackResponse;
-                }
+            for (const candidate of candidates) {
+                head = await fetchYoastHead(candidate, controller.signal);
+                if (head) break;
             }
 
-            // Fallback 2: If still not OK and lang !== "en", try the English version
-            if (!response.ok && lang !== "en") {
-                const englishBaseUrl = WP_BASE_URL;
-                const fallbackUrl = `${englishBaseUrl}${cleanPath === "/" ? "" : cleanPath}/`;
-                const fallbackResponse = await fetch(fallbackUrl, {
-                    signal: controller.signal,
-                    next: { revalidate: WP_REVALIDATE_SECONDS },
-                    headers: { "User-Agent": SCRAPER_USER_AGENT },
-                });
-
-                if (fallbackResponse.ok) {
-                    response = fallbackResponse;
-                } else if (cleanPath.split("/").filter(Boolean).length > 1) {
-                    // Also try the root slug in English
-                    const slug = cleanPath.split("/").filter(Boolean).pop();
-                    const engRootUrl = `${englishBaseUrl}/${slug}/`;
-                    const engRootResponse = await fetch(engRootUrl, {
-                        signal: controller.signal,
-                        next: { revalidate: WP_REVALIDATE_SECONDS },
-                        headers: { "User-Agent": SCRAPER_USER_AGENT },
-                    });
-                    if (engRootResponse.ok) response = engRootResponse;
+            // get_head omits the meta description for posts and pages, but their
+            // REST objects carry it in yoast_head_json — fill it in from there.
+            const slug = segments[segments.length - 1];
+            if (head && !head.description && !head.og_description && slug) {
+                for (const type of ["posts", "pages"]) {
+                    const response = await wpFetch(
+                        `${wpGlobusApiUrl(lang)}/${type}?slug=${encodeURIComponent(slug)}&_fields=yoast_head_json`,
+                        { signal: controller.signal, next: { revalidate: WP_REVALIDATE_SECONDS } },
+                        1
+                    );
+                    if (!response.ok) continue;
+                    const yoast = (await response.json())?.[0]?.yoast_head_json;
+                    if (yoast?.description || yoast?.og_description) {
+                        head = { ...head, description: yoast.description, og_description: yoast.og_description };
+                        break;
+                    }
                 }
             }
-
-            clearTimeout(timeout);
-            if (!response.ok) return { alternates };
-            html = await response.text();
         } catch (err) {
+            if (isDynamicServerUsageError(err)) throw err;
+            console.error(`Fetch error in getYoastMetadata for ${candidates[0]}:`, err);
+        } finally {
             clearTimeout(timeout);
-            console.error(`Fetch error in getYoastMetadata for ${url}:`, err);
-            return { alternates };
         }
-
-        const $ = cheerio.load(html);
 
         // Resolve translated title and description from common.json
         const dict = dictionaries[lang] || enCommon;
         const metaKey = getMetaKey(path);
-        
-        let title = dict.meta_titles?.[metaKey] || "";
-        let description = dict.meta_descriptions?.[metaKey] || "";
 
-        // Fallback to scraped titles if localized title not found
-        if (!title) {
-            title = $("title").text() ||
-                $("meta[property='og:title']").attr("content") ||
-                $("meta[name='twitter:title']").attr("content") ||
-                $("h1").first().text();
-        }
-        if (!description) {
-            description = $("meta[name='description']").attr("content") || $("meta[property='og:description']").attr("content") || "";
-        }
-        const ogImage = $("meta[property='og:image']").attr("content");
+        const title: string = dict.meta_titles?.[metaKey] || decodeEntities(head?.title || head?.og_title || head?.twitter_title || "");
+        const description: string = dict.meta_descriptions?.[metaKey] || decodeEntities(head?.description || head?.og_description || "");
+
+        if (!head && !title) return { alternates };
+
+        const ogImage: string | undefined = head?.og_image?.[0]?.url;
         const finalOgImage = ogImage ? fixHttps(ogImage) : "https://www.retrieve.am/logo.jpg";
 
         const finalCanonical = alternates?.canonical as string;
@@ -383,7 +277,8 @@ export async function getYoastMetadata(path: string, lang: string = "en", overri
             },
         };
     } catch (e) {
-        console.error(`Error scraping Yoast metadata for ${path}:`, e);
+        if (isDynamicServerUsageError(e)) throw e;
+        console.error(`Error fetching Yoast metadata for ${path}:`, e);
         return { alternates };
     }
 }
@@ -601,277 +496,20 @@ export async function getMasonryPosts(
     }
 }
 
-// Personnel to hide from the site's team listings even though WP still has
-// them published (sitemap is otherwise the source of truth).
-const PERSONNEL_HIDDEN = [
-    "renata-martirosyan",
-];
+type Lang = "en" | "ru" | "am";
 
-// Explicit display order for the team. Published members not listed here are
-// appended afterwards (in sitemap order).
-const PERSONNEL_ORDER = [
-    "feliks-hovakimyan",     // Feliks
-    "michael-hovhannesyan",  // Maykl (Michael)
-    "vache-simonyan",        // Vache
-    "aleksandr-harutyunyan", // Aleksander Harutyunyan
-    "lia-nikoghosyan",       // Lia
-    "mariam-dovlatyan",      // Mariam
-    "meline-nadaryan",        // Meline
-    "anahit-petrosyan",      // Anahit
-    "larisa-petrosyan",      // Larisa
-    "lilit-petrosyan",       // Lilit
-    "papin-karapetyan",      // Papin
-    "mikayel-sargsyan",      // Mikayel
-    "yeghishe-manukyan",     // Yeghishe
-    "nanar-siravyan",        // Nanar
-];
-
-// Position overrides — WP's profile-page caption widget is the source of truth
-// for position, but these two haven't been updated there yet.
-const PERSONNEL_POSITION_OVERRIDES: Record<string, string> = {
-    "michael-hovhannesyan": "Senior Partner",
-    "vache-simonyan": "Partner",
-};
-
-/**
- * Build a team card for a single personnel by scraping their profile page.
- * The position comes from the profile's title caption (e.g. "Tax Specialist"),
- * which is where the caption is set in WordPress — the our-team list card does
- * not render it for most members.
- *
- * Cached for an hour: getTeamMembers runs on the home page, about-us page and
- * the sitemap, so we avoid re-fetching every profile on every request.
- */
-async function getTeamMemberCard(slug: string, lang?: string): Promise<WPTeamMember | null> {
-    try {
-        const fetchUrl =
-            lang === "am"
-                ? `${WP_BASE_URL}/personnel/${slug}/?lang=hy`
-                : lang && lang !== "en"
-                    ? `${WP_BASE_URL}/${lang}/personnel/${slug}/`
-                    : `${WP_BASE_URL}/personnel/${slug}/`;
-
-        const fetchOpts = {
-            next: { revalidate: 3600 },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        } as const;
-
-        let response = await fetch(fetchUrl, fetchOpts);
-
-        // Fall back to the English profile if the translated one is missing.
-        if (!response.ok && lang && lang !== "en") {
-            response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, fetchOpts);
-        }
-
-        if (!response.ok) return null;
-
-        const $ = cheerio.load(await response.text());
-
-        const name =
-            $(".gdlr-core-title-item-title").first().text().trim() ||
-            $("h1").first().text().trim();
-        if (!name) return null;
-
-        // Caption / position set on the profile page.
-        const position = PERSONNEL_POSITION_OVERRIDES[slug] ?? $(".gdlr-core-title-item-caption").first().text().trim();
-
-        const $img = $(".gdlr-core-column-20 img").first().length
-            ? $(".gdlr-core-column-20 img").first()
-            : $("img[src*='wp-content/uploads']").first();
-        const rawImage = pickBestImage($img);
-
-        const link =
-            lang && lang !== "en"
-                ? `${WP_BASE_URL}/${lang}/personnel/${slug}/`
-                : `${WP_BASE_URL}/personnel/${slug}/`;
-
-        return {
-            id: `team-${slug}`,
-            name,
-            position,
-            image: rawImage ? fixHttps(rawImage) : "",
-            imageAlt: await getMediaAlt(rawImage, lang),
-            link,
-        };
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error(`Error fetching team member card for ${slug}:`, error);
-        return null;
-    }
+/** Pick the entry for `lang` from a per-language record, falling back to English. */
+function forLang<T>(byLang: Record<Lang, T>, lang?: string): T {
+    return byLang[(lang as Lang)] ?? byLang.en;
 }
 
 /**
- * Fallback: scrape the curated our-team page for team members. Used only when the
- * personnel sitemap is unavailable. Does not include the profile-page caption.
+ * Team members and personnel profiles are maintained locally in
+ * src/data/personnel.json (WordPress doesn't expose the personnel post type
+ * through its REST API). The team list there is already in display order.
  */
-async function scrapeOurTeamPage(lang?: string): Promise<WPTeamMember[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(`${baseUrl}our-team/`, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-        if (!response.ok) return [];
-
-        const $ = cheerio.load(await response.text());
-        const members: WPTeamMember[] = [];
-        const seen = new Set<string>();
-
-        $(".gdlr-core-personnel-list-column, .gdlr-core-personnel-grid-column, .gdlr-core-personnel-item").each((_, el) => {
-            const name = $(el).find("[class*='-title'] a, [class*='-title']").first().text().trim();
-            const position = $(el).find("[class*='-position']").first().text().trim();
-            const $img = $(el).find("img");
-            const rawImage = pickBestImage($img);
-            const link = fixHttps($(el).find("a").attr("href") || "");
-            const slug = link.split("/personnel/")[1]?.replace(/\//g, "") || "";
-
-            if (name && slug && !seen.has(slug)) {
-                seen.add(slug);
-                members.push({
-                    id: `team-${slug}`,
-                    name,
-                    position,
-                    image: rawImage ? fixHttps(rawImage) : "",
-                    imageAlt: "",
-                    link,
-                });
-            }
-        });
-
-        await Promise.all(members.map(async (m) => { m.imageAlt = await getMediaAlt(m.image, lang); }));
-        return members;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping our-team page:", error);
-        return [];
-    }
-}
-
 export async function getTeamMembers(lang?: string): Promise<WPTeamMember[]> {
-    try {
-        // Authoritative list of every PUBLISHED personnel, regardless of whether they
-        // were placed on the curated our-team page.
-        const publishedSlugs = await getPublishedPersonnelSlugs();
-
-        // If the sitemap is unavailable, fall back to scraping the our-team page.
-        if (publishedSlugs.length === 0) {
-            return scrapeOurTeamPage(lang);
-        }
-
-        const orderIndex = (slug: string) => {
-            const i = PERSONNEL_ORDER.indexOf(slug);
-            return i === -1 ? Number.MAX_SAFE_INTEGER : i;
-        };
-        const orderedSlugs = publishedSlugs
-            .filter((slug) => !PERSONNEL_HIDDEN.includes(slug))
-            .sort((a, b) => orderIndex(a) - orderIndex(b));
-
-        // Build each card from the member's profile page so the caption/position shows
-        // for everyone (not just those whose position appears on the our-team list).
-        const members = await Promise.all(
-            orderedSlugs.map((slug) => getTeamMemberCard(slug, lang))
-        );
-
-        return members.filter((m): m is WPTeamMember => m !== null);
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error fetching team members:", error);
-        return [];
-    }
-}
-
-/**
- * Get portfolio categories and sub-categories by scraping the main menu
- */
-export async function getPortfolioCategories(): Promise<MenuItem[]> {
-    try {
-        const response = await fetch(`${WP_BASE_URL}/`, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: {
-                "User-Agent": SCRAPER_USER_AGENT,
-            },
-        });
-
-        if (!response.ok) {
-            console.error("Failed to fetch menu");
-            return [];
-        }
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const menuItems: MenuItem[] = [];
-
-        // Find the Practice Areas menu item
-        let practiceAreasLi: any = null;
-
-        $(".sf-menu > li").each((_, el) => {
-            if ($(el).children("a").text().trim().includes("Practice Areas")) {
-                practiceAreasLi = el;
-            }
-        });
-
-        if (practiceAreasLi) {
-            $(practiceAreasLi).find("> ul.sub-menu > li").each((_, subEl) => {
-                const catName = $(subEl).children("a").text().trim();
-                const children: MenuItem[] = [];
-
-                $(subEl).find("> ul.sub-menu > li").each((_, childEl) => {
-                    const childName = $(childEl).children("a").text().trim();
-                    const childUrl = $(childEl).children("a").attr("href");
-
-                    // Convert full URLs to relative
-                    let relativeUrl = childUrl ? childUrl.replace(/^https?:\/\/(www\.|wp\.)?retrieve\.am/, "") : "#";
-                    if (!relativeUrl.startsWith("/")) relativeUrl = "/" + relativeUrl;
-
-                    children.push({
-                        label: childName,
-                        url: relativeUrl
-                    });
-                });
-
-                if (catName) {
-                    let sortedChildren = [...children];
-
-                    if (catName.includes("Legal")) {
-                        const orderSlugs = [
-                            "corporate-business-law",
-                            "immigration-residence-services",
-                            "employment-law",
-                            "intellectual-property-law",
-                            "real-estate-construction-law",
-                            "investment-law",
-                            "arbitration-ligitation"
-                        ];
-
-                        sortedChildren.sort((a, b) => {
-                            const aSlug = a.url.split('/').filter(Boolean).pop() || "";
-                            const bSlug = b.url.split('/').filter(Boolean).pop() || "";
-
-                            const aIdx = orderSlugs.indexOf(aSlug);
-                            const bIdx = orderSlugs.indexOf(bSlug);
-
-                            if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
-                            if (aIdx !== -1) return -1;
-                            if (bIdx !== -1) return 1;
-                            return 0;
-                        });
-                    }
-
-                    menuItems.push({
-                        label: catName,
-                        url: "#", // Top level categories usually don't have deep links in header themselves
-                        children: sortedChildren
-                    });
-                }
-            });
-        }
-
-        return menuItems;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping portfolio categories:", error);
-        return [];
-    }
+    return forLang(personnelData.team as Record<Lang, WPTeamMember[]>, lang);
 }
 
 /**
@@ -921,73 +559,12 @@ export async function getPracticeAreasNav(): Promise<MenuItem[]> {
 }
 
 /**
- * Get all portfolio items (practice areas) - Scraped from Live WP HTML
+ * Get all portfolio items (practice areas), maintained locally in
+ * src/data/practice-areas.json (WordPress doesn't expose the portfolio post
+ * type through its REST API).
  */
 export async function getPortfolioItems(lang?: string): Promise<PortfolioItem[]> {
-    try {
-        const fetchItemsFromUrl = async (scrapeUrl: string, category: string): Promise<PortfolioItem[]> => {
-            const res = await fetch(scrapeUrl, {
-                next: { revalidate: WP_REVALIDATE_SECONDS },
-                headers: { "User-Agent": SCRAPER_USER_AGENT }
-            });
-            if (!res.ok) return [];
-            const html = await res.text();
-            const $ = cheerio.load(html);
-            const items: PortfolioItem[] = [];
-
-            $(".gdlr-core-portfolio-item, .gdlr-core-column-service-item, .gdlr-core-item-list").each((i, el) => {
-                const title = $(el).find("h3, .gdlr-core-portfolio-title, .gdlr-core-column-service-title").text().trim();
-                const $img = $(el).find("img");
-                const image = $img.attr("src") || null;
-                const link = $(el).find("a").attr("href");
-
-                if (title && link && link !== "#") {
-                    // Extract slug from link: https://wp.retrieve.am/practice-areas/corporate-business-law/ => corporate-business-law
-                    const slug = link.replace(/\/$/, "").split("/").pop() || "";
-                    if (slug && !items.find(t => t.slug === slug)) {
-                        items.push({
-                            id: i + (category === "Legal services" ? 1000 : 2000),
-                            slug: slug,
-                            title: title,
-                            image: image,
-                            imageAlt: "",
-                            category: category,
-                            categories: [],
-                            tags: []
-                        });
-                    }
-                }
-            });
-            await Promise.all(items.map(async (item) => { item.imageAlt = await getMediaAlt(item.image, lang); }));
-            return items;
-        };
-
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}` : WP_BASE_URL;
-
-        const legalItems = await fetchItemsFromUrl(`${baseUrl}/legal-services/`, "Legal services");
-        const taxItems = await fetchItemsFromUrl(`${baseUrl}/tax-and-business-advisory-services/`, "Tax & Business advisory services");
-
-        return [...legalItems, ...taxItems];
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping portfolio data:", error);
-        return [];
-    }
-}
-
-/**
- * Get portfolio items by category
- * @param category - "Legal services" or "Tax & Business advisory services"
- */
-export async function getPortfolioByCategory(category: string): Promise<PortfolioItem[]> {
-    try {
-        const allItems = await getPortfolioItems();
-        return allItems.filter(item => item.category === category);
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error filtering portfolio by category:", error);
-        return [];
-    }
+    return forLang(practiceAreaData.listing as Record<Lang, PortfolioItem[]>, lang);
 }
 
 /**
@@ -995,364 +572,8 @@ export async function getPortfolioByCategory(category: string): Promise<Portfoli
  * @param slug - Personnel slug (e.g., "feliks-hovakimyan")
  */
 export async function getPersonnelDetails(slug: string, lang?: string): Promise<import("@/types/wordpress").PersonnelDetails | null> {
-    try {
-        // am uses TranslatePress ?lang=hy, ru uses subdirectory, en uses base
-        let fetchUrl: string;
-        if (lang === "am") {
-            fetchUrl = `${WP_BASE_URL}/personnel/${slug}/?lang=hy`;
-        } else if (lang && lang !== "en") {
-            fetchUrl = `${WP_BASE_URL}/${lang}/personnel/${slug}/`;
-        } else {
-            fetchUrl = `${WP_BASE_URL}/personnel/${slug}/`;
-        }
-
-        let response = await fetch(fetchUrl, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: {
-                "User-Agent": SCRAPER_USER_AGENT,
-            },
-        });
-
-        // Fallback to English if the translated path doesn't exist
-        if (!response.ok && lang && lang !== "en") {
-            response = await fetch(`${WP_BASE_URL}/personnel/${slug}/`, {
-                next: { revalidate: WP_REVALIDATE_SECONDS },
-                headers: {
-                    "User-Agent": SCRAPER_USER_AGENT,
-                },
-            });
-        }
-
-        if (!response.ok) {
-            console.error(`Failed to fetch personnel page for ${slug}`);
-            return null;
-        }
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-
-        // Extract basic info - using correct Goodlayers selectors
-        const name = $(".gdlr-core-title-item-title").first().text().trim() ||
-            $("h1").first().text().trim();
-        const position = PERSONNEL_POSITION_OVERRIDES[slug] ?? $(".gdlr-core-title-item-caption").first().text().trim();
-
-        // Extract image from the left column (gdlr-core-column-20)
-        const $img = $(".gdlr-core-column-20 img").first().length
-            ? $(".gdlr-core-column-20 img").first()
-            : $("img[src*='wp-content/uploads']").first();
-
-        // Prefer data-src (lazy-loading plugins), then srcset highest-res, then src
-        let image = pickBestImage($img);
-        const image_alt = await getMediaAlt(image, lang);
-
-        if (image.startsWith("http://")) {
-            image = image.replace("http://", "https://");
-        }
-
-        // Extract biography. Each personnel bio is authored as TWO (or more) separate
-        // text blocks in WordPress, which may live in different columns, so collect
-        // every paragraph text block on the page rather than scoping to one column.
-        // List blocks (the practice areas) and empty blocks are skipped, and identical
-        // blocks are de-duplicated.
-        let biography = "";
-        const bioSeen = new Set<string>();
-        $(".gdlr-core-text-box-item-content").each((_, el) => {
-            const $el = $(el);
-            if ($el.find("ul, ol").length > 0) return;       // practice-area lists, not bio
-            // Skip contact blocks — the email / phone belong in the sidebar, not the bio.
-            if ($el.find("a[href^='mailto:'], a[href^='tel:']").length > 0) return;
-            const text = $el.text().trim();
-            if (!text) return;                                // skip empty blocks
-            if (text.includes("@") || /\+\d[\d\s.\-()]{6,}\d/.test(text)) return; // email / phone
-            const html = ($el.html() || "").trim();
-            if (!html || bioSeen.has(html)) return;           // de-duplicate
-            bioSeen.add(html);
-            biography += html;
-        });
-
-        // Extract practice areas from icon list or text box
-        const practiceAreas: string[] = [];
-
-        // Try finding practice areas in the dedicated section
-        $(".gdlr-core-text-box-item-content ul li").each((_, el) => {
-            const area = $(el).text().trim();
-            if (area && area.length < 100) {
-                practiceAreas.push(area);
-            }
-        });
-
-        // If no list found, try alternate selectors
-        if (practiceAreas.length === 0) {
-            $(".practice-area-item, .gdlr-core-icon-list-content").each((_, el) => {
-                const area = $(el).text().trim();
-                if (area && area.length < 100 && !area.includes('@') && !area.includes('+')) {
-                    practiceAreas.push(area);
-                }
-            });
-        }
-
-        // Extract contact info. Personnel pages publish the email / phone inside the
-        // bio content blocks (as plain text or mailto/tel links), not always in an icon
-        // list — so read the content first, then the icon list, then any page-wide link.
-        let email = "";
-        let phone = "";
-
-        const $contactContent = $(".gdlr-core-text-box-item-content");
-        email = $contactContent.find("a[href^='mailto:']").first().attr("href")?.replace("mailto:", "").trim()
-            || $contactContent.text().match(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/)?.[0]
-            || "";
-        // Prefer the tel link's visible (formatted) text over the raw href so the
-        // displayed number keeps its spacing (e.g. "+374 41 777 332", not "+37441777332").
-        const $tel = $contactContent.find("a[href^='tel:']").first();
-        phone = ($tel.text().trim()
-            || $contactContent.text().match(/\+\d[\d\s().\-]{6,}\d/)?.[0]?.trim()
-            || $tel.attr("href")?.replace("tel:", "").trim()
-            || "").replace(/\s+/g, " ").trim();
-
-        $(".gdlr-core-icon-list-content").each((_, el) => {
-            const text = $(el).text().trim();
-            if (!email && text.includes('@')) {
-                email = text;
-            } else if (!phone && (text.includes('+') || text.match(/\d{2,}/))) {
-                phone = text;
-            }
-        });
-
-        // Final fallback: any mailto / tel link anywhere on the page
-        if (!email) {
-            email = $("a[href^='mailto:']").attr("href")?.replace("mailto:", "").trim() || "";
-        }
-        if (!phone) {
-            phone = $("a[href^='tel:']").attr("href")?.replace("tel:", "").replace(/\s/g, "") || "";
-        }
-
-        // The firm has a single public phone number: +374 41 777 332. Normalize any
-        // scraped variant of the firm line (e.g. the incorrect +374 44 777 332) to it.
-        if (phone && phone.replace(/\D/g, "").endsWith("777332")) {
-            phone = "+374 41 777 332";
-        }
-
-        const linkedin = $("a[href*='linkedin.com']").attr("href") || "";
-
-        // Extract education
-        const education: import("@/types/wordpress").EducationEntry[] = [];
-        $(".gdlr-core-personnel-education-item, .education-item, .timeline-item").each((_, el) => {
-            const year = $(el).find(".year, .date").text().trim();
-            const degree = $(el).find(".degree, .title").text().trim();
-            const institution = $(el).find(".institution, .school").text().trim();
-
-            if (year || degree || institution) {
-                education.push({ year, degree, institution });
-            }
-        });
-
-        return {
-            name,
-            position,
-            image,
-            imageAlt: image_alt,
-            biography,
-            practiceAreas,
-            email,
-            phone,
-            linkedin,
-            education,
-        };
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error(`Error scraping personnel details for ${slug}:`, error);
-        return null;
-    }
-}
-
-/**
- * Scrape Testimonials directly from the retrieve.am homepage
- */
-export async function getTestimonials(lang?: string): Promise<{ text: string; author: string; role: string; initial: string }[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(baseUrl, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const testimonials: { text: string; author: string; role: string; initial: string }[] = [];
-
-        $(".gdlr-core-testimonial").each((_, el) => {
-            const text = $(el).find(".gdlr-core-testimonial-content p").text().trim();
-            const author = $(el).find(".gdlr-core-testimonial-title").text().trim();
-            const role = $(el).find(".gdlr-core-testimonial-position").text().trim();
-
-            if (text && author) {
-                testimonials.push({
-                    text,
-                    author,
-                    role,
-                    initial: author.charAt(0).toUpperCase()
-                });
-            }
-        });
-
-        return testimonials;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping testimonials:", error);
-        return [];
-    }
-}
-
-/**
- * Scrape Client Logos directly from the retrieve.am homepage
- */
-export async function getClientLogos(lang?: string): Promise<{ id: string; url: string; alt: string }[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(baseUrl, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const logos: { id: string; url: string; alt: string }[] = [];
-
-        // Look specifically for the gallery list items that hold the client logos
-        $(".gdlr-core-gallery-list.gdlr-core-media-image img").each((i, el) => {
-            const url = $(el).attr("src");
-            const alt = $(el).attr("alt") || $(el).attr("title") || `Client Logo ${i + 1}`;
-
-            if (url) {
-                logos.push({
-                    id: `client-${i}`,
-                    url,
-                    alt
-                });
-            }
-        });
-
-        return logos;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping client logos:", error);
-        return [];
-    }
-}
-
-/**
- * Scrape "Why Clients Choose Us" section from retrieve.am
- */
-export async function getWhyChooseUs(lang?: string): Promise<{ title: string; description: string }[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(baseUrl, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const reasons: { title: string; description: string }[] = [];
-
-        // Find the "Why Clients Choose Us" section text boxes
-        // They are generally inside gdlr-core-text-box-item where the text starts with a strong phrase followed by colon
-        $(".gdlr-core-text-box-item-content p.p1").each((_, el) => {
-            const text = $(el).text().trim();
-            // Look for pattern "Title: Description"
-            if (text && text.includes(":")) {
-                const [title, ...descParts] = text.split(":");
-                const description = descParts.join(":").trim();
-
-                if (title && description && title.length < 50) {
-                    reasons.push({
-                        title: title.trim(),
-                        description: description
-                    });
-                }
-            }
-        });
-
-        // Filter out irrelevant short ones or mismatched
-        return reasons.filter(r => r.title.length > 5 && r.description.length > 10).slice(0, 4); // Take exact 4
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping why choose us:", error);
-        return [];
-    }
-}
-
-/**
- * Scrape "Legal Practise Areas" from retrieve.am/legal-services/
- */
-export async function getLegalPracticeAreas(lang?: string): Promise<{ label: string; url: string }[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const areas: { label: string; url: string }[] = [];
-
-        // In the footer or sidebar widgets, the list is typically inside #menu-legal-practise-areas
-        $("#menu-legal-practise-areas li a").each((_, el) => {
-            const label = $(el).text().trim();
-            const url = $(el).attr("href") || "#";
-            if (label) {
-                areas.push({ label, url });
-            }
-        });
-
-        return areas;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping legal practice areas:", error);
-        return [];
-    }
-}
-
-/**
- * Scrape "Tax & Business advisory services" from retrieve.am/legal-services/
- */
-export async function getTaxAdvisoryServices(lang?: string): Promise<{ label: string; url: string }[]> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const response = await fetch(`${baseUrl}legal-services/`, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        if (!response.ok) return [];
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        const services: { label: string; url: string }[] = [];
-
-        $("#menu-business-areas li a").each((_, el) => {
-            const label = $(el).text().trim();
-            const url = $(el).attr("href") || "#";
-            if (label) {
-                services.push({ label, url });
-            }
-        });
-
-        return services;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error("Error scraping tax advisory services:", error);
-        return [];
-    }
+    const profiles = personnelData.profiles as Record<Lang, Record<string, import("@/types/wordpress").PersonnelDetails>>;
+    return forLang(profiles, lang)[slug] ?? profiles.en[slug] ?? null;
 }
 
 export interface PortfolioItem {
@@ -1678,114 +899,15 @@ export interface PracticeAreaContent {
 }
 
 /**
- * Scrape detailed content for a Practice Area single page
+ * Detailed content for a Practice Area single page, maintained locally in
+ * src/data/practice-areas.json. Falls back to English (flagged isFallback).
  */
 export async function getPracticeAreaContent(slug: string, lang?: string): Promise<PracticeAreaContent | null> {
-    try {
-        const baseUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/` : `${WP_BASE_URL}/`;
-        const url = `${baseUrl}practice-areas/${slug}/`;
-
-        // Add ?lang=hy for TranslatePress if needed, though they usually use subdirectories
-        const fetchUrl = lang === "am" ? `${WP_BASE_URL}/practice-areas/${slug}/?lang=hy` : url;
-
-        let response = await fetch(fetchUrl, {
-            next: { revalidate: WP_REVALIDATE_SECONDS },
-            headers: { "User-Agent": SCRAPER_USER_AGENT },
-        });
-
-        let isFallback = false;
-
-        // Try root slug if practice-areas path fails
-        if (!response.ok) {
-            const rootUrl = lang && lang !== "en" ? `${WP_BASE_URL}/${lang}/${slug}/` : `${WP_BASE_URL}/${slug}/`;
-            const rootResponse = await fetch(rootUrl, {
-                next: { revalidate: WP_REVALIDATE_SECONDS },
-                headers: { "User-Agent": SCRAPER_USER_AGENT },
-            });
-            if (rootResponse.ok) {
-                response = rootResponse;
-            }
-        }
-
-        if (!response.ok && lang && lang !== "en") {
-            isFallback = true;
-            // Try English version
-            let engResponse = await fetch(`${WP_BASE_URL}/practice-areas/${slug}/`, {
-                next: { revalidate: WP_REVALIDATE_SECONDS },
-                headers: { "User-Agent": SCRAPER_USER_AGENT },
-            });
-
-            if (!engResponse.ok) {
-                // Try English root
-                engResponse = await fetch(`${WP_BASE_URL}/${slug}/`, {
-                    next: { revalidate: WP_REVALIDATE_SECONDS },
-                    headers: { "User-Agent": SCRAPER_USER_AGENT },
-                });
-            }
-
-            if (engResponse.ok) {
-                response = engResponse;
-            }
-        }
-
-        if (!response.ok) return null;
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-
-        const data: PracticeAreaContent = {
-            title: $("h1.attorna-page-title").text().trim(),
-            overview: $(".gdlr-core-title-item-caption").first().html()?.trim() || "",
-            howWeCanHelp: [],
-            whyChooseUs: [],
-            faqs: [],
-            isFallback: isFallback
-        };
-
-        // If it's a fallback page (English content on AM route) and it's Armenian, 
-        // we check if we can partially translate it via the local amCommon dictionary.
-        // This is handled in the Page component now, but we prepare the data.
-
-        // Lists for How we can help / Why choose us
-        const lists = $(".gdlr-core-icon-list-item ul");
-        if (lists.length >= 1) {
-            $(lists[0]).find("li").each((_, el) => {
-                data.howWeCanHelp.push($(el).text().trim());
-            });
-        }
-        if (lists.length >= 2) {
-            $(lists[1]).find("li").each((_, el) => {
-                data.whyChooseUs.push($(el).text().trim());
-            });
-        }
-
-        // FAQs
-        $(".gdlr-core-accordion-item-tab").each((_, el) => {
-            const q = $(el).find(".gdlr-core-accordion-item-title").text().trim();
-            const a = $(el).find(".gdlr-core-accordion-item-content").text().trim();
-            if (q && a) data.faqs.push({ question: q, answer: a });
-        });
-
-        // Find header image directly from the page
-        const $img = $(".gdlr-core-portfolio-thumbnail img").length
-            ? $(".gdlr-core-portfolio-thumbnail img").first()
-            : $(".gdlr-core-media-image img").length
-                ? $(".gdlr-core-media-image img").first()
-                : $(".gdlr-core-image-item img").first();
-
-        const img = $img.attr("src") || $("meta[property=\"og:image\"]").attr("content");
-
-        if (img) {
-            data.image = img;
-            data.imageAlt = await getMediaAlt(img, lang);
-        }
-
-        return data;
-    } catch (error) {
-        if (isDynamicServerUsageError(error)) throw error;
-        console.error(`Error scraping practice area content for ${slug}:`, error);
-        return null;
-    }
+    const content = practiceAreaData.content as Record<Lang, Record<string, PracticeAreaContent>>;
+    const localized = forLang(content, lang)[slug];
+    if (localized) return localized;
+    const english = content.en[slug];
+    return english ? { ...english, isFallback: true } : null;
 }
 
 export async function getTags(lang?: string): Promise<WPTag[]> {
@@ -1824,12 +946,8 @@ export async function getContentTypeBySlug(slug: string): Promise<"post" | "port
             if (posts.length > 0) return "post";
         }
 
-        // 2. Try fetching as a portfolio item (practice area)
-        const portfolioRes = await wpFetch(`${WP_API_URL}/portfolio?slug=${slug}`, { next: { revalidate: WP_REVALIDATE_SECONDS } });
-        if (portfolioRes.ok) {
-            const items = await portfolioRes.json();
-            if (items.length > 0) return "portfolio";
-        }
+        // 2. Check the local practice-area listing
+        if ((await getPortfolioItems()).some((item) => item.slug === slug)) return "portfolio";
 
         return null;
     } catch (error) {

@@ -1,0 +1,2877 @@
+{
+  "listing": {
+    "en": [
+      {
+        "id": 1001,
+        "slug": "corporate-business-law",
+        "title": "Corporate & Business Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1002,
+        "slug": "tax-law-compliance",
+        "title": "Tax Law & Compliance",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions--700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1003,
+        "slug": "immigration-residence-services",
+        "title": "Immigration & Residency Services",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_-700x443.jpg",
+        "imageAlt": "Immigration & Residency Services",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1004,
+        "slug": "intellectual-property-law",
+        "title": "Intellectual Property (IP) Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1005,
+        "slug": "real-estate-construction-law",
+        "title": "Real Estate & Construction Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1006,
+        "slug": "banking-finance-law",
+        "title": "Banking & Finance Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1007,
+        "slug": "competition-law",
+        "title": "Competition Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1008,
+        "slug": "energy-law",
+        "title": "Energy Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1009,
+        "slug": "investment-law",
+        "title": "Investment Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1010,
+        "slug": "it-data-privacy-protection",
+        "title": "IT & Data Protection",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1011,
+        "slug": "health-pharmaceuticals",
+        "title": "Health & Pharmaceuticals",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1012,
+        "slug": "arbitration-ligitation",
+        "title": "Arbitration & Litigation",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1013,
+        "slug": "igaming-licensing",
+        "title": "iGaming & Licensing",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201-700x450.jpg",
+        "imageAlt": "iGaming Licensing Armenia",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1014,
+        "slug": "employment-law",
+        "title": "Employment Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3-645x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2001,
+        "slug": "accounting-bookkeeping",
+        "title": "Accounting & Bookkeeping",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2002,
+        "slug": "tax-advisory",
+        "title": "Tax Advisory",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2003,
+        "slug": "corporate-finance-advisory",
+        "title": "Corporate Finance Advisory",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2004,
+        "slug": "ma-advising",
+        "title": "M&A Advising",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      }
+    ],
+    "ru": [
+      {
+        "id": 1001,
+        "slug": "corporate-business-law",
+        "title": "Корпоративное и коммерческое прав",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1002,
+        "slug": "tax-law-compliance",
+        "title": "Налоговое право и соблюдение требований",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions--700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1003,
+        "slug": "immigration-residence-services",
+        "title": "Услуги по иммиграции и оформлению резидентства",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_-700x443.jpg",
+        "imageAlt": "Immigration & Residency Services",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1004,
+        "slug": "intellectual-property-law",
+        "title": "Защита интеллектуальной собственности",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1005,
+        "slug": "real-estate-construction-law",
+        "title": "Право недвижимости и строительства",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1006,
+        "slug": "banking-finance-law",
+        "title": "Банковское и финансовое право",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1007,
+        "slug": "competition-law",
+        "title": "Антимонопольное право",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1008,
+        "slug": "energy-law",
+        "title": "Энергетическое право",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1009,
+        "slug": "investment-law",
+        "title": "Инвестиционное право",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1010,
+        "slug": "it-data-privacy-protection",
+        "title": "IT и защита данных",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1011,
+        "slug": "health-pharmaceuticals",
+        "title": "Здравоохранение и фармацевтика",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1012,
+        "slug": "arbitration-ligitation",
+        "title": "Арбитраж и судебные разбирательства",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1013,
+        "slug": "igaming-licensing",
+        "title": "iGaming & Licensing",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201-700x450.jpg",
+        "imageAlt": "iGaming Licensing Armenia",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1014,
+        "slug": "employment-law",
+        "title": "Трудовое право",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3-645x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2001,
+        "slug": "accounting-bookkeeping",
+        "title": "Бухгалтерия и ведение учета",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2002,
+        "slug": "tax-advisory",
+        "title": "Налоговое консультирование",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2003,
+        "slug": "corporate-finance-advisory",
+        "title": "Консультирование по корпоративным финансам",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2004,
+        "slug": "ma-advising",
+        "title": "Консультирование по слияниям и поглощениям (M&A)",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      }
+    ],
+    "am": [
+      {
+        "id": 1001,
+        "slug": "corporate-business-law",
+        "title": "Corporate & Business Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1002,
+        "slug": "tax-law-compliance",
+        "title": "Tax Law & Compliance",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/Experience-worry-free-compliance-management-with-reliable-outsourcing-solutions--700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1003,
+        "slug": "immigration-residence-services",
+        "title": "Immigration & Residency Services",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/f659fab050fcad_659fab050fcee.thumb_-700x443.jpg",
+        "imageAlt": "Immigration & Residency Services",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1004,
+        "slug": "intellectual-property-law",
+        "title": "Intellectual Property (IP) Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/4033b297038394c66dcd396bfa24e9e2-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1005,
+        "slug": "real-estate-construction-law",
+        "title": "Real Estate & Construction Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9a35fc1236b859852280a24184608865-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1006,
+        "slug": "banking-finance-law",
+        "title": "Banking & Finance Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/79aa88038c5a3fb972689998d595a06b-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1007,
+        "slug": "competition-law",
+        "title": "Competition Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/3e23d435bcbba84d457565c2ecb83787-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1008,
+        "slug": "energy-law",
+        "title": "Energy Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/649fa0c3ddb788e17d833cffcd27f449.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1009,
+        "slug": "investment-law",
+        "title": "Investment Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/25c7f5b04ff1a0fcc34054ce23b70186-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1010,
+        "slug": "it-data-privacy-protection",
+        "title": "IT & Data Protection",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d18140c380b3680979507bf0fbe3ca73.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1011,
+        "slug": "health-pharmaceuticals",
+        "title": "Health & Pharmaceuticals",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/9fa12f90d188a16858266b5dc80dcc0f-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1012,
+        "slug": "arbitration-ligitation",
+        "title": "Arbitration & Litigation",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/853b521965c5bd168b304ab08893e652-700x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1013,
+        "slug": "igaming-licensing",
+        "title": "iGaming & Licensing",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/64a0805beef0d6f774636ca66e94e201-700x450.jpg",
+        "imageAlt": "iGaming Licensing Armenia",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 1014,
+        "slug": "employment-law",
+        "title": "Employment Law",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d3573bb42991db9251467878528faee3-645x450.jpg",
+        "imageAlt": "",
+        "category": "Legal services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2001,
+        "slug": "accounting-bookkeeping",
+        "title": "Accounting & Bookkeeping",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/b37ddc9ca35c21d426e9cc978c871b87-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2002,
+        "slug": "tax-advisory",
+        "title": "Tax Advisory",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/7107d2b78139bb30f559196273c2c25a.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2003,
+        "slug": "corporate-finance-advisory",
+        "title": "Corporate Finance Advisory",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/48049b36e51fb548629039fc78035d04-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      },
+      {
+        "id": 2004,
+        "slug": "ma-advising",
+        "title": "M&A Advising",
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/ecfc01622d9c5021096496e606fcc82a-700x450.jpg",
+        "imageAlt": "",
+        "category": "Tax & Business advisory services",
+        "categories": [],
+        "tags": []
+      }
+    ]
+  },
+  "content": {
+    "en": {
+      "corporate-business-law": {
+        "title": "Corporate & Business Law",
+        "overview": "Corporate law governs how companies are formed, structured, operated, and eventually reorganized or dissolved. It defines the legal framework that allows businesses to function as independent legal entities capable of owning assets, entering contracts, and managing obligations.\nAt Retrieve Legal &amp; Tax, we help companies navigate these legal frameworks with clarity and confidence, ensuring every decision is legally sound and strategically aligned with business goals.",
+        "howWeCanHelp": [
+          "Company Formation & Structuring",
+          "Corporate Governance & Compliance",
+          "Mergers & Acquisitions (M&A)",
+          "Corporate Restructuring",
+          "Commercial Contracts & Legal Support"
+        ],
+        "whyChooseUs": [
+          "Legal strategies for all business stages",
+          "Trusted by local and international clients",
+          "Cross-border and international advisory experience",
+          "Deep expertise in Armenian corporate law",
+          "Strong focus on M&A and business transactions"
+        ],
+        "faqs": [
+          {
+            "question": "What Types of Business Structures Can Be Established in Armenia?",
+            "answer": "Armenia recognizes several business structures – Limited Liability Companies (LLCs), Joint-Stock Companies (JSCs), Sole Proprietorships, and Partnerships. For most foreign investors and small-to-mid-size businesses, the LLC is the most practical choice: it’s straightforward to set up, offers limited liability protection, and has no minimum capital requirement. That said, the right structure depends on your specific goals, ownership setup, and long-term plans. We help clients think through these decisions before filing a single document."
+          },
+          {
+            "question": "What Are the Legal Requirements for Registering an LLC or JSC in Armenia?",
+            "answer": "You’ll need to prepare a company charter, provide information about shareholders or participants, and submit the official registration forms. The company also needs to be registered with Armenian tax authorities and a corporate bank account must be opened before you can operate.\nIn practice, the process is more manageable than it sounds – especially with the right guidance. Our team handles the entire registration process, so you’re not left deciphering bureaucratic requirements on your own."
+          },
+          {
+            "question": "Can Foreign Citizens Own and Manage a Business in Armenia?",
+            "answer": "Yes – fully. Armenian law permits 100% foreign ownership, and foreign nationals have the same rights to establish, own, and manage a company as Armenian citizens. There are no mandatory local partners or resident director requirements.\nThis is one of the reasons Armenia has become an increasingly popular destination for international entrepreneurs and investors looking for a straightforward entry point into the region."
+          },
+          {
+            "question": "Are Shareholder and Director Agreements Necessary for My Business?",
+            "answer": "Technically, they’re not always required by law. In practice, we strongly recommend them – and most clients who’ve dealt with a corporate dispute wish they’d had them in place from the start.\nThese agreements define who has decision-making authority, how disputes get resolved, what happens if a shareholder wants to exit, and much more. They’re far easier to put together at the beginning than to negotiate after a conflict arises."
+          },
+          {
+            "question": "How Does Armenia's Legal System Support Foreign Investment?",
+            "answer": "Armenia has built a genuinely open environment for foreign investors. Your rights are protected under both domestic law and international treaties, including bilateral investment protection agreements with a number of countries.\nPractically speaking, this means no restrictions on repatriating profits, a competitive tax system, and a legal framework that treats foreign and local investors on equal footing. If you’re evaluating Armenia as a jurisdiction, we’re happy to walk you through what this means for your specific situation."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services-1.jpg",
+        "imageAlt": ""
+      },
+      "tax-law-compliance": {
+        "title": "Tax Law & Compliance",
+        "overview": "Navigating tax regulations in Armenia can be challenging. We specialize in tax law, ensuring compliance while optimizing financial outcomes. Whether you are a business or an individual, our team simplifies tax complexities and protects your interests.",
+        "howWeCanHelp": [
+          "Comprehensive tax planning and strategy",
+          "Resolving tax disputes with Armenian authorities",
+          "Cross-border taxation solutions",
+          "Transfer pricing documentation and compliance",
+          "Advising on VAT, customs, and excise duties",
+          "Providing legal representation during tax audits and investigations",
+          "Offering guidance on double tax treaties and international agreements",
+          "Advising on tax-efficient investment structures for individuals and companies",
+          "Helping with tax registration and reporting for new businesses",
+          "Drafting and submitting appeals in tax-related disputes",
+          "Assisting in VAT refunds and customs clearance issues",
+          "Monitoring changes in Armenian tax regulations to ensure compliance"
+        ],
+        "whyChooseUs": [
+          "In-depth understanding of Armenian tax laws and international treaties.",
+          "Proven track record in achieving favorable outcomes for clients.",
+          "Strategies designed to mitigate risks and maximize benefits."
+        ],
+        "faqs": [
+          {
+            "question": "What legal support can you provide during a tax audit?",
+            "answer": "We assist clients by preparing required documentation, representing them in discussions with Armenian tax authorities, and ensuring their rights are protected throughout the audit process. If disputes arise, we advocate on your behalf to resolve them effectively."
+          },
+          {
+            "question": "How can legal counsel help with VAT and customs compliance?",
+            "answer": "Legal advice is crucial for navigating VAT and customs regulations, particularly in complex scenarios involving imports, exports, or supply chains. We review contracts, advise on tax obligations, and assist in securing refunds or resolving disputes with customs authorities."
+          },
+          {
+            "question": "Can you handle tax disputes in court?",
+            "answer": "Yes, we provide full representation in tax litigation cases. From filing appeals against tax assessments to presenting your case in Armenian courts, we offer strategic legal support to ensure the best possible outcome."
+          },
+          {
+            "question": "What role does legal advice play in cross-border taxation?",
+            "answer": "Cross-border transactions often involve intricate tax regulations and risks of double taxation. We provide legal advice to structure transactions, leverage double taxation treaties, and ensure compliance with both Armenian and international laws."
+          },
+          {
+            "question": "How can you help with tax-related contract drafting?",
+            "answer": "We ensure that contracts, especially those involving financial transactions or international trade, are structured to comply with Armenian tax laws while minimizing potential liabilities. This includes drafting clauses that address VAT, withholding taxes, and other obligations."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Lawyers-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "immigration-residence-services": {
+        "title": "Immigration & Residency Services",
+        "overview": "Armenia is becoming a key destination for global talent and investment. Our immigration services simplify the process of obtaining visas, work permits, and residency, making your relocation stress-free.",
+        "howWeCanHelp": [
+          "Business visas for entrepreneurs and professionals",
+          "Work permits for foreign employees",
+          "Residency permits for investors and digital nomads",
+          "Citizenship by naturalization or descent",
+          "Family reunification and dependent visas",
+          "Preparing complete documentation for visa and residency applications",
+          "Advising on fast-track routes for residency or citizenship through investment",
+          "Representing clients in immigration appeals or hearings",
+          "Supporting businesses with employment compliance for foreign workers",
+          "Assisting in obtaining travel documents and ID cards for residents",
+          "Monitoring residency renewal deadlines and maintaining compliance"
+        ],
+        "whyChooseUs": [
+          "Step-by-step guidance tailored to your needs.",
+          "Expertise in Armenian and international immigration frameworks.",
+          "Efficient handling of applications for timely approval"
+        ],
+        "faqs": [
+          {
+            "question": "What types of immigration visas are available in Armenia?",
+            "answer": "Armenia offers business visas, work permits, and residency permits tailored to professionals, investors, and family members."
+          },
+          {
+            "question": "Can you assist with citizenship by descent in Armenia?",
+            "answer": "Yes, we specialize in obtaining Armenian citizenship for individuals with Armenian ancestry."
+          },
+          {
+            "question": "How long does it take to process a residency permit in Armenia?",
+            "answer": "The process typically takes several weeks, depending on the type of residency and the completeness of your documentation."
+          },
+          {
+            "question": "What is the benefit of Armenia’s digital nomad visa?",
+            "answer": "Armenia’s digital nomad visa allows remote workers to enjoy residency benefits without formal employment in the country."
+          },
+          {
+            "question": "How can businesses ensure compliance when hiring foreign employees?",
+            "answer": "We assist businesses with work permit applications, compliance audits, and employment contract drafting to meet Armenian labor and immigration laws."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Immigration-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "intellectual-property-law": {
+        "title": "Intellectual Property (IP) Law",
+        "overview": "Innovation and creativity drive growth, and protecting your intellectual property ensures your competitive edge. At Retrieve Legal &amp; Tax, we offer reliable IP services to safeguard your brand, inventions, and designs.",
+        "howWeCanHelp": [
+          "Trademark and copyright registration in Armenia",
+          "Filing and prosecuting patents locally and globally",
+          "Drafting licensing agreements for technology and products",
+          "Handling IP infringement claims and disputes",
+          "Advising on anti-counterfeiting strategies",
+          "Conducting IP audits to evaluate and manage your portfolio",
+          "Advising on IP commercialization, including licensing and franchising",
+          "Representing clients in opposition proceedings for trademarks and patents",
+          "Providing strategies to prevent domain name cybersquatting",
+          "Drafting and enforcing non-disclosure and confidentiality agreements",
+          "Monitoring IP registrations for renewal deadlines and compliance",
+          "Assisting with legal actions against counterfeit products and piracy"
+        ],
+        "whyChooseUs": [
+          "Covering trademarks, patents, copyrights, and trade secrets.",
+          "Experts in Armenian and international IP law.",
+          "Ensuring your business remains protected in the marketplace."
+        ],
+        "faqs": [
+          {
+            "question": "What is the process for registering a trademark in Armenia?",
+            "answer": "The process includes filing an application with the Armenian Intellectual Property Agency, which typically takes a few months for approval."
+          },
+          {
+            "question": "How can I protect my patent in multiple countries?",
+            "answer": "By utilizing international treaties like the Patent Cooperation Treaty (PCT), we can help you secure patent protection globally."
+          },
+          {
+            "question": "Can I take legal action if someone infringes on my copyright in Armenia?",
+            "answer": "Yes, we assist with filing lawsuits, issuing cease-and-desist letters, and pursuing legal remedies for copyright infringement."
+          },
+          {
+            "question": "What steps can I take to commercialize my intellectual property?",
+            "answer": "We draft licensing and franchising agreements to help monetize your IP assets."
+          },
+          {
+            "question": "Is registering a trademark mandatory to protect my brand in Armenia?",
+            "answer": "While not mandatory, registration provides legal advantages, including easier enforcement of your rights."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Real-Estate-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "real-estate-construction-law": {
+        "title": "Real Estate & Construction Law",
+        "overview": "Real estate investments in Armenia are booming. Our legal team ensures smooth transactions, secure contracts, and reliable representation for developers, buyers, and investors.",
+        "howWeCanHelp": [
+          "Property purchase agreements and due diligence",
+          "Drafting and reviewing lease agreements",
+          "Advising on construction contracts and disputes",
+          "Legal support for zoning and land-use compliance",
+          "Managing real estate litigation",
+          "Providing legal advice on real estate financing and investments",
+          "Supporting land acquisition and ownership transfer procedures",
+          "Drafting construction contracts and subcontractor agreements",
+          "Handling legal disputes in construction delays and defects",
+          "Assisting with regulatory approvals and licensing for construction projects",
+          "Advising on urban planning and zoning law compliance",
+          "Representing landlords and tenants in lease-related disputes"
+        ],
+        "whyChooseUs": [
+          "From purchase to dispute resolution.",
+          "In-depth knowledge of Armenian real estate regulations.",
+          "Expertise in safeguarding your investments."
+        ],
+        "faqs": [
+          {
+            "question": "Can foreign nationals purchase property in Armenia?",
+            "answer": "Yes, foreigners can own apartments and commercial properties, but restrictions apply to agricultural land."
+          },
+          {
+            "question": "What legal steps are involved in buying property in Armenia?",
+            "answer": "The process includes due diligence, drafting purchase agreements, and registering ownership with the State Cadastre."
+          },
+          {
+            "question": "Do you assist with construction contract disputes?",
+            "answer": "Absolutely. We represent clients in resolving disputes related to construction delays, defects, or non-compliance."
+          },
+          {
+            "question": "What are the zoning laws for real estate development in Armenia?",
+            "answer": "Zoning laws vary by region, and we assist clients in obtaining necessary permits and approvals for their projects."
+          },
+          {
+            "question": "Can you assist with financing agreements for real estate projects?",
+            "answer": "Yes, we help draft and negotiate agreements with lenders while ensuring compliance with Armenian regulations."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d84f03d4419dacaf3cd496b11643377b.jpg",
+        "imageAlt": ""
+      },
+      "banking-finance-law": {
+        "title": "Banking & Finance Law",
+        "overview": "Our Banking and Finance Law services cater to both corporate and individual clients, ensuring compliance with Armenian and international financial regulations. We specialize in structuring financial transactions and resolving complex disputes.",
+        "howWeCanHelp": [
+          "Structuring corporate loans, project financing, and syndicated loans",
+          "Advising on bank licensing and regulatory compliance",
+          "Drafting and negotiating credit facility and loan agreements",
+          "Supporting fintech companies with licensing and legal frameworks",
+          "Managing disputes in financial transactions and debt recovery",
+          "Advising on compliance for digital banking and payment systems",
+          "Facilitating cross-border financial operations and investments",
+          "Assisting with anti-money laundering (AML) and Know Your Customer (KYC) compliance"
+        ],
+        "whyChooseUs": [
+          "Extensive experience in Armenian banking laws and international finance",
+          "Tailored solutions for fintech, startups, and financial institutions",
+          "Proven success in resolving high-stakes financial disputes"
+        ],
+        "faqs": [
+          {
+            "question": "Can you help with securing business loans in Armenia?",
+            "answer": "Yes, we assist with structuring and negotiating loan agreements tailored to your business needs."
+          },
+          {
+            "question": "What are the AML compliance requirements for Armenian banks?",
+            "answer": "Armenian banks must adhere to strict AML and KYC regulations, including customer verification and transaction monitoring."
+          },
+          {
+            "question": "Do you represent clients in financial disputes?",
+            "answer": "Yes, we represent clients in disputes involving loan defaults, mismanagement, or financial fraud."
+          },
+          {
+            "question": "Can fintech companies operate legally in Armenia?",
+            "answer": "Absolutely. We assist fintech startups with obtaining licenses and navigating the regulatory landscape."
+          },
+          {
+            "question": "How do I handle cross-border financial transactions?",
+            "answer": "Our team provides legal advice on structuring and executing international financial operations while ensuring compliance with applicable laws."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Finance-Banking-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "competition-law": {
+        "title": "Competition Law",
+        "overview": "In the rapidly evolving Armenian market, competition law is vital for fair trade practices. Our team helps businesses ensure compliance, manage investigations, and resolve disputes related to anti-competitive behavior.",
+        "howWeCanHelp": [
+          "Representing clients in anti-trust investigations and hearings",
+          "Drafting compliance policies to avoid anti-competitive practices",
+          "Advising on merger control and obtaining necessary clearances",
+          "Assisting with pricing policies and market analysis for compliance",
+          "Managing disputes in abuse of dominance or cartel cases",
+          "Reviewing and drafting distribution and supply agreements",
+          "Conducting internal audits for competition law compliance"
+        ],
+        "whyChooseUs": [
+          "Deep knowledge of Armenian and international competition regulations",
+          "Proven track record in handling high-profile competition disputes",
+          "Strategic advice tailored to client business models"
+        ],
+        "faqs": [
+          {
+            "question": "What is merger control, and do I need clearance in Armenia?",
+            "answer": "Merger control involves reviewing mergers and acquisitions to prevent anti-competitive market effects. Clearance is required for transactions exceeding certain thresholds."
+          },
+          {
+            "question": "How do I handle a competition investigation?",
+            "answer": "We represent clients during investigations, ensuring compliance and defending against allegations of anti-competitive behavior."
+          },
+          {
+            "question": "Can I draft contracts to avoid competition law risks?",
+            "answer": "Yes, we assist with drafting agreements that align with competition laws while protecting your business interests."
+          },
+          {
+            "question": "What is considered abuse of dominance in Armenia?",
+            "answer": "Abuse of dominance includes actions like predatory pricing, unfair terms, or restricting market access. We help businesses navigate such allegations."
+          },
+          {
+            "question": "What are the penalties for violating Armenian competition law?",
+            "answer": "Penalties can include fines, corrective actions, and even the nullification of agreements. Our team helps mitigate these risks."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Antitrust-and-Competition-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "energy-law": {
+        "title": "Energy Law",
+        "overview": "The energy sector in Armenia is growing rapidly, with a focus on renewable resources. Our Energy Law services support businesses in navigating regulatory frameworks, managing projects, and resolving disputes in this highly technical industry.",
+        "howWeCanHelp": [
+          "Advising on licensing and permitting for energy projects",
+          "Drafting and negotiating Power Purchase Agreements (PPAs)",
+          "Assisting with renewable energy project development and financing",
+          "Representing clients in tariff disputes and energy-related litigation",
+          "Supporting compliance with Armenian energy regulations",
+          "Guiding investors in cross-border energy transactions",
+          "Providing legal counsel on energy efficiency and sustainability policies"
+        ],
+        "whyChooseUs": [
+          "Expertise in renewable and traditional energy law",
+          "Strong relationships with regulatory bodies in Armenia",
+          "Proven experience in managing large-scale energy projects"
+        ],
+        "faqs": [
+          {
+            "question": "What are the requirements for renewable energy projects in Armenia?",
+            "answer": "Renewable energy projects must comply with licensing and environmental regulations. We assist with securing necessary permits."
+          },
+          {
+            "question": "How do Power Purchase Agreements (PPAs) work in Armenia?",
+            "answer": "PPAs are contracts between energy producers and buyers, outlining terms for electricity sales. We help negotiate and draft these agreements."
+          },
+          {
+            "question": "Can you represent clients in energy tariff disputes?",
+            "answer": "Yes, we provide legal representation in disputes related to energy pricing and regulatory compliance."
+          },
+          {
+            "question": "What incentives are available for renewable energy investments?",
+            "answer": "Armenia offers tax incentives, reduced tariffs, and support for renewable energy initiatives. We help clients access these benefits."
+          },
+          {
+            "question": "Do you handle cross-border energy transactions?",
+            "answer": "Absolutely. We assist with structuring and ensuring compliance for cross-border energy investments and trade agreements."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Energy-Lawyer-Legal-Help.jpg",
+        "imageAlt": ""
+      },
+      "investment-law": {
+        "title": "Investment Law",
+        "overview": "Armenia’s growing economy offers immense opportunities for foreign and domestic investors. Our Investment Law services help clients secure their investments, navigate regulations, and resolve disputes effectively.",
+        "howWeCanHelp": [
+          "Structuring foreign direct investments and joint ventures",
+          "Advising on bilateral investment treaties and protections",
+          "Drafting and negotiating investment agreements and contracts",
+          "Representing clients in investment-related disputes and arbitration",
+          "Supporting compliance with Armenian investment regulations",
+          "Guiding on private equity, venture capital, and fund formation",
+          "Conducting due diligence for investment projects"
+        ],
+        "whyChooseUs": [
+          "Proven expertise in cross-border investments",
+          "Experience working with international investment frameworks",
+          "Strategic advice for risk mitigation and maximized returns"
+        ],
+        "faqs": [
+          {
+            "question": "Can foreign investors own businesses in Armenia?",
+            "answer": "Yes, Armenia allows 100% foreign ownership of businesses across most sectors."
+          },
+          {
+            "question": "What protections are available under bilateral investment treaties?",
+            "answer": "Bilateral investment treaties protect investors from expropriation, unfair treatment, and discriminatory practices."
+          },
+          {
+            "question": "What is the process for setting up a joint venture in Armenia?",
+            "answer": "Establishing a joint venture involves drafting agreements, registering the entity, and ensuring regulatory compliance."
+          },
+          {
+            "question": "How can I resolve disputes related to investments?",
+            "answer": "We represent clients in arbitration and litigation under Armenian law and international investment treaties."
+          },
+          {
+            "question": "Are there incentives for foreign investors in Armenia?",
+            "answer": "Yes, incentives include tax benefits, reduced regulatory hurdles, and investment grants in specific sectors."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Investment-Lawyer-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "it-data-privacy-protection": {
+        "title": "IT & Data Protection",
+        "overview": "In today’s digital world, our IT and data protection services help businesses comply with regulations and protect sensitive information.",
+        "howWeCanHelp": [
+          "Advising on GDPR and local data protection laws",
+          "Drafting technology-related agreements",
+          "Managing data breaches and incident responses",
+          "Representing clients in tech-related disputes",
+          "Offering guidance on cybersecurity policies"
+        ],
+        "whyChooseUs": [
+          "Expertise in IT and data protection compliance",
+          "Tailored solutions for tech companies and startups",
+          "Practical advice on minimizing cybersecurity risks"
+        ],
+        "faqs": [
+          {
+            "question": "What are the data protection laws in Armenia?",
+            "answer": "Armenia’s data protection laws align with global standards, emphasizing user consent, data security, and privacy rights."
+          },
+          {
+            "question": "Does GDPR apply to businesses in Armenia?",
+            "answer": "GDPR applies to Armenian businesses handling data from EU citizens. We help ensure compliance with these regulations."
+          },
+          {
+            "question": "How can I handle a data breach legally?",
+            "answer": "We guide businesses through breach notification requirements and assist with managing regulatory investigations."
+          },
+          {
+            "question": "What contracts are needed for IT compliance?",
+            "answer": "Essential contracts include data processing agreements, non-disclosure agreements, and terms of service. We help draft and review these documents."
+          },
+          {
+            "question": "Can you represent clients in IT-related disputes?",
+            "answer": "Yes, we provide legal representation in disputes involving software development, licensing, and data misuse."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Information-Technology-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "health-pharmaceuticals": {
+        "title": "Health & Pharmaceuticals",
+        "overview": "The healthcare and pharmaceutical industries are highly regulated and require expert legal guidance. Our Health &amp; Pharmaceuticals practice provides solutions to help businesses meet regulatory demands while protecting their intellectual property and ensuring patient safety.",
+        "howWeCanHelp": [
+          "Advising on licensing and regulatory compliance for healthcare providers and pharmaceutical companies",
+          "Assisting with clinical trials, drug approvals, and certifications",
+          "Protecting pharmaceutical patents, trademarks, and other IP assets",
+          "Representing clients in regulatory investigations and disputes",
+          "Drafting and reviewing distribution and supply chain agreements",
+          "Ensuring compliance with health data privacy laws and patient confidentiality",
+          "Advising on medical device regulations and market entry strategies"
+        ],
+        "whyChooseUs": [
+          "Deep understanding of Armenian healthcare regulations",
+          "Proven expertise in pharmaceutical IP protection and compliance",
+          "Tailored strategies for navigating complex legal landscapes"
+        ],
+        "faqs": [
+          {
+            "question": "What is the process for obtaining drug approvals in Armenia?",
+            "answer": "The process involves submitting clinical data and documentation to Armenia’s health authorities for evaluation and certification."
+          },
+          {
+            "question": "Can you help with licensing for medical devices?",
+            "answer": "Yes, we assist with regulatory approvals and market entry strategies for medical devices."
+          },
+          {
+            "question": "How can I protect pharmaceutical patents in Armenia?",
+            "answer": "We help register and enforce patents to protect your innovations from infringement."
+          },
+          {
+            "question": "What are the legal requirements for clinical trials in Armenia?",
+            "answer": "Clinical trials must comply with ethical and regulatory standards. We guide clients through approvals and compliance processes."
+          },
+          {
+            "question": "Do you assist with distribution agreements for pharmaceuticals?",
+            "answer": "Yes, we draft and review agreements to ensure compliance and protect your business interests."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Healthcare-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "arbitration-ligitation": {
+        "title": "Arbitration & Litigation",
+        "overview": "Disputes can disrupt business operations, but effective resolution strategies minimize risks and costs. Our Arbitration &amp; Litigation practice provides clients with the expertise needed to navigate legal conflicts efficiently, whether through negotiation, arbitration, or court proceedings.",
+        "howWeCanHelp": [
+          "Representing clients in commercial litigation and arbitration cases",
+          "Managing disputes related to contracts, real estate, and employment",
+          "Developing pre-trial strategies and conducting risk assessments",
+          "Representing clients in cross-border litigation and international arbitration",
+          "Drafting and enforcing arbitration agreements",
+          "Advising on settlement negotiations to avoid prolonged litigation",
+          "Assisting with enforcement of foreign judgments and arbitral awards"
+        ],
+        "whyChooseUs": [
+          "Experienced litigators and arbitrators with a track record of success",
+          "Expertise in resolving cross-border and high-stakes disputes",
+          "Strategic, client-focused approaches to achieving favorable outcomes"
+        ],
+        "faqs": [
+          {
+            "question": "What types of disputes can you handle?",
+            "answer": "We manage disputes related to commercial contracts, real estate, employment, intellectual property, and cross-border transactions."
+          },
+          {
+            "question": "What is the difference between arbitration and litigation in Armenia?",
+            "answer": "Arbitration is a private dispute resolution process, while litigation is conducted in public courts. We advise on the most suitable approach for your case."
+          },
+          {
+            "question": "Can you enforce foreign judgments in Armenia?",
+            "answer": "Yes, we assist with the recognition and enforcement of foreign judgments and arbitral awards in Armenian courts."
+          },
+          {
+            "question": "How can I avoid litigation in business disputes?",
+            "answer": "We help clients draft clear contracts and provide pre-dispute advisory services to prevent conflicts from escalating."
+          },
+          {
+            "question": "Do you represent clients in international arbitration?",
+            "answer": "Absolutely. We have experience representing clients in arbitration cases governed by international rules, such as ICC or UNCITRAL."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Litigation-and-Arbitration-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "igaming-licensing": {
+        "title": "iGaming & Licensing",
+        "overview": "From B2C operator licenses to B2B supplier structures, Retrieve Legal &amp; Tax advises gaming businesses on Armenian licensing, compliance, and multi-jurisdictional structuring.",
+        "howWeCanHelp": [
+          "Armenian iGaming license applications - B2C operator and B2B supplier licenses",
+          "Corporate structure advisory for licensing - Armenian operating entity, holding company, and beneficial ownership documentation",
+          "KYC/AML policy preparation and compliance program development",
+          "Regulatory analysis and licensing feasibility assessment",
+          "Technical, financial, and legal documentation packages for regulators",
+          "Payment and banking support for iGaming operators - account documentation, bank introductions, and payment processor arrangements",
+          "White label, sub-operator, and platform agreements",
+          "Ongoing regulatory compliance - reporting, license maintenance, and changes of ownership",
+          "Multi-jurisdictional operator structure advisory - Armenia in combination with Curaçao, Malta, Anjouan, and other jurisdictions"
+        ],
+        "whyChooseUs": [
+          "Retrieve Legal & Tax offers client-focused, results-driven advice to gaming businesses operating across borders. Here is why operators and suppliers choose our iGaming practice:",
+          "We have handled Armenian iGaming licensing end-to-end, including corporate structuring for multi-jurisdictional operator groups.",
+          "We advise the full operator stack - from holding company to licensed entity to payment infrastructure.",
+          "Trusted by international casino operators, B2B platform providers, and payment processors entering the Armenian market."
+        ],
+        "faqs": [
+          {
+            "question": "What types of iGaming licenses are available in Armenia?",
+            "answer": "Armenia issues both B2C operator licenses and B2B supplier licenses. B2C licenses cover online casino, sports betting, and other player-facing gaming activities. B2B licenses cover platform providers, software suppliers, and other entities providing services to licensed operators. The licensing authority is the Tax Committee of the Republic of Armenia."
+          },
+          {
+            "question": "How long does the Armenian iGaming licensing process take?",
+            "answer": "Timelines vary depending on the completeness of the application package and the structure of the applicant entity. We prepare comprehensive documentation packages designed to minimise back-and-forth with the regulator and move the application forward efficiently."
+          },
+          {
+            "question": "Can an Armenian iGaming license be used as part of a multi-jurisdictional structure?",
+            "answer": "Yes. Armenian licensing is frequently used alongside Curaçao, Anjouan, Malta, and other jurisdictions. We advise on structuring the Armenian entity within a broader holding and operational group, including beneficial ownership documentation, intercompany agreements, and regulatory disclosure requirements."
+          },
+          {
+            "question": "What KYC and AML obligations apply to Armenian-licensed operators?",
+            "answer": "Licensed operators are subject to Armenian AML legislation and must maintain a compliance program covering customer due diligence, transaction monitoring, suspicious activity reporting, and record-keeping. We prepare full KYC/AML policy packages and compliance frameworks tailored to the operator’s business model."
+          },
+          {
+            "question": "Can you assist with banking and payment processing for an Armenian-licensed operator?",
+            "answer": "Yes. Banking access is one of the most practical challenges for iGaming operators. We assist with account documentation, regulatory opinion letters, and introductions to banks and payment processors with experience in the gaming sector."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Cryptocurrency-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "employment-law": {
+        "title": "Employment Law",
+        "overview": "A well-structured approach to employment law ensures businesses maintain healthy workplace relationships and comply with Armenian labor standards. Whether you’re drafting contracts, addressing workplace conflicts, or managing compliance for foreign hires, our employment law expertise supports businesses and individuals alike.",
+        "howWeCanHelp": [
+          "Creating clear and enforceable employment agreements",
+          "Providing guidance on workplace policies and regulatory requirements",
+          "Advising on disciplinary actions, dismissals, and severance packages",
+          "Representing clients in labor disputes, mediations, and court proceedings",
+          "Ensuring alignment with Armenian labor codes for both domestic and international staff",
+          "Conducting audits to uncover and address compliance risks",
+          "Offering counsel on workplace harassment, discrimination, and equal opportunity issues",
+          "Negotiating with trade unions and advising on collective agreements",
+          "Assisting with workforce restructuring and redundancy planning",
+          "Supporting businesses in streamlining HR processes and managing legal risks"
+        ],
+        "whyChooseUs": [
+          "A nuanced understanding of labor laws and their practical application",
+          "Solutions tailored to your unique workplace challenges",
+          "Experience across industries in resolving employment disputes and compliance matters"
+        ],
+        "faqs": [
+          {
+            "question": "What are the key legal requirements for employment contracts in Armenia?",
+            "answer": "Employment contracts must include terms such as salary, job description, and working hours, and they must comply with Armenian labor laws."
+          },
+          {
+            "question": "How can I handle workplace disputes legally?",
+            "answer": "We assist with mediation, arbitration, and litigation to resolve disputes related to termination, harassment, or discrimination."
+          },
+          {
+            "question": "What are the rules for hiring foreign employees in Armenia?",
+            "answer": "Employers must obtain work permits and ensure compliance with immigration and labor regulations. We assist with the entire process."
+          },
+          {
+            "question": "Do you help with workforce restructuring?",
+            "answer": "Yes, we provide legal support for redundancy planning, severance packages, and compliance with labor laws during restructuring."
+          },
+          {
+            "question": "What rights do employees have under Armenian labor law?",
+            "answer": "Employees are entitled to minimum wage, paid leave, workplace safety, and protection against unfair dismissal, among other rights."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "accounting-bookkeeping": {
+        "title": "Accounting & Bookkeeping",
+        "overview": "Our accounting and bookkeeping services are designed to keep your financial records accurate and compliant while providing insights for strategic decision-making.",
+        "howWeCanHelp": [
+          "Managing day-to-day bookkeeping and ledger maintenance",
+          "Preparing accurate financial reports and statements",
+          "Assisting with payroll management and compliance",
+          "Providing support during audits with proper documentation",
+          "Setting up accounting systems for startups and growing businesses",
+          "Reconciling accounts receivable and payable"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Do you offer payroll management services?",
+            "answer": "Yes, we handle payroll calculations, tax deductions, and compliance with employment laws."
+          },
+          {
+            "question": "What types of businesses benefit from bookkeeping services?",
+            "answer": "All businesses, from small startups to large corporations, benefit from maintaining accurate financial records for compliance and decision-making."
+          },
+          {
+            "question": "Can you assist with preparing financial statements for audits?",
+            "answer": "Absolutely. We prepare detailed financial reports to ensure a smooth audit process."
+          },
+          {
+            "question": "Do you provide bookkeeping software recommendations?",
+            "answer": "Yes, we recommend and set up accounting software tailored to your business needs."
+          },
+          {
+            "question": "How often should financial records be updated?",
+            "answer": "Financial records should be updated monthly, or more frequently for businesses with high transaction volumes."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg",
+        "imageAlt": ""
+      },
+      "tax-advisory": {
+        "title": "Tax Advisory",
+        "overview": "We offer expert tax advisory services to ensure compliance and optimize financial performance for businesses and individuals.",
+        "howWeCanHelp": [
+          "Tailored tax planning and compliance strategies",
+          "Resolving disputes with tax authorities",
+          "Assisting with VAT, customs, and international tax compliance",
+          "Monitoring legislative updates for regulatory compliance",
+          "Guiding businesses through tax-efficient cross-border transactions"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "How can tax advisory services benefit my business?",
+            "answer": "Tax advisory services help you optimize your tax strategy, reduce liabilities, and ensure compliance with Armenian regulations."
+          },
+          {
+            "question": "Do you assist with VAT compliance?",
+            "answer": "Yes, we provide guidance on VAT registration, filing, and refunds to ensure smooth operations."
+          },
+          {
+            "question": "What is transfer pricing, and do I need to comply?",
+            "answer": "Transfer pricing refers to pricing transactions between related entities. Compliance is required for businesses engaged in cross-border transactions."
+          },
+          {
+            "question": "Can you represent me in a tax dispute?",
+            "answer": "Yes, we provide legal representation during tax audits and disputes, ensuring your rights are protected."
+          },
+          {
+            "question": "What are the tax incentives for businesses in Armenia?",
+            "answer": "Armenia offers various incentives, including reduced tax rates and exemptions for specific industries. We help clients access these benefits."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Advisory-Services-in-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "corporate-finance-advisory": {
+        "title": "Corporate Finance Advisory",
+        "overview": "Our corporate finance services help businesses plan, raise, and manage capital effectively, ensuring long-term growth.",
+        "howWeCanHelp": [
+          "Conducting business valuations and financial modeling",
+          "Assisting with fundraising strategies, including debt and equity financing",
+          "Supporting M&A transactions with due diligence and financial planning",
+          "Offering guidance on cash flow optimization and risk management"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "What services are included in corporate finance advisory?",
+            "answer": "We assist with financial modeling, capital structure planning, fundraising, and risk assessment to optimize business performance."
+          },
+          {
+            "question": "Can you help with due diligence for investments?",
+            "answer": "Yes, we conduct in-depth financial and legal due diligence to ensure informed investment decisions."
+          },
+          {
+            "question": "What are the benefits of optimizing my company’s capital structure?",
+            "answer": "An optimized capital structure minimizes costs, improves profitability, and enhances financial flexibility."
+          },
+          {
+            "question": "Do you provide support for startups seeking investment?",
+            "answer": "Absolutely. We help startups prepare investor-ready financial plans, business valuations, and fundraising strategies."
+          },
+          {
+            "question": "How can I improve my company’s cash flow management?",
+            "answer": "We analyze cash flow patterns and provide actionable strategies to improve liquidity and reduce financial risks."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Corporate-Finance-Advisory-Services.jpg",
+        "imageAlt": ""
+      },
+      "ma-advising": {
+        "title": "M&A Advising",
+        "overview": "Mergers and acquisitions are transformative moments for businesses. Our advisory services ensure smooth processes and maximum synergy realization.",
+        "howWeCanHelp": [
+          "Conducting in-depth due diligence investigations",
+          "Negotiating and drafting M&A agreements",
+          "Facilitating regulatory approvals for mergers and acquisitions",
+          "Providing post-merger integration support"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "What is the first step in an M&A transaction?",
+            "answer": "The first step is conducting due diligence to assess the target company’s financial, legal, and operational health."
+          },
+          {
+            "question": "How do you assist during negotiations?",
+            "answer": "We draft and negotiate purchase agreements, ensuring favorable terms while protecting your interests."
+          },
+          {
+            "question": "Can you help with regulatory approvals for M&A?",
+            "answer": "Yes, we assist with obtaining necessary clearances from Armenian regulatory authorities."
+          },
+          {
+            "question": "What is post-merger integration, and why is it important?",
+            "answer": "Post-merger integration involves combining two companies’ operations, cultures, and systems to maximize synergies. We help ensure a smooth transition."
+          },
+          {
+            "question": "Do you handle cross-border M&A transactions?",
+            "answer": "Absolutely. We have extensive experience managing cross-border deals, addressing jurisdiction-specific challenges, and ensuring compliance."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/MA-Advisory-Services.jpg",
+        "imageAlt": ""
+      }
+    },
+    "ru": {
+      "corporate-business-law": {
+        "title": "Корпоративное и коммерческое прав",
+        "overview": "Corporate law governs how companies are formed, structured, operated, and eventually reorganized or dissolved. It defines the legal framework that allows businesses to function as independent legal entities capable of owning assets, entering contracts, and managing obligations.\nAt Retrieve Legal &amp; Tax, we help companies navigate these legal frameworks with clarity and confidence, ensuring every decision is legally sound and strategically aligned with business goals.",
+        "howWeCanHelp": [
+          "Company Formation & Structuring",
+          "Corporate Governance & Compliance",
+          "Mergers & Acquisitions (M&A)",
+          "Corporate Restructuring",
+          "Commercial Contracts & Legal Support"
+        ],
+        "whyChooseUs": [
+          "Legal strategies for all business stages",
+          "Trusted by local and international clients",
+          "Cross-border and international advisory experience",
+          "Deep expertise in Armenian corporate law",
+          "Strong focus on M&A and business transactions"
+        ],
+        "faqs": [
+          {
+            "question": "What Types of Business Structures Can Be Established in Armenia?",
+            "answer": "Armenia recognizes several business structures – Limited Liability Companies (LLCs), Joint-Stock Companies (JSCs), Sole Proprietorships, and Partnerships. For most foreign investors and small-to-mid-size businesses, the LLC is the most practical choice: it’s straightforward to set up, offers limited liability protection, and has no minimum capital requirement. That said, the right structure depends on your specific goals, ownership setup, and long-term plans. We help clients think through these decisions before filing a single document."
+          },
+          {
+            "question": "What Are the Legal Requirements for Registering an LLC or JSC in Armenia?",
+            "answer": "You’ll need to prepare a company charter, provide information about shareholders or participants, and submit the official registration forms. The company also needs to be registered with Armenian tax authorities and a corporate bank account must be opened before you can operate.\nIn practice, the process is more manageable than it sounds – especially with the right guidance. Our team handles the entire registration process, so you’re not left deciphering bureaucratic requirements on your own."
+          },
+          {
+            "question": "Can Foreign Citizens Own and Manage a Business in Armenia?",
+            "answer": "Yes – fully. Armenian law permits 100% foreign ownership, and foreign nationals have the same rights to establish, own, and manage a company as Armenian citizens. There are no mandatory local partners or resident director requirements.\nThis is one of the reasons Armenia has become an increasingly popular destination for international entrepreneurs and investors looking for a straightforward entry point into the region."
+          },
+          {
+            "question": "Are Shareholder and Director Agreements Necessary for My Business?",
+            "answer": "Technically, they’re not always required by law. In practice, we strongly recommend them – and most clients who’ve dealt with a corporate dispute wish they’d had them in place from the start.\nThese agreements define who has decision-making authority, how disputes get resolved, what happens if a shareholder wants to exit, and much more. They’re far easier to put together at the beginning than to negotiate after a conflict arises."
+          },
+          {
+            "question": "How Does Armenia's Legal System Support Foreign Investment?",
+            "answer": "Armenia has built a genuinely open environment for foreign investors. Your rights are protected under both domestic law and international treaties, including bilateral investment protection agreements with a number of countries.\nPractically speaking, this means no restrictions on repatriating profits, a competitive tax system, and a legal framework that treats foreign and local investors on equal footing. If you’re evaluating Armenia as a jurisdiction, we’re happy to walk you through what this means for your specific situation."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services-1.jpg",
+        "imageAlt": ""
+      },
+      "tax-law-compliance": {
+        "title": "Налоговое право и соблюдение требований",
+        "overview": "Ориентирование в налоговых регламентах Армении может быть сложным. Мы специализируемся на налоговом праве, обеспечивая соблюдение законодательства при оптимизации финансовых результатов. Независимо от того, являетесь ли вы бизнесом или частным лицом, наша команда упрощает налоговые сложности и защищает ваши интересы.",
+        "howWeCanHelp": [
+          "Комплексное налоговое планирование и стратегия",
+          "Разрешение налоговых споров с армянскими властями",
+          "Решения по трансграничному налогообложению",
+          "Документация и соблюдение трансфертного ценообразования",
+          "Консультирование по НДС, таможенным пошлинам и акцизам",
+          "Юридическое представительство во время налоговых проверок и расследований",
+          "Руководство по соглашениям об избежании двойного налогообложения и международным договорам",
+          "Консультирование по налогово-эффективным инвестиционным структурам для частных лиц и компаний",
+          "Помощь с налоговой регистрацией и отчетностью для новых бизнесов",
+          "Составление и подача апелляций в налоговых спорах",
+          "Помощь с возвратом НДС и таможенным оформлением",
+          "Мониторинг изменений в армянских налоговых правилах для обеспечения соблюдения"
+        ],
+        "whyChooseUs": [
+          "Глубокое понимание армянских налоговых законов и международных договоров.",
+          "Доказанный опыт достижения благоприятных результатов для клиентов.",
+          "Стратегии, разработанные для минимизации рисков и максимизации выгод."
+        ],
+        "faqs": [
+          {
+            "question": "Какую юридическую поддержку вы можете предоставить во время налоговой проверки?",
+            "answer": "Мы помогаем клиентам подготовить необходимые документы, представляем их в переговорах с армянскими налоговыми органами и обеспечиваем защиту их прав на протяжении всего процесса проверки. Если возникают споры, мы выступаем от вашего имени, чтобы эффективно их разрешить."
+          },
+          {
+            "question": "Как юридическая консультация может помочь с соблюдением НДС и таможенных правил?",
+            "answer": "Юридическая консультация имеет решающее значение для навигации в правилах НДС и таможенных пошлин, особенно в сложных сценариях, связанных с импортом, экспортом или цепочками поставок. Мы проверяем контракты, консультируем по налоговым обязательствам и помогаем в получении возвратов или разрешении споров с таможенными органами."
+          },
+          {
+            "question": "Можете ли вы заниматься налоговыми спорами в суде?",
+            "answer": "Да, мы предоставляем полное представительство в налоговых судебных делах. От подачи апелляций против налоговых оценок до представления вашего дела в армянских судах мы предлагаем стратегическую юридическую поддержку для достижения наилучшего результата."
+          },
+          {
+            "question": "Какую роль играет юридическая консультация в трансграничном налогообложении?",
+            "answer": "Трансграничные сделки часто включают сложные налоговые правила и риски двойного налогообложения. Мы предоставляем юридические консультации по структурированию сделок, использованию договоров об избежании двойного налогообложения и обеспечению соблюдения как армянских, так и международных законов."
+          },
+          {
+            "question": "Как вы можете помочь с составлением контрактов, связанных с налогами?",
+            "answer": "Мы гарантируем, что контракты, особенно те, что связаны с финансовыми сделками или международной торговлей, структурированы в соответствии с армянскими налоговыми законами, минимизируя потенциальные обязательства. Это включает составление пунктов, касающихся НДС, удерживаемых налогов и других обязательств."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Lawyers-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "immigration-residence-services": {
+        "title": "Услуги по иммиграции и оформлению резидентства",
+        "overview": "Армения становится ключевым направлением для глобальных талантов и инвестиций. Наши иммиграционные услуги упрощают процесс получения виз, рабочих разрешений и вида на жительство, делая ваше переезд беззаботным.",
+        "howWeCanHelp": [
+          "Бизнес-визы для предпринимателей и профессионалов",
+          "Разрешения на работу для иностранных сотрудников",
+          "Резидентские разрешения для инвесторов и цифровых кочевников",
+          "Гражданство по натурализации или происхождению",
+          "Визы для воссоединения семьи и иждивенцев",
+          "Подготовка полного пакета документов для заявлений на визы и резидентство",
+          "Консультирование по ускоренным путям получения резидентства или гражданства через инвестиции",
+          "Представительство клиентов в апелляциях или слушаниях по иммиграционным вопросам",
+          "Поддержка бизнеса в соблюдении требований при найме иностранных работников",
+          "Помощь в получении проездных документов и удостоверений личности для резидентов",
+          "Мониторинг сроков продления резидентства и поддержание соответствия требованиям"
+        ],
+        "whyChooseUs": [
+          "Пошаговое руководство, адаптированное к вашим потребностям.",
+          "Экспертиза в армянских и международных иммиграционных рамках.",
+          "Эффективная обработка заявлений для своевременного одобрения."
+        ],
+        "faqs": [
+          {
+            "question": "Какие типы иммиграционных виз доступны в Армении?",
+            "answer": "Армения предлагает бизнес-визы, разрешения на работу и резидентские разрешения, адаптированные для профессионалов, инвесторов и членов семьи."
+          },
+          {
+            "question": "Можете ли вы помочь с получением гражданства по происхождению в Армении?",
+            "answer": "Да, мы специализируемся на получении армянского гражданства для лиц с армянскими корнями."
+          },
+          {
+            "question": "Сколько времени занимает обработка резидентского разрешения в Армении?",
+            "answer": "Процесс обычно занимает несколько недель, в зависимости от типа резидентства и полноты ваших документов."
+          },
+          {
+            "question": "В чем преимущество визы для цифровых кочевников в Армении?",
+            "answer": "Виза для цифровых кочевников в Армении позволяет удаленным работникам пользоваться преимуществами резидентства без официального трудоустройства в стране."
+          },
+          {
+            "question": "Как бизнесы могут обеспечить соблюдение требований при найме иностранных сотрудников?",
+            "answer": "Мы помогаем бизнесам с заявками на разрешения на работу, проверками соблюдения требований и составлением трудовых договоров в соответствии с армянскими законами о труде и иммиграции."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Immigration-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "intellectual-property-law": {
+        "title": "Защита интеллектуальной собственности",
+        "overview": "Инновации и креативность способствуют росту, а защита вашей интеллектуальной собственности гарантирует конкурентные преимущества. В Retrieve Legal &amp; Tax мы предлагаем надежные услуги по защите интеллектуальной собственности, чтобы охранять ваш бренд, изобретения и дизайны.",
+        "howWeCanHelp": [
+          "Регистрация товарных знаков и авторских прав в Армении",
+          "Подача и защита патентов на местном и глобальном уровнях",
+          "Составление лицензионных соглашений для технологий и продуктов",
+          "Обработка претензий и споров по нарушению ИС",
+          "Консультирование по стратегиям борьбы с контрафакцией",
+          "Проведение аудитов ИС для оценки и управления вашим портфелем",
+          "Консультирование по коммерциализации ИС, включая лицензирование и франчайзинг",
+          "Представительство клиентов в процедурах возражения по товарным знакам и патентам",
+          "Предоставление стратегий для предотвращения киберсквоттинга доменных имен",
+          "Составление и обеспечение соблюдения соглашений о неразглашении и конфиденциальности",
+          "Мониторинг регистраций ИС для соблюдения сроков продления и соответствия требованиям",
+          "Помощь в юридических действиях против контрафактной продукции и пиратства"
+        ],
+        "whyChooseUs": [
+          "Охват товарных знаков, патентов, авторских прав и коммерческих тайн.",
+          "Эксперты в армянском и международном праве ИС.",
+          "Обеспечение защиты вашего бизнеса на рынке."
+        ],
+        "faqs": [
+          {
+            "question": "Каков процесс регистрации товарного знака в Армении?",
+            "answer": "Процесс включает подачу заявки в Армянское агентство интеллектуальной собственности, что обычно занимает несколько месяцев для одобрения."
+          },
+          {
+            "question": "Как я могу защитить свой патент в нескольких странах?",
+            "answer": "Используя международные договоры, такие как Договор о патентной кооперации (PCT), мы можем помочь вам обеспечить патентную защиту по всему миру."
+          },
+          {
+            "question": "Могу ли я подать в суд, если кто-то нарушает мои авторские права в Армении?",
+            "answer": "Да, мы помогаем с подачей исков, отправкой писем о прекращении и пресечении и преследованием юридических средств для защиты авторских прав."
+          },
+          {
+            "question": "Какие шаги я могу предпринять для коммерциализации моей интеллектуальной собственности?",
+            "answer": "Мы составляем лицензионные и франчайзинговые соглашения, чтобы помочь монетизировать ваши активы ИС."
+          },
+          {
+            "question": "Обязательно ли регистрировать товарный знак для защиты моего бренда в Армении?",
+            "answer": "Хотя это не обязательно, регистрация предоставляет юридические преимущества, включая более легкое обеспечение ваших прав."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Real-Estate-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "real-estate-construction-law": {
+        "title": "Право недвижимости и строительства",
+        "overview": "Инвестиции в недвижимость в Армении переживают бум. Наша юридическая команда обеспечивает бесперебойные сделки, надежные контракты и квалифицированное представительство для застройщиков, покупателей и инвесторов.",
+        "howWeCanHelp": [
+          "Соглашения о покупке недвижимости и комплексная проверка",
+          "Составление и проверка договоров аренды",
+          "Консультирование по строительным контрактам и спорам",
+          "Юридическая поддержка по вопросам зонирования и использования земли",
+          "Управление судебными разбирательствами по недвижимости",
+          "Предоставление юридических консультаций по финансированию и инвестициям в недвижимость",
+          "Поддержка процедур приобретения земли и передачи прав собственности",
+          "собственности Составление контрактов на строительство и соглашений с субподрядчиками",
+          "Обработка юридических споров по задержкам строительства и дефектам",
+          "Помощь с получением регуляторных разрешений и лицензий для строительных проектов",
+          "Консультирование по соблюдению законов о городском планировании и зонировании",
+          "Представительство арендодателей и арендаторов в спорах, связанных с арендой"
+        ],
+        "whyChooseUs": [
+          "От покупки до разрешения споров.",
+          "Глубокие знания армянских правил недвижимости.",
+          "Экспертиза в защите ваших инвестиций."
+        ],
+        "faqs": [
+          {
+            "question": "Могут ли иностранные граждане покупать недвижимость в Армении?",
+            "answer": "Да, иностранцы могут владеть квартирами и коммерческой недвижимостью, но на сельскохозяйственные земли распространяются ограничения."
+          },
+          {
+            "question": "Какие юридические шаги связаны с покупкой недвижимости в Армении?",
+            "answer": "Процесс включает due diligence, составление договоров купли-продажи и регистрацию права собственности в Государственном кадастре."
+          },
+          {
+            "question": "Помогаете ли вы со спорами по строительным контрактам?",
+            "answer": "Безусловно. Мы представляем клиентов в разрешении споров, связанных с задержками строительства, дефектами или несоблюдением требований."
+          },
+          {
+            "question": "Каковы законы о зонировании для развития недвижимости в Армении?",
+            "answer": "Законы о зонировании варьируются в зависимости от региона, и мы помогаем клиентам получать необходимые разрешения и согласования для их проектов."
+          },
+          {
+            "question": "Можете ли вы помочь с соглашениями о финансировании проектов недвижимости?",
+            "answer": "Да, мы помогаем составлять и обсуждать соглашения с кредиторами, обеспечивая соблюдение армянских правил."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d84f03d4419dacaf3cd496b11643377b.jpg",
+        "imageAlt": ""
+      },
+      "banking-finance-law": {
+        "title": "Банковское и финансовое право",
+        "overview": "Наши услуги в области банковского и финансового права ориентированы как на корпоративных, так и на частных клиентов, обеспечивая соблюдение финансовых регламентов Армении и международных стандартов. Мы специализируемся на структурировании финансовых сделок и разрешении сложных споров.",
+        "howWeCanHelp": [
+          "Структурирование корпоративных займов, проектного финансирования и синдицированных кредитов",
+          "Консультирование по лицензированию банков и соблюдению регулирующих требований",
+          "Составление и обсуждение соглашений о кредитных линиях и займах",
+          "Поддержка финтех-компаний с лицензированием и юридическими рамками",
+          "Управление спорами в финансовых операциях и взыскании долгов",
+          "Консультирование по соблюдению требований для цифрового банкинга и платежных систем",
+          "Содействие трансграничным финансовым операциям и инвестициям",
+          "Помощь с соблюдением требований по противодействию отмыванию денег (AML) и \"знай своего клиента\" (KYC)"
+        ],
+        "whyChooseUs": [
+          "Обширный опыт в армянских банковских законах и международных финансах",
+          "Индивидуальные решения для финтех-компаний, стартапов и финансовых учреждений",
+          "Доказанный успех в разрешении финансовых споров высокой значимости"
+        ],
+        "faqs": [
+          {
+            "question": "Можете ли вы помочь с получением бизнес-кредитов в Армении?",
+            "answer": "Да, мы помогаем с структурированием и обсуждением кредитных соглашений, адаптированных к вашим бизнес-потребностям."
+          },
+          {
+            "question": "Каковы требования AML для армянских банков?",
+            "answer": "Армянские банки должны соблюдать строгие правила AML и KYC, включая верификацию клиентов и мониторинг транзакций."
+          },
+          {
+            "question": "Представляете ли вы клиентов в финансовых спорах?",
+            "answer": "Да, мы представляем клиентов в спорах, связанных с невыполнением обязательств по кредитам, неправильным управлением или финансовым мошенничеством."
+          },
+          {
+            "question": "Могут ли финтех-компании легально работать в Армении?",
+            "answer": "Безусловно. Мы помогаем финтех-стартапам с получением лицензий и навигацией в регулирующей среде."
+          },
+          {
+            "question": "Как мне управлять трансграничными финансовыми операциями?",
+            "answer": "Наша команда предоставляет юридические консультации по структурированию и выполнению международных финансовых операций, обеспечивая соблюдение применимых законов."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Finance-Banking-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "competition-law": {
+        "title": "Антимонопольное право",
+        "overview": "В быстро развивающемся армянском рынке антимонопольное право играет ключевую роль в обеспечении честных торговых практик. Наша команда помогает бизнесам соблюдать нормативные требования, управлять расследованиями и разрешать споры, связанные с антиконкурентным поведением.",
+        "howWeCanHelp": [
+          "Представительство клиентов в антимонопольных расследованиях и слушаниях",
+          "Составление политик соблюдения для избежания антиконкурентных практик",
+          "Консультирование по контролю слияний и получению необходимых разрешений",
+          "Помощь с политиками ценообразования и анализом рынка для соблюдения требований",
+          "Управление спорами в случаях злоупотребления доминирующим положением или картельных соглашений",
+          "Проверка и составление дистрибьюторских и поставочных соглашений",
+          "Проведение внутренних аудитов для соблюдения конкурентного права"
+        ],
+        "whyChooseUs": [
+          "Глубокие знания армянских и международных конкурентных правил",
+          "Доказанный опыт в разрешении значимых конкурентных споров",
+          "Стратегические консультации, адаптированные к моделям бизнеса клиентов"
+        ],
+        "faqs": [
+          {
+            "question": "Что такое контроль слияний, и нужно ли мне разрешение в Армении?",
+            "answer": "Контроль слияний включает проверку слияний и поглощений для предотвращения антиконкурентных эффектов на рынке. Разрешение требуется для сделок, превышающих определенные пороги."
+          },
+          {
+            "question": "Как мне справиться с конкурентным расследованием?",
+            "answer": "Мы представляем клиентов во время расследований, обеспечивая соблюдение требований и защищая от обвинений в антиконкурентном поведении."
+          },
+          {
+            "question": "Могу ли я составить контракты, чтобы избежать рисков конкурентного права?",
+            "answer": "Да, мы помогаем составлять соглашения, соответствующие конкурентным законам, защищая при этом ваши бизнес-интересы."
+          },
+          {
+            "question": "Что считается злоупотреблением доминирующим положением в Армении?",
+            "answer": "Злоупотребление доминирующим положением включает такие действия, как демпинговые цены, несправедливые условия или ограничение доступа к рынку. Мы помогаем бизнесам ориентироваться в таких обвинениях."
+          },
+          {
+            "question": "Каковы штрафы за нарушение армянского конкурентного права?",
+            "answer": "Штрафы могут включать денежные взыскания, корректирующие меры и даже аннулирование соглашений. Наша команда помогает снизить эти риски."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Antitrust-and-Competition-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "energy-law": {
+        "title": "Энергетическое право",
+        "overview": "Энергетический сектор Армении развивается быстрыми темпами, с акцентом на возобновляемые источники энергии. Наши услуги в области энергетического права помогают бизнесам ориентироваться в нормативных рамках, управлять проектами и решать споры в этой высокотехнологичной отрасли.",
+        "howWeCanHelp": [
+          "Консультирование по лицензированию и получению разрешений для энергетических проектов",
+          "Составление и обсуждение соглашений о покупке электроэнергии (PPA)",
+          "Помощь с развитием и финансированием проектов возобновляемой энергетики",
+          "Представительство клиентов в тарифных спорах и судебных разбирательствах, связанных с энергетикой",
+          "Поддержка соблюдения армянских энергетических правил",
+          "Руководство инвесторов в трансграничных энергетических сделках",
+          "Предоставление юридических консультаций по энергоэффективности и политикам устойчивого развития"
+        ],
+        "whyChooseUs": [
+          "Экспертиза в законах о возобновляемой и традиционной энергетике",
+          "Прочные отношения с регулирующими органами в Армении",
+          "Доказанный опыт управления крупномасштабными энергетическими проектами"
+        ],
+        "faqs": [
+          {
+            "question": "Каковы требования для проектов возобновляемой энергетики в Армении?",
+            "answer": "Проекты возобновляемой энергетики должны соответствовать лицензионным и экологическим правилам. Мы помогаем с получением необходимых разрешений."
+          },
+          {
+            "question": "Как работают соглашения о покупке электроэнергии (PPA) в Армении?",
+            "answer": "? PPA — это контракты между производителями энергии и покупателями, определяющие условия продажи электроэнергии. Мы помогаем обсуждать и составлять эти соглашения."
+          },
+          {
+            "question": "Можете ли вы представлять клиентов в спорах по энергетическим тарифам?",
+            "answer": "Да, мы предоставляем юридическое представительство в спорах, связанных с ценообразованием на энергию и соблюдением регулирующих требований."
+          },
+          {
+            "question": "Какие стимулы доступны для инвестиций в возобновляемую энергетику?",
+            "answer": "Армения предлагает налоговые льготы, сниженные тарифы и поддержку инициатив в области возобновляемой энергетики. Мы помогаем клиентам воспользоваться этими преимуществами."
+          },
+          {
+            "question": "Занимаетесь ли вы трансграничными энергетическими сделками?",
+            "answer": "Безусловно. Мы помогаем с структурированием и обеспечением соблюдения требований для трансграничных инвестиций и торговых соглашений в энергетике."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Energy-Lawyer-Legal-Help.jpg",
+        "imageAlt": ""
+      },
+      "investment-law": {
+        "title": "Инвестиционное право",
+        "overview": "Растущая экономика Армении предлагает огромные возможности для иностранных и местных инвесторов. Наши услуги в области инвестиционного права помогают клиентам обезопасить их инвестиции, ориентироваться в регламентах и эффективно разрешать споры.",
+        "howWeCanHelp": [
+          "помочь Структурирование прямых иностранных инвестиций и совместных предприятий",
+          "Консультирование по двусторонним инвестиционным договорам и защитам",
+          "Составление и обсуждение инвестиционных соглашений и контрактов",
+          "Представительство клиентов в инвестиционных спорах и арбитраже",
+          "Поддержка соблюдения армянских инвестиционных правил",
+          "Руководство по частному капиталу, венчурному капиталу и формированию фондов",
+          "Проведение комплексной проверки (due diligence) для инвестиционных проектов"
+        ],
+        "whyChooseUs": [
+          "Доказанная экспертиза в трансграничных инвестициях",
+          "Опыт работы с международными инвестиционными рамками",
+          "Стратегические консультации для минимизации рисков и максимизации доходов"
+        ],
+        "faqs": [
+          {
+            "question": "Могут ли иностранные инвесторы владеть бизнесом в Армении?",
+            "answer": "Да, Армения допускает 100% иностранное владение бизнесом в большинстве секторов."
+          },
+          {
+            "question": "Какие защиты доступны по двусторонним инвестиционным договорам?",
+            "answer": "Двусторонние инвестиционные договоры защищают инвесторов от экспроприации, несправедливого обращения и дискриминационных практик."
+          },
+          {
+            "question": "Каков процесс создания совместного предприятия в Армении?",
+            "answer": "Создание совместного предприятия включает составление соглашений, регистрацию юридического лица и обеспечение соблюдения регулирующих требований."
+          },
+          {
+            "question": "Как я могу разрешить споры, связанные с инвестициями?",
+            "answer": "Мы представляем клиентов в арбитраже и судебных разбирательствах в соответствии с армянским правом и международными инвестиционными договорами."
+          },
+          {
+            "question": "Есть ли стимулы для иностранных инвесторов в Армении?",
+            "answer": "Да, стимулы включают налоговые льготы, сниженные регуляторные препятствия и инвестиционные гранты в определенных секторах."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Investment-Lawyer-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "it-data-privacy-protection": {
+        "title": "IT и защита данных",
+        "overview": "В современном цифровом мире наши услуги в области информационных технологий и защиты данных помогают бизнесам соблюдать регламенты и защищать конфиденциальную информацию.",
+        "howWeCanHelp": [
+          "Консультирование по GDPR и местным законам о защите данных",
+          "Составление соглашений, связанных с технологиями",
+          "Управление утечками данных и реагирование на инциденты",
+          "Представительство клиентов в спорах, связанных с технологиями",
+          "Предоставление руководства по политикам кибербезопасности"
+        ],
+        "whyChooseUs": [
+          "Экспертиза в соблюдении требований IT и защиты данных",
+          "Индивидуальные решения для технологических компаний и стартапов",
+          "Практичные советы по минимизации рисков кибербезопасности"
+        ],
+        "faqs": [
+          {
+            "question": "Каковы законы о защите данных в Армении?",
+            "answer": "Законы о защите данных в Армении соответствуют глобальным стандартам, подчеркивая согласие пользователя, безопасность данных и права на конфиденциальность."
+          },
+          {
+            "question": "Применяется ли GDPR к бизнесам в Армении?",
+            "answer": "GDPR применяется к армянским бизнесам, обрабатывающим данные граждан ЕС. Мы помогаем обеспечить соблюдение этих правил."
+          },
+          {
+            "question": "Как я могу юридически справиться с утечкой данных?",
+            "answer": "Мы проводим бизнесы через требования уведомления об утечке и помогаем с управлением регуляторными расследованиями."
+          },
+          {
+            "question": "Какие контракты нужны для соблюдения IT?",
+            "answer": "Необходимые контракты включают соглашения об обработке данных, соглашения о неразглашении и условия обслуживания. Мы помогаем составлять и проверять эти документы."
+          },
+          {
+            "question": "Можете ли вы представлять клиентов в спорах, связанных с IT?",
+            "answer": "Да, мы предоставляем юридическое представительство в спорах, связанных с разработкой программного обеспечения, лицензированием и неправомерным использованием данных."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Information-Technology-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "health-pharmaceuticals": {
+        "title": "Здравоохранение и фармацевтика",
+        "overview": "Здравоохранение и фармацевтическая промышленность сильно регулируются и требуют экспертного юридического сопровождения. Наша практика в области здравоохранения и фармацевтики предлагает решения, которые помогают бизнесам соответствовать регламентам, защищать интеллектуальную собственность и обеспечивать безопасность пациентов.",
+        "howWeCanHelp": [
+          "Консультирование по лицензированию и соблюдению регулирующих требований для медицинских учреждений и фармацевтических компаний",
+          "Помощь с клиническими испытаниями, одобрением лекарств и сертификацией",
+          "Защита фармацевтических патентов, товарных знаков и других активов ИС",
+          "Представительство клиентов в регуляторных расследованиях и спорах",
+          "Составление и проверка соглашений о дистрибуции и цепочке поставок",
+          "Обеспечение соблюдения законов о конфиденциальности медицинских данных и конфиденциальности пациентов",
+          "Консультирование по правилам для медицинских изделий и стратегиям выхода на рынок"
+        ],
+        "whyChooseUs": [
+          "Глубокое понимание армянских правил здравоохранения",
+          "Доказанная экспертиза в защите фармацевтической ИС и соблюдении требований",
+          "Индивидуальные стратегии для навигации в сложных юридических ландшафтах"
+        ],
+        "faqs": [
+          {
+            "question": "Каков процесс получения одобрения лекарств в Армении?",
+            "answer": "Процесс включает подачу клинических данных и документации в медицинские органы Армении для оценки и сертификации."
+          },
+          {
+            "question": "Можете ли вы помочь с лицензированием медицинских изделий?",
+            "answer": "Да, мы помогаем с регуляторными одобрениями и стратегиями выхода на рынок для медицинских изделий."
+          },
+          {
+            "question": "Как я могу защитить фармацевтические патенты в Армении?",
+            "answer": "Мы помогаем регистрировать и обеспечивать соблюдение патентов для защиты ваших инноваций от нарушений."
+          },
+          {
+            "question": "Каковы юридические требования для клинических испытаний в Армении?",
+            "answer": "Клинические испытания должны соответствовать этическим и регуляторным стандартам. Мы проводим клиентов через процессы одобрения и соблюдения."
+          },
+          {
+            "question": "Помогаете ли вы с соглашениями о дистрибуции фармацевтических препаратов?",
+            "answer": "Да, мы составляем и проверяем соглашения, чтобы обеспечить соблюдение требований и защитить ваши бизнес-интересы."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Healthcare-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "arbitration-ligitation": {
+        "title": "Арбитраж и судебные разбирательства",
+        "overview": "Споры могут нарушать деятельность бизнеса, но эффективные стратегии разрешения минимизируют риски и затраты. Наша практика арбитража и судебных разбирательств предоставляет клиентам экспертизу, необходимую для эффективного разрешения юридических конфликтов, будь то через переговоры, арбитраж или судебные разбирательства.",
+        "howWeCanHelp": [
+          "Представительство клиентов в коммерческих судебных и арбитражных делах",
+          "Управление спорами, связанными с контрактами, недвижимостью и трудовыми отношениями",
+          "Разработка предсудебных стратегий и проведение оценки рисков",
+          "Представительство клиентов в трансграничных судебных разбирательствах и международном арбитраже",
+          "Составление и обеспечение соблюдения арбитражных соглашений",
+          "Консультирование по переговорам о мировом соглашении для избежания длительных судебных процессов",
+          "Помощь с исполнением иностранных решений и арбитражных постановлений"
+        ],
+        "whyChooseUs": [
+          "Опытные адвокаты и арбитры с успешным опытом",
+          "Экспертиза в разрешении трансграничных и высокозначимых споров",
+          "Стратегические, ориентированные на клиента подходы к достижению благоприятных результатов"
+        ],
+        "faqs": [
+          {
+            "question": "Какие типы споров вы можете разрешить?",
+            "answer": "Мы занимаемся спорами, связанными с коммерческими контрактами, недвижимостью, трудовыми отношениями, интеллектуальной собственностью и трансграничными сделками."
+          },
+          {
+            "question": "В чем разница между арбитражем и судебным разбирательством в Армении?",
+            "answer": "Арбитраж — это частный процесс разрешения споров, тогда как судебное разбирательство проводится в публичных судах. Мы консультируем по наиболее подходящему подходу для вашего дела."
+          },
+          {
+            "question": "Можете ли вы обеспечить исполнение иностранных решений в Армении?",
+            "answer": "Да, мы помогаем с признанием и исполнением иностранных решений и арбитражных постановлений в армянских судах."
+          },
+          {
+            "question": "Как я могу избежать судебных разбирательств в бизнес-спорах?",
+            "answer": "? Мы помогаем клиентам составлять четкие контракты и предоставляем консультационные услуги до возникновения споров, чтобы предотвратить эскалацию конфликтов."
+          },
+          {
+            "question": "Представляете ли вы клиентов в международном арбитраже?",
+            "answer": "Безусловно. У нас есть опыт представления клиентов в арбитражных делах, регулируемых международными правилами, такими как ICC или UNCITRAL."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Litigation-and-Arbitration-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "igaming-licensing": {
+        "title": "iGaming & Licensing",
+        "overview": "From B2C operator licenses to B2B supplier structures, Retrieve Legal &amp; Tax advises gaming businesses on Armenian licensing, compliance, and multi-jurisdictional structuring.",
+        "howWeCanHelp": [
+          "Armenian iGaming license applications - B2C operator and B2B supplier licenses",
+          "Corporate structure advisory for licensing - Armenian operating entity, holding company, and beneficial ownership documentation",
+          "KYC/AML policy preparation and compliance program development",
+          "Regulatory analysis and licensing feasibility assessment",
+          "Technical, financial, and legal documentation packages for regulators",
+          "Payment and banking support for iGaming operators - account documentation, bank introductions, and payment processor arrangements",
+          "White label, sub-operator, and platform agreements",
+          "Ongoing regulatory compliance - reporting, license maintenance, and changes of ownership",
+          "Multi-jurisdictional operator structure advisory - Armenia in combination with Curaçao, Malta, Anjouan, and other jurisdictions"
+        ],
+        "whyChooseUs": [
+          "Retrieve Legal & Tax offers client-focused, results-driven advice to gaming businesses operating across borders. Here is why operators and suppliers choose our iGaming practice:",
+          "We have handled Armenian iGaming licensing end-to-end, including corporate structuring for multi-jurisdictional operator groups.",
+          "We advise the full operator stack - from holding company to licensed entity to payment infrastructure.",
+          "Trusted by international casino operators, B2B platform providers, and payment processors entering the Armenian market."
+        ],
+        "faqs": [
+          {
+            "question": "What types of iGaming licenses are available in Armenia?",
+            "answer": "Armenia issues both B2C operator licenses and B2B supplier licenses. B2C licenses cover online casino, sports betting, and other player-facing gaming activities. B2B licenses cover platform providers, software suppliers, and other entities providing services to licensed operators. The licensing authority is the Tax Committee of the Republic of Armenia."
+          },
+          {
+            "question": "How long does the Armenian iGaming licensing process take?",
+            "answer": "Timelines vary depending on the completeness of the application package and the structure of the applicant entity. We prepare comprehensive documentation packages designed to minimise back-and-forth with the regulator and move the application forward efficiently."
+          },
+          {
+            "question": "Can an Armenian iGaming license be used as part of a multi-jurisdictional structure?",
+            "answer": "Yes. Armenian licensing is frequently used alongside Curaçao, Anjouan, Malta, and other jurisdictions. We advise on structuring the Armenian entity within a broader holding and operational group, including beneficial ownership documentation, intercompany agreements, and regulatory disclosure requirements."
+          },
+          {
+            "question": "What KYC and AML obligations apply to Armenian-licensed operators?",
+            "answer": "Licensed operators are subject to Armenian AML legislation and must maintain a compliance program covering customer due diligence, transaction monitoring, suspicious activity reporting, and record-keeping. We prepare full KYC/AML policy packages and compliance frameworks tailored to the operator’s business model."
+          },
+          {
+            "question": "Can you assist with banking and payment processing for an Armenian-licensed operator?",
+            "answer": "Yes. Banking access is one of the most practical challenges for iGaming operators. We assist with account documentation, regulatory opinion letters, and introductions to banks and payment processors with experience in the gaming sector."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Cryptocurrency-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "employment-law": {
+        "title": "Трудовое право",
+        "overview": "Грамотно12 выстроенный подход к трудовому праву обеспечивает компаниям поддержание здоровых трудовых отношений и соблюдение трудовых стандартов Армении. Независимо от того, разрабатываете ли вы трудовые договоры, решаете трудовые споры или обеспечиваете соответствие требованиям законодательства при найме иностранных сотрудников, наша экспертиза в области трудового права поддерживает как бизнес, так и частных клиентов.",
+        "howWeCanHelp": [
+          "Создание четких и исполнимых трудовых соглашений",
+          "Предоставление руководства по политикам на рабочем месте и регуляторным требованиям",
+          "Консультирование по дисциплинарным мерам, увольнениям и выходным пособиям",
+          "Представительство клиентов в трудовых спорах, медиациях и судебных разбирательствах",
+          "Обеспечение соответствия армянским трудовым кодексам для местного и международного персонала",
+          "Проведение аудитов для выявления и устранения рисков соблюдения",
+          "Предоставление консультаций по вопросам домогательств на рабочем месте, дискриминации и равных возможностей",
+          "Переговоры с профсоюзами и консультирование по коллективным соглашениям",
+          "Помощь с реструктуризацией рабочей силы и планированием сокращений",
+          "Поддержка бизнеса в оптимизации HR-процессов и управлении юридическими рисками"
+        ],
+        "whyChooseUs": [
+          "Тонкое понимание трудовых законов и их практического применения",
+          "Решения, адаптированные к вашим уникальным вызовам на рабочем месте",
+          "Опыт разрешения трудовых споров и вопросов соблюдения в разных отраслях"
+        ],
+        "faqs": [
+          {
+            "question": "Каковы ключевые юридические требования для трудовых контрактов в Армении?",
+            "answer": "Трудовые контракты должны включать такие условия, как зарплата, описание работы и рабочие часы, и соответствовать армянским трудовым законам."
+          },
+          {
+            "question": "Как я могу юридически справиться со спорами на рабочем месте?",
+            "answer": "Мы помогаем с медиацией, арбитражем и судебными разбирательствами для разрешения споров, связанных с увольнением, домогательствами или дискриминацией."
+          },
+          {
+            "question": "Каковы правила найма иностранных сотрудников в Армении?",
+            "answer": "Работодатели должны получать разрешения на работу и обеспечивать соблюдение иммиграционных и трудовых норм. Мы помогаем с этим процессом."
+          },
+          {
+            "question": "Помогаете ли вы с реструктуризацией рабочей силы?",
+            "answer": "Да, мы предоставляем юридическую поддержку для планирования сокращений, выходных пособий и соблюдения трудовых законов во время реструктуризации."
+          },
+          {
+            "question": "Какие права имеют работники по армянскому трудовому праву?",
+            "answer": "Работники имеют право на минимальную зарплату, оплачиваемый отпуск, безопасность на рабочем месте и защиту от несправедливого увольнения, среди прочих прав."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "accounting-bookkeeping": {
+        "title": "Бухгалтерия и ведение учета",
+        "overview": "Наши услуги по бухгалтерскому учету и ведению финансовой отчетности разработаны для обеспечения точности данных и соблюдения нормативных требований, а также для предоставления аналитической информации, необходимой для стратегического принятия решений.",
+        "howWeCanHelp": [
+          "Управление ежедневной бухгалтерией и ведение главной книги",
+          "Подготовка точных финансовых отчетов и выписок",
+          "Помощь с управлением заработной платой и соблюдением требований",
+          "Поддержка во время аудитов с надлежащей документацией",
+          "Настройка бухгалтерских систем для стартапов и растущих бизнесов",
+          "Сверка счетов дебиторской и кредиторской задолженности"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Предлагаете ли вы услуги управления заработной платой?",
+            "answer": "Да, мы занимаемся расчетом заработной платы, налоговыми вычетами и соблюдением трудовых законов."
+          },
+          {
+            "question": "Какие типы бизнесов выигрывают от услуг ведения учета?",
+            "answer": "Все бизнесы, от небольших стартапов до крупных корпораций, выигрывают от поддержания точных финансовых записей для соблюдения требований и принятия решений."
+          },
+          {
+            "question": "Можете ли вы помочь с подготовкой финансовых отчетов для аудитов?",
+            "answer": "Безусловно. Мы готовим подробные финансовые отчеты, чтобы обеспечить гладкий процесс аудита."
+          },
+          {
+            "question": "Предоставляете ли вы рекомендации по бухгалтерскому программному обеспечению?",
+            "answer": "Да, мы рекомендуем и настраиваем бухгалтерское программное обеспечение, адаптированное к вашим бизнес-потребностям."
+          },
+          {
+            "question": "Как часто следует обновлять финансовые записи?",
+            "answer": "Финансовые записи следует обновлять ежемесячно или чаще для бизнесов с большим объемом транзакций."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg",
+        "imageAlt": ""
+      },
+      "tax-advisory": {
+        "title": "Налоговое консультирование",
+        "overview": "Мы предлагаем профессиональные консультации по вопросам налогообложения, обеспечивая соблюдение налогового законодательства и оптимизацию финансовых показателей как для бизнеса, так и для частных клиентов.",
+        "howWeCanHelp": [
+          "Индивидуальные стратегии налогового планирования и соблюдения",
+          "Разрешение споров с налоговыми органами",
+          "Помощь с НДС, таможенными пошлинами и международным налоговым соблюдением",
+          "Мониторинг законодательных обновлений для обеспечения регуляторного соответствия",
+          "Руководство бизнесов через налогово-эффективные трансграничные сделки"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Как налоговые консультационные услуги могут принести пользу моему бизнесу?",
+            "answer": "Налоговые консультационные услуги помогают оптимизировать вашу налоговую стратегию, снизить обязательства и обеспечить соблюдение армянских правил."
+          },
+          {
+            "question": "Помогаете ли вы с соблюдением НДС?",
+            "answer": "Да, мы предоставляем руководство по регистрации НДС, подаче документов и возвратам, чтобы обеспечить бесперебойную работу."
+          },
+          {
+            "question": "Что такое трансфертное ценообразование, и нужно ли мне его соблюдать?",
+            "answer": "Трансфертное ценообразование относится к ценообразованию сделок между связанными сторонами. Соблюдение требуется для бизнесов, участвующих в трансграничных операциях."
+          },
+          {
+            "question": "Можете ли вы представлять меня в налоговом споре?",
+            "answer": "Да, мы предоставляем юридическое представительство во время налоговых проверок и споров, защищая ваши права."
+          },
+          {
+            "question": "Какие налоговые льготы доступны для бизнесов в Армении?",
+            "answer": "Армения предлагает различные льготы, включая сниженные налоговые ставки и освобождения для определенных отраслей. Мы помогаем клиентам воспользоваться этими преимуществами."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Advisory-Services-in-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "corporate-finance-advisory": {
+        "title": "Консультирование по корпоративным финансам",
+        "overview": "Наши услуги в сфере корпоративных финансов помогают компаниям эффективно планировать, привлекать и управлять капиталом, обеспечивая устойчивый долгосрочный рост.",
+        "howWeCanHelp": [
+          "Проведение оценки бизнеса и финансового моделирования",
+          "Помощь со стратегиями привлечения средств, включая долговое и акционерное финансирование",
+          "Сопровождение сделок слияния и поглощения (M&A), включая проведение комплексной проверки (due diligence) и финансовое планирование.",
+          "Предоставление руководства по оптимизации денежных потоков и управлению рисками"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Какие услуги включены в консультации по корпоративным финансам?",
+            "answer": "Мы помогаем с финансовым моделированием, планированием структуры капитала, привлечением средств и оценкой рисков для оптимизации бизнес-результатов."
+          },
+          {
+            "question": "Можете ли вы помочь с due diligence для инвестиций?",
+            "answer": "Да, мы проводим глубокий финансовый и юридический due diligence, чтобы обеспечить обоснованные инвестиционные решения."
+          },
+          {
+            "question": "Каковы преимущества оптимизации структуры капитала моей компании?",
+            "answer": "Оптимизированная структура капитала минимизирует затраты, повышает прибыльность и улучшает финансовую гибкость."
+          },
+          {
+            "question": "Предоставляете ли вы поддержку стартапам, ищущим инвестиции?",
+            "answer": "Безусловно. Мы помогаем стартапам подготовить финансовые планы, готовые для инвесторов, оценку бизнеса и стратегии привлечения средств."
+          },
+          {
+            "question": "Как я могу улучшить управление денежными потоками моей компании?",
+            "answer": "Мы анализируем модели денежных потоков и предоставляем действенные стратегии для улучшения ликвидности и снижения финансовых рисков."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Corporate-Finance-Advisory-Services.jpg",
+        "imageAlt": ""
+      },
+      "ma-advising": {
+        "title": "Консультирование по слияниям и поглощениям (M&A)",
+        "overview": "Сделки по слиянию и поглощению являются ключевыми этапами трансформации бизнеса. Наши консультационные услуги обеспечивают прозрачность процессов и максимальную реализацию синергии.",
+        "howWeCanHelp": [
+          "Проведение глубоких расследований комплексной проверки (due diligence).",
+          "Обсуждение и составление соглашений по M&A",
+          "Содействие получению регуляторных разрешений для слияний и поглощений",
+          "Предоставление поддержки интеграции после слияния"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Каков первый шаг в сделке M&A?",
+            "answer": "Первый шаг — проведение комплексной проверки (due diligence) для оценки финансового, юридического и операционного состояния целевой компании."
+          },
+          {
+            "question": "Как вы помогаете во время переговоров?",
+            "answer": "Мы составляем и обсуждаем соглашения о покупке, обеспечивая выгодные условия и защищая ваши интересы."
+          },
+          {
+            "question": "Можете ли вы помочь с регуляторными разрешениями для M&A?",
+            "answer": "Да, мы помогаем с получением необходимых разрешений от армянских регуляторных органов."
+          },
+          {
+            "question": "Что такое интеграция после слияния и почему это важно?",
+            "answer": "Интеграция после слияния включает объединение операций, культур и систем двух компаний для максимизации синергии. Мы помогаем обеспечить плавный переход."
+          },
+          {
+            "question": "Занимаетесь ли вы трансграничными сделками M&A?",
+            "answer": "У нас есть обширный опыт управления трансграничными сделками, решения специфичных для юрисдикции вызовов и обеспечения соблюдения требований."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/MA-Advisory-Services.jpg",
+        "imageAlt": ""
+      }
+    },
+    "am": {
+      "corporate-business-law": {
+        "title": "Corporate & Business Law",
+        "overview": "Corporate law governs how companies are formed, structured, operated, and eventually reorganized or dissolved. It defines the legal framework that allows businesses to function as independent legal entities capable of owning assets, entering contracts, and managing obligations.\nAt Retrieve Legal &amp; Tax, we help companies navigate these legal frameworks with clarity and confidence, ensuring every decision is legally sound and strategically aligned with business goals.",
+        "howWeCanHelp": [
+          "Company Formation & Structuring",
+          "Corporate Governance & Compliance",
+          "Mergers & Acquisitions (M&A)",
+          "Corporate Restructuring",
+          "Commercial Contracts & Legal Support"
+        ],
+        "whyChooseUs": [
+          "Legal strategies for all business stages",
+          "Trusted by local and international clients",
+          "Cross-border and international advisory experience",
+          "Deep expertise in Armenian corporate law",
+          "Strong focus on M&A and business transactions"
+        ],
+        "faqs": [
+          {
+            "question": "What Types of Business Structures Can Be Established in Armenia?",
+            "answer": "Armenia recognizes several business structures – Limited Liability Companies (LLCs), Joint-Stock Companies (JSCs), Sole Proprietorships, and Partnerships. For most foreign investors and small-to-mid-size businesses, the LLC is the most practical choice: it’s straightforward to set up, offers limited liability protection, and has no minimum capital requirement. That said, the right structure depends on your specific goals, ownership setup, and long-term plans. We help clients think through these decisions before filing a single document."
+          },
+          {
+            "question": "What Are the Legal Requirements for Registering an LLC or JSC in Armenia?",
+            "answer": "You’ll need to prepare a company charter, provide information about shareholders or participants, and submit the official registration forms. The company also needs to be registered with Armenian tax authorities and a corporate bank account must be opened before you can operate.\nIn practice, the process is more manageable than it sounds – especially with the right guidance. Our team handles the entire registration process, so you’re not left deciphering bureaucratic requirements on your own."
+          },
+          {
+            "question": "Can Foreign Citizens Own and Manage a Business in Armenia?",
+            "answer": "Yes – fully. Armenian law permits 100% foreign ownership, and foreign nationals have the same rights to establish, own, and manage a company as Armenian citizens. There are no mandatory local partners or resident director requirements.\nThis is one of the reasons Armenia has become an increasingly popular destination for international entrepreneurs and investors looking for a straightforward entry point into the region."
+          },
+          {
+            "question": "Are Shareholder and Director Agreements Necessary for My Business?",
+            "answer": "Technically, they’re not always required by law. In practice, we strongly recommend them – and most clients who’ve dealt with a corporate dispute wish they’d had them in place from the start.\nThese agreements define who has decision-making authority, how disputes get resolved, what happens if a shareholder wants to exit, and much more. They’re far easier to put together at the beginning than to negotiate after a conflict arises."
+          },
+          {
+            "question": "How Does Armenia's Legal System Support Foreign Investment?",
+            "answer": "Armenia has built a genuinely open environment for foreign investors. Your rights are protected under both domestic law and international treaties, including bilateral investment protection agreements with a number of countries.\nPractically speaking, this means no restrictions on repatriating profits, a competitive tax system, and a legal framework that treats foreign and local investors on equal footing. If you’re evaluating Armenia as a jurisdiction, we’re happy to walk you through what this means for your specific situation."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services-1.jpg",
+        "imageAlt": ""
+      },
+      "tax-law-compliance": {
+        "title": "Tax Law & Compliance",
+        "overview": "Navigating tax regulations in Armenia can be challenging. We specialize in tax law, ensuring compliance while optimizing financial outcomes. Whether you are a business or an individual, our team simplifies tax complexities and protects your interests.",
+        "howWeCanHelp": [
+          "Comprehensive tax planning and strategy",
+          "Resolving tax disputes with Armenian authorities",
+          "Cross-border taxation solutions",
+          "Transfer pricing documentation and compliance",
+          "Advising on VAT, customs, and excise duties",
+          "Providing legal representation during tax audits and investigations",
+          "Offering guidance on double tax treaties and international agreements",
+          "Advising on tax-efficient investment structures for individuals and companies",
+          "Helping with tax registration and reporting for new businesses",
+          "Drafting and submitting appeals in tax-related disputes",
+          "Assisting in VAT refunds and customs clearance issues",
+          "Monitoring changes in Armenian tax regulations to ensure compliance"
+        ],
+        "whyChooseUs": [
+          "In-depth understanding of Armenian tax laws and international treaties.",
+          "Proven track record in achieving favorable outcomes for clients.",
+          "Strategies designed to mitigate risks and maximize benefits."
+        ],
+        "faqs": [
+          {
+            "question": "What legal support can you provide during a tax audit?",
+            "answer": "We assist clients by preparing required documentation, representing them in discussions with Armenian tax authorities, and ensuring their rights are protected throughout the audit process. If disputes arise, we advocate on your behalf to resolve them effectively."
+          },
+          {
+            "question": "How can legal counsel help with VAT and customs compliance?",
+            "answer": "Legal advice is crucial for navigating VAT and customs regulations, particularly in complex scenarios involving imports, exports, or supply chains. We review contracts, advise on tax obligations, and assist in securing refunds or resolving disputes with customs authorities."
+          },
+          {
+            "question": "Can you handle tax disputes in court?",
+            "answer": "Yes, we provide full representation in tax litigation cases. From filing appeals against tax assessments to presenting your case in Armenian courts, we offer strategic legal support to ensure the best possible outcome."
+          },
+          {
+            "question": "What role does legal advice play in cross-border taxation?",
+            "answer": "Cross-border transactions often involve intricate tax regulations and risks of double taxation. We provide legal advice to structure transactions, leverage double taxation treaties, and ensure compliance with both Armenian and international laws."
+          },
+          {
+            "question": "How can you help with tax-related contract drafting?",
+            "answer": "We ensure that contracts, especially those involving financial transactions or international trade, are structured to comply with Armenian tax laws while minimizing potential liabilities. This includes drafting clauses that address VAT, withholding taxes, and other obligations."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Lawyers-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "immigration-residence-services": {
+        "title": "Immigration & Residency Services",
+        "overview": "Armenia is becoming a key destination for global talent and investment. Our immigration services simplify the process of obtaining visas, work permits, and residency, making your relocation stress-free.",
+        "howWeCanHelp": [
+          "Business visas for entrepreneurs and professionals",
+          "Work permits for foreign employees",
+          "Residency permits for investors and digital nomads",
+          "Citizenship by naturalization or descent",
+          "Family reunification and dependent visas",
+          "Preparing complete documentation for visa and residency applications",
+          "Advising on fast-track routes for residency or citizenship through investment",
+          "Representing clients in immigration appeals or hearings",
+          "Supporting businesses with employment compliance for foreign workers",
+          "Assisting in obtaining travel documents and ID cards for residents",
+          "Monitoring residency renewal deadlines and maintaining compliance"
+        ],
+        "whyChooseUs": [
+          "Step-by-step guidance tailored to your needs.",
+          "Expertise in Armenian and international immigration frameworks.",
+          "Efficient handling of applications for timely approval"
+        ],
+        "faqs": [
+          {
+            "question": "What types of immigration visas are available in Armenia?",
+            "answer": "Armenia offers business visas, work permits, and residency permits tailored to professionals, investors, and family members."
+          },
+          {
+            "question": "Can you assist with citizenship by descent in Armenia?",
+            "answer": "Yes, we specialize in obtaining Armenian citizenship for individuals with Armenian ancestry."
+          },
+          {
+            "question": "How long does it take to process a residency permit in Armenia?",
+            "answer": "The process typically takes several weeks, depending on the type of residency and the completeness of your documentation."
+          },
+          {
+            "question": "What is the benefit of Armenia’s digital nomad visa?",
+            "answer": "Armenia’s digital nomad visa allows remote workers to enjoy residency benefits without formal employment in the country."
+          },
+          {
+            "question": "How can businesses ensure compliance when hiring foreign employees?",
+            "answer": "We assist businesses with work permit applications, compliance audits, and employment contract drafting to meet Armenian labor and immigration laws."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Immigration-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "intellectual-property-law": {
+        "title": "Intellectual Property (IP) Law",
+        "overview": "Innovation and creativity drive growth, and protecting your intellectual property ensures your competitive edge. At Retrieve Legal &amp; Tax, we offer reliable IP services to safeguard your brand, inventions, and designs.",
+        "howWeCanHelp": [
+          "Trademark and copyright registration in Armenia",
+          "Filing and prosecuting patents locally and globally",
+          "Drafting licensing agreements for technology and products",
+          "Handling IP infringement claims and disputes",
+          "Advising on anti-counterfeiting strategies",
+          "Conducting IP audits to evaluate and manage your portfolio",
+          "Advising on IP commercialization, including licensing and franchising",
+          "Representing clients in opposition proceedings for trademarks and patents",
+          "Providing strategies to prevent domain name cybersquatting",
+          "Drafting and enforcing non-disclosure and confidentiality agreements",
+          "Monitoring IP registrations for renewal deadlines and compliance",
+          "Assisting with legal actions against counterfeit products and piracy"
+        ],
+        "whyChooseUs": [
+          "Covering trademarks, patents, copyrights, and trade secrets.",
+          "Experts in Armenian and international IP law.",
+          "Ensuring your business remains protected in the marketplace."
+        ],
+        "faqs": [
+          {
+            "question": "What is the process for registering a trademark in Armenia?",
+            "answer": "The process includes filing an application with the Armenian Intellectual Property Agency, which typically takes a few months for approval."
+          },
+          {
+            "question": "How can I protect my patent in multiple countries?",
+            "answer": "By utilizing international treaties like the Patent Cooperation Treaty (PCT), we can help you secure patent protection globally."
+          },
+          {
+            "question": "Can I take legal action if someone infringes on my copyright in Armenia?",
+            "answer": "Yes, we assist with filing lawsuits, issuing cease-and-desist letters, and pursuing legal remedies for copyright infringement."
+          },
+          {
+            "question": "What steps can I take to commercialize my intellectual property?",
+            "answer": "We draft licensing and franchising agreements to help monetize your IP assets."
+          },
+          {
+            "question": "Is registering a trademark mandatory to protect my brand in Armenia?",
+            "answer": "While not mandatory, registration provides legal advantages, including easier enforcement of your rights."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Real-Estate-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "real-estate-construction-law": {
+        "title": "Real Estate & Construction Law",
+        "overview": "Real estate investments in Armenia are booming. Our legal team ensures smooth transactions, secure contracts, and reliable representation for developers, buyers, and investors.",
+        "howWeCanHelp": [
+          "Property purchase agreements and due diligence",
+          "Drafting and reviewing lease agreements",
+          "Advising on construction contracts and disputes",
+          "Legal support for zoning and land-use compliance",
+          "Managing real estate litigation",
+          "Providing legal advice on real estate financing and investments",
+          "Supporting land acquisition and ownership transfer procedures",
+          "Drafting construction contracts and subcontractor agreements",
+          "Handling legal disputes in construction delays and defects",
+          "Assisting with regulatory approvals and licensing for construction projects",
+          "Advising on urban planning and zoning law compliance",
+          "Representing landlords and tenants in lease-related disputes"
+        ],
+        "whyChooseUs": [
+          "From purchase to dispute resolution.",
+          "In-depth knowledge of Armenian real estate regulations.",
+          "Expertise in safeguarding your investments."
+        ],
+        "faqs": [
+          {
+            "question": "Can foreign nationals purchase property in Armenia?",
+            "answer": "Yes, foreigners can own apartments and commercial properties, but restrictions apply to agricultural land."
+          },
+          {
+            "question": "What legal steps are involved in buying property in Armenia?",
+            "answer": "The process includes due diligence, drafting purchase agreements, and registering ownership with the State Cadastre."
+          },
+          {
+            "question": "Do you assist with construction contract disputes?",
+            "answer": "Absolutely. We represent clients in resolving disputes related to construction delays, defects, or non-compliance."
+          },
+          {
+            "question": "What are the zoning laws for real estate development in Armenia?",
+            "answer": "Zoning laws vary by region, and we assist clients in obtaining necessary permits and approvals for their projects."
+          },
+          {
+            "question": "Can you assist with financing agreements for real estate projects?",
+            "answer": "Yes, we help draft and negotiate agreements with lenders while ensuring compliance with Armenian regulations."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/d84f03d4419dacaf3cd496b11643377b.jpg",
+        "imageAlt": ""
+      },
+      "banking-finance-law": {
+        "title": "Banking & Finance Law",
+        "overview": "Our Banking and Finance Law services cater to both corporate and individual clients, ensuring compliance with Armenian and international financial regulations. We specialize in structuring financial transactions and resolving complex disputes.",
+        "howWeCanHelp": [
+          "Structuring corporate loans, project financing, and syndicated loans",
+          "Advising on bank licensing and regulatory compliance",
+          "Drafting and negotiating credit facility and loan agreements",
+          "Supporting fintech companies with licensing and legal frameworks",
+          "Managing disputes in financial transactions and debt recovery",
+          "Advising on compliance for digital banking and payment systems",
+          "Facilitating cross-border financial operations and investments",
+          "Assisting with anti-money laundering (AML) and Know Your Customer (KYC) compliance"
+        ],
+        "whyChooseUs": [
+          "Extensive experience in Armenian banking laws and international finance",
+          "Tailored solutions for fintech, startups, and financial institutions",
+          "Proven success in resolving high-stakes financial disputes"
+        ],
+        "faqs": [
+          {
+            "question": "Can you help with securing business loans in Armenia?",
+            "answer": "Yes, we assist with structuring and negotiating loan agreements tailored to your business needs."
+          },
+          {
+            "question": "What are the AML compliance requirements for Armenian banks?",
+            "answer": "Armenian banks must adhere to strict AML and KYC regulations, including customer verification and transaction monitoring."
+          },
+          {
+            "question": "Do you represent clients in financial disputes?",
+            "answer": "Yes, we represent clients in disputes involving loan defaults, mismanagement, or financial fraud."
+          },
+          {
+            "question": "Can fintech companies operate legally in Armenia?",
+            "answer": "Absolutely. We assist fintech startups with obtaining licenses and navigating the regulatory landscape."
+          },
+          {
+            "question": "How do I handle cross-border financial transactions?",
+            "answer": "Our team provides legal advice on structuring and executing international financial operations while ensuring compliance with applicable laws."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Finance-Banking-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "competition-law": {
+        "title": "Competition Law",
+        "overview": "In the rapidly evolving Armenian market, competition law is vital for fair trade practices. Our team helps businesses ensure compliance, manage investigations, and resolve disputes related to anti-competitive behavior.",
+        "howWeCanHelp": [
+          "Representing clients in anti-trust investigations and hearings",
+          "Drafting compliance policies to avoid anti-competitive practices",
+          "Advising on merger control and obtaining necessary clearances",
+          "Assisting with pricing policies and market analysis for compliance",
+          "Managing disputes in abuse of dominance or cartel cases",
+          "Reviewing and drafting distribution and supply agreements",
+          "Conducting internal audits for competition law compliance"
+        ],
+        "whyChooseUs": [
+          "Deep knowledge of Armenian and international competition regulations",
+          "Proven track record in handling high-profile competition disputes",
+          "Strategic advice tailored to client business models"
+        ],
+        "faqs": [
+          {
+            "question": "What is merger control, and do I need clearance in Armenia?",
+            "answer": "Merger control involves reviewing mergers and acquisitions to prevent anti-competitive market effects. Clearance is required for transactions exceeding certain thresholds."
+          },
+          {
+            "question": "How do I handle a competition investigation?",
+            "answer": "We represent clients during investigations, ensuring compliance and defending against allegations of anti-competitive behavior."
+          },
+          {
+            "question": "Can I draft contracts to avoid competition law risks?",
+            "answer": "Yes, we assist with drafting agreements that align with competition laws while protecting your business interests."
+          },
+          {
+            "question": "What is considered abuse of dominance in Armenia?",
+            "answer": "Abuse of dominance includes actions like predatory pricing, unfair terms, or restricting market access. We help businesses navigate such allegations."
+          },
+          {
+            "question": "What are the penalties for violating Armenian competition law?",
+            "answer": "Penalties can include fines, corrective actions, and even the nullification of agreements. Our team helps mitigate these risks."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Antitrust-and-Competition-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "energy-law": {
+        "title": "Energy Law",
+        "overview": "The energy sector in Armenia is growing rapidly, with a focus on renewable resources. Our Energy Law services support businesses in navigating regulatory frameworks, managing projects, and resolving disputes in this highly technical industry.",
+        "howWeCanHelp": [
+          "Advising on licensing and permitting for energy projects",
+          "Drafting and negotiating Power Purchase Agreements (PPAs)",
+          "Assisting with renewable energy project development and financing",
+          "Representing clients in tariff disputes and energy-related litigation",
+          "Supporting compliance with Armenian energy regulations",
+          "Guiding investors in cross-border energy transactions",
+          "Providing legal counsel on energy efficiency and sustainability policies"
+        ],
+        "whyChooseUs": [
+          "Expertise in renewable and traditional energy law",
+          "Strong relationships with regulatory bodies in Armenia",
+          "Proven experience in managing large-scale energy projects"
+        ],
+        "faqs": [
+          {
+            "question": "What are the requirements for renewable energy projects in Armenia?",
+            "answer": "Renewable energy projects must comply with licensing and environmental regulations. We assist with securing necessary permits."
+          },
+          {
+            "question": "How do Power Purchase Agreements (PPAs) work in Armenia?",
+            "answer": "PPAs are contracts between energy producers and buyers, outlining terms for electricity sales. We help negotiate and draft these agreements."
+          },
+          {
+            "question": "Can you represent clients in energy tariff disputes?",
+            "answer": "Yes, we provide legal representation in disputes related to energy pricing and regulatory compliance."
+          },
+          {
+            "question": "What incentives are available for renewable energy investments?",
+            "answer": "Armenia offers tax incentives, reduced tariffs, and support for renewable energy initiatives. We help clients access these benefits."
+          },
+          {
+            "question": "Do you handle cross-border energy transactions?",
+            "answer": "Absolutely. We assist with structuring and ensuring compliance for cross-border energy investments and trade agreements."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Energy-Lawyer-Legal-Help.jpg",
+        "imageAlt": ""
+      },
+      "investment-law": {
+        "title": "Investment Law",
+        "overview": "Armenia’s growing economy offers immense opportunities for foreign and domestic investors. Our Investment Law services help clients secure their investments, navigate regulations, and resolve disputes effectively.",
+        "howWeCanHelp": [
+          "Structuring foreign direct investments and joint ventures",
+          "Advising on bilateral investment treaties and protections",
+          "Drafting and negotiating investment agreements and contracts",
+          "Representing clients in investment-related disputes and arbitration",
+          "Supporting compliance with Armenian investment regulations",
+          "Guiding on private equity, venture capital, and fund formation",
+          "Conducting due diligence for investment projects"
+        ],
+        "whyChooseUs": [
+          "Proven expertise in cross-border investments",
+          "Experience working with international investment frameworks",
+          "Strategic advice for risk mitigation and maximized returns"
+        ],
+        "faqs": [
+          {
+            "question": "Can foreign investors own businesses in Armenia?",
+            "answer": "Yes, Armenia allows 100% foreign ownership of businesses across most sectors."
+          },
+          {
+            "question": "What protections are available under bilateral investment treaties?",
+            "answer": "Bilateral investment treaties protect investors from expropriation, unfair treatment, and discriminatory practices."
+          },
+          {
+            "question": "What is the process for setting up a joint venture in Armenia?",
+            "answer": "Establishing a joint venture involves drafting agreements, registering the entity, and ensuring regulatory compliance."
+          },
+          {
+            "question": "How can I resolve disputes related to investments?",
+            "answer": "We represent clients in arbitration and litigation under Armenian law and international investment treaties."
+          },
+          {
+            "question": "Are there incentives for foreign investors in Armenia?",
+            "answer": "Yes, incentives include tax benefits, reduced regulatory hurdles, and investment grants in specific sectors."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Investment-Lawyer-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "it-data-privacy-protection": {
+        "title": "IT & Data Protection",
+        "overview": "In today’s digital world, our IT and data protection services help businesses comply with regulations and protect sensitive information.",
+        "howWeCanHelp": [
+          "Advising on GDPR and local data protection laws",
+          "Drafting technology-related agreements",
+          "Managing data breaches and incident responses",
+          "Representing clients in tech-related disputes",
+          "Offering guidance on cybersecurity policies"
+        ],
+        "whyChooseUs": [
+          "Expertise in IT and data protection compliance",
+          "Tailored solutions for tech companies and startups",
+          "Practical advice on minimizing cybersecurity risks"
+        ],
+        "faqs": [
+          {
+            "question": "What are the data protection laws in Armenia?",
+            "answer": "Armenia’s data protection laws align with global standards, emphasizing user consent, data security, and privacy rights."
+          },
+          {
+            "question": "Does GDPR apply to businesses in Armenia?",
+            "answer": "GDPR applies to Armenian businesses handling data from EU citizens. We help ensure compliance with these regulations."
+          },
+          {
+            "question": "How can I handle a data breach legally?",
+            "answer": "We guide businesses through breach notification requirements and assist with managing regulatory investigations."
+          },
+          {
+            "question": "What contracts are needed for IT compliance?",
+            "answer": "Essential contracts include data processing agreements, non-disclosure agreements, and terms of service. We help draft and review these documents."
+          },
+          {
+            "question": "Can you represent clients in IT-related disputes?",
+            "answer": "Yes, we provide legal representation in disputes involving software development, licensing, and data misuse."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Information-Technology-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "health-pharmaceuticals": {
+        "title": "Health & Pharmaceuticals",
+        "overview": "The healthcare and pharmaceutical industries are highly regulated and require expert legal guidance. Our Health &amp; Pharmaceuticals practice provides solutions to help businesses meet regulatory demands while protecting their intellectual property and ensuring patient safety.",
+        "howWeCanHelp": [
+          "Advising on licensing and regulatory compliance for healthcare providers and pharmaceutical companies",
+          "Assisting with clinical trials, drug approvals, and certifications",
+          "Protecting pharmaceutical patents, trademarks, and other IP assets",
+          "Representing clients in regulatory investigations and disputes",
+          "Drafting and reviewing distribution and supply chain agreements",
+          "Ensuring compliance with health data privacy laws and patient confidentiality",
+          "Advising on medical device regulations and market entry strategies"
+        ],
+        "whyChooseUs": [
+          "Deep understanding of Armenian healthcare regulations",
+          "Proven expertise in pharmaceutical IP protection and compliance",
+          "Tailored strategies for navigating complex legal landscapes"
+        ],
+        "faqs": [
+          {
+            "question": "What is the process for obtaining drug approvals in Armenia?",
+            "answer": "The process involves submitting clinical data and documentation to Armenia’s health authorities for evaluation and certification."
+          },
+          {
+            "question": "Can you help with licensing for medical devices?",
+            "answer": "Yes, we assist with regulatory approvals and market entry strategies for medical devices."
+          },
+          {
+            "question": "How can I protect pharmaceutical patents in Armenia?",
+            "answer": "We help register and enforce patents to protect your innovations from infringement."
+          },
+          {
+            "question": "What are the legal requirements for clinical trials in Armenia?",
+            "answer": "Clinical trials must comply with ethical and regulatory standards. We guide clients through approvals and compliance processes."
+          },
+          {
+            "question": "Do you assist with distribution agreements for pharmaceuticals?",
+            "answer": "Yes, we draft and review agreements to ensure compliance and protect your business interests."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Healthcare-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "arbitration-ligitation": {
+        "title": "Arbitration & Litigation",
+        "overview": "Disputes can disrupt business operations, but effective resolution strategies minimize risks and costs. Our Arbitration &amp; Litigation practice provides clients with the expertise needed to navigate legal conflicts efficiently, whether through negotiation, arbitration, or court proceedings.",
+        "howWeCanHelp": [
+          "Representing clients in commercial litigation and arbitration cases",
+          "Managing disputes related to contracts, real estate, and employment",
+          "Developing pre-trial strategies and conducting risk assessments",
+          "Representing clients in cross-border litigation and international arbitration",
+          "Drafting and enforcing arbitration agreements",
+          "Advising on settlement negotiations to avoid prolonged litigation",
+          "Assisting with enforcement of foreign judgments and arbitral awards"
+        ],
+        "whyChooseUs": [
+          "Experienced litigators and arbitrators with a track record of success",
+          "Expertise in resolving cross-border and high-stakes disputes",
+          "Strategic, client-focused approaches to achieving favorable outcomes"
+        ],
+        "faqs": [
+          {
+            "question": "What types of disputes can you handle?",
+            "answer": "We manage disputes related to commercial contracts, real estate, employment, intellectual property, and cross-border transactions."
+          },
+          {
+            "question": "What is the difference between arbitration and litigation in Armenia?",
+            "answer": "Arbitration is a private dispute resolution process, while litigation is conducted in public courts. We advise on the most suitable approach for your case."
+          },
+          {
+            "question": "Can you enforce foreign judgments in Armenia?",
+            "answer": "Yes, we assist with the recognition and enforcement of foreign judgments and arbitral awards in Armenian courts."
+          },
+          {
+            "question": "How can I avoid litigation in business disputes?",
+            "answer": "We help clients draft clear contracts and provide pre-dispute advisory services to prevent conflicts from escalating."
+          },
+          {
+            "question": "Do you represent clients in international arbitration?",
+            "answer": "Absolutely. We have experience representing clients in arbitration cases governed by international rules, such as ICC or UNCITRAL."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Litigation-and-Arbitration-Lawyers.jpg",
+        "imageAlt": ""
+      },
+      "igaming-licensing": {
+        "title": "iGaming & Licensing",
+        "overview": "From B2C operator licenses to B2B supplier structures, Retrieve Legal &amp; Tax advises gaming businesses on Armenian licensing, compliance, and multi-jurisdictional structuring.",
+        "howWeCanHelp": [
+          "Armenian iGaming license applications - B2C operator and B2B supplier licenses",
+          "Corporate structure advisory for licensing - Armenian operating entity, holding company, and beneficial ownership documentation",
+          "KYC/AML policy preparation and compliance program development",
+          "Regulatory analysis and licensing feasibility assessment",
+          "Technical, financial, and legal documentation packages for regulators",
+          "Payment and banking support for iGaming operators - account documentation, bank introductions, and payment processor arrangements",
+          "White label, sub-operator, and platform agreements",
+          "Ongoing regulatory compliance - reporting, license maintenance, and changes of ownership",
+          "Multi-jurisdictional operator structure advisory - Armenia in combination with Curaçao, Malta, Anjouan, and other jurisdictions"
+        ],
+        "whyChooseUs": [
+          "Retrieve Legal & Tax offers client-focused, results-driven advice to gaming businesses operating across borders. Here is why operators and suppliers choose our iGaming practice:",
+          "We have handled Armenian iGaming licensing end-to-end, including corporate structuring for multi-jurisdictional operator groups.",
+          "We advise the full operator stack - from holding company to licensed entity to payment infrastructure.",
+          "Trusted by international casino operators, B2B platform providers, and payment processors entering the Armenian market."
+        ],
+        "faqs": [
+          {
+            "question": "What types of iGaming licenses are available in Armenia?",
+            "answer": "Armenia issues both B2C operator licenses and B2B supplier licenses. B2C licenses cover online casino, sports betting, and other player-facing gaming activities. B2B licenses cover platform providers, software suppliers, and other entities providing services to licensed operators. The licensing authority is the Tax Committee of the Republic of Armenia."
+          },
+          {
+            "question": "How long does the Armenian iGaming licensing process take?",
+            "answer": "Timelines vary depending on the completeness of the application package and the structure of the applicant entity. We prepare comprehensive documentation packages designed to minimise back-and-forth with the regulator and move the application forward efficiently."
+          },
+          {
+            "question": "Can an Armenian iGaming license be used as part of a multi-jurisdictional structure?",
+            "answer": "Yes. Armenian licensing is frequently used alongside Curaçao, Anjouan, Malta, and other jurisdictions. We advise on structuring the Armenian entity within a broader holding and operational group, including beneficial ownership documentation, intercompany agreements, and regulatory disclosure requirements."
+          },
+          {
+            "question": "What KYC and AML obligations apply to Armenian-licensed operators?",
+            "answer": "Licensed operators are subject to Armenian AML legislation and must maintain a compliance program covering customer due diligence, transaction monitoring, suspicious activity reporting, and record-keeping. We prepare full KYC/AML policy packages and compliance frameworks tailored to the operator’s business model."
+          },
+          {
+            "question": "Can you assist with banking and payment processing for an Armenian-licensed operator?",
+            "answer": "Yes. Banking access is one of the most practical challenges for iGaming operators. We assist with account documentation, regulatory opinion letters, and introductions to banks and payment processors with experience in the gaming sector."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Cryptocurrency-Lawyer.jpg",
+        "imageAlt": ""
+      },
+      "employment-law": {
+        "title": "Employment Law",
+        "overview": "A well-structured approach to employment law ensures businesses maintain healthy workplace relationships and comply with Armenian labor standards. Whether you’re drafting contracts, addressing workplace conflicts, or managing compliance for foreign hires, our employment law expertise supports businesses and individuals alike.",
+        "howWeCanHelp": [
+          "Creating clear and enforceable employment agreements",
+          "Providing guidance on workplace policies and regulatory requirements",
+          "Advising on disciplinary actions, dismissals, and severance packages",
+          "Representing clients in labor disputes, mediations, and court proceedings",
+          "Ensuring alignment with Armenian labor codes for both domestic and international staff",
+          "Conducting audits to uncover and address compliance risks",
+          "Offering counsel on workplace harassment, discrimination, and equal opportunity issues",
+          "Negotiating with trade unions and advising on collective agreements",
+          "Assisting with workforce restructuring and redundancy planning",
+          "Supporting businesses in streamlining HR processes and managing legal risks"
+        ],
+        "whyChooseUs": [
+          "A nuanced understanding of labor laws and their practical application",
+          "Solutions tailored to your unique workplace challenges",
+          "Experience across industries in resolving employment disputes and compliance matters"
+        ],
+        "faqs": [
+          {
+            "question": "What are the key legal requirements for employment contracts in Armenia?",
+            "answer": "Employment contracts must include terms such as salary, job description, and working hours, and they must comply with Armenian labor laws."
+          },
+          {
+            "question": "How can I handle workplace disputes legally?",
+            "answer": "We assist with mediation, arbitration, and litigation to resolve disputes related to termination, harassment, or discrimination."
+          },
+          {
+            "question": "What are the rules for hiring foreign employees in Armenia?",
+            "answer": "Employers must obtain work permits and ensure compliance with immigration and labor regulations. We assist with the entire process."
+          },
+          {
+            "question": "Do you help with workforce restructuring?",
+            "answer": "Yes, we provide legal support for redundancy planning, severance packages, and compliance with labor laws during restructuring."
+          },
+          {
+            "question": "What rights do employees have under Armenian labor law?",
+            "answer": "Employees are entitled to minimum wage, paid leave, workplace safety, and protection against unfair dismissal, among other rights."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Business-and-Corporate-Legal-Services.jpg",
+        "imageAlt": ""
+      },
+      "accounting-bookkeeping": {
+        "title": "Accounting & Bookkeeping",
+        "overview": "Our accounting and bookkeeping services are designed to keep your financial records accurate and compliant while providing insights for strategic decision-making.",
+        "howWeCanHelp": [
+          "Managing day-to-day bookkeeping and ledger maintenance",
+          "Preparing accurate financial reports and statements",
+          "Assisting with payroll management and compliance",
+          "Providing support during audits with proper documentation",
+          "Setting up accounting systems for startups and growing businesses",
+          "Reconciling accounts receivable and payable"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "Do you offer payroll management services?",
+            "answer": "Yes, we handle payroll calculations, tax deductions, and compliance with employment laws."
+          },
+          {
+            "question": "What types of businesses benefit from bookkeeping services?",
+            "answer": "All businesses, from small startups to large corporations, benefit from maintaining accurate financial records for compliance and decision-making."
+          },
+          {
+            "question": "Can you assist with preparing financial statements for audits?",
+            "answer": "Absolutely. We prepare detailed financial reports to ensure a smooth audit process."
+          },
+          {
+            "question": "Do you provide bookkeeping software recommendations?",
+            "answer": "Yes, we recommend and set up accounting software tailored to your business needs."
+          },
+          {
+            "question": "How often should financial records be updated?",
+            "answer": "Financial records should be updated monthly, or more frequently for businesses with high transaction volumes."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/12/220bf46fa29e4f138a1c006f0f0aee91.jpg",
+        "imageAlt": ""
+      },
+      "tax-advisory": {
+        "title": "Tax Advisory",
+        "overview": "We offer expert tax advisory services to ensure compliance and optimize financial performance for businesses and individuals.",
+        "howWeCanHelp": [
+          "Tailored tax planning and compliance strategies",
+          "Resolving disputes with tax authorities",
+          "Assisting with VAT, customs, and international tax compliance",
+          "Monitoring legislative updates for regulatory compliance",
+          "Guiding businesses through tax-efficient cross-border transactions"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "How can tax advisory services benefit my business?",
+            "answer": "Tax advisory services help you optimize your tax strategy, reduce liabilities, and ensure compliance with Armenian regulations."
+          },
+          {
+            "question": "Do you assist with VAT compliance?",
+            "answer": "Yes, we provide guidance on VAT registration, filing, and refunds to ensure smooth operations."
+          },
+          {
+            "question": "What is transfer pricing, and do I need to comply?",
+            "answer": "Transfer pricing refers to pricing transactions between related entities. Compliance is required for businesses engaged in cross-border transactions."
+          },
+          {
+            "question": "Can you represent me in a tax dispute?",
+            "answer": "Yes, we provide legal representation during tax audits and disputes, ensuring your rights are protected."
+          },
+          {
+            "question": "What are the tax incentives for businesses in Armenia?",
+            "answer": "Armenia offers various incentives, including reduced tax rates and exemptions for specific industries. We help clients access these benefits."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Tax-Advisory-Services-in-Armenia.jpg",
+        "imageAlt": ""
+      },
+      "corporate-finance-advisory": {
+        "title": "Corporate Finance Advisory",
+        "overview": "Our corporate finance services help businesses plan, raise, and manage capital effectively, ensuring long-term growth.",
+        "howWeCanHelp": [
+          "Conducting business valuations and financial modeling",
+          "Assisting with fundraising strategies, including debt and equity financing",
+          "Supporting M&A transactions with due diligence and financial planning",
+          "Offering guidance on cash flow optimization and risk management"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "What services are included in corporate finance advisory?",
+            "answer": "We assist with financial modeling, capital structure planning, fundraising, and risk assessment to optimize business performance."
+          },
+          {
+            "question": "Can you help with due diligence for investments?",
+            "answer": "Yes, we conduct in-depth financial and legal due diligence to ensure informed investment decisions."
+          },
+          {
+            "question": "What are the benefits of optimizing my company’s capital structure?",
+            "answer": "An optimized capital structure minimizes costs, improves profitability, and enhances financial flexibility."
+          },
+          {
+            "question": "Do you provide support for startups seeking investment?",
+            "answer": "Absolutely. We help startups prepare investor-ready financial plans, business valuations, and fundraising strategies."
+          },
+          {
+            "question": "How can I improve my company’s cash flow management?",
+            "answer": "We analyze cash flow patterns and provide actionable strategies to improve liquidity and reduce financial risks."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/Corporate-Finance-Advisory-Services.jpg",
+        "imageAlt": ""
+      },
+      "ma-advising": {
+        "title": "M&A Advising",
+        "overview": "Mergers and acquisitions are transformative moments for businesses. Our advisory services ensure smooth processes and maximum synergy realization.",
+        "howWeCanHelp": [
+          "Conducting in-depth due diligence investigations",
+          "Negotiating and drafting M&A agreements",
+          "Facilitating regulatory approvals for mergers and acquisitions",
+          "Providing post-merger integration support"
+        ],
+        "whyChooseUs": [],
+        "faqs": [
+          {
+            "question": "What is the first step in an M&A transaction?",
+            "answer": "The first step is conducting due diligence to assess the target company’s financial, legal, and operational health."
+          },
+          {
+            "question": "How do you assist during negotiations?",
+            "answer": "We draft and negotiate purchase agreements, ensuring favorable terms while protecting your interests."
+          },
+          {
+            "question": "Can you help with regulatory approvals for M&A?",
+            "answer": "Yes, we assist with obtaining necessary clearances from Armenian regulatory authorities."
+          },
+          {
+            "question": "What is post-merger integration, and why is it important?",
+            "answer": "Post-merger integration involves combining two companies’ operations, cultures, and systems to maximize synergies. We help ensure a smooth transition."
+          },
+          {
+            "question": "Do you handle cross-border M&A transactions?",
+            "answer": "Absolutely. We have extensive experience managing cross-border deals, addressing jurisdiction-specific challenges, and ensuring compliance."
+          }
+        ],
+        "isFallback": false,
+        "image": "https://wp.retrieve.am/wp-content/uploads/2024/11/MA-Advisory-Services.jpg",
+        "imageAlt": ""
+      }
+    }
+  }
+}
