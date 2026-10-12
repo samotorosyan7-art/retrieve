@@ -40,7 +40,6 @@ export default async function OfferSinglePage({ params }: Props) {
                 <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <Breadcrumbs items={[
-                        { label: t.special_offers || "Trending services", href: "/" },
                         { label: post.title }
                     ]} />
 

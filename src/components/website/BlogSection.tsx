@@ -59,7 +59,7 @@ export default function BlogSection({ posts }: { posts: LegalUpdate[] }) {
                             transition={{ duration: 0.45, delay: idx * 0.07 }}
                         >
                             <Link
-                                href={`/legal-updates/${post.slug}`}
+                                href={`/blog/${post.slug}`}
                                 className="group flex flex-col h-full bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_12px_40px_-10px_rgba(0,92,185,0.15)] hover:border-primary/20 transition-all duration-300 overflow-hidden"
                             >
                                 {/* Thumbnail */}

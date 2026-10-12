@@ -4,6 +4,9 @@ import type { NextRequest } from "next/server";
 const locales = ["en", "ru", "am"];
 const defaultLocale = "en";
 
+// Internal route that always calls notFound(), so the branded 404 page is rendered with a 404 status
+const NOT_FOUND_PATH = "page-not-found";
+
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
@@ -17,7 +20,7 @@ export function middleware(request: NextRequest) {
     if (pathnameHasLocale) {
         locale = pathname.split("/")[1];
         const response = NextResponse.next();
-        
+
         // Update cookie if needed
         const currentCookie = request.cookies.get("i18next")?.value;
         if (currentCookie !== locale) {
@@ -32,16 +35,23 @@ export function middleware(request: NextRequest) {
         locale = localeMatch as string;
     }
 
-    // Rewrite or Redirect? The standard approach is to redirect to the URL with locale
-    request.nextUrl.pathname = `/${locale}${pathname}`;
-    const response = NextResponse.redirect(request.nextUrl);
-    response.cookies.set("i18next", locale);
-    return response;
+    // Only the bare root redirects to a localized homepage
+    if (pathname === "/") {
+        request.nextUrl.pathname = `/${locale}`;
+        const response = NextResponse.redirect(request.nextUrl);
+        response.cookies.set("i18next", locale);
+        return response;
+    }
+
+    // Anything else without a locale prefix (/sitemap.xml, /foo.php, /about-us, ...) is a 404.
+    // Without this, /[lang] would catch it as lang="sitemap.xml" and render a duplicate homepage.
+    request.nextUrl.pathname = `/${locale}/${NOT_FOUND_PATH}`;
+    return NextResponse.rewrite(request.nextUrl);
 }
 
 export const config = {
     matcher: [
-        // Skip all internal paths (_next, api, images, favicon)
-        "/((?!api|_next/static|_next/image|favicon.ico|logo.jpg|.*\\..*|images/).*)",
+        // Skip internal paths, real files in /public, and metadata routes (robots.txt, /sitemap/<lang>.xml)
+        "/((?!api|_next/static|_next/image|__nextjs|favicon\\.ico|favicon\\.png|logo\\.jpg|images/|logo-images/|legal-updates/.+\\.pdf|robots\\.txt|sitemap/).*)",
     ],
 };
