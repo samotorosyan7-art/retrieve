@@ -3,8 +3,9 @@ import Link from "@/components/ui/LocalizedLink";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
+import { getBlogPostLanguages, getLegalUpdateBySlug, getLegalUpdates, getTags, getYoastMetadata } from "@/lib/wordpress";
 import { formatDate } from "@/lib/dateUtils";
+import { buildAlternates } from "@/lib/seo";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide-react";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
@@ -20,7 +21,15 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
     const { slug, lang } = await params;
-    return getYoastMetadata(`/${slug}`, lang, `/blog/${slug}`);
+    const [metadata, languages] = await Promise.all([
+        getYoastMetadata(`/${slug}`, lang, `/blog/${slug}`),
+        getBlogPostLanguages(slug),
+    ]);
+    // hreflang should only list languages the post is actually translated into.
+    if (languages.length) {
+        metadata.alternates = buildAlternates(lang, `/blog/${slug}`, languages);
+    }
+    return metadata;
 }
 
 export const dynamic = "force-dynamic";
@@ -32,6 +41,13 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
     const post = await getLegalUpdateBySlug(slug, lang);
     if (!post) {
         redirect(`/${lang}/blog`);
+    }
+
+    // The post lookup matches the slug in any language, so send untranslated
+    // languages (e.g. /en/ for a Russian-only post) to one the post exists in.
+    const languages = await getBlogPostLanguages(slug);
+    if (languages.length && !languages.includes(lang)) {
+        redirect(`/${languages[0]}/blog/${encodeURIComponent(decodeURIComponent(slug))}`);
     }
 
     const { posts: related } = await getLegalUpdates(1, 4, lang);

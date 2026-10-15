@@ -34,7 +34,7 @@ export default function LanguageSelector() {
         }
     }, [i18n.language, i18n.resolvedLanguage]);
 
-    const handleLanguageChange = (lang: Language) => {
+    const handleLanguageChange = async (lang: Language) => {
         i18n.changeLanguage(lang.code);
         setCurrentLang(lang);
         setIsOpen(false);
@@ -49,12 +49,20 @@ export default function LanguageSelector() {
         if (parts.length > 1 && ["en", "ru", "am"].includes(parts[1])) {
             parts[1] = lang.code;
             
-            // Blog post slugs differ per language, so fall back to the blog index.
+            // A translated blog post shares its slug across languages, so keep it
+            // open; single-language posts fall back to the blog index.
             // Practice-area slugs are shared across languages, so keep the same
             // service open when switching language.
             if (parts.length > 3) {
                 if (parts[2] === "blog") {
-                    newPathname = `/${lang.code}/blog`;
+                    let languages: string[] = [];
+                    try {
+                        const res = await fetch(`/api/blog-languages?slug=${encodeURIComponent(parts[3])}`);
+                        if (res.ok) languages = (await res.json()).languages ?? [];
+                    } catch {
+                        // Network error: fall back to the blog index below.
+                    }
+                    newPathname = languages.includes(lang.code) ? parts.join("/") : `/${lang.code}/blog`;
                 } else {
                     newPathname = parts.join("/");
                 }

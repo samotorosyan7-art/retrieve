@@ -7,6 +7,7 @@ import { Mail, Phone, Linkedin, User, GraduationCap, Scale, MapPin } from "lucid
 import { getPersonnelDetails, getYoastMetadata } from "@/lib/wordpress";
 import PracticeAreasAccordion from "@/components/website/PracticeAreasAccordion";
 import { personnelEducation } from "@/data/personnel-education";
+import { personnelLinkedin, COMPANY_LINKEDIN } from "@/data/personnel-linkedin";
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
 import ru from "@/locales/ru/common.json";
@@ -34,14 +35,30 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
     }
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
 
-    const linkedinUrl = personnel.linkedin
-        ? personnel.linkedin.startsWith("http") ? personnel.linkedin : `https://${personnel.linkedin}`
-        : null;
+    const linkedinUrl = personnelLinkedin[slug] || COMPANY_LINKEDIN;
 
     // Use the contact details scraped from WordPress; fall back to the firm's
     // general contact info when a specific person's details aren't published.
     const email = personnel.email || "info@retrieve.am";
     const phone = personnel.phone || "+374 41 777 332";
+
+    const jobTitle = personnel.position
+        ? (t.team_member_positions as any)?.[personnel.position] || personnel.position
+        : undefined;
+
+    // One Person entity across languages: @id always points at the English page.
+    const schemaMarkup = {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "@id": `https://www.retrieve.am/en/personnel/${slug}#person`,
+            "name": personnel.name,
+            "jobTitle": jobTitle,
+            "url": `https://www.retrieve.am/${lang}/personnel/${slug}`,
+            "worksFor": { "@id": "https://www.retrieve.am/en/#organization" }
+        }
+    };
 
     const localizedEducation = personnelEducation[slug];
     const education =
@@ -51,6 +68,11 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
+            {/* JSON-LD Schema Markup */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+            />
 
             {/* ── Thin top bar with back link ── */}
             <div className="bg-white border-b border-gray-100 pt-40 pb-0">
@@ -101,7 +123,7 @@ export default async function PersonnelPage({ params }: PersonnelPageProps) {
                                     </h1>
                                     {personnel.position && (
                                         <p className="text-blue-200 text-sm font-medium">
-                                            {(t.team_member_positions as any)?.[personnel.position] || personnel.position}
+                                            {jobTitle}
                                         </p>
                                     )}
                                 </div>

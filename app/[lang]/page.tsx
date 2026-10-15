@@ -13,6 +13,7 @@ import LegalPractices from "@/components/website/LegalPractices";
 import TaxAdvisoryGrid from "@/components/website/TaxAdvisoryGrid";
 import ContactSection from "@/components/website/ContactSection";
 import { getPortfolioItems, getTeamMembers, getLegalUpdates, getYoastMetadata, getMasonryPosts } from "@/lib/wordpress";
+import { homepageSchema } from "@/data/homepage-schema";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const lang = (await params).lang;
@@ -52,85 +53,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         
     const taxItems = portfolioItems.filter(item => item.category === "Tax & Business advisory services");
 
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": ["Organization", "LegalService"],
-                "@id": `https://www.retrieve.am/${lang}/#organization`,
-                "name": "Retrieve Legal & Tax",
-                "url": `https://www.retrieve.am/${lang}`,
-                "logo": "https://www.retrieve.am/logo.jpg",
-                "image": "https://www.retrieve.am/logo.jpg",
-                "description": "Retrieve Legal & Tax is a trusted law firm in Armenia, providing legal and tax advisory services to businesses and individuals.",
-                "telephone": "+37441777332",
-                "email": "info@retrieve.am",
-                "priceRange": "$$",
-                "contactPoint": {
-                    "@type": "ContactPoint",
-                    "contactType": "customer support",
-                    "telephone": "+37441777332",
-                    "email": "info@retrieve.am",
-                    "availableLanguage": ["English", "Armenian", "Russian"]
-                },
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "Baghramyan 41",
-                    "addressLocality": "Yerevan",
-                    "postalCode": "0019",
-                    "addressCountry": "AM"
-                },
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": 40.1741,
-                    "longitude": 44.5038
-                },
-                "openingHoursSpecification": {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday"
-                    ],
-                    "opens": "09:00",
-                    "closes": "18:00"
-                },
-                "areaServed": {
-                    "@type": "Country",
-                    "name": "Armenia"
-                },
-                "sameAs": [
-                    "https://www.linkedin.com/company/retrievelegal/"
-                ]
-            },
-            {
-                "@type": "WebSite",
-                "@id": `https://www.retrieve.am/${lang}/#website`,
-                "url": `https://www.retrieve.am/${lang}`,
-                "name": "Retrieve Legal & Tax",
-                "publisher": {
-                    "@id": `https://www.retrieve.am/${lang}/#organization`
-                }
-            },
-            {
-                "@type": "WebPage",
-                "@id": `https://www.retrieve.am/${lang}/#webpage`,
-                "url": `https://www.retrieve.am/${lang}`,
-                "name": "Retrieve Legal & Tax",
-                "isPartOf": {
-                    "@id": `https://www.retrieve.am/${lang}/#website`
-                },
-                "about": {
-                    "@id": `https://www.retrieve.am/${lang}/#organization`
-                },
-                "mainEntity": {
-                    "@id": `https://www.retrieve.am/${lang}/#organization`
-                }
-            }
-        ]
-    };
+    const jsonLd = homepageSchema[lang] ?? homepageSchema.en;
 
     return (
         <>

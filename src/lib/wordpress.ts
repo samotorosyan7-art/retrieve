@@ -759,6 +759,54 @@ export async function getLegalUpdateBySlug(slug: string, lang?: string): Promise
 }
 
 /**
+ * Languages a blog post can be opened in under the same slug.
+ *
+ * A WPGlobus post serves every language from one slug, but an untranslated
+ * language just echoes the English title, so a language only counts when its
+ * title differs from English. English counts when the post has any
+ * translation, or when it isn't a legacy post written by the ru/am author
+ * accounts (those exist in one language only, under their own slug).
+ */
+export async function getBlogPostLanguages(slug: string): Promise<string[]> {
+    const fetchPost = async (lang?: string): Promise<{ title?: { rendered?: string }; author?: number } | null> => {
+        try {
+            const url = new URL(`${wpGlobusApiUrl(lang)}/posts`);
+            url.searchParams.append("slug", slug);
+            url.searchParams.append("_fields", "title,author");
+            url.searchParams.append("v", cacheBuster());
+            const response = await wpFetch(url.toString(), { next: { revalidate: WP_REVALIDATE_SECONDS } });
+            if (!response.ok) return null;
+            const data = await response.json();
+            return Array.isArray(data) && data.length ? data[0] : null;
+        } catch (error) {
+            if (isDynamicServerUsageError(error)) throw error;
+            return null;
+        }
+    };
+
+    const translatedLangs = Object.keys(WPGLOBUS_LANG_SEGMENT);
+    const [english, ...translations] = await Promise.all([undefined, ...translatedLangs].map(fetchPost));
+    if (!english) return [];
+
+    const englishTitle = english.title?.rendered ?? "";
+    const langs = translatedLangs.filter((lang, i) => {
+        const title = translations[i]?.title?.rendered;
+        return !!title && title !== englishTitle;
+    });
+
+    const isLegacyNonEnglish = Object.entries(LANGUAGE_AUTHOR_MAP)
+        .some(([lang, author]) => lang !== "en" && author === english.author);
+    if (langs.length || !isLegacyNonEnglish) langs.unshift("en");
+
+    // A legacy ru/am post is still available in its own language.
+    for (const [lang, author] of Object.entries(LANGUAGE_AUTHOR_MAP)) {
+        if (author === english.author && !langs.includes(lang)) langs.push(lang);
+    }
+
+    return langs;
+}
+
+/**
  * Blog tags are maintained locally in src/data/tags.json (the same in every
  * language in WordPress). Their ids match WordPress, so getPostsByTag works.
  */
