@@ -10,11 +10,70 @@ import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide
 import en from "@/locales/en/common.json";
 import am from "@/locales/am/common.json";
 import ru from "@/locales/ru/common.json";
+import personnelData from "@/data/personnel.json";
 
 const dictionaries = { en, am, ru };
 
 interface Props {
     params: Promise<{ slug: string; lang: string }>;
+}
+
+const BYLINE_TITLE_RE = /\b(attorney|lawyer|associate|partner|counsel|advocate|managing director)\b|адвокат|юрист|партн|փաստաբան|իրավաբան|գործընկեր/i;
+
+const ORGANIZATION_ID = "https://www.retrieve.am/en/#organization";
+
+const stripTags = (html: string) =>
+    html.replace(/<[^>]+>|&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+const normalizeName = (name: string) =>
+    name.replace(/,?\s*Esq\.?$/i, "").trim().toLowerCase();
+
+// Personnel slug by every localized spelling of the person's name.
+const personnelSlugByName = new Map<string, string>();
+for (const profiles of Object.values(personnelData.profiles as Record<string, Record<string, { name: string }>>)) {
+    for (const [slug, profile] of Object.entries(profiles)) {
+        personnelSlugByName.set(normalizeName(profile.name), slug);
+    }
+}
+
+// Authored posts open with a short "Name, Job title" block (a table with one
+// cell per author, or paragraphs) before the first heading or body paragraph.
+function getBylineAuthors(html: string): { name: string; jobTitle: string }[] {
+    const blockRe = /<(p|figure|h[1-6]|div|ul|ol)\b[^>]*>[\s\S]*?<\/\1>/g;
+    const lead: string[] = [];
+    for (const match of html.matchAll(blockRe)) {
+        if (match[1] !== "p" && match[1] !== "figure") break;
+        const text = stripTags(match[0]);
+        if (!text) continue;
+        if (text.length > 150) break;
+        lead.push(match[0]);
+    }
+    const leadHtml = lead.join("\n");
+    if (!BYLINE_TITLE_RE.test(stripTags(leadHtml))) return [];
+
+    const cells = leadHtml.includes("<td")
+        ? [...leadHtml.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/g)].map((m) => m[1])
+        : [leadHtml];
+
+    const authors: { name: string; jobTitle: string }[] = [];
+    for (const cell of cells) {
+        let name: string;
+        let jobTitle: string;
+        const title = cell.match(/<em\b[^>]*>([\s\S]*?)<\/em>/);
+        if (title) {
+            // "<strong>Name,</strong> <em>Job title</em>"
+            jobTitle = stripTags(title[1]);
+            name = stripTags(cell.slice(0, title.index));
+        } else {
+            // "Name<br>Job title"
+            const lines = cell.split(/<br\s*\/?>|<\/p>/).map(stripTags).filter(Boolean);
+            name = lines[0] || "";
+            jobTitle = lines.slice(1).join(" ");
+        }
+        name = name.replace(/[\s,]+$/, "");
+        jobTitle = jobTitle.replace(/^[\s,]+|[\s,]+$/g, "");
+        if (name && name.length <= 60) authors.push({ name, jobTitle });
+    }
+    return authors;
 }
 
 
@@ -58,7 +117,19 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
     const publishDate = post.date ? post.date.split("T")[0] : new Date().toISOString().split("T")[0];
     const modifiedDate = post.modified ? post.modified.split("T")[0] : publishDate;
 
-    const schemaMarkup = {
+    const bylineAuthors = getBylineAuthors(post.content).map(({ name, jobTitle }) => {
+        const personnelSlug = personnelSlugByName.get(normalizeName(name));
+        const personnelUrl = personnelSlug && `https://www.retrieve.am/${lang}/personnel/${personnelSlug}`;
+        return {
+            "@type": "Person",
+            ...(personnelUrl && { "@id": `${personnelUrl}#person` }),
+            "name": name,
+            ...(jobTitle && { "jobTitle": jobTitle }),
+            ...(personnelUrl && { "url": personnelUrl })
+        };
+    });
+
+    const articleBase = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "@id": `${canonicalUrl}#article`,
@@ -67,28 +138,51 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
             "@id": canonicalUrl
         },
         "headline": post.title,
-        "description": post.excerpt || "",
+        "description": post.excerpt || ""
+    };
+    const articleDates = {
+        "datePublished": publishDate,
+        "dateModified": modifiedDate,
+        "inLanguage": lang
+    };
+
+    // Posts with a byline credit their authors; the rest credit the firm.
+    const schemaMarkup = bylineAuthors.length ? {
+        ...articleBase,
         "image": {
             "@type": "ImageObject",
             "url": post.image || "https://www.retrieve.am/logo.jpg"
         },
-        "author": {
-            "@type": "Organization",
-            "name": post.author || "Retrieve Legal & Tax",
-            "url": "https://www.retrieve.am/"
-        },
+        "author": bylineAuthors,
         "publisher": {
             "@type": "Organization",
+            "@id": ORGANIZATION_ID,
             "name": "Retrieve Legal & Tax",
-            "url": "https://www.retrieve.am/",
+            "url": "https://www.retrieve.am/en",
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://www.retrieve.am/logo.jpg"
             }
         },
-        "datePublished": `${publishDate}T00:00:00+04:00`,
-        "dateModified": `${modifiedDate}T00:00:00+04:00`,
-        "inLanguage": lang
+        ...articleDates
+    } : {
+        ...articleBase,
+        "image": [post.image || "https://www.retrieve.am/logo.jpg"],
+        "author": {
+            "@type": "Organization",
+            "@id": ORGANIZATION_ID,
+            "name": "Retrieve Legal & Tax",
+            "url": "https://www.retrieve.am/en"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Retrieve Legal & Tax",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.retrieve.am/logo.jpg"
+            }
+        },
+        ...articleDates
     };
 
     return (
