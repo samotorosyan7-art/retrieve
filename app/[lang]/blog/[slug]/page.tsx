@@ -114,15 +114,17 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
     const allTags = await getTags(lang);
 
     const canonicalUrl = `https://www.retrieve.am/${lang}/blog/${post.slug}`;
-    const publishDate = post.date ? post.date.split("T")[0] : new Date().toISOString().split("T")[0];
-    const modifiedDate = post.modified ? post.modified.split("T")[0] : publishDate;
+    // WordPress returns site-local (Asia/Yerevan) timestamps without an offset.
+    const publishDate = post.date ? `${post.date}+04:00` : new Date().toISOString();
+    const modifiedDate = post.modified ? `${post.modified}+04:00` : publishDate;
 
     const bylineAuthors = getBylineAuthors(post.content).map(({ name, jobTitle }) => {
         const personnelSlug = personnelSlugByName.get(normalizeName(name));
         const personnelUrl = personnelSlug && `https://www.retrieve.am/${lang}/personnel/${personnelSlug}`;
         return {
             "@type": "Person",
-            ...(personnelUrl && { "@id": `${personnelUrl}#person` }),
+            // One stable identity per person across all languages.
+            ...(personnelSlug && { "@id": `https://www.retrieve.am/en/personnel/${personnelSlug}#person` }),
             "name": name,
             ...(jobTitle && { "jobTitle": jobTitle }),
             ...(personnelUrl && { "url": personnelUrl })
@@ -140,6 +142,16 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
         "headline": post.title,
         "description": post.excerpt || ""
     };
+    const publisher = {
+        "@type": "Organization",
+        "@id": ORGANIZATION_ID,
+        "name": "Retrieve Legal & Tax",
+        "url": "https://www.retrieve.am/en",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.retrieve.am/logo.jpg"
+        }
+    };
     const articleDates = {
         "datePublished": publishDate,
         "dateModified": modifiedDate,
@@ -154,16 +166,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
             "url": post.image || "https://www.retrieve.am/logo.jpg"
         },
         "author": bylineAuthors,
-        "publisher": {
-            "@type": "Organization",
-            "@id": ORGANIZATION_ID,
-            "name": "Retrieve Legal & Tax",
-            "url": "https://www.retrieve.am/en",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://www.retrieve.am/logo.jpg"
-            }
-        },
+        "publisher": publisher,
         ...articleDates
     } : {
         ...articleBase,
@@ -172,16 +175,9 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
             "@type": "Organization",
             "@id": ORGANIZATION_ID,
             "name": "Retrieve Legal & Tax",
-            "url": "https://www.retrieve.am/en"
+            "url": `https://www.retrieve.am/${lang}`
         },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Retrieve Legal & Tax",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://www.retrieve.am/logo.jpg"
-            }
-        },
+        "publisher": publisher,
         ...articleDates
     };
 
