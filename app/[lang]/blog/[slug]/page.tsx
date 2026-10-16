@@ -146,7 +146,7 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
         "@type": "Organization",
         "@id": ORGANIZATION_ID,
         "name": "Retrieve Legal & Tax",
-        "url": "https://www.retrieve.am/en",
+        "url": `https://www.retrieve.am/${lang}`,
         "logo": {
             "@type": "ImageObject",
             "url": "https://www.retrieve.am/logo.jpg"
