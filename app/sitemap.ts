@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getPortfolioItems, getTeamMembers, getBlogPosts } from '@/lib/wordpress'
+import { getPortfolioItems, getTeamMembers, getAllBlogPostSlugs } from '@/lib/wordpress'
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +69,7 @@ export default async function sitemap(
     .filter((p): p is NonNullable<typeof p> => p !== null)
 
   // 4. Dynamic Blog Posts
-  const { posts } = await getBlogPosts(100, 1, lang)
+  const posts = await getAllBlogPostSlugs(lang)
   const blogPages = posts.map((post) => ({
     url: `${baseUrl}/${lang}/blog/${post.slug}`,
     lastModified: new Date(post.date),

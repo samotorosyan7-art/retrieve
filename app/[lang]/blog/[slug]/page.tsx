@@ -103,10 +103,10 @@ export default async function LegalUpdateSinglePage({ params }: Props) {
     }
 
     // The post lookup matches the slug in any language, so send untranslated
-    // languages (e.g. /en/ for a Russian-only post) to one the post exists in.
+    // languages (e.g. /en/ for a Russian-only post) to that language's blog.
     const languages = await getBlogPostLanguages(slug);
-    if (languages.length && !languages.includes(lang)) {
-        redirect(`/${languages[0]}/blog/${encodeURIComponent(decodeURIComponent(slug))}`);
+    if (!languages.includes(lang)) {
+        redirect(`/${lang}/blog`);
     }
 
     const { posts: related } = await getLegalUpdates(1, 4, lang);
