@@ -7,12 +7,12 @@ import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/l
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
-import amCommon from "@/locales/am/common.json";
+import hyCommon from "@/locales/hy/common.json";
 
 const dictionaries = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 } as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; lang: string }> }) {
@@ -134,7 +134,7 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
         ? (t as any).practice_content[slug].hero_desc
         : lang === 'en' 
         ? `Retrieve Legal & Tax provides comprehensive ${displayTitle.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
-        : lang === 'am'
+        : lang === 'hy'
         ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${displayTitle.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
         : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${displayTitle.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`;
 
@@ -144,7 +144,7 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
 
     const introTitle = lang === 'en'
         ? `${displayTitle} Services for Businesses in Armenia`
-        : lang === 'am'
+        : lang === 'hy'
         ? `${displayTitle} ծառայություններ բիզնեսի համար Հայաստանում`
         : `${displayTitle} услуги для бизнеса в Армении`;
 
@@ -371,7 +371,7 @@ export default async function TaxAdvisoryServiceDetailPage({ params }: { params:
                                 ? (t as any).practice_content[slug].why_choose_desc
                                 : lang === 'en'
                                 ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${displayTitle.toLowerCase()} services:`
-                                : lang === 'am'
+                                : lang === 'hy'
                                 ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${displayTitle.toLowerCase()} ծառայությունները.`
                                 : `Retrieve Legal & Tax предлагает ориентированные на клиента и результат юридические услуги. Вот почему компании выбирают нас для услуг в сфере ${displayTitle.toLowerCase()}:`
                             }

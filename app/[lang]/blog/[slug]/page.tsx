@@ -8,11 +8,11 @@ import { formatDate } from "@/lib/dateUtils";
 import { buildAlternates } from "@/lib/seo";
 import { Calendar, Clock, ArrowLeft, ArrowRight, FileText, Layout } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 import personnelData from "@/data/personnel.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 interface Props {
     params: Promise<{ slug: string; lang: string }>;

@@ -9,12 +9,12 @@ import seoData from "../data/seo.json";
 
 import enCommon from '../locales/en/common.json';
 import ruCommon from '../locales/ru/common.json';
-import amCommon from '../locales/am/common.json';
+import hyCommon from '../locales/hy/common.json';
 
 const dictionaries: Record<string, any> = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 };
 
 const WP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
@@ -114,14 +114,13 @@ const WP_BASE_URL = WP_API_URL.replace(/\/wp-json\/wp\/v2\/?$/, "");
  * the SAME post (one post id, one slug across languages) and serves the
  * translated title/content/excerpt by prefixing the REST base with a language
  * segment before /wp-json — e.g. https://wp.retrieve.am/ru/wp-json/wp/v2/...
- * or .../hy/wp-json/wp/v2/... (WPGlobus's code for Armenian is "hy", not our
- * app's "am"). No prefix serves the primary language (English). A language
+ * or .../hy/wp-json/wp/v2/... No prefix serves the primary language (English). A language
  * whose title/content hasn't been filled in yet gracefully falls back to the
  * English text rather than erroring or returning blank.
  */
 const WPGLOBUS_LANG_SEGMENT: Partial<Record<string, string>> = {
     ru: "ru",
-    am: "hy",
+    hy: "hy",
 };
 
 function wpGlobusApiUrl(lang?: string): string {
@@ -147,7 +146,7 @@ function detectPrimaryLanguage(title: string): string {
     const armenian = title.match(/[Ա-֏]/g)?.length ?? 0;
     const cyrillic = title.match(/[Ѐ-ӿ]/g)?.length ?? 0;
     const latin = title.match(/[A-Za-z]/g)?.length ?? 0;
-    if (armenian > latin && armenian >= cyrillic) return "am";
+    if (armenian > latin && armenian >= cyrillic) return "hy";
     if (cyrillic > latin) return "ru";
     return "en";
 }
@@ -208,7 +207,7 @@ function cachedWpReader<Args extends unknown[], Result>(name: string, reader: (.
  * the listings filter and paginate this index and then fetch only the posts
  * for the requested page.
  */
-const getPostIndex = cachedWpReader("post-index", async (): Promise<PostIndexEntry[]> => {
+const getCachedPostIndex = cachedWpReader("post-index", async (): Promise<PostIndexEntry[]> => {
     const entries: PostIndexEntry[] = [];
     for (let page = 1, totalPages = 1; page <= totalPages; page++) {
         const url = new URL(`${WP_API_URL}/posts`);
@@ -228,6 +227,19 @@ const getPostIndex = cachedWpReader("post-index", async (): Promise<PostIndexEnt
     }
     return entries;
 });
+
+/**
+ * The post index with Armenian as "hy". An index cached before Armenian moved
+ * from /am/ to /hy/ still says "am", and the stale-while-revalidate cache
+ * keeps serving it for as long as WordPress can't be re-fetched.
+ */
+async function getPostIndex(): Promise<PostIndexEntry[]> {
+    return (await getCachedPostIndex()).map((post) =>
+        post.languages.includes("am")
+            ? { ...post, languages: post.languages.map((l) => (l === "am" ? "hy" : l)) }
+            : post
+    );
+}
 
 /** Full posts (with _embed) by id, in the given order, from `lang`'s WPGlobus endpoint. */
 const getPostsByIds = cachedWpReader("posts-by-ids", async (lang: string, ids: number[]): Promise<any[]> => {
@@ -551,7 +563,7 @@ export async function getMasonryPosts(
     }
 }
 
-type Lang = "en" | "ru" | "am";
+type Lang = "en" | "ru" | "hy";
 
 /** Pick the entry for `lang` from a per-language record, falling back to English. */
 function forLang<T>(byLang: Record<Lang, T>, lang?: string): T {

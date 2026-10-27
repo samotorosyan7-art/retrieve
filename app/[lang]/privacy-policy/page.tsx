@@ -4,21 +4,21 @@ import { cookies } from "next/headers";
 import Link from "@/components/ui/LocalizedLink";
 import { ArrowLeft } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 const staticTitles: Record<string, string> = {
     en: "Privacy Policy",
     ru: "Политика конфиденциальности",
-    am: "Գաղտնիության քաղաքականություն",
+    hy: "Գաղտնիության քաղաքականություն",
 };
 
 const lastUpdatedText: Record<string, string> = {
     en: "Last updated: 19.05.2026",
     ru: "Последнее обновление: 19.05.2026",
-    am: "Վերջին թարմացումը՝ 19.05.2026",
+    hy: "Վերջին թարմացումը՝ 19.05.2026",
 };
 
 const armenianCorrections: Record<string, string> = {
@@ -62,7 +62,7 @@ const armenianCorrections: Record<string, string> = {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     // Russian is mapped to "practice-area-1", Armenian to "practice-area-2", English/others to "privacy-policy"
-    const slug = lang === "ru" ? "practice-area-1" : lang === "am" ? "practice-area-2" : "privacy-policy";
+    const slug = lang === "ru" ? "practice-area-1" : lang === "hy" ? "practice-area-2" : "privacy-policy";
     return getYoastMetadata(`/${slug}`, lang);
 }
 
@@ -70,8 +70,8 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
     const { lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     
-    // Fetch dynamically from WP: ru -> practice-area-1, am -> practice-area-2, others -> privacy-policy
-    const slug = lang === "ru" ? "practice-area-1" : lang === "am" ? "practice-area-2" : "privacy-policy";
+    // Fetch dynamically from WP: ru -> practice-area-1, hy -> practice-area-2, others -> privacy-policy
+    const slug = lang === "ru" ? "practice-area-1" : lang === "hy" ? "practice-area-2" : "privacy-policy";
     const page = await getWPPageBySlug(slug, lang);
 
     if (!page) {
@@ -84,7 +84,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         .replace(/&nbsp;/g, " ")
         .replace(/\u00a0/g, " ");
 
-    if (lang === "am") {
+    if (lang === "hy") {
         Object.entries(armenianCorrections).forEach(([connected, corrected]) => {
             cleanContent = cleanContent.split(connected).join(corrected);
         });

@@ -4,21 +4,21 @@ import { cookies } from "next/headers";
 import Link from "@/components/ui/LocalizedLink";
 import { ArrowLeft } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 const staticTitles: Record<string, string> = {
     en: "Terms of Service",
     ru: "Условия предоставления услуг",
-    am: "Օգտագործման պայմաններ",
+    hy: "Օգտագործման պայմաններ",
 };
 
 const lastUpdatedText: Record<string, string> = {
     en: "Last updated: 19.05.2026",
     ru: "Последнее обновление: 19.05.2026",
-    am: "Վերջին թարմացումը՝ 19.05.2026",
+    hy: "Վերջին թարմացումը՝ 19.05.2026",
 };
 
 const armenianCorrections: Record<string, string> = {
@@ -66,7 +66,7 @@ const armenianCorrections: Record<string, string> = {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     // Russian is mapped to "team-frame-style", Armenian to "team-plain-style", English/others to "terms-of-service"
-    const slug = lang === "ru" ? "team-frame-style" : lang === "am" ? "team-plain-style" : "terms-of-service";
+    const slug = lang === "ru" ? "team-frame-style" : lang === "hy" ? "team-plain-style" : "terms-of-service";
     return getYoastMetadata(`/${slug}`, lang);
 }
 
@@ -74,8 +74,8 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
     const { lang } = await params;
     const t = dictionaries[lang as keyof typeof dictionaries] || dictionaries.en;
     
-    // Fetch dynamically from WP: ru -> team-frame-style, am -> team-plain-style, others -> terms-of-service
-    const slug = lang === "ru" ? "team-frame-style" : lang === "am" ? "team-plain-style" : "terms-of-service";
+    // Fetch dynamically from WP: ru -> team-frame-style, hy -> team-plain-style, others -> terms-of-service
+    const slug = lang === "ru" ? "team-frame-style" : lang === "hy" ? "team-plain-style" : "terms-of-service";
     const page = await getWPPageBySlug(slug, lang);
 
     if (!page) {
@@ -89,7 +89,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
         .replace(/&nbsp;/g, " ")
         .replace(/\u00a0/g, " ");
 
-    if (lang === "am") {
+    if (lang === "hy") {
         Object.entries(armenianCorrections).forEach(([connected, corrected]) => {
             cleanContent = cleanContent.split(connected).join(corrected);
         });

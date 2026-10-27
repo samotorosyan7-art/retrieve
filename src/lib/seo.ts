@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://www.retrieve.am";
-export const LOCALES = ["en", "ru", "am"] as const;
-
-// URLs use "/am/" for Armenian, but the ISO 639-1 code is "hy" ("am" is Amharic).
-export function toLangCode(lang: string): string {
-    return lang === "am" ? "hy" : lang;
-}
+export const LOCALES = ["en", "ru", "hy"] as const;
 
 /**
  * Canonical + hreflang for a page, built from the route (not from WordPress).
@@ -25,7 +20,7 @@ export function buildAlternates(
     return {
         canonical: url(lang),
         languages: {
-            ...Object.fromEntries(locales.map((l) => [toLangCode(l), url(l)])),
+            ...Object.fromEntries(locales.map((l) => [l, url(l)])),
             "x-default": url(defaultLang),
         },
     };

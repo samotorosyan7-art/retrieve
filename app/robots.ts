@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: [
       'https://www.retrieve.am/sitemap/en.xml',
       'https://www.retrieve.am/sitemap/ru.xml',
-      'https://www.retrieve.am/sitemap/am.xml',
+      'https://www.retrieve.am/sitemap/hy.xml',
     ],
   }
 }

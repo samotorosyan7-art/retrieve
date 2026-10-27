@@ -7,11 +7,11 @@ import { getLegalUpdateBySlug, getYoastMetadata } from "@/lib/wordpress";
 import { formatDate } from "@/lib/dateUtils";
 import { Calendar, ArrowLeft } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 import QuoteForm from "@/components/website/QuoteForm";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 interface Props {
     params: Promise<{ slug: string; lang: string }>;

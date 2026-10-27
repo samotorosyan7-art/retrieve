@@ -7,10 +7,10 @@ import { getTagBySlug, getPostsByTag, getLegalUpdates, getYoastMetadata } from "
 import { formatDate } from "@/lib/dateUtils";
 import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 interface Props {
     params: Promise<{ lang: string; slug: string }>;

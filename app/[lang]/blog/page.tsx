@@ -5,10 +5,10 @@ import { getBlogPosts, getYoastMetadata } from "@/lib/wordpress";
 import { formatDate } from "@/lib/dateUtils";
 import { Calendar, Clock, ArrowRight, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;

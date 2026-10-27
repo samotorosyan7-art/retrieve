@@ -2,7 +2,7 @@ import Link from "@/components/ui/LocalizedLink";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
-import amCommon from "@/locales/am/common.json";
+import hyCommon from "@/locales/hy/common.json";
 import {
     Plane,
     Briefcase,
@@ -18,7 +18,7 @@ import {
 const dictionaries = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 } as const;
 
 // Icons cycle through the service cards in the order they appear.
@@ -176,12 +176,11 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
                             </p>
                         </div>
                         {/* Right: image */}
-                        <div className="relative min-h-[300px] lg:min-h-0 p-6 lg:p-8 flex items-center justify-center">
+                        <div className="p-6 lg:p-8 flex items-center justify-center">
                             <img
                                 src="https://wp.retrieve.am/wp-content/uploads/2026/06/desired3-image.jpeg"
                                 alt={c.intro_title}
-                                className="w-full h-full object-cover rounded-2xl"
-                                style={{ maxHeight: "420px" }}
+                                className="max-w-full max-h-[420px] w-auto h-auto rounded-2xl"
                             />
                         </div>
                     </div>
@@ -330,11 +329,11 @@ export default function ImmigrationServicePage({ lang }: { lang: string }) {
                             </ul>
                         </div>
                         {/* Right: image */}
-                        <div className="relative min-h-[320px] lg:min-h-0">
+                        <div className="p-6 lg:p-8 flex items-center justify-center">
                             <img
                                 src="https://wp.retrieve.am/wp-content/uploads/2026/06/Immigration-Support-for-Companies-in-Armenia.jpg"
                                 alt={c.company_title}
-                                className="absolute inset-0 w-full h-full object-cover"
+                                className="max-w-full max-h-[480px] w-auto h-auto rounded-2xl"
                             />
                         </div>
                     </div>

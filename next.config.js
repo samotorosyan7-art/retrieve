@@ -9,6 +9,8 @@ const nextConfig = {
         },
     },
     images: {
+        // wp.retrieve.am's anti-bot captcha blocks local image fetches, so in dev images go through production's optimizer.
+        ...(process.env.NODE_ENV === "development" && { loader: "custom", loaderFile: "./src/lib/dev-image-loader.ts" }),
         remotePatterns: [
             {
                 protocol: "https",
@@ -23,6 +25,15 @@ const nextConfig = {
                 hostname: "retrieve.am",
             },
         ],
+    },
+    // Armenian moved from /am/ to /hy/ (ISO 639-1 code; "am" is Amharic). Old URLs 308 to their /hy/ equivalent.
+    async redirects() {
+        return [
+            { source: "/am", destination: "/hy", permanent: true },
+            { source: "/am/:path*", destination: "/hy/:path*", permanent: true },
+            { source: "/legal-updates/am/:file*", destination: "/legal-updates/hy/:file*", permanent: true },
+            { source: "/sitemap/am.xml", destination: "/sitemap/hy.xml", permanent: true },
+        ];
     },
     async headers() {
         return [

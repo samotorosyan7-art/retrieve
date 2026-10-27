@@ -15,7 +15,7 @@ interface Language {
 const languages: Language[] = [
     { code: "en", name: "English", flag: "us" },
     { code: "ru", name: "Русский", flag: "ru" },
-    { code: "am", name: "Հայերեն", flag: "am" },
+    { code: "hy", name: "Հայերեն", flag: "am" },
 ];
 
 export default function LanguageSelector() {
@@ -46,7 +46,7 @@ export default function LanguageSelector() {
         let newPathname = pathname || "/";
         const parts = newPathname.split("/");
         
-        if (parts.length > 1 && ["en", "ru", "am"].includes(parts[1])) {
+        if (parts.length > 1 && ["en", "ru", "hy"].includes(parts[1])) {
             parts[1] = lang.code;
             
             // A translated blog post shares its slug across languages, so keep it

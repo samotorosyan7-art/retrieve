@@ -3,10 +3,10 @@ import ContactForm from "./ContactForm";
 
 import { getYoastMetadata } from "@/lib/wordpress";
 import en from "@/locales/en/common.json";
-import am from "@/locales/am/common.json";
+import hy from "@/locales/hy/common.json";
 import ru from "@/locales/ru/common.json";
 
-const dictionaries = { en, am, ru };
+const dictionaries = { en, hy, ru };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const lang = (await params).lang as keyof typeof dictionaries;

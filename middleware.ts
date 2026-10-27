@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const locales = ["en", "ru", "am"];
+const locales = ["en", "ru", "hy"];
 const defaultLocale = "en";
 
 // Internal route that always calls notFound(), so the branded 404 page is rendered with a 404 status
@@ -30,7 +30,9 @@ export function middleware(request: NextRequest) {
     }
 
     // Default to cookie if present, otherwise default locale
-    const localeMatch = request.cookies.get("i18next")?.value;
+    // Cookies set before Armenian moved from /am/ to /hy/ still hold "am"
+    const cookieLocale = request.cookies.get("i18next")?.value;
+    const localeMatch = cookieLocale === "am" ? "hy" : cookieLocale;
     if (locales.includes(localeMatch as string)) {
         locale = localeMatch as string;
     }

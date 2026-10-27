@@ -8,7 +8,7 @@ export function formatDate(iso: string, lang: string = "en"): string {
     const normalizedLang = lang?.toLowerCase() || "en";
     
     let locale: string;
-    if (normalizedLang.startsWith("am")) {
+    if (normalizedLang.startsWith("hy")) {
         locale = "hy-AM";
     } else if (normalizedLang.startsWith("ru")) {
         locale = "ru-RU";

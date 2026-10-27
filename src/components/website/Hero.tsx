@@ -9,7 +9,7 @@ import InteractiveIntake from "@/components/website/InteractiveIntake";
 
 export default function Hero() {
     const { t, i18n } = useTranslation();
-    const isSmallLang = i18n.language === "am" || i18n.language === "ru";
+    const isSmallLang = i18n.language === "hy" || i18n.language === "ru";
 
     return (
         <section className="relative w-full min-h-[85vh] lg:min-h-[800px] flex items-center overflow-hidden pt-36 sm:pt-44 lg:pt-52 bg-gray-900 z-0">

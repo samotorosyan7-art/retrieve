@@ -5,12 +5,12 @@ import Link from "@/components/ui/LocalizedLink";
 import { ArrowRight } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
-import amCommon from "@/locales/am/common.json";
+import hyCommon from "@/locales/hy/common.json";
 
 const dictionaries = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 } as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {

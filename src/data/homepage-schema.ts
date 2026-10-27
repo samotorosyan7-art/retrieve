@@ -154,14 +154,14 @@ export const homepageSchema: Record<string, object> = {
             }
         ]
     },
-    am: {
+    hy: {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": ["Organization", "LegalService"],
                 "@id": "https://www.retrieve.am/en/#organization",
                 "name": "Retrieve Legal & Tax",
-                "url": "https://www.retrieve.am/am",
+                "url": "https://www.retrieve.am/hy",
                 "logo": "https://www.retrieve.am/logo.jpg",
                 "image": "https://www.retrieve.am/logo.jpg",
                 "description": "Retrieve Legal & Tax-ը իրավաբանական ընկերություն է Հայաստանում, որը բիզնեսին և անհատներին տրամադրում է իրավաբանական և հարկային խորհրդատվական ծառայություններ։",
@@ -205,19 +205,19 @@ export const homepageSchema: Record<string, object> = {
             },
             {
                 "@type": "WebSite",
-                "@id": "https://www.retrieve.am/am/#website",
-                "url": "https://www.retrieve.am/am",
+                "@id": "https://www.retrieve.am/hy/#website",
+                "url": "https://www.retrieve.am/hy",
                 "name": "Retrieve Legal & Tax",
                 "inLanguage": "hy",
                 "publisher": { "@id": "https://www.retrieve.am/en/#organization" }
             },
             {
                 "@type": "WebPage",
-                "@id": "https://www.retrieve.am/am/#webpage",
-                "url": "https://www.retrieve.am/am",
+                "@id": "https://www.retrieve.am/hy/#webpage",
+                "url": "https://www.retrieve.am/hy",
                 "name": "Retrieve Legal & Tax",
                 "inLanguage": "hy",
-                "isPartOf": { "@id": "https://www.retrieve.am/am/#website" },
+                "isPartOf": { "@id": "https://www.retrieve.am/hy/#website" },
                 "about": { "@id": "https://www.retrieve.am/en/#organization" },
                 "mainEntity": { "@id": "https://www.retrieve.am/en/#organization" }
             }

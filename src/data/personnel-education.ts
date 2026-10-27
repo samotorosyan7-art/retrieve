@@ -1,6 +1,6 @@
 import type { EducationEntry } from "@/types/wordpress";
 
-export type PersonnelEducation = Record<"en" | "ru" | "am", EducationEntry[]>;
+export type PersonnelEducation = Record<"en" | "ru" | "hy", EducationEntry[]>;
 
 /**
  * Manually curated education/bar-admission entries, keyed by personnel slug.
@@ -21,7 +21,7 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2020", degree: "Магистр права (LL.M.), специализация — корпоративное право", institution: "Американский университет Армении" },
             { year: "2018", degree: "Бакалавр международных отношений, специализация — международное право", institution: "Ереванский государственный университет" },
         ],
-        am: [
+        hy: [
             { year: "2025", degree: "Ընդունվել է Կալիֆոռնիա նահանգի փաստաբանների միություն", institution: "Կալիֆոռնիա նահանգում փաստաբանական գործունեություն իրականացնելու արտոնագիր" },
             { year: "2021", degree: "Հայաստանի Հանրապետության Փաստաբանական ակադեմիա", institution: "Հայաստանի Հանրապետությունում փաստաբանական գործունեություն իրականացնելու արտոնագիր" },
             { year: "2020", degree: "Իրավագիտության մագիստրոսի աստիճան (LL.M.), մասնագիտացում՝ կորպորատիվ իրավունք", institution: "Հայաստանի ամերիկյան համալսարան" },
@@ -39,7 +39,7 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2020", degree: "Сертификат по корпоративному управлению", institution: "Мюнхенский университет имени Людвига-Максимилиана (LMU)" },
             { year: "2018", degree: "Бакалавр искусств (B.A.), специализация — связи с общественностью", institution: "Американский университет Армении" },
         ],
-        am: [
+        hy: [
             { year: "2020", degree: "Իրավագիտության մագիստրոսի աստիճան (LL.M), մասնագիտացում՝ կորպորատիվ իրավունք", institution: "Հայաստանի ամերիկյան համալսարան" },
             { year: "2020", degree: "Կորպորատիվ կառավարման վկայական", institution: "Մյունխենի Լյուդվիգ-Մաքսիմիլիան համալսարան (LMU)" },
             { year: "2018", degree: "Արվեստի բակալավրի աստիճան (B.A.), մասնագիտացում՝ հանրային կապեր", institution: "Հայաստանի ամերիկյան համալսարան" },
@@ -58,7 +58,7 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2007–2009", degree: "Магистр права", institution: "Российско-Армянский университет" },
             { year: "2003–2007", degree: "Бакалавр права", institution: "Российско-Армянский университет" },
         ],
-        am: [
+        hy: [
             { year: "2021", degree: "ՀՀ Փաստաբանական ակադեմիա", institution: "" },
             { year: "2013", degree: "ՀՀ Դատախազների դպրոց", institution: "" },
             { year: "2007–2009", degree: "Իրավագիտության մագիստրոսի աստիճան", institution: "Հայ-ռուսական համալսարան" },
@@ -76,7 +76,7 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2017", degree: "PhD по конституционному праву", institution: "Академия государственного управления Республики Армения" },
             { year: "2013", degree: "Программа магистра права (LL.M)", institution: "Американский университет Армении" },
         ],
-        am: [
+        hy: [
             { year: "2018", degree: "Հայաստանի Հանրապետության փաստաբանական արտոնագիր, մասնագիտացում՝ քաղաքացիական և վարչական իրավունք", institution: "Հայաստանի Հանրապետության Փաստաբանական դպրոց" },
             { year: "2017", degree: "Իրավագիտության դոկտոր (PhD)՝ սահմանադրական իրավունք", institution: "ՀՀ պետական կառավարման ակադեմիա" },
             { year: "2013", degree: "Իրավագիտության մագիստրոսի աստիճան (LL.M)", institution: "Հայաստանի ամերիկյան համալսարան" },
@@ -91,7 +91,7 @@ export const personnelEducation: Record<string, PersonnelEducation> = {
             { year: "2016–2018", degree: "Бакалавр экономики и управления маркетингом", institution: "Университет Жан Мулен Лион III" },
             { year: "2014–2018", degree: "Бакалавр экономики и управления маркетингом", institution: "Французский университет в Армении" },
         ],
-        am: [
+        hy: [
             { year: "2016–2018", degree: "Տնտեսագիտության և մարքեթինգի կառավարման բակալավրի աստիճան", institution: "Jean Moulin Lyon III համալսարան" },
             { year: "2014–2018", degree: "Տնտեսագիտության և մարքեթինգի կառավարման բակալավրի աստիճան", institution: "Հայաստանի ֆրանսիական համալսարան" },
         ],

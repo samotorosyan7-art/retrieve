@@ -3,13 +3,13 @@ import ClientsDirectory from "@/components/website/ClientsDirectory";
 import { CLIENTS, CLIENT_INDUSTRY_COUNT, CLIENT_TOTAL_LABEL } from "@/data/clients";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
-import amCommon from "@/locales/am/common.json";
+import hyCommon from "@/locales/hy/common.json";
 import { buildAlternates } from "@/lib/seo";
 
 const dictionaries = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 } as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {

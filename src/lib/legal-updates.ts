@@ -6,7 +6,7 @@ export interface LegalUpdatePDF {
     pdfLink: string;
 }
 
-const SUPPORTED_LANGS = ["en", "ru", "am"] as const;
+const SUPPORTED_LANGS = ["en", "ru", "hy"] as const;
 const LEGAL_UPDATES_DIR = path.join(process.cwd(), "public", "legal-updates");
 
 // Explicit display titles per file, in the order they should appear on the page.
@@ -22,7 +22,7 @@ const CUSTOM_TITLES: Record<string, Record<string, string>> = {
         "IT-Sector-Support_Rus.pdf": "ГОСУДАРСТВЕННАЯ ПОДДЕРЖКА, ПРЕДОСТАВЛЯЕМАЯ ВЫСОКОТЕХНОЛОГИЧНОМУ СЕКТОРУ",
         "Ключевые поправки.pdf": "КЛЮЧЕВЫЕ ПОПРАВКИ К ЗАКОНУ АРМЕНИИ ОБ ИНОСТРАНЦАХ",
     },
-    am: {
+    hy: {
         "IT-Sector-Support_Arm-3.pdf": "ԲԱՐՁՐ ՏԵԽՆՈԼՈԳԻԱՆԵՐԻ ՈԼՈՐՏԻՆ ՏՐԱՄԱԴՐՎՈՂ ՊԵՏԱԿԱՆ ԱՋԱԿՑՈՒԹՅՈՒՆ",
         "Օտարերկրացիների_մասին_ՀՀ_օրենքի_հիմնական_փոփոխությունները.pdf": "«ՕՏԱՐԵՐԿՐԱՑԻՆԵՐԻ ՄԱՍԻՆ» ՀՀ ՕՐԵՆՔԻ ՀԻՄՆԱԿԱՆ ՓՈՓՈԽՈՒԹՅՈՒՆՆԵՐԸ",
     },

@@ -7,13 +7,13 @@ import { getPracticeAreaContent, getPortfolioItems, getYoastMetadata } from "@/l
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, ChevronDown, FileText } from "lucide-react";
 import enCommon from "@/locales/en/common.json";
 import ruCommon from "@/locales/ru/common.json";
-import amCommon from "@/locales/am/common.json";
+import hyCommon from "@/locales/hy/common.json";
 import ImmigrationServicePage from "./ImmigrationServicePage";
 
 const dictionaries = {
     en: enCommon,
     ru: ruCommon,
-    am: amCommon,
+    hy: hyCommon,
 } as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; lang: string }> }) {
@@ -150,7 +150,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
         ? (t as any).practice_content[slug].hero_desc
         : lang === 'en' 
         ? `Retrieve Legal & Tax provides comprehensive ${titleStem.toLowerCase()} services for local and international businesses. Our goal is to deliver actionable advice and solutions that help you make confident decisions and manage risks effectively.`
-        : lang === 'am'
+        : lang === 'hy'
         ? `Retrieve Legal & Tax-ը տրամադրում է համապարփակ ${titleStem.toLowerCase()} ծառայություններ տեղական և միջազգային բիզնեսների համար: Մեր նպատակն է առաջարկել գործնական լուծումներ, որոնք կօգնեն ձեզ վստահ որոշումներ կայացնել:`
         : `Retrieve Legal & Tax предоставляет комплексные услуги в сфере ${titleStem.toLowerCase()} для местных и международных компаний. Наша цель — предложить практические решения для уверенного ведения бизнеса.`;
 
@@ -160,7 +160,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
 
     const introTitle = lang === 'en'
         ? `${titleStem} Services for Businesses in Armenia`
-        : lang === 'am'
+        : lang === 'hy'
         ? `${titleStem} ծառայություններ բիզնեսի համար Հայաստանում`
         : `${titleStem} услуги для бизнеса в Армении`;
 
@@ -373,11 +373,11 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                     </div>
                                     {/* Right: image */}
                                     {pc.mna_image && (
-                                        <div className="relative min-h-[320px] lg:min-h-0">
+                                        <div className="p-6 lg:p-8 flex items-center justify-center">
                                             <img
                                                 src={pc.mna_image}
                                                 alt={pc.mna_image_alt || pc.mna_title}
-                                                className="absolute inset-0 w-full h-full object-cover"
+                                                className="max-w-full max-h-[480px] w-auto h-auto rounded-2xl"
                                             />
                                         </div>
                                     )}
@@ -431,7 +431,7 @@ export default async function LegalServiceDetailPage({ params }: { params: Promi
                                 ? (t as any).practice_content[slug].why_choose_desc
                                 : lang === 'en'
                                 ? `Retrieve Legal & Tax offers client-focused, results-driven legal advice. Here is why businesses choose our ${titleStem.toLowerCase()} services:`
-                                : lang === 'am'
+                                : lang === 'hy'
                                 ? `Retrieve Legal & Tax-ն առաջարկում է հաճախորդամետ և արդյունավետ իրավական աջակցություն: Ահա թե ինչու են բիզնեսները ընտրում մեր ${titleStem.toLowerCase()} ծառայությունները.`
                                 : `Retrieve Legal & Tax предлагает ориентированные на клиента и результат юридические услуги. Вот почему компании выбирают нас для услуг в сфере ${titleStem.toLowerCase()}:`
                             }

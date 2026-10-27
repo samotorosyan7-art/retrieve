@@ -6,7 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import enCommon from '../locales/en/common.json';
 import ruCommon from '../locales/ru/common.json';
-import amCommon from '../locales/am/common.json';
+import hyCommon from '../locales/hy/common.json';
 
 const resources = {
     en: {
@@ -15,8 +15,8 @@ const resources = {
     ru: {
         common: ruCommon,
     },
-    am: {
-        common: amCommon,
+    hy: {
+        common: hyCommon,
     },
 };
 

@@ -4,7 +4,7 @@ import { getPortfolioItems, getTeamMembers, getAllBlogPostSlugs } from '@/lib/wo
 export const dynamic = "force-dynamic";
 
 export async function generateSitemaps() {
-  return [{ id: 'en' }, { id: 'ru' }, { id: 'am' }];
+  return [{ id: 'en' }, { id: 'ru' }, { id: 'hy' }];
 }
 
 export default async function sitemap(

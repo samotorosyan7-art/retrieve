@@ -5,7 +5,7 @@ import Footer from "@/components/website/Footer";
 import I18nProvider from "@/components/providers/I18nProvider";
 import MobileFAB from "@/components/website/MobileFAB";
 import { getPracticeAreasNav } from "@/lib/wordpress";
-import { LOCALES, toLangCode } from "@/lib/seo";
+import { LOCALES } from "@/lib/seo";
 import Script from "next/script";
 
 
@@ -46,7 +46,7 @@ export default async function RootLayout({
     const lang = (LOCALES as readonly string[]).includes(routeLang) ? routeLang : "en";
 
     return (
-        <html lang={toLangCode(lang)} className="font-sans">
+        <html lang={lang} className="font-sans">
             <Script
                 src="https://www.googletagmanager.com/gtag/js?id=AW-18179368906"
                 strategy="afterInteractive"
